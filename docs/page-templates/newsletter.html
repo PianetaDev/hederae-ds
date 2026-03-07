@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Newsletter — Hederae DS · Susdef Settori</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Susdef Brand Tokens ─────────────────────────────────── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    rgba(1,62,57,0.15);
+      --color-interactive-primary-bg:    #013E39;
+      --color-interactive-primary-label: #FFFFFF;
+      --color-brand-accent: #D8EC28;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── DS Meta Nav ─────────────────────────────────────────── */
+    .ds-nav {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--color-surface-inverse);
+      padding: 14px 32px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .ds-nav-left { display: flex; align-items: center; gap: 16px; }
+    .ds-nav-back {
+      font-family: var(--font-ui); font-size: 12px; color: rgba(255,255,255,0.55);
+      text-decoration: none; letter-spacing: 0.04em;
+    }
+    .ds-nav-back:hover { color: rgba(255,255,255,0.9); }
+    .ds-nav-sep { color: rgba(255,255,255,0.2); font-size: 14px; }
+    .ds-nav-title { font-family: var(--font-ui); font-size: 13px; color: rgba(255,255,255,0.85); }
+    .ds-nav-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      padding: 2px 8px; border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 10px; color: rgba(255,255,255,0.4);
+    }
+    .ds-nav-meta { font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.35); }
+
+    /* ── Demo Hero ───────────────────────────────────────────── */
+    .demo-hero {
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 40px 40px 32px;
+    }
+    .demo-eyebrow {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 10px;
+    }
+    .demo-title {
+      font-family: var(--font-display); font-size: 36px; font-weight: 400;
+      color: var(--color-content-brand); margin-bottom: 8px; line-height: 1.2;
+    }
+    .demo-desc {
+      font-size: 16px; color: var(--color-content-secondary);
+      max-width: 640px; line-height: 1.6;
+    }
+
+    /* ── Sector Switcher ─────────────────────────────────────── */
+    .switcher-wrap {
+      padding: 24px 40px;
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--color-surface-page);
+    }
+    .switcher-label {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 12px;
+    }
+    .switcher-row {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .sector-btn {
+      display: inline-flex; align-items: center; gap: 7px;
+      padding: 6px 14px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 9999px; background: transparent;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.03em;
+      color: var(--color-content-secondary); cursor: pointer;
+      transition: border-color 0.15s, background 0.15s, color 0.15s;
+    }
+    .sector-btn:hover { border-color: var(--color-content-brand); color: var(--color-content-brand); }
+    .sector-btn.active {
+      background: var(--color-content-primary); border-color: var(--color-content-primary);
+      color: #FFFFFF;
+    }
+    .sector-btn .dot {
+      width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+    }
+
+    /* ── Email Client Wrapper ────────────────────────────────── */
+    .email-client-bg {
+      background: #D9D9D9;
+      padding: 48px 24px 80px;
+    }
+    .email-client-chrome {
+      max-width: 660px; margin: 0 auto 0;
+    }
+    .email-client-bar {
+      background: #EBEBEB;
+      border-radius: 6px 6px 0 0;
+      padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+      border: 1px solid #C8C8C8; border-bottom: none;
+    }
+    .chrome-dots { display: flex; gap: 6px; }
+    .chrome-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .chrome-field {
+      flex: 1; height: 22px; background: white; border-radius: 4px;
+      border: 1px solid #C8C8C8; font-family: var(--font-ui); font-size: 10px;
+      color: #888; display: flex; align-items: center; padding: 0 10px;
+    }
+
+    /* ── Email Frame ─────────────────────────────────────────── */
+    .email-frame {
+      max-width: 660px; margin: 0 auto;
+      background: #FFFFFF;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.14);
+      border: 1px solid #C8C8C8; border-top: none;
+      border-radius: 0 0 4px 4px;
+      overflow: hidden;
+      font-family: 'IBM Plex Sans', system-ui, sans-serif;
+      color: #212121;
+    }
+
+    /* Preheader */
+    .email-preheader {
+      display: none;
+    }
+
+    /* Top accent bar */
+    .sector-accent-bar {
+      height: 5px;
+      background: var(--s-primary, #013E39);
+    }
+
+    /* Header */
+    .email-header {
+      padding: 20px 36px;
+      display: flex; align-items: center; justify-content: space-between;
+      border-bottom: 1px solid #E9E3D7;
+    }
+    .email-logo {
+      font-family: 'IBM Plex Mono', monospace; font-size: 15px;
+      letter-spacing: 0.14em; text-transform: uppercase; color: #013E39;
+      text-decoration: none;
+    }
+    .email-logo span { color: #C3C234; }
+    .header-right { text-align: right; }
+    .sector-name-pill {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 4px 12px;
+      background: var(--s-muted, rgba(1,62,57,0.08));
+      border-radius: 9999px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      letter-spacing: 0.04em; color: #212121;
+    }
+    .sector-name-pill::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%;
+      background: var(--s-primary); flex-shrink: 0;
+    }
+    .email-issue-line {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      color: #9D9D9D; margin-top: 4px; display: block;
+    }
+
+    /* Hero image placeholder */
+    .email-hero-img {
+      width: 100%; height: 220px;
+      background: var(--s-muted, rgba(1,62,57,0.08));
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-deco-1 {
+      position: absolute; right: -40px; top: -40px;
+      width: 240px; height: 240px; border-radius: 50%;
+      background: var(--s-primary); opacity: 0.10;
+    }
+    .hero-deco-2 {
+      position: absolute; left: 30px; bottom: -50px;
+      width: 180px; height: 180px; border-radius: 50%;
+      background: var(--s-primary); opacity: 0.07;
+    }
+    .hero-deco-3 {
+      position: absolute; left: 45%; top: 20px;
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--s-primary); opacity: 0.06;
+    }
+    .hero-img-label {
+      position: relative; z-index: 1;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--s-primary); opacity: 0.55;
+    }
+
+    /* Hero content */
+    .email-hero-content { padding: 28px 36px 24px; }
+    .hero-category-tag {
+      display: inline-block;
+      padding: 3px 11px;
+      background: var(--s-muted); border-radius: 9999px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      letter-spacing: 0.05em; color: #212121;
+      margin-bottom: 14px;
+    }
+    .email-h1 {
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: 24px; font-weight: 500; line-height: 1.3;
+      color: #212121; margin-bottom: 12px;
+    }
+    .email-body-text {
+      font-size: 14px; line-height: 1.7; color: #6D6D69;
+      margin-bottom: 20px;
+    }
+    .email-btn {
+      display: inline-block;
+      padding: 10px 22px;
+      background: var(--s-primary);
+      color: var(--s-label, #FFFFFF);
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      letter-spacing: 0.04em; border-radius: 9999px;
+      text-decoration: none;
+    }
+
+    /* Divider */
+    .email-hr { height: 1px; background: #E9E3D7; margin: 0 36px; }
+
+    /* Articles */
+    .email-section { padding: 28px 36px; }
+    .email-section-label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--s-primary); margin-bottom: 18px; display: block;
+    }
+    .articles-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px;
+    }
+    .article-card {
+      border: 1px solid #E9E3D7; border-radius: 4px; overflow: hidden;
+    }
+    .article-img {
+      height: 90px;
+      background: var(--s-muted);
+      border-bottom: 3px solid var(--s-primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .article-img-num {
+      font-family: 'IBM Plex Mono', monospace; font-size: 36px;
+      color: var(--s-primary); opacity: 0.22;
+    }
+    .article-body { padding: 14px; }
+    .article-body h3 {
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: 13px; font-weight: 500; line-height: 1.45;
+      color: #212121; margin-bottom: 7px;
+    }
+    .article-body p {
+      font-size: 12px; line-height: 1.6; color: #6D6D69; margin-bottom: 9px;
+    }
+    .article-link {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      color: var(--s-primary); text-decoration: none;
+    }
+
+    /* Highlight */
+    .email-highlight {
+      margin: 0 36px 28px;
+      padding: 22px 24px;
+      background: var(--s-muted);
+      border-left: 4px solid var(--s-primary);
+      border-radius: 0 4px 4px 0;
+    }
+    .highlight-kicker {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--s-primary); display: block; margin-bottom: 8px;
+    }
+    .highlight-text {
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: 14px; font-style: italic; line-height: 1.65; color: #212121;
+    }
+
+    /* Events */
+    .email-events { padding: 0 36px 28px; }
+    .events-heading {
+      font-family: 'IBM Plex Serif', Georgia, serif;
+      font-size: 18px; font-weight: 400; color: #212121; margin-bottom: 14px;
+    }
+    .event-row {
+      display: flex; align-items: center; gap: 14px;
+      padding: 11px 0; border-bottom: 1px solid #E9E3D7;
+    }
+    .event-row:last-child { border-bottom: none; }
+    .event-date {
+      flex-shrink: 0; width: 50px; text-align: center;
+      padding: 6px 4px;
+      background: var(--s-muted); border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      line-height: 1.4; color: #212121;
+    }
+    .event-info { flex: 1; }
+    .event-title-text {
+      font-size: 13px; font-weight: 600; color: #212121;
+      display: block; margin-bottom: 2px;
+    }
+    .event-loc-text {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px; color: #9D9D9D;
+    }
+    .event-cta {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      color: var(--s-primary); text-decoration: none; flex-shrink: 0;
+    }
+
+    /* CTA Banner */
+    .email-cta-banner {
+      margin: 0 36px 36px;
+      padding: 28px 28px;
+      background: #013E39;
+      border-radius: 4px; text-align: center;
+    }
+    .cta-banner-text {
+      font-size: 14px; line-height: 1.65;
+      color: rgba(255,255,255,0.75); margin-bottom: 18px;
+    }
+    .email-btn-lime {
+      display: inline-block; padding: 10px 24px;
+      background: #D8EC28; color: #013E39;
+      font-family: 'IBM Plex Mono', monospace; font-size: 12px;
+      letter-spacing: 0.04em; border-radius: 9999px; text-decoration: none;
+    }
+
+    /* Footer */
+    .email-footer {
+      background: #013E39;
+      border-top: 4px solid var(--s-primary);
+      padding: 28px 36px;
+    }
+    .footer-top {
+      display: flex; justify-content: space-between; align-items: flex-start;
+      margin-bottom: 20px;
+    }
+    .footer-logo-area {}
+    .footer-logo-text {
+      font-family: 'IBM Plex Mono', monospace; font-size: 13px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.85); display: block;
+    }
+    .footer-sector-label {
+      font-family: 'IBM Plex Mono', monospace; font-size: 10px;
+      color: rgba(255,255,255,0.35); margin-top: 3px; display: block;
+    }
+    .footer-social { display: flex; gap: 14px; padding-top: 4px; }
+    .footer-social a {
+      font-family: 'IBM Plex Mono', monospace; font-size: 11px;
+      color: rgba(255,255,255,0.5); text-decoration: none;
+    }
+    .footer-social a:hover { color: #D8EC28; }
+    .footer-divider {
+      height: 1px; background: rgba(255,255,255,0.10); margin-bottom: 14px;
+    }
+    .footer-legal {
+      font-size: 11px; line-height: 1.7; color: rgba(255,255,255,0.35);
+    }
+    .footer-legal a { color: rgba(255,255,255,0.5); text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+  <!-- DS meta nav -->
+  <nav class="ds-nav">
+    <div class="ds-nav-left">
+      <a href="index.html" class="ds-nav-back">◀ Catalogo</a>
+      <span class="ds-nav-sep">|</span>
+      <span class="ds-nav-title">Newsletter — Susdef Settori</span>
+    </div>
+    <div style="display:flex;gap:12px;align-items:center;">
+      <span class="ds-nav-badge">8 settori</span>
+      <span class="ds-nav-meta">Hederae DS · v0.2</span>
+    </div>
+  </nav>
+
+  <!-- Demo hero -->
+  <header class="demo-hero">
+    <p class="demo-eyebrow">Page Templates · Comunicazione</p>
+    <h1 class="demo-title">Newsletter</h1>
+    <p class="demo-desc">Template newsletter unico per tutti gli 8 settori tematici di Susdef. Struttura e tipografia identiche — i colori del settore cambiano tutto.</p>
+  </header>
+
+  <!-- Sector switcher -->
+  <div class="switcher-wrap">
+    <p class="switcher-label">Seleziona settore</p>
+    <div class="switcher-row">
+      <button class="sector-btn active" onclick="switchSector('ecoinnovazione',this)" data-s="ecoinnovazione">
+        <span class="dot" style="background:#FF8C01"></span>Eco-innovazione
+      </button>
+      <button class="sector-btn" onclick="switchSector('energiaclima',this)" data-s="energiaclima">
+        <span class="dot" style="background:#2792B9"></span>Energia &amp; Clima
+      </button>
+      <button class="sector-btn" onclick="switchSector('economiacircolare',this)" data-s="economiacircolare">
+        <span class="dot" style="background:#7B7EC8"></span>Economia Circolare
+      </button>
+      <button class="sector-btn" onclick="switchSector('mobilita',this)" data-s="mobilita">
+        <span class="dot" style="background:#CE9B62"></span>Mobilità Sostenibile
+      </button>
+      <button class="sector-btn" onclick="switchSector('greencity',this)" data-s="greencity">
+        <span class="dot" style="background:#B9284F"></span>Green City
+      </button>
+      <button class="sector-btn" onclick="switchSector('agroecologia',this)" data-s="agroecologia">
+        <span class="dot" style="background:#B08800"></span>Agroecologia
+      </button>
+      <button class="sector-btn" onclick="switchSector('statigenerali',this)" data-s="statigenerali">
+        <span class="dot" style="background:#2A8A6A"></span>Stati Generali
+      </button>
+      <button class="sector-btn" onclick="switchSector('corsiformazione',this)" data-s="corsiformazione">
+        <span class="dot" style="background:#C25490"></span>Corsi &amp; Formazione
+      </button>
+    </div>
+  </div>
+
+  <!-- Email client simulation -->
+  <div class="email-client-bg">
+    <div class="email-client-chrome">
+      <div class="email-client-bar">
+        <div class="chrome-dots">
+          <div class="chrome-dot" style="background:#FF5F57"></div>
+          <div class="chrome-dot" style="background:#FEBC2E"></div>
+          <div class="chrome-dot" style="background:#28C840"></div>
+        </div>
+        <div class="chrome-field">
+          <span id="chrome-sender">newsletter@susdef.it</span>
+        </div>
+      </div>
+
+      <!-- Email frame -->
+      <div class="email-frame" id="email-frame" style="--s-primary:#FF8C01;--s-muted:rgba(255,140,1,0.10);--s-label:#212121;">
+
+        <div class="email-preheader" id="preheader-text">Startup del riciclo, packaging biodegradabile e simbiosi industriale nel numero di marzo.</div>
+
+        <!-- Accent bar -->
+        <div class="sector-accent-bar"></div>
+
+        <!-- Header -->
+        <div class="email-header">
+          <a class="email-logo" href="#">sus<span>·</span>def</a>
+          <div class="header-right">
+            <span class="sector-name-pill" id="sect-name">Eco-innovazione</span>
+            <span class="email-issue-line" id="sect-issue">Marzo 2026 · n. 18</span>
+          </div>
+        </div>
+
+        <!-- Hero image -->
+        <div class="email-hero-img">
+          <div class="hero-deco-1"></div>
+          <div class="hero-deco-2"></div>
+          <div class="hero-deco-3"></div>
+          <span class="hero-img-label" id="hero-img-label">Eco-innovazione</span>
+        </div>
+
+        <!-- Hero content -->
+        <div class="email-hero-content">
+          <span class="hero-category-tag" id="hero-tag">Eco-innovazione</span>
+          <h1 class="email-h1" id="art-main-title">Il futuro del riciclo: le startup italiane che stanno cambiando le regole del gioco</h1>
+          <p class="email-body-text" id="art-main-body">Dal compostaggio industriale ai materiali tecnici rigenerabili: il panorama dell'eco-innovazione italiana cresce a ritmi superiori alla media europea. Un'analisi delle filiere emergenti e dei modelli di business vincenti.</p>
+          <a class="email-btn" href="#">Leggi l'articolo →</a>
+        </div>
+
+        <div class="email-hr"></div>
+
+        <!-- Articles grid -->
+        <div class="email-section">
+          <span class="email-section-label">In questo numero</span>
+          <div class="articles-grid">
+            <div class="article-card">
+              <div class="article-img"><span class="article-img-num">02</span></div>
+              <div class="article-body">
+                <h3 id="art-2-title">Packaging biodegradabile: il punto della situazione a un anno dalla Direttiva SUP</h3>
+                <p id="art-2-body">Le imprese italiane hanno investito 2,3 miliardi in soluzioni alternative. Il mercato premia, ma la raccolta non regge il ritmo.</p>
+                <a class="article-link" href="#">Leggi →</a>
+              </div>
+            </div>
+            <div class="article-card">
+              <div class="article-img"><span class="article-img-num">03</span></div>
+              <div class="article-body">
+                <h3 id="art-3-title">Simbiosi industriale: nuovi distretti circolari in Emilia-Romagna</h3>
+                <p id="art-3-body">Il modello ECUBA coinvolge 340 aziende. Lo scarto di uno diventa risorsa dell'altro: 180.000 tonnellate valorizzate nel 2025.</p>
+                <a class="article-link" href="#">Leggi →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Highlight callout -->
+        <div class="email-highlight">
+          <span class="highlight-kicker">In evidenza</span>
+          <p class="highlight-text" id="highlight-text">«L'economia circolare non è un costo: è il modello di crescita che l'Italia può guidare in Europa.» — Edo Ronchi</p>
+        </div>
+
+        <div class="email-hr"></div>
+
+        <!-- Events -->
+        <div class="email-events">
+          <h2 class="events-heading">Prossimi appuntamenti</h2>
+
+          <div class="event-row">
+            <div class="event-date" id="ev1-date">20 mar</div>
+            <div class="event-info">
+              <span class="event-title-text" id="ev1-title">Forum ECO-Innovation 2026</span>
+              <span class="event-loc-text" id="ev1-loc">Fiera Milano · Online</span>
+            </div>
+            <a class="event-cta" href="#">Iscriviti →</a>
+          </div>
+
+          <div class="event-row">
+            <div class="event-date" id="ev2-date">3 apr</div>
+            <div class="event-info">
+              <span class="event-title-text" id="ev2-title">Webinar: Green Procurement nelle PA</span>
+              <span class="event-loc-text" id="ev2-loc">Online</span>
+            </div>
+            <a class="event-cta" href="#">Iscriviti →</a>
+          </div>
+
+          <div class="event-row">
+            <div class="event-date" id="ev3-date">24 apr</div>
+            <div class="event-info">
+              <span class="event-title-text" id="ev3-title">Workshop Startup Sostenibili</span>
+              <span class="event-loc-text" id="ev3-loc">Bologna</span>
+            </div>
+            <a class="event-cta" href="#">Iscriviti →</a>
+          </div>
+        </div>
+
+        <!-- CTA banner -->
+        <div class="email-cta-banner">
+          <p class="cta-banner-text" id="cta-text">Scopri tutti i materiali, le ricerche e i report del settore Eco-innovazione sul portale Susdef.</p>
+          <a class="email-btn-lime" href="#">Vai al portale →</a>
+        </div>
+
+        <!-- Footer -->
+        <div class="email-footer">
+          <div class="footer-top">
+            <div class="footer-logo-area">
+              <span class="footer-logo-text">sus·def</span>
+              <span class="footer-sector-label">Newsletter — <span id="footer-sect-name">Eco-innovazione</span></span>
+            </div>
+            <div class="footer-social">
+              <a href="#">LinkedIn</a>
+              <a href="#">Instagram</a>
+              <a href="#">YouTube</a>
+            </div>
+          </div>
+          <div class="footer-divider"></div>
+          <p class="footer-legal">
+            Hai ricevuto questa email perché sei iscritto alla newsletter Susdef.<br>
+            <a href="#">Gestisci preferenze</a> · <a href="#">Disiscrivi</a> · <a href="#">Privacy Policy</a><br><br>
+            Fondazione per lo Sviluppo Sostenibile ETS · Via Cristoforo Colombo 163 · 00147 Roma
+          </p>
+        </div>
+
+      </div><!-- /email-frame -->
+    </div><!-- /email-client-chrome -->
+  </div><!-- /email-client-bg -->
+
+  <script>
+    const sectors = {
+      ecoinnovazione: {
+        primary: '#FF8C01', muted: 'rgba(255,140,1,0.10)', label: '#212121',
+        name: 'Eco-innovazione', issue: 'Marzo 2026 · n. 18',
+        preheader: 'Startup del riciclo, packaging biodegradabile e simbiosi industriale nel numero di marzo.',
+        mainTitle: 'Il futuro del riciclo: le startup italiane che stanno cambiando le regole del gioco',
+        mainBody: 'Dal compostaggio industriale ai materiali tecnici rigenerabili: il panorama dell\'eco-innovazione italiana cresce a ritmi superiori alla media europea. Un\'analisi delle filiere emergenti e dei modelli di business vincenti.',
+        art2Title: 'Packaging biodegradabile: il punto della situazione a un anno dalla Direttiva SUP',
+        art2Body: 'Le imprese italiane hanno investito 2,3 miliardi in soluzioni alternative. Il mercato premia, ma la raccolta non regge il ritmo.',
+        art3Title: 'Simbiosi industriale: nuovi distretti circolari in Emilia-Romagna',
+        art3Body: 'Il modello ECUBA coinvolge 340 aziende. Lo scarto di uno diventa risorsa dell\'altro: 180.000 tonnellate valorizzate nel 2025.',
+        highlight: '«L\'economia circolare non è un costo: è il modello di crescita che l\'Italia può guidare in Europa.» — Edo Ronchi',
+        ev1Date: '20 mar', ev1Title: 'Forum ECO-Innovation 2026', ev1Loc: 'Fiera Milano · Online',
+        ev2Date: '3 apr',  ev2Title: 'Webinar: Green Procurement nelle PA', ev2Loc: 'Online',
+        ev3Date: '24 apr', ev3Title: 'Workshop Startup Sostenibili', ev3Loc: 'Bologna',
+        cta: 'Scopri tutti i materiali, le ricerche e i report del settore Eco-innovazione sul portale Susdef.'
+      },
+      energiaclima: {
+        primary: '#2792B9', muted: 'rgba(39,146,185,0.10)', label: '#FFFFFF',
+        name: 'Energia & Clima', issue: 'Marzo 2026 · n. 31',
+        preheader: 'COP30, rinnovabili al +23% e carbon capture: l\'agenda climatica nel numero di marzo.',
+        mainTitle: 'COP30 a Belém: le posizioni italiane ed europee sull\'agenda climatica al 2035',
+        mainBody: 'A pochi mesi dall\'apertura del summit, Susdef analizza i Nationally Determined Contributions europei e il ruolo dell\'Italia nella transizione energetica globale.',
+        art2Title: 'Rinnovabili in Italia: +23% nel 2025, ma la burocrazia blocca ancora troppi impianti',
+        art2Body: 'I dati GSE fotografano un settore in forte crescita. Il 38% delle autorizzazioni è ancora in attesa da oltre 24 mesi.',
+        art3Title: 'Carbon capture and storage: da tecnologia di nicchia a pilastro della transizione',
+        art3Body: 'I costi si sono dimezzati dal 2020. Due impianti italiani sono in fase avanzata con finanziamenti PNRR confermati.',
+        highlight: 'Il 2025 è stato il secondo anno più caldo mai registrato. La finestra per restare sotto 1,5°C si restringe a 6–8 anni.',
+        ev1Date: '18 mar', ev1Title: 'Convegno Nazionale Energia Rinnovabile', ev1Loc: 'Roma',
+        ev2Date: '9 apr',  ev2Title: 'Webinar: Comunità Energetiche Rinnovabili', ev2Loc: 'Online',
+        ev3Date: '16 apr', ev3Title: 'Visita impianto eolico offshore Adriatico', ev3Loc: 'Ravenna',
+        cta: 'Accedi al repository di ricerche, report e policy brief sul clima e le energie rinnovabili.'
+      },
+      economiacircolare: {
+        primary: '#7B7EC8', muted: 'rgba(190,191,248,0.22)', label: '#FFFFFF',
+        name: 'Economia Circolare', issue: 'Marzo 2026 · n. 22',
+        preheader: 'Direttiva ecocompatibile, moda second-hand e end of waste: tutto nel numero di marzo.',
+        mainTitle: 'La Direttiva UE sulla progettazione ecocompatibile: cosa cambia per le imprese italiane',
+        mainBody: 'Dal 1° luglio 2026 entrano in vigore i nuovi requisiti di durabilità, riparabilità e contenuto riciclato. Le PMI devono adeguarsi entro 18 mesi.',
+        art2Title: 'Moda circolare: il mercato del second-hand vale già 40 miliardi in Europa',
+        art2Body: 'Italia terzo mercato europeo per volume di abbigliamento usato. Le piattaforme digitali trainano la crescita con un +67% rispetto al 2022.',
+        art3Title: 'End of Waste: le nuove linee guida ministeriali per 5 flussi prioritari',
+        art3Body: 'Il Ministero ha aggiornato le specifiche per carta, plastica, vetro, metalli e RAEE. Semplificazione attesa per 12.000 aziende.',
+        highlight: 'Il potenziale economico dell\'economia circolare in Italia vale 96 miliardi l\'anno: il 5,2% del PIL.',
+        ev1Date: '26 mar', ev1Title: 'Forum Nazionale Economia Circolare', ev1Loc: 'Milano',
+        ev2Date: '8 apr',  ev2Title: 'Workshop: Design for Disassembly', ev2Loc: 'Torino · Online',
+        ev3Date: '29 apr', ev3Title: 'Convegno Plastic Economy 2026', ev3Loc: 'Venezia',
+        cta: 'Esplora la mappa delle filiere circolari italiane e gli strumenti di supporto per le imprese.'
+      },
+      mobilita: {
+        primary: '#CE9B62', muted: 'rgba(206,155,98,0.12)', label: '#212121',
+        name: 'Mobilità Sostenibile', issue: 'Marzo 2026 · n. 14',
+        preheader: 'PUMS 2026, bici condivise +38% e rilancio delle ferrovie regionali: il numero di marzo.',
+        mainTitle: 'PUMS 2026: le città italiane e i nuovi piani di mobilità urbana tra obiettivi e ritardi',
+        mainBody: 'Solo 23 delle 50 città capoluogo hanno approvato il Piano Urbano della Mobilità Sostenibile entro la scadenza. Susdef fa il punto sui ritardi e le best practice.',
+        art2Title: 'Sharing mobility 2025: le bici condivise crescono del 38%, i monopattini calano del 12%',
+        art2Body: 'Il report ISFORT fotografa un settore in evoluzione. Milano e Bologna trainano, mentre il Sud sconta gap infrastrutturali profondi.',
+        art3Title: 'Ferrovie regionali: il rilancio dei collegamenti nelle aree interne del Paese',
+        art3Body: 'Il PNRR finanzia 87 tratte ferroviarie minori. I lavori superano il 60%, ma i tempi slittano al 2028 per molte linee.',
+        highlight: 'Le città con PUMS approvato registrano una riduzione delle emissioni da trasporto del 14% rispetto al 2019.',
+        ev1Date: '21 mar', ev1Title: 'Forum della Mobilità Sostenibile', ev1Loc: 'Roma',
+        ev2Date: '5 apr',  ev2Title: 'Convegno Nazionale Bici & Città', ev2Loc: 'Ferrara',
+        ev3Date: '17 apr', ev3Title: 'Webinar: PUMS — buone pratiche europee', ev3Loc: 'Online',
+        cta: 'Consulta le schede di tutti i PUMS italiani, le guide e i dati sulla mobilità urbana.'
+      },
+      greencity: {
+        primary: '#B9284F', muted: 'rgba(185,40,79,0.08)', label: '#FFFFFF',
+        name: 'Green City', issue: 'Marzo 2026 · n. 19',
+        preheader: 'Urban heat island, verde urbano obbligatorio e soluzioni basate sulla natura.',
+        mainTitle: 'Urban Heat Island: strategie di raffreddamento per le città del Sud Italia nell\'era dei +45°C',
+        mainBody: 'L\'estate 2025 ha registrato 18 giorni di caldo estremo a Palermo e Napoli. Susdef analizza le soluzioni — dal tetto verde alle foreste urbane — già adottate da Barcellona e Atene.',
+        art2Title: 'Verde urbano: i nuovi obblighi per i Comuni dopo il Decreto Clima',
+        art2Body: 'Dal 2027 ogni comune sopra 15.000 abitanti dovrà garantire 9 m² di verde pubblico per abitante. Il 68% dei capoluoghi è sotto la soglia.',
+        art3Title: 'Nature-based solutions: 12 città italiane candidate ai fondi UE LIFE 2026',
+        art3Body: 'Torino, Genova e Cagliari tra le candidate più ambiziose. Disponibili 340 milioni per il ciclo 2026–2028.',
+        highlight: '1 euro investito in infrastrutture verdi urbane genera 4 euro in co-benefici: qualità dell\'aria, salute, turismo, valore immobiliare.',
+        ev1Date: '19 mar', ev1Title: 'Green City Italy 2026', ev1Loc: 'Bologna',
+        ev2Date: '10 apr', ev2Title: 'Webinar: Nature-Based Solutions nelle città', ev2Loc: 'Online',
+        ev3Date: '23 apr', ev3Title: 'Workshop: Infrastrutture Verdi e fondi UE', ev3Loc: 'Milano',
+        cta: 'Scopri la piattaforma Green City Network: strumenti, casi studio e opportunità di finanziamento.'
+      },
+      agroecologia: {
+        primary: '#B08800', muted: 'rgba(255,195,16,0.12)', label: '#FFFFFF',
+        name: 'Agroecologia', issue: 'Marzo 2026 · n. 11',
+        preheader: 'PAC a metà percorso, bio al 20% e carbonio nel suolo: il numero di marzo sull\'agroecologia.',
+        mainTitle: 'Piano Strategico Nazionale della PAC: bilancio a metà percorso tra promesse e compromessi',
+        mainBody: 'A 3 anni dall\'approvazione del PSN, Susdef valuta l\'impatto reale degli eco-schemi sull\'agricoltura italiana. Luci sulle colture estensive, ombre sui distretti intensivi.',
+        art2Title: 'Biologico in Italia: la superficie certificata supera il 20% dei terreni agricoli',
+        art2Body: 'Dati SINAB 2025: 2,2 milioni di ettari bio, con Sicilia e Calabria che trainano. La sfida ora è la distribuzione e il contenimento dei costi.',
+        art3Title: 'Suolo sano, clima stabile: la rivincita della materia organica nell\'agricoltura',
+        art3Body: 'Aumentare l\'humus dell\'1% in un ettaro equivale a sequestrare 40 t di CO₂. I nuovi protocolli di carbon farming aprono un mercato da 1,8 miliardi.',
+        highlight: 'Il suolo agricolo italiano ha perso il 35% di materia organica negli ultimi 50 anni. Invertire questa tendenza è la sfida agroecologica del decennio.',
+        ev1Date: '22 mar', ev1Title: 'Forum Nazionale Agroecologia', ev1Loc: 'Bari',
+        ev2Date: '12 apr', ev2Title: 'Webinar: Suolo Vivo — sequestro del carbonio', ev2Loc: 'Online',
+        ev3Date: '26 apr', ev3Title: 'Campo aperto: visita az. dimostrativa biologica', ev3Loc: 'Caserta',
+        cta: 'Accedi ai report, alle guide tecniche e agli strumenti di supporto per l\'agroecologia.'
+      },
+      statigenerali: {
+        primary: '#2A8A6A', muted: 'rgba(158,223,201,0.20)', label: '#FFFFFF',
+        name: 'Stati Generali', issue: 'Marzo 2026 · n. 9',
+        preheader: 'Stati Generali 2026, SDGs in Italia e partecipazione alla VAS: il numero di marzo.',
+        mainTitle: 'Stati Generali 2026: verso un\'agenda italiana per la sostenibilità nella XVI legislatura',
+        mainBody: 'Il programma si concentra su tre priorità: governance della transizione, finanza pubblica per la sostenibilità e partecipazione civica. Le iscrizioni sono aperte.',
+        art2Title: 'SDGs in Italia: il rapporto ISTAT 2025 e i divari strutturali tra Nord e Sud',
+        art2Body: 'Su 169 target dell\'Agenda 2030, l\'Italia è "on track" per il 31%, in ritardo per il 48%, in regressione per il 21%.',
+        art3Title: 'Valutazione Ambientale Strategica: nuovi strumenti di partecipazione della società civile',
+        art3Body: 'Il decreto di riforma della VAS introduce consultazioni digitali obbligatorie. Susdef ha contribuito alle linee guida ministeriali.',
+        highlight: 'L\'Italia ha sottoscritto 17 Obiettivi di Sviluppo Sostenibile. La coerenza tra politiche nazionali e Agenda 2030 rimane la sfida principale.',
+        ev1Date: '14–15 mag', ev1Title: 'Stati Generali dello Sviluppo Sostenibile', ev1Loc: 'Roma',
+        ev2Date: '28 mar',   ev2Title: 'Tavolo Tecnico SDGs — sessione aperta', ev2Loc: 'Online',
+        ev3Date: '11 apr',   ev3Title: 'Audizione parlamentare — Agenda 2030', ev3Loc: 'Camera, Roma',
+        cta: 'Consulta i documenti ufficiali, i position paper e le proposte di Susdef per l\'Agenda 2030.'
+      },
+      corsiformazione: {
+        primary: '#C25490', muted: 'rgba(249,147,197,0.14)', label: '#FFFFFF',
+        name: 'Corsi & Formazione', issue: 'Marzo 2026 · n. 27',
+        preheader: 'Nuovi corsi 2026, Sustainability Reporting e ESG per PMI: il numero di marzo.',
+        mainTitle: 'Nuovi corsi 2026: Manager della Sostenibilità, Green Finance e Life Cycle Assessment',
+        mainBody: 'Il catalogo formativo Susdef si aggiorna con 8 nuovi percorsi, 3 master universitari in partnership e oltre 40 webinar gratuiti per i soci. Iscrizioni aperte.',
+        art2Title: 'Sustainability Reporting: da obbligo normativo a vantaggio competitivo per le imprese',
+        art2Body: 'La CSRD è entrata in vigore per le grandi imprese. Come trasformare il reporting obbligatorio in uno strumento di comunicazione e posizionamento.',
+        art3Title: 'ESG per PMI: il percorso intensivo pensato per il manifatturiero italiano',
+        art3Body: 'Il nuovo corso di 5 giornate formerà i professionisti della sostenibilità nelle PMI, con focus su materialità, KPI e supply chain.',
+        highlight: 'Il 78% dei professionisti della sostenibilità dichiara che la formazione continua è il principale fattore di crescita della propria carriera. (GreenBiz 2025)',
+        ev1Date: '25 mar', ev1Title: 'Open day Corsi Susdef 2026', ev1Loc: 'Roma · Online',
+        ev2Date: '7 apr',  ev2Title: 'Webinar gratuito: Come evitare il Greenwashing', ev2Loc: 'Online',
+        ev3Date: '19 apr', ev3Title: 'Master Economia Circolare — primo modulo', ev3Loc: 'Milano',
+        cta: 'Sfoglia il catalogo completo dei corsi, scarica i programmi e iscriviti ai prossimi appuntamenti.'
+      }
+    };
+
+    function switchSector(id, btn) {
+      const s = sectors[id];
+      const frame = document.getElementById('email-frame');
+
+      // CSS vars
+      frame.style.setProperty('--s-primary', s.primary);
+      frame.style.setProperty('--s-muted',   s.muted);
+      frame.style.setProperty('--s-label',   s.label);
+
+      // Text
+      const set = (id, val) => { const el = document.getElementById(id); if (el) el.textContent = val; };
+      set('preheader-text',  s.preheader);
+      set('sect-name',       s.name);
+      set('sect-issue',      s.issue);
+      set('hero-img-label',  s.name);
+      set('hero-tag',        s.name);
+      set('art-main-title',  s.mainTitle);
+      set('art-main-body',   s.mainBody);
+      set('art-2-title',     s.art2Title);
+      set('art-2-body',      s.art2Body);
+      set('art-3-title',     s.art3Title);
+      set('art-3-body',      s.art3Body);
+      set('highlight-text',  s.highlight);
+      set('ev1-date',        s.ev1Date);
+      set('ev1-title',       s.ev1Title);
+      set('ev1-loc',         s.ev1Loc);
+      set('ev2-date',        s.ev2Date);
+      set('ev2-title',       s.ev2Title);
+      set('ev2-loc',         s.ev2Loc);
+      set('ev3-date',        s.ev3Date);
+      set('ev3-title',       s.ev3Title);
+      set('ev3-loc',         s.ev3Loc);
+      set('cta-text',        s.cta);
+      set('footer-sect-name', s.name);
+
+      // Chrome field sender
+      set('chrome-sender', 'newsletter@susdef.it — ' + s.name);
+
+      // Active button
+      document.querySelectorAll('.sector-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+
+</body>
+</html>
