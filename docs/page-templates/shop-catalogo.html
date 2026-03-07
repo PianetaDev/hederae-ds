@@ -1,0 +1,576 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="generic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Shop — Catalogo Prodotti · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── GENERIC SHOP TOKENS (adattare al brand target) ─────────────── */
+    :root {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F7F7F7;
+      --color-surface-card:    #F0F0F0;
+      --color-surface-deep:    #E0E0E0;
+      --color-surface-inverse: #111111;
+      --color-content-primary:   #111111;
+      --color-content-secondary: #6B6B6B;
+      --color-content-disabled:  #BBBBBB;
+      --color-content-inverse:   #FFFFFF;
+      --color-border-default:    #E5E5E5;
+      --color-border-strong:     #111111;
+      --color-interactive-primary-bg:       #111111;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #333333;
+      --color-interactive-secondary-border: #111111;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-pill:  40px;
+      --radius-card:  12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--color-surface-page); color: var(--color-content-primary); font-family: var(--font-body); font-size: 15px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+
+    /* ─── DS WRAPPER ─────────────────────────────────────────────────── */
+    .ds-nav { background: var(--color-surface-inverse); padding: 12px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 200; }
+    .ds-nav-brand { font-family: var(--font-ui); font-size: 12px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
+    .ds-nav-links { display: flex; gap: 20px; align-items: center; }
+    .ds-nav-links a { font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.6); text-decoration: none; }
+    .ds-nav-links a:hover { color: white; }
+    .ds-tag-pill { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-family: var(--font-ui); font-size: 10px; padding: 2px 8px; border-radius: 10px; }
+    .ds-hero { background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border-default); padding: 40px 24px; }
+    .ds-hero h1 { font-family: var(--font-display); font-size: 36px; font-weight: 400; margin-bottom: 8px; }
+    .ds-hero p { font-size: 15px; color: var(--color-content-secondary); max-width: 580px; margin-bottom: 14px; line-height: 1.6; }
+    .ds-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+    .ds-tag { font-family: var(--font-ui); font-size: 10px; padding: 2px 8px; border-radius: 8px; background: var(--color-surface-card); border: 1px solid var(--color-border-default); color: var(--color-content-secondary); letter-spacing: 0.05em; }
+    .demo-controls { background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border-default); padding: 14px 24px; display: flex; align-items: center; gap: 24px; }
+    .demo-label { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); }
+    .demo-btns { display: flex; border: 1px solid var(--color-border-strong); border-radius: 4px; overflow: hidden; }
+    .demo-btn { padding: 7px 16px; font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em; background: transparent; border: none; cursor: pointer; color: var(--color-content-secondary); }
+    .demo-btn + .demo-btn { border-left: 1px solid var(--color-border-strong); }
+    .demo-btn.active { background: var(--color-surface-inverse); color: white; }
+    .page-preview[hidden] { display: none; }
+    .page-preview { border-top: 2px solid var(--color-border-default); }
+
+    /* ─── SITE HEADER ───────────────────────────────────────────────── */
+    .sh-header { background: var(--color-surface-page); border-bottom: 1px solid var(--color-border-default); padding: 0 32px; height: 64px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+    .sh-logo { font-family: var(--font-display); font-size: 22px; font-weight: 500; text-decoration: none; color: var(--color-content-primary); }
+    .sh-nav { display: flex; gap: 28px; }
+    .sh-nav a { font-size: 14px; color: var(--color-content-secondary); text-decoration: none; font-weight: 500; }
+    .sh-nav a:hover { color: var(--color-content-primary); }
+    .sh-nav a.active { color: var(--color-content-primary); border-bottom: 2px solid var(--color-content-primary); padding-bottom: 2px; }
+    .sh-header-right { display: flex; gap: 16px; align-items: center; }
+    .sh-cart-btn {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 16px; border: 1px solid var(--color-border-default); border-radius: var(--radius-pill);
+      font-size: 14px; font-weight: 500; text-decoration: none; color: var(--color-content-primary);
+      position: relative;
+    }
+    .sh-cart-badge {
+      position: absolute; top: -6px; right: -6px;
+      width: 18px; height: 18px; border-radius: 50%; background: var(--color-surface-inverse); color: white;
+      font-family: var(--font-ui); font-size: 10px; display: flex; align-items: center; justify-content: center;
+    }
+    .sh-search { display: flex; align-items: center; gap: 8px; padding: 8px 14px; border: 1px solid var(--color-border-default); border-radius: var(--radius-pill); font-size: 14px; color: var(--color-content-secondary); cursor: pointer; }
+
+    /* ─── BREADCRUMB ────────────────────────────────────────────────── */
+    .breadcrumb { padding: 14px 32px; font-size: 13px; color: var(--color-content-secondary); display: flex; gap: 6px; align-items: center; }
+    .breadcrumb a { color: var(--color-content-secondary); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--color-content-primary); }
+    .breadcrumb-sep { color: var(--color-content-disabled); }
+
+    /* ─── CATALOG LAYOUT ────────────────────────────────────────────── */
+    .catalog-layout { display: grid; grid-template-columns: 260px 1fr; gap: 40px; padding: 0 32px 64px; max-width: 1440px; margin: 0 auto; }
+
+    /* Sidebar */
+    .sidebar {}
+    .sidebar-section { border-bottom: 1px solid var(--color-border-default); padding: 20px 0; }
+    .sidebar-section:first-child { padding-top: 0; }
+    .sidebar-title { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 14px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
+    .sidebar-title .toggle { font-size: 14px; color: var(--color-content-disabled); }
+    .category-list { list-style: none; }
+    .category-item { padding: 6px 0; }
+    .category-link { display: flex; justify-content: space-between; font-size: 14px; text-decoration: none; color: var(--color-content-secondary); cursor: pointer; }
+    .category-link:hover, .category-link.active { color: var(--color-content-primary); font-weight: 500; }
+    .category-count { font-family: var(--font-ui); font-size: 12px; color: var(--color-content-disabled); }
+    .category-link.active .category-count { color: var(--color-content-secondary); }
+    .price-inputs { display: flex; gap: 8px; align-items: center; }
+    .price-input { width: 80px; padding: 7px 10px; border: 1px solid var(--color-border-default); border-radius: 6px; font-size: 13px; font-family: var(--font-ui); }
+    .price-sep { color: var(--color-content-disabled); }
+    .price-apply { padding: 7px 14px; background: var(--color-surface-inverse); color: white; border: none; border-radius: var(--radius-pill); font-size: 12px; cursor: pointer; margin-top: 10px; font-family: var(--font-ui); display: block; }
+    .tag-filter-list { display: flex; flex-wrap: wrap; gap: 6px; }
+    .tag-filter { padding: 5px 12px; border: 1px solid var(--color-border-default); border-radius: var(--radius-pill); font-size: 13px; cursor: pointer; color: var(--color-content-secondary); background: transparent; }
+    .tag-filter:hover, .tag-filter.active { border-color: var(--color-border-strong); color: var(--color-content-primary); background: var(--color-surface-card); }
+    .checkbox-list { display: flex; flex-direction: column; gap: 8px; }
+    .checkbox-item { display: flex; align-items: center; gap: 8px; font-size: 14px; cursor: pointer; }
+    .checkbox-item input { width: 16px; height: 16px; accent-color: var(--color-surface-inverse); cursor: pointer; }
+    .avail-badge { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 4px; }
+    .avail-badge.green { background: #1B7A3E; }
+    .avail-badge.orange { background: #856400; }
+
+    /* Main content */
+    .catalog-main {}
+    .catalog-header { display: flex; align-items: center; justify-content: space-between; padding: 20px 0 16px; border-bottom: 1px solid var(--color-border-default); margin-bottom: 16px; }
+    .catalog-title { font-family: var(--font-display); font-size: 28px; font-weight: 400; }
+    .catalog-count { font-size: 14px; color: var(--color-content-secondary); margin-top: 2px; }
+    .catalog-controls { display: flex; align-items: center; gap: 12px; }
+    .sort-select { padding: 8px 14px; border: 1px solid var(--color-border-default); border-radius: 6px; font-size: 14px; font-family: var(--font-body); color: var(--color-content-primary); background: white; cursor: pointer; }
+    .view-toggle { display: flex; gap: 4px; }
+    .view-btn { width: 32px; height: 32px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border-default); border-radius: 4px; cursor: pointer; font-size: 16px; color: var(--color-content-secondary); background: transparent; }
+    .view-btn.active { background: var(--color-surface-card); color: var(--color-content-primary); }
+
+    /* Active filters */
+    .active-filters { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding-bottom: 16px; border-bottom: 1px solid var(--color-border-default); margin-bottom: 20px; }
+    .active-filter-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-content-secondary); }
+    .active-filter-chip { display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px; background: var(--color-surface-card); border: 1px solid var(--color-border-default); border-radius: var(--radius-pill); font-size: 13px; }
+    .active-filter-chip button { background: none; border: none; cursor: pointer; color: var(--color-content-secondary); font-size: 14px; padding: 0; line-height: 1; }
+    .clear-all-link { font-size: 13px; text-decoration: underline; color: var(--color-content-secondary); cursor: pointer; margin-left: auto; background: none; border: none; }
+
+    /* Product grid */
+    .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+    /* Product card */
+    .product-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; }
+    .product-card:hover .product-img-wrapper { box-shadow: 0 4px 16px rgba(0,0,0,0.1); }
+    .product-img-wrapper {
+      background: var(--color-surface-raised); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-card); aspect-ratio: 4/3; overflow: hidden;
+      position: relative; transition: box-shadow 0.2s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .product-img-placeholder { font-size: 48px; opacity: 0.2; }
+    .product-badge { position: absolute; top: 12px; left: 12px; padding: 3px 10px; border-radius: 20px; font-family: var(--font-ui); font-size: 10px; font-weight: 500; letter-spacing: 0.05em; }
+    .badge-new { background: var(--color-surface-inverse); color: white; }
+    .badge-sale { background: #FDECEA; color: #C62828; border: 1px solid #FBCFCF; }
+    .badge-out { background: var(--color-surface-deep); color: var(--color-content-secondary); }
+    .product-wishlist { position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; border-radius: 50%; background: white; border: 1px solid var(--color-border-default); display: flex; align-items: center; justify-content: center; font-size: 14px; cursor: pointer; opacity: 0; transition: opacity 0.15s; }
+    .product-card:hover .product-wishlist { opacity: 1; }
+    .product-body { padding: 14px 0 0; flex: 1; display: flex; flex-direction: column; gap: 4px; }
+    .product-category { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); }
+    .product-name { font-size: 15px; font-weight: 500; line-height: 1.35; }
+    .product-desc { font-size: 13px; color: var(--color-content-secondary); line-height: 1.5; margin-top: 2px; }
+    .product-rating { display: flex; align-items: center; gap: 4px; margin-top: 4px; }
+    .stars { color: #D97706; font-size: 12px; }
+    .rating-count { font-size: 12px; color: var(--color-content-secondary); }
+    .product-footer { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 12px; }
+    .product-price { font-family: var(--font-ui); font-size: 17px; font-weight: 500; }
+    .product-price-old { font-size: 13px; color: var(--color-content-disabled); text-decoration: line-through; margin-right: 6px; }
+    .product-price-sale { color: #C62828; }
+    .add-to-cart-btn {
+      padding: 8px 16px; background: var(--color-surface-inverse); color: white;
+      border: none; border-radius: var(--radius-pill); font-size: 12px; font-weight: 500; cursor: pointer;
+      font-family: var(--font-ui); letter-spacing: 0.05em;
+      transition: background 0.15s;
+    }
+    .add-to-cart-btn:hover { background: #333; }
+    .add-to-cart-btn.disabled { background: var(--color-surface-deep); color: var(--color-content-disabled); cursor: not-allowed; }
+
+    /* Pagination */
+    .pagination { display: flex; align-items: center; justify-content: center; gap: 4px; padding: 40px 0 0; }
+    .page-btn { width: 38px; height: 38px; display: flex; align-items: center; justify-content: center; border: 1px solid var(--color-border-default); border-radius: 4px; font-size: 14px; cursor: pointer; text-decoration: none; color: var(--color-content-secondary); background: transparent; }
+    .page-btn.active { background: var(--color-surface-inverse); color: white; border-color: var(--color-surface-inverse); }
+    .page-btn:hover:not(.active) { background: var(--color-surface-card); }
+    .page-btn.arrow { font-size: 16px; }
+
+    /* Empty state */
+    .empty-state { text-align: center; padding: 80px 32px; }
+    .empty-icon { font-size: 64px; margin-bottom: 24px; opacity: 0.4; }
+    .empty-title { font-family: var(--font-display); font-size: 28px; font-weight: 400; margin-bottom: 10px; }
+    .empty-sub { font-size: 16px; color: var(--color-content-secondary); margin-bottom: 32px; }
+    .empty-suggestions { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; margin-bottom: 24px; }
+    .empty-suggestion-chip { padding: 6px 16px; border: 1px solid var(--color-border-default); border-radius: var(--radius-pill); font-size: 14px; cursor: pointer; color: var(--color-content-secondary); }
+    .empty-suggestion-chip:hover { border-color: var(--color-border-strong); color: var(--color-content-primary); }
+    .btn-ghost { padding: 11px 28px; border: 1px solid var(--color-border-strong); border-radius: var(--radius-pill); font-size: 14px; font-weight: 500; cursor: pointer; text-decoration: none; color: var(--color-content-primary); display: inline-block; }
+    .btn-ghost:hover { background: var(--color-surface-raised); }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DS META NAVIGATION ──────────────────────────────────────────── -->
+  <nav class="ds-nav">
+    <a href="#" class="ds-nav-brand">Hederae DS</a>
+    <div class="ds-nav-links">
+      <span class="ds-tag-pill">GENERIC · SHOP</span>
+      <a href="index.html">← Catalog</a>
+      <a href="shop-prodotto.html">Prodotto →</a>
+    </div>
+  </nav>
+
+  <!-- ─── DS PAGE HERO ────────────────────────────────────────────────── -->
+  <div class="ds-hero">
+    <h1>Shop — Catalogo prodotti</h1>
+    <p>Pagina di listing con sidebar filtri (categoria, prezzo, tag, disponibilità), active filter chips, ordinamento, griglia prodotti e paginazione. Variante empty state con ricerca zero risultati.</p>
+    <div class="ds-tags">
+      <span class="ds-tag">Multi-brand</span>
+      <span class="ds-tag">Filtri sidebar</span>
+      <span class="ds-tag">Active chips</span>
+      <span class="ds-tag">Sort & view</span>
+      <span class="ds-tag">Empty state</span>
+      <span class="ds-tag">Wishlist</span>
+    </div>
+  </div>
+
+  <!-- ─── DEMO CONTROLS ───────────────────────────────────────────────── -->
+  <div class="demo-controls">
+    <span class="demo-label">Stato</span>
+    <div class="demo-btns">
+      <button class="demo-btn active" onclick="showState('s-results', this)">Con risultati (12 prodotti)</button>
+      <button class="demo-btn" onclick="showState('s-empty', this)">Nessun risultato</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- STATE: CON RISULTATI                                               -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div id="s-results" class="page-preview">
+
+    <header class="sh-header">
+      <a href="#" class="sh-logo">Negozio</a>
+      <nav class="sh-nav">
+        <a href="#" class="active">Tutti i prodotti</a>
+        <a href="#">Libri</a>
+        <a href="#">Uniformi</a>
+        <a href="#">Materiali</a>
+        <a href="#">Gadget</a>
+      </nav>
+      <div class="sh-header-right">
+        <div class="sh-search">🔍 Cerca…</div>
+        <a href="shop-carrello.html" class="sh-cart-btn">
+          🛒 Carrello
+          <span class="sh-cart-badge">3</span>
+        </a>
+      </div>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="#">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Negozio</a><span class="breadcrumb-sep">›</span>
+      <span>Tutti i prodotti</span>
+    </div>
+
+    <div class="catalog-layout">
+
+      <!-- ── SIDEBAR FILTRI ── -->
+      <aside aria-label="Filtri prodotti">
+
+        <div class="sidebar-section">
+          <p class="sidebar-title">Categorie <span class="toggle">−</span></p>
+          <ul class="category-list">
+            <li class="category-item"><span class="category-link active">Tutti i prodotti <span class="category-count">48</span></span></li>
+            <li class="category-item"><span class="category-link">Libri e pubblicazioni <span class="category-count">18</span></span></li>
+            <li class="category-item"><span class="category-link">Uniformi e abbigliamento <span class="category-count">12</span></span></li>
+            <li class="category-item"><span class="category-link">Materiali formativi <span class="category-count">9</span></span></li>
+            <li class="category-item"><span class="category-link">Gadget e accessori <span class="category-count">6</span></span></li>
+            <li class="category-item"><span class="category-link">PDF scaricabili <span class="category-count">3</span></span></li>
+          </ul>
+        </div>
+
+        <div class="sidebar-section">
+          <p class="sidebar-title">Prezzo <span class="toggle">−</span></p>
+          <div class="price-inputs">
+            <input type="number" class="price-input" placeholder="Min €" min="0" value="0">
+            <span class="price-sep">—</span>
+            <input type="number" class="price-input" placeholder="Max €" min="0" value="100">
+          </div>
+          <button class="price-apply">Applica filtro</button>
+        </div>
+
+        <div class="sidebar-section">
+          <p class="sidebar-title">Tag <span class="toggle">−</span></p>
+          <div class="tag-filter-list">
+            <button class="tag-filter active">Scout</button>
+            <button class="tag-filter">Branca L/C</button>
+            <button class="tag-filter">Branca E/G</button>
+            <button class="tag-filter">Branca R/S</button>
+            <button class="tag-filter">Capi</button>
+            <button class="tag-filter">Formazione</button>
+            <button class="tag-filter">Digitalizzabile</button>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <p class="sidebar-title">Disponibilità <span class="toggle">−</span></p>
+          <div class="checkbox-list">
+            <label class="checkbox-item">
+              <input type="checkbox" checked>
+              <span><span class="avail-badge green"></span>Disponibile (32)</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox">
+              <span><span class="avail-badge orange"></span>Ultimi pezzi (8)</span>
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox">
+              <span>Anche esauriti (8)</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="sidebar-section">
+          <p class="sidebar-title">Valutazione <span class="toggle">−</span></p>
+          <div class="checkbox-list">
+            <label class="checkbox-item"><input type="checkbox"><span>★★★★★ 5 stelle</span></label>
+            <label class="checkbox-item"><input type="checkbox"><span>★★★★☆ 4+ stelle</span></label>
+            <label class="checkbox-item"><input type="checkbox"><span>★★★☆☆ 3+ stelle</span></label>
+          </div>
+        </div>
+
+      </aside>
+
+      <!-- ── MAIN ── -->
+      <main>
+
+        <div class="catalog-header">
+          <div>
+            <h1 class="catalog-title">Tutti i prodotti</h1>
+            <p class="catalog-count">48 prodotti trovati</p>
+          </div>
+          <div class="catalog-controls">
+            <select class="sort-select" aria-label="Ordina per">
+              <option>Rilevanza</option>
+              <option>Novità</option>
+              <option>Prezzo: crescente</option>
+              <option>Prezzo: decrescente</option>
+              <option>Più recensiti</option>
+            </select>
+            <div class="view-toggle">
+              <button class="view-btn active" title="Vista griglia">⊞</button>
+              <button class="view-btn" title="Vista lista">☰</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Active filters -->
+        <div class="active-filters" role="region" aria-label="Filtri attivi">
+          <span class="active-filter-label">Filtri attivi:</span>
+          <span class="active-filter-chip">Scout <button aria-label="Rimuovi filtro Scout">×</button></span>
+          <span class="active-filter-chip">Disponibile <button aria-label="Rimuovi filtro Disponibile">×</button></span>
+          <button class="clear-all-link">Rimuovi tutti</button>
+        </div>
+
+        <!-- Product grid -->
+        <div class="product-grid" role="list">
+
+          <!-- Product 1 — sale -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper">
+              <span class="product-img-placeholder">📚</span>
+              <span class="product-badge badge-sale">−20%</span>
+              <button class="product-wishlist" aria-label="Aggiungi ai desideri">♡</button>
+            </div>
+            <div class="product-body">
+              <span class="product-category">Libri</span>
+              <p class="product-name">Manuale del Capo Scout — Edizione 2024</p>
+              <p class="product-desc">Guida completa al metodo scout per capi branca E/G. Aggiornata con le ultime indicazioni nazionali.</p>
+              <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(42)</span></div>
+              <div class="product-footer">
+                <div><span class="product-price-old">€24,90</span><span class="product-price product-price-sale">€19,90</span></div>
+                <button class="add-to-cart-btn">+ Carrello</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 2 — new -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper">
+              <span class="product-img-placeholder">👕</span>
+              <span class="product-badge badge-new">Nuovo</span>
+              <button class="product-wishlist" aria-label="Aggiungi ai desideri">♡</button>
+            </div>
+            <div class="product-body">
+              <span class="product-category">Uniformi</span>
+              <p class="product-name">Camicia Estivale Branca E/G</p>
+              <p class="product-desc">Tessuto traspirante, taglie S–XXL. Disponibile in versione maschile e femminile.</p>
+              <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(18)</span></div>
+              <div class="product-footer">
+                <span class="product-price">€29,00</span>
+                <button class="add-to-cart-btn">+ Carrello</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 3 — normale -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper">
+              <span class="product-img-placeholder">🗒</span>
+              <button class="product-wishlist" aria-label="Aggiungi ai desideri">♡</button>
+            </div>
+            <div class="product-body">
+              <span class="product-category">Materiali formativi</span>
+              <p class="product-name">Quaderno del Campo Estivo R/S</p>
+              <p class="product-desc">Materiali stampati per la progettazione e documentazione del campo.</p>
+              <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(9)</span></div>
+              <div class="product-footer">
+                <span class="product-price">€12,50</span>
+                <button class="add-to-cart-btn">+ Carrello</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 4 — PDF -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper" style="background:#F0F4FF;">
+              <span class="product-img-placeholder">📄</span>
+              <span class="product-badge badge-new">PDF</span>
+              <button class="product-wishlist" aria-label="Aggiungi ai desideri">♡</button>
+            </div>
+            <div class="product-body">
+              <span class="product-category">PDF scaricabili</span>
+              <p class="product-name">Pista L/C — Kit Completo Attività 2024/25</p>
+              <p class="product-desc">Pack digitale con 12 piste tematiche per Lupetti e Coccinelle. Download immediato.</p>
+              <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(31)</span></div>
+              <div class="product-footer">
+                <span class="product-price">€8,00</span>
+                <button class="add-to-cart-btn">+ Carrello</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 5 — esaurito -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper" style="opacity:0.6;">
+              <span class="product-img-placeholder">🎒</span>
+              <span class="product-badge badge-out">Esaurito</span>
+            </div>
+            <div class="product-body">
+              <span class="product-category">Gadget</span>
+              <p class="product-name">Zaino Scout Logo Ricamato</p>
+              <p class="product-desc">Zaino 30L impermeabile con logo ricamato. Riassortimento previsto a marzo 2026.</p>
+              <div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(56)</span></div>
+              <div class="product-footer">
+                <span class="product-price" style="color:var(--color-content-disabled);">€45,00</span>
+                <button class="add-to-cart-btn disabled" disabled>Esaurito</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Product 6 -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper">
+              <span class="product-img-placeholder">📖</span>
+              <button class="product-wishlist" aria-label="Aggiungi ai desideri">♡</button>
+            </div>
+            <div class="product-body">
+              <span class="product-category">Libri</span>
+              <p class="product-name">La Route — Guida al Cammino R/S</p>
+              <p class="product-desc">Il testo fondamentale per accompagnare la branca Rover e Scolte nel percorso di crescita.</p>
+              <div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(27)</span></div>
+              <div class="product-footer">
+                <span class="product-price">€15,00</span>
+                <button class="add-to-cart-btn">+ Carrello</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Products 7–12: abbreviated -->
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper"><span class="product-img-placeholder">🏕</span><button class="product-wishlist">♡</button></div>
+            <div class="product-body"><span class="product-category">Materiali</span><p class="product-name">Kit Brevetti Branca L/C</p><div class="product-rating"><span class="stars">★★★★☆</span><span class="rating-count">(14)</span></div><div class="product-footer"><span class="product-price">€6,00</span><button class="add-to-cart-btn">+ Carrello</button></div></div>
+          </div>
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper"><span class="product-img-placeholder">🎭</span><span class="product-badge badge-sale">−15%</span><button class="product-wishlist">♡</button></div>
+            <div class="product-body"><span class="product-category">Gadget</span><p class="product-name">Foulard Gruppo Personalizzato</p><div class="product-rating"><span class="stars">★★★★★</span><span class="rating-count">(73)</span></div><div class="product-footer"><div><span class="product-price-old">€12,00</span><span class="product-price product-price-sale">€10,20</span></div><button class="add-to-cart-btn">+ Carrello</button></div></div>
+          </div>
+          <div class="product-card" role="listitem">
+            <div class="product-img-wrapper"><span class="product-img-placeholder">📝</span><button class="product-wishlist">♡</button></div>
+            <div class="product-body"><span class="product-category">Formazione</span><p class="product-name">Dispense Corso Capi — Modulo A</p><div class="product-rating"><span class="stars">★★★☆☆</span><span class="rating-count">(6)</span></div><div class="product-footer"><span class="product-price">€5,00</span><button class="add-to-cart-btn">+ Carrello</button></div></div>
+          </div>
+
+        </div><!-- /product-grid -->
+
+        <!-- Pagination -->
+        <nav class="pagination" aria-label="Navigazione pagine">
+          <a href="#" class="page-btn arrow">←</a>
+          <a href="#" class="page-btn active">1</a>
+          <a href="#" class="page-btn">2</a>
+          <a href="#" class="page-btn">3</a>
+          <span class="page-btn" style="border:none; color:var(--color-content-disabled);">…</span>
+          <a href="#" class="page-btn">6</a>
+          <a href="#" class="page-btn arrow">→</a>
+        </nav>
+
+      </main>
+    </div><!-- /catalog-layout -->
+  </div><!-- /s-results -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- STATE: NESSUN RISULTATO                                            -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div id="s-empty" class="page-preview" hidden>
+
+    <header class="sh-header">
+      <a href="#" class="sh-logo">Negozio</a>
+      <nav class="sh-nav"><a href="#">Tutti i prodotti</a><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
+      <div class="sh-header-right">
+        <div class="sh-search">🔍 Cerca…</div>
+        <a href="shop-carrello.html" class="sh-cart-btn">🛒 Carrello<span class="sh-cart-badge">3</span></a>
+      </div>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="#">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Negozio</a><span class="breadcrumb-sep">›</span>
+      <span>Risultati per "tenda campo"</span>
+    </div>
+
+    <div class="catalog-layout">
+      <aside aria-label="Filtri">
+        <div class="sidebar-section">
+          <p class="sidebar-title">Categorie</p>
+          <ul class="category-list">
+            <li class="category-item"><span class="category-link">Tutti i prodotti <span class="category-count">48</span></span></li>
+            <li class="category-item"><span class="category-link">Libri e pubblicazioni <span class="category-count">18</span></span></li>
+            <li class="category-item"><span class="category-link">Gadget e accessori <span class="category-count">6</span></span></li>
+          </ul>
+        </div>
+      </aside>
+
+      <main>
+        <div class="catalog-header">
+          <div>
+            <h1 class="catalog-title">Risultati per "tenda campo"</h1>
+            <p class="catalog-count" style="color:var(--color-feedback-error-text);">0 prodotti trovati</p>
+          </div>
+          <select class="sort-select"><option>Rilevanza</option></select>
+        </div>
+
+        <div class="empty-state" role="status">
+          <div class="empty-icon">🔍</div>
+          <h2 class="empty-title">Nessun prodotto trovato</h2>
+          <p class="empty-sub">Non abbiamo trovato prodotti corrispondenti a "<strong>tenda campo</strong>".<br>Prova con termini diversi o sfoglia le categorie.</p>
+          <p style="font-size:14px; color:var(--color-content-secondary); margin-bottom:16px;">Potrebbero interessarti:</p>
+          <div class="empty-suggestions">
+            <button class="empty-suggestion-chip">Materiali campo</button>
+            <button class="empty-suggestion-chip">Kit attività outdoor</button>
+            <button class="empty-suggestion-chip">Equipaggiamento scout</button>
+            <button class="empty-suggestion-chip">Gadget e accessori</button>
+          </div>
+          <a href="#" class="btn-ghost">Sfoglia tutti i prodotti</a>
+        </div>
+      </main>
+    </div>
+
+  </div><!-- /s-empty -->
+
+  <script>
+    function showState(id, btn) {
+      document.querySelectorAll('.page-preview').forEach(el => el.hidden = true);
+      document.querySelectorAll('.demo-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).hidden = false;
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

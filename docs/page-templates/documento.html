@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rapporto Economia Circolare 2023 — SUSDEF · Page Template</title>
+
+  <!-- Schema.org (template — in produzione generato server-side) -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "name": "Rapporto sull'Economia Circolare in Italia 2023",
+    "description": "Analisi dei progressi dell'economia circolare nel contesto italiano, con dati aggiornati al 2023 su tassi di riciclo, riduzione degli scarti e impatto occupazionale della transizione ecologica.",
+    "author": [
+      { "@type": "Organization", "name": "Fondazione Sviluppo Sostenibile" },
+      { "@type": "Organization", "name": "Scuola Superiore Sant'Anna" }
+    ],
+    "datePublished": "2023-11-08",
+    "inLanguage": "it",
+    "keywords": ["economia circolare", "riciclo", "transizione ecologica", "PNRR", "PMI", "plastica"],
+    "isAccessibleForFree": false,
+    "hasPart": {
+      "@type": "CreativeWork",
+      "name": "Abstract pubblico",
+      "isAccessibleForFree": true
+    },
+    "url": "https://fondazionesvilupposostenibile.org/biblioteca/economia-circolare-2023"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-sector-ecoinnovazione-primary:    #FF8C01;
+      --color-sector-ecoinnovazione-muted:      #FFF1D9;
+      --color-sector-energia-clima-primary:     #2792B9;
+      --color-sector-energia-clima-muted:       #D9EEF7;
+      --color-sector-economia-circolare-primary:#BEBFF8;
+      --color-sector-economia-circolare-muted:  #EEEEFF;
+      --color-sector-mobilita-sostenibile-primary: #CE9B62;
+      --color-sector-mobilita-sostenibile-muted:   #F5EAD8;
+      --color-sector-green-city-primary:        #B9284F;
+      --color-sector-green-city-muted:          #F7D4DC;
+      --color-sector-agroecologia-primary:      #FFC310;
+      --color-sector-agroecologia-muted:        #FFF7D9;
+      --color-sector-stati-generali-primary:    #9EDFC9;
+      --color-sector-stati-generali-muted:      #E5F7F2;
+      --color-sector-corsi-formazione-primary:  #F993C5;
+      --color-sector-corsi-formazione-muted:    #FEE8F3;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT SHELL ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+    .page-wrapper { min-height: 100vh; }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      background-color: var(--color-surface-inverse);
+      color: var(--color-content-inverse);
+      padding: 16px 0;
+    }
+    .site-header .container { display: flex; align-items: center; justify-content: space-between; }
+    .site-logo {
+      font-family: var(--font-ui); font-size: 14px; color: var(--color-content-inverse);
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: 0.9;
+    }
+    .site-nav { display: flex; gap: 32px; }
+    .site-nav a {
+      font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.8);
+      text-decoration: none; letter-spacing: 0.05em;
+    }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      padding: 16px 0;
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .breadcrumb ol {
+      display: flex; align-items: center; gap: 6px;
+      list-style: none; flex-wrap: wrap;
+    }
+    .breadcrumb li {
+      font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb li::after { content: '/'; opacity: 0.4; }
+    .breadcrumb li:last-child::after { content: ''; }
+    .breadcrumb a { color: var(--color-content-secondary); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--color-content-brand); }
+    .breadcrumb li:last-child { color: var(--color-content-primary); }
+
+    /* ─── ARTICLE LAYOUT ─── */
+    .article-layout {
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 60px;
+      padding: 48px 0 80px;
+      align-items: start;
+    }
+
+    /* ─── ARTICLE HEADER ─── */
+    .doc-meta-row {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 10px;
+      margin-bottom: 20px;
+    }
+    .doc-type-badge {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 4px 10px; border-radius: 2px;
+      background: var(--color-surface-deep); color: var(--color-content-secondary);
+    }
+    .sector-badge {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      padding: 4px 12px; border-radius: 2px;
+    }
+    .doc-year {
+      font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);
+    }
+    .doc-lang-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 7px;
+      border: 1px solid var(--color-border-default); border-radius: 2px;
+      color: var(--color-content-secondary);
+    }
+    .version-badge-latest {
+      font-family: var(--font-ui); font-size: 11px;
+      display: inline-flex; align-items: center; gap: 5px;
+      padding: 4px 10px; border-radius: 10px;
+      background: var(--color-feedback-success-bg);
+      color: var(--color-feedback-success-text);
+      border: 1px solid #9ECAB1;
+    }
+
+    .doc-title {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--color-content-primary);
+      margin-bottom: 16px;
+    }
+    .doc-authors {
+      font-size: 18px;
+      color: var(--color-content-secondary);
+      margin-bottom: 8px;
+    }
+    .doc-authors strong { color: var(--color-content-primary); font-weight: 600; }
+    .doc-id {
+      font-family: var(--font-ui); font-size: 12px; color: var(--color-content-disabled);
+      margin-bottom: 32px;
+    }
+
+    /* ─── SECTION LABELS ─── */
+    .section-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 16px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .section-label::after {
+      content: ''; flex: 1; height: 1px; background: var(--color-border-default);
+    }
+
+    /* ─── AI SUMMARY (PUBLIC LAYER) ─── */
+    .ai-summary-section {
+      margin-bottom: 40px;
+    }
+    .ai-summary-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .ai-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+    }
+    .ai-badge::before {
+      content: '';
+      display: inline-block; width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-brand-primary);
+    }
+
+    .ai-summary-text {
+      font-size: 18px; line-height: 1.7; color: var(--color-content-primary);
+      margin-bottom: 20px;
+    }
+    .ai-summary-text + .ai-summary-text { margin-top: -4px; }
+
+    /* ─── AI HIGHLIGHTS ─── */
+    .highlights-section { margin-bottom: 40px; }
+
+    .highlights-list {
+      list-style: none; padding: 0;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .highlight-item {
+      display: flex; gap: 14px; align-items: flex-start;
+      padding: 16px 20px;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-left: 3px solid var(--color-brand-primary);
+      border-radius: 2px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--color-content-primary);
+    }
+    .highlight-num {
+      font-family: var(--font-ui); font-size: 12px;
+      color: var(--color-content-secondary);
+      min-width: 20px; margin-top: 1px;
+    }
+
+    /* ─── KEYWORDS ─── */
+    .keywords-section { margin-bottom: 48px; }
+    .keyword-tags {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .keyword-tag {
+      padding: 5px 12px;
+      font-family: var(--font-ui); font-size: 12px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 2px;
+      color: var(--color-content-secondary);
+      text-decoration: none;
+      transition: all 0.1s;
+    }
+    .keyword-tag:hover {
+      border-color: var(--color-content-brand);
+      color: var(--color-content-brand);
+      background: var(--color-surface-page);
+    }
+
+    /* ─── PROTECTED GATE ─── */
+    .protected-gate {
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-top: 4px solid var(--color-brand-primary);
+      border-radius: 4px;
+      padding: 36px;
+      margin-bottom: 48px;
+      text-align: center;
+    }
+    .gate-icon {
+      font-size: 40px; display: block; margin-bottom: 16px;
+    }
+    .gate-title {
+      font-family: var(--font-display); font-size: 24px; font-weight: 400;
+      color: var(--color-content-primary); margin-bottom: 10px;
+    }
+    .gate-desc {
+      font-size: 16px; color: var(--color-content-secondary);
+      margin-bottom: 28px; max-width: 400px; margin-left: auto; margin-right: auto;
+      line-height: 1.5;
+    }
+
+    .gate-form { max-width: 360px; margin: 0 auto; }
+    .form-field { margin-bottom: 14px; text-align: left; }
+    .form-field label {
+      display: block; font-family: var(--font-ui); font-size: 12px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-content-secondary); margin-bottom: 6px;
+    }
+    .form-field input {
+      width: 100%; padding: 12px 16px; font-family: var(--font-body); font-size: 16px;
+      border: 1px solid var(--color-border-default); border-radius: 3px;
+      background: var(--color-surface-page); color: var(--color-content-primary);
+      outline: none;
+    }
+    .form-field input:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.3);
+    }
+    .form-field input::placeholder { color: var(--color-content-disabled); }
+
+    .btn-primary {
+      width: 100%; padding: 14px 28px;
+      font-family: var(--font-ui); font-size: 16px;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none; border-radius: 3px; cursor: pointer;
+      transition: background-color 0.15s;
+    }
+    .btn-primary:hover { background-color: var(--color-interactive-primary-bg-hover); }
+    .btn-primary:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+
+    .gate-note {
+      font-size: 13px; color: var(--color-content-secondary);
+      margin-top: 16px; line-height: 1.5;
+    }
+    .gate-note a { color: var(--color-content-brand); }
+
+    /* Logged in state of the gate */
+    .gate-logged-in { text-align: center; }
+    .btn-download {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 16px 32px; font-family: var(--font-ui); font-size: 16px;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none; border-radius: 3px; cursor: pointer;
+      text-decoration: none; transition: background-color 0.15s;
+      margin-bottom: 12px;
+    }
+    .btn-download:hover { background-color: var(--color-interactive-primary-bg-hover); }
+    .btn-download:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+    .download-meta {
+      font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary);
+      display: flex; align-items: center; justify-content: center; gap: 16px; flex-wrap: wrap;
+    }
+    .download-warning {
+      margin-top: 14px; font-size: 13px; color: var(--color-content-secondary);
+      padding: 10px 16px; background: var(--color-feedback-warning-bg);
+      border: 1px solid #F0D98A; border-radius: 3px;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar { position: sticky; top: 24px; }
+
+    /* Metadata card */
+    .meta-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .meta-card-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 20px;
+    }
+    .meta-row {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 10px 0; border-bottom: 1px solid var(--color-border-default);
+    }
+    .meta-row:last-child { border-bottom: none; padding-bottom: 0; }
+    .meta-key {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      min-width: 80px; padding-top: 1px;
+    }
+    .meta-val {
+      font-size: 15px; color: var(--color-content-primary); line-height: 1.4;
+    }
+    .meta-val a { color: var(--color-content-brand); text-decoration: none; }
+    .meta-val a:hover { text-decoration: underline; }
+
+    /* Sector color chip in sidebar */
+    .sector-chip-sidebar {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px;
+      border-radius: 3px;
+      margin-top: 8px;
+    }
+    .sector-chip-sidebar .dot {
+      width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0;
+    }
+    .sector-chip-sidebar .name {
+      font-family: var(--font-ui); font-size: 12px; line-height: 1.3;
+    }
+
+    /* ─── VERSION HISTORY CARD ─── */
+    .version-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .version-card-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 16px;
+    }
+
+    .version-item {
+      display: grid; grid-template-columns: 44px 1fr auto;
+      align-items: center; gap: 8px;
+      padding: 10px 0; border-bottom: 1px solid var(--color-border-default);
+    }
+    .version-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+    .version-year-badge {
+      font-family: var(--font-ui); font-size: 12px; font-weight: 400;
+      color: var(--color-content-brand);
+    }
+    .version-item-label {
+      font-size: 13px; color: var(--color-content-primary);
+      line-height: 1.3;
+    }
+    .version-item-label span {
+      display: block; font-family: var(--font-ui); font-size: 10px;
+      color: var(--color-content-secondary); margin-top: 2px;
+    }
+    .version-item-actions {
+      display: flex; gap: 4px;
+    }
+    .version-lang-pill {
+      font-family: var(--font-ui); font-size: 10px;
+      padding: 2px 6px; border: 1px solid var(--color-border-default);
+      border-radius: 2px; color: var(--color-content-secondary);
+      text-decoration: none; transition: all 0.1s;
+    }
+    .version-lang-pill:hover {
+      border-color: var(--color-content-brand); color: var(--color-content-brand);
+    }
+    .version-lang-pill.current {
+      background: var(--color-brand-primary); color: white; border-color: var(--color-brand-primary);
+    }
+
+    /* ─── RELATED DOCUMENTS ─── */
+    .related-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 24px;
+    }
+    .related-card-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 16px;
+    }
+    .related-doc-item {
+      padding: 10px 0; border-bottom: 1px solid var(--color-border-default);
+    }
+    .related-doc-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .related-doc-meta {
+      display: flex; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;
+    }
+    .related-doc-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      padding: 2px 6px; background: var(--color-surface-deep);
+      border-radius: 2px; color: var(--color-content-secondary);
+    }
+    .related-doc-title {
+      font-family: var(--font-body); font-size: 15px;
+      color: var(--color-content-brand); text-decoration: none; line-height: 1.4;
+      display: block;
+    }
+    .related-doc-title:hover { text-decoration: underline; }
+    .related-doc-author {
+      font-size: 12px; color: var(--color-content-secondary); margin-top: 2px;
+    }
+
+    /* ─── CTA TO SEARCH ─── */
+    .back-to-search {
+      display: inline-flex; align-items: center; gap: 8px;
+      font-family: var(--font-ui); font-size: 13px;
+      color: var(--color-content-secondary); text-decoration: none;
+      margin-bottom: 32px;
+    }
+    .back-to-search:hover { color: var(--color-content-brand); }
+
+    /* ─── GATE STATE SWITCHER (demo only) ─── */
+    .gate-state-switcher {
+      position: fixed; bottom: 24px; right: 24px;
+      background: #1a1a2e; color: white;
+      padding: 14px 16px; border-radius: 8px;
+      z-index: 100; font-family: var(--font-ui); font-size: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    .gate-state-switcher h4 {
+      color: rgba(255,255,255,0.5); letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 10px; margin-bottom: 8px;
+    }
+    .gate-state-btn {
+      display: inline-block; margin-right: 6px;
+      padding: 5px 10px; background: rgba(255,255,255,0.1);
+      border: none; border-radius: 4px; color: white; cursor: pointer;
+      font-family: var(--font-ui); font-size: 11px; transition: background 0.1s;
+    }
+    .gate-state-btn:hover, .gate-state-btn.active { background: var(--color-brand-primary); }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background-color: var(--color-surface-inverse);
+      color: rgba(255,255,255,0.7); padding: 40px 0;
+    }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo {
+      font-family: var(--font-ui); font-size: 14px;
+      color: rgba(255,255,255,0.9); letter-spacing: 0.1em;
+    }
+    .footer-copy { font-size: 13px; }
+
+    /* ─── UTILITY ─── */
+    [data-gate] { display: none; }
+    [data-gate].visible { display: block; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DEMO GATE SWITCHER ─── -->
+  <div class="gate-state-switcher" aria-label="Demo: stato accesso (solo template)">
+    <h4>Stato accesso</h4>
+    <button class="gate-state-btn active" onclick="showGate('anonymous')">🔒 Anonimo</button>
+    <button class="gate-state-btn" onclick="showGate('loggedin')">✅ Registrato</button>
+  </div>
+
+  <div class="page-wrapper" data-brand="susdef">
+
+    <!-- ─── HEADER ─── -->
+    <header class="site-header" role="banner">
+      <div class="container">
+        <a href="#" class="site-logo">Fondazione Sviluppo Sostenibile</a>
+        <nav class="site-nav">
+          <a href="search.html">Ricerca</a>
+          <a href="#">Settori</a>
+          <a href="#">Strumenti</a>
+          <a href="#">Formazione</a>
+          <a href="#">Chi siamo</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ─── BREADCRUMB ─── -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <div class="container">
+        <ol>
+          <li><a href="#">Home</a></li>
+          <li><a href="search.html">Biblioteca</a></li>
+          <li><a href="#">Economia circolare</a></li>
+          <li>Rapporto sull'Economia Circolare in Italia 2023</li>
+        </ol>
+      </div>
+    </nav>
+
+    <!-- ─── MAIN ─── -->
+    <main id="main" class="container">
+
+      <a href="search.html" class="back-to-search" style="display: inline-flex; margin-top: 28px;">
+        ← Torna ai risultati
+      </a>
+
+      <div class="article-layout">
+
+        <!-- ─── LEFT COLUMN: document content ─── -->
+        <article aria-labelledby="doc-title">
+
+          <!-- ── Document header ── -->
+          <header>
+            <div class="doc-meta-row">
+              <span class="doc-type-badge">Rapporto</span>
+              <span class="sector-badge" style="background: var(--color-sector-economia-circolare-muted); color: #4B4CB8;">
+                Economia circolare
+              </span>
+              <span class="doc-year">2023</span>
+              <span class="doc-lang-badge">IT</span>
+              <span class="version-badge-latest">● Versione più recente</span>
+            </div>
+
+            <h1 class="doc-title" id="doc-title">
+              Rapporto sull'Economia Circolare in Italia 2023
+            </h1>
+
+            <p class="doc-authors">
+              <strong>Fondazione Sviluppo Sostenibile</strong> in collaborazione con
+              <strong>Scuola Superiore Sant'Anna</strong>
+            </p>
+            <p class="doc-id">#1047 · Pubblicato l'8 novembre 2023</p>
+          </header>
+
+          <!-- ── AI Summary (public, indexable) ── -->
+          <section class="ai-summary-section" aria-labelledby="summary-title">
+            <div class="ai-summary-header">
+              <div class="section-label" id="summary-title">Sintesi</div>
+              <div class="ai-badge">Sintesi AI</div>
+            </div>
+
+            <p class="ai-summary-text">
+              Il <em>Rapporto sull'Economia Circolare in Italia 2023</em> fornisce un'analisi aggiornata dello stato della transizione circolare nel sistema produttivo italiano, con un focus particolare sull'impatto del Piano Nazionale di Ripresa e Resilienza (PNRR) sulle politiche di riciclo e simbiosi industriale. Il documento integra dati Eurostat 2022 con analisi settoriali originali condotte su un campione di 340 aziende manifatturiere.
+            </p>
+            <p class="ai-summary-text">
+              L'Italia conferma una posizione di leadership europea nel tasso di utilizzo circolare dei materiali (21,4%), ma registra ritardi significativi nella raccolta differenziata della plastica (37%) rispetto alla media UE (50%). Il rapporto identifica le PMI come attore chiave della transizione, con oltre il 60% delle imprese intervistate che ha introdotto almeno una pratica circolare negli ultimi tre anni, sebbene l'accesso ai finanziamenti rimanga la principale barriera.
+            </p>
+            <p class="ai-summary-text">
+              La sezione dedicata alle politiche esamina l'efficacia degli strumenti normativi in vigore — dal Green Public Procurement al sistema EPR per imballaggi — e propone raccomandazioni per accelerare la transizione nei settori tessile, elettronico e delle costruzioni, identificati come priorità per il raggiungimento degli obiettivi del Piano d'Azione Europeo per l'Economia Circolare al 2030.
+            </p>
+          </section>
+
+          <!-- ── AI Highlights ── -->
+          <section class="highlights-section" aria-labelledby="highlights-title">
+            <div class="section-label" id="highlights-title">Punti chiave</div>
+
+            <ul class="highlights-list">
+              <li class="highlight-item">
+                <span class="highlight-num">01</span>
+                <span>L'Italia raggiunge il <strong>21,4% di utilizzo circolare dei materiali</strong>, seconda in Europa dopo i Paesi Bassi e ben sopra la media UE del 12,8%.</span>
+              </li>
+              <li class="highlight-item">
+                <span class="highlight-num">02</span>
+                <span>Il <strong>PNRR destina 5,4 miliardi di euro</strong> alla transizione circolare, con il 40% già allocato a impianti di riciclo e bioeconomia entro il 2023.</span>
+              </li>
+              <li class="highlight-item">
+                <span class="highlight-num">03</span>
+                <span>Critica la situazione della plastica: il tasso di riciclo al 37% è <strong>13 punti sotto la media europea</strong> e richiede investimenti urgenti in infrastrutture di selezione.</span>
+              </li>
+              <li class="highlight-item">
+                <span class="highlight-num">04</span>
+                <span>Oltre il <strong>60% delle PMI manifatturiere</strong> ha adottato almeno una pratica circolare, ma solo il 18% dispone di un modello di business circolare strutturato.</span>
+              </li>
+              <li class="highlight-item">
+                <span class="highlight-num">05</span>
+                <span>I settori tessile, elettronico e delle costruzioni sono identificati come <strong>priorità di intervento</strong> per raggiungere gli obiettivi UE al 2030.</span>
+              </li>
+            </ul>
+          </section>
+
+          <!-- ── Keywords ── -->
+          <section class="keywords-section" aria-label="Parole chiave">
+            <div class="section-label">Parole chiave</div>
+            <div class="keyword-tags">
+              <a href="search.html" class="keyword-tag">economia circolare</a>
+              <a href="search.html" class="keyword-tag">riciclo</a>
+              <a href="search.html" class="keyword-tag">PNRR</a>
+              <a href="search.html" class="keyword-tag">transizione ecologica</a>
+              <a href="search.html" class="keyword-tag">PMI</a>
+              <a href="search.html" class="keyword-tag">plastica</a>
+              <a href="search.html" class="keyword-tag">simbiosi industriale</a>
+              <a href="search.html" class="keyword-tag">Green Public Procurement</a>
+              <a href="search.html" class="keyword-tag">EPR</a>
+              <a href="search.html" class="keyword-tag">bioeconomia</a>
+              <a href="search.html" class="keyword-tag">settore tessile</a>
+              <a href="search.html" class="keyword-tag">costruzioni sostenibili</a>
+            </div>
+          </section>
+
+          <!-- ── DOWNLOAD GATE ── -->
+          <section aria-labelledby="gate-title">
+            <div class="section-label" id="gate-title">Documento completo</div>
+
+            <!-- STATE: anonymous (not logged in) -->
+            <div class="protected-gate" data-gate="anonymous" role="region" aria-label="Accesso documento">
+              <span class="gate-icon" aria-hidden="true">📄</span>
+              <h2 class="gate-title">Scarica il rapporto completo</h2>
+              <p class="gate-desc">
+                Il documento completo (142 pagine, 4.2 MB) è disponibile gratuitamente. Inserisci la tua email per ricevere il link di download.
+              </p>
+
+              <form class="gate-form" novalidate>
+                <div class="form-field">
+                  <label for="gate-email">Il tuo indirizzo email</label>
+                  <input
+                    type="email"
+                    id="gate-email"
+                    placeholder="nome@organizzazione.it"
+                    autocomplete="email"
+                    required
+                    aria-required="true"
+                  >
+                </div>
+                <div class="form-field">
+                  <label for="gate-org">Organizzazione (opzionale)</label>
+                  <input
+                    type="text"
+                    id="gate-org"
+                    placeholder="Azienda, Università, Ente…"
+                    autocomplete="organization"
+                  >
+                </div>
+                <button type="submit" class="btn-primary">
+                  ⬇ Scarica il documento
+                </button>
+              </form>
+
+              <p class="gate-note">
+                Il file sarà inviato via email con un link valido 1 ora.<br>
+                Usano già la biblioteca? <a href="#">Accedi al tuo profilo</a>
+              </p>
+            </div>
+
+            <!-- STATE: logged in / email confirmed -->
+            <div class="protected-gate" data-gate="loggedin" role="region" aria-label="Download documento">
+              <span class="gate-icon" aria-hidden="true">✅</span>
+              <div class="gate-logged-in">
+                <p style="font-size: 16px; color: var(--color-content-secondary); margin-bottom: 20px;">
+                  Bentornato, <strong style="color: var(--color-content-primary);">marco@enea.it</strong>
+                </p>
+                <a href="#" class="btn-download" role="button" aria-label="Scarica PDF Rapporto Economia Circolare 2023">
+                  ⬇ Scarica PDF
+                </a>
+                <div class="download-meta">
+                  <span>PDF · 142 pagine</span>
+                  <span>4.2 MB</span>
+                  <span>⬇ 2.847 download totali</span>
+                </div>
+                <div class="download-warning">
+                  ⚠️ Il documento verrà contrassegnato con la tua email e la data di download. Non distribuire senza autorizzazione dell'autore.
+                </div>
+                <p class="gate-note" style="margin-top: 16px;">
+                  Non sei tu? <a href="#">Accedi con un altro account</a>
+                </p>
+              </div>
+            </div>
+
+          </section>
+
+        </article>
+
+        <!-- ─── RIGHT COLUMN: sidebar ─── -->
+        <aside aria-label="Informazioni documento">
+
+          <!-- Metadata card -->
+          <div class="meta-card">
+            <p class="meta-card-title">Scheda documento</p>
+
+            <div class="meta-row">
+              <span class="meta-key">Settore</span>
+              <div class="meta-val">
+                <div class="sector-chip-sidebar" style="background: var(--color-sector-economia-circolare-muted);">
+                  <span class="dot" style="background: #7B7CF4;"></span>
+                  <span class="name" style="color: #4B4CB8;">Economia circolare</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Anno</span>
+              <span class="meta-val">2023</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Autori</span>
+              <div class="meta-val">
+                <a href="#">Fondazione Sviluppo Sostenibile</a><br>
+                <a href="#">Scuola Superiore Sant'Anna</a>
+              </div>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Lingua</span>
+              <span class="meta-val">Italiano</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Pagine</span>
+              <span class="meta-val">142</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Formato</span>
+              <span class="meta-val">PDF · 4.2 MB</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Categoria</span>
+              <span class="meta-val">
+                <a href="#">Rapporti nazionali</a>
+              </span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">WP ID</span>
+              <span class="meta-val" style="font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);">#1047</span>
+            </div>
+
+            <div class="meta-row">
+              <span class="meta-key">Download</span>
+              <span class="meta-val" style="font-family: var(--font-ui); font-size: 14px;">2.847</span>
+            </div>
+          </div>
+
+          <!-- Version history card -->
+          <div class="version-card" aria-labelledby="version-card-title">
+            <p class="version-card-title" id="version-card-title">Versioni disponibili</p>
+
+            <!-- Current version -->
+            <div class="version-item">
+              <span class="version-year-badge">2023</span>
+              <div class="version-item-label">
+                Rapporto EC in Italia 2023
+                <span>Versione più recente</span>
+              </div>
+              <div class="version-item-actions">
+                <span class="version-lang-pill current">IT</span>
+                <a href="#" class="version-lang-pill">EN</a>
+              </div>
+            </div>
+
+            <!-- Previous year -->
+            <div class="version-item">
+              <span class="version-year-badge">2022</span>
+              <div class="version-item-label">
+                Rapporto EC in Italia 2022
+              </div>
+              <div class="version-item-actions">
+                <a href="#" class="version-lang-pill">IT</a>
+              </div>
+            </div>
+
+            <!-- Previous year -->
+            <div class="version-item">
+              <span class="version-year-badge">2021</span>
+              <div class="version-item-label">
+                Rapporto EC in Italia 2021
+              </div>
+              <div class="version-item-actions">
+                <a href="#" class="version-lang-pill">IT</a>
+              </div>
+            </div>
+
+            <!-- Executive summary (related type) -->
+            <div class="version-item">
+              <span class="version-year-badge">2023</span>
+              <div class="version-item-label">
+                The Circular Economy — Executive Summary
+                <span>Sintesi EN</span>
+              </div>
+              <div class="version-item-actions">
+                <a href="#" class="version-lang-pill">EN</a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Related documents -->
+          <div class="related-card" aria-labelledby="related-card-title">
+            <p class="related-card-title" id="related-card-title">Potrebbe interessarti</p>
+
+            <div class="related-doc-item">
+              <div class="related-doc-meta">
+                <span class="related-doc-badge">Analisi</span>
+                <span class="related-doc-badge">2023</span>
+              </div>
+              <a href="#" class="related-doc-title">
+                Modelli di business per l'economia circolare: una guida per le PMI
+              </a>
+              <p class="related-doc-author">Lorenzo Bianchi · ENEA</p>
+            </div>
+
+            <div class="related-doc-item">
+              <div class="related-doc-meta">
+                <span class="related-doc-badge">Rapporto</span>
+                <span class="related-doc-badge">2022</span>
+              </div>
+              <a href="#" class="related-doc-title">
+                Green Economy e occupazione: l'impatto della transizione sul mercato del lavoro
+              </a>
+              <p class="related-doc-author">Fondazione Sviluppo Sostenibile</p>
+            </div>
+
+            <div class="related-doc-item">
+              <div class="related-doc-meta">
+                <span class="related-doc-badge">Presentazione</span>
+                <span class="related-doc-badge">2023</span>
+              </div>
+              <a href="#" class="related-doc-title">
+                Stati Generali della Green Economy 2023 — slide plenaria
+              </a>
+              <p class="related-doc-author">Edo Ronchi · Fondazione Sviluppo Sostenibile</p>
+            </div>
+
+          </div>
+
+        </aside><!-- /sidebar -->
+
+      </div><!-- /article-layout -->
+    </main>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+        <span class="footer-copy">© 2025 · Template Hederae DS v0.1.0 · Brand: Susdef</span>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <script>
+    // Show first gate state by default
+    document.querySelector('[data-gate="anonymous"]').classList.add('visible');
+
+    function showGate(state) {
+      document.querySelectorAll('[data-gate]').forEach(el => el.classList.remove('visible'));
+      document.querySelector('[data-gate="' + state + '"]').classList.add('visible');
+      document.querySelectorAll('.gate-state-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

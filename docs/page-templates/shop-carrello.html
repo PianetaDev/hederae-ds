@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="generic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Shop — Carrello · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-surface-page:#FFFFFF; --color-surface-raised:#F7F7F7; --color-surface-card:#F0F0F0;
+      --color-surface-deep:#E0E0E0; --color-surface-inverse:#111111;
+      --color-content-primary:#111111; --color-content-secondary:#6B6B6B; --color-content-disabled:#BBBBBB;
+      --color-border-default:#E5E5E5; --color-border-strong:#111111;
+      --color-feedback-success-bg:#E6F4EA; --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:#FFF8E1; --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:#FDECEA; --color-feedback-error-text:#C62828;
+      --font-display:'IBM Plex Serif',Georgia,serif; --font-body:'IBM Plex Sans',system-ui,sans-serif; --font-ui:'IBM Plex Mono',monospace;
+      --radius-pill:40px; --radius-card:12px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--color-surface-page);color:var(--color-content-primary);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+    .ds-nav{background:var(--color-surface-inverse);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+    .ds-nav-brand{font-family:var(--font-ui);font-size:12px;color:rgba(255,255,255,0.9);letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;}
+    .ds-nav-links{display:flex;gap:20px;align-items:center;}
+    .ds-nav-links a{font-family:var(--font-ui);font-size:11px;color:rgba(255,255,255,0.6);text-decoration:none;}
+    .ds-tag-pill{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-family:var(--font-ui);font-size:10px;padding:2px 8px;border-radius:10px;}
+    .ds-hero{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:40px 24px;}
+    .ds-hero h1{font-family:var(--font-display);font-size:36px;font-weight:400;margin-bottom:8px;}
+    .ds-hero p{font-size:15px;color:var(--color-content-secondary);max-width:580px;margin-bottom:14px;line-height:1.6;}
+    .ds-tags{display:flex;gap:6px;flex-wrap:wrap;}
+    .ds-tag{font-family:var(--font-ui);font-size:10px;padding:2px 8px;border-radius:8px;background:var(--color-surface-card);border:1px solid var(--color-border-default);color:var(--color-content-secondary);}
+    .demo-controls{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:14px 24px;display:flex;align-items:center;gap:24px;}
+    .demo-label{font-family:var(--font-ui);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-secondary);}
+    .demo-btns{display:flex;border:1px solid var(--color-border-strong);border-radius:4px;overflow:hidden;}
+    .demo-btn{padding:7px 16px;font-family:var(--font-ui);font-size:11px;background:transparent;border:none;cursor:pointer;color:var(--color-content-secondary);}
+    .demo-btn+.demo-btn{border-left:1px solid var(--color-border-strong);}
+    .demo-btn.active{background:var(--color-surface-inverse);color:white;}
+    .page-preview[hidden]{display:none;}
+    .page-preview{border-top:2px solid var(--color-border-default);}
+
+    /* Site header */
+    .sh-header{background:var(--color-surface-page);border-bottom:1px solid var(--color-border-default);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .sh-logo{font-family:var(--font-display);font-size:22px;font-weight:500;text-decoration:none;color:var(--color-content-primary);}
+    .sh-nav{display:flex;gap:28px;}
+    .sh-nav a{font-size:14px;color:var(--color-content-secondary);text-decoration:none;}
+    .breadcrumb{padding:14px 32px;font-size:13px;color:var(--color-content-secondary);display:flex;gap:6px;}
+    .breadcrumb a{color:var(--color-content-secondary);text-decoration:none;}
+    .breadcrumb-sep{color:var(--color-content-disabled);}
+
+    /* Cart layout */
+    .cart-layout{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:0 32px 64px;max-width:1440px;margin:0 auto;}
+    .cart-main-title{font-family:var(--font-display);font-size:32px;font-weight:400;margin:24px 0 24px;}
+
+    /* Cart table */
+    .cart-table{width:100%;border-collapse:collapse;}
+    .cart-table thead tr{border-bottom:2px solid var(--color-border-default);}
+    .cart-table th{padding:10px 8px;font-family:var(--font-ui);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-secondary);font-weight:400;text-align:left;}
+    .cart-table tbody tr{border-bottom:1px solid var(--color-border-default);}
+    .cart-table tbody tr:hover{background:var(--color-surface-raised);}
+    .cart-table td{padding:16px 8px;vertical-align:middle;}
+    .cart-item-cell{display:flex;align-items:center;gap:16px;}
+    .cart-item-img{width:72px;height:72px;background:var(--color-surface-raised);border:1px solid var(--color-border-default);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:32px;flex-shrink:0;}
+    .cart-item-name{font-size:14px;font-weight:500;margin-bottom:2px;}
+    .cart-item-variant{font-size:12px;color:var(--color-content-secondary);}
+    .cart-item-remove{font-size:12px;text-decoration:underline;color:var(--color-content-secondary);cursor:pointer;background:none;border:none;margin-top:4px;display:block;}
+    .qty-group{display:inline-flex;align-items:center;border:1px solid var(--color-border-default);border-radius:6px;overflow:hidden;}
+    .qty-btn{width:32px;height:32px;display:flex;align-items:center;justify-content:center;font-size:16px;cursor:pointer;background:none;border:none;color:var(--color-content-secondary);}
+    .qty-val{width:36px;height:32px;text-align:center;border:none;border-left:1px solid var(--color-border-default);border-right:1px solid var(--color-border-default);font-family:var(--font-ui);font-size:13px;}
+    .item-price{font-family:var(--font-ui);font-size:15px;font-weight:500;white-space:nowrap;}
+    .item-price-old{font-size:12px;color:var(--color-content-disabled);text-decoration:line-through;display:block;}
+
+    /* Coupon */
+    .coupon-section{margin-top:24px;padding:20px;background:var(--color-surface-raised);border:1px solid var(--color-border-default);border-radius:var(--radius-card);}
+    .coupon-title{font-size:14px;font-weight:600;margin-bottom:12px;}
+    .coupon-form{display:flex;gap:8px;}
+    .coupon-input{flex:1;padding:10px 14px;border:1px solid var(--color-border-default);border-radius:6px;font-size:14px;font-family:var(--font-body);}
+    .coupon-btn{padding:10px 20px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-size:13px;font-family:var(--font-ui);cursor:pointer;letter-spacing:0.05em;white-space:nowrap;}
+    .coupon-success{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--color-feedback-success-bg);border:1px solid #9ECAB1;border-radius:6px;font-size:14px;color:var(--color-feedback-success-text);}
+
+    /* Continue shopping */
+    .continue-link{display:inline-flex;align-items:center;gap:6px;font-size:14px;color:var(--color-content-secondary);text-decoration:none;margin-top:20px;}
+    .continue-link:hover{color:var(--color-content-primary);}
+
+    /* Order summary */
+    .order-summary{background:var(--color-surface-raised);border:1px solid var(--color-border-default);border-radius:var(--radius-card);padding:28px;position:sticky;top:80px;margin-top:72px;}
+    .summary-title{font-family:var(--font-display);font-size:22px;font-weight:400;margin-bottom:20px;}
+    .summary-row{display:flex;justify-content:space-between;font-size:14px;padding:8px 0;border-bottom:1px solid var(--color-border-default);}
+    .summary-row:last-of-type{border-bottom:none;}
+    .summary-row.total{font-size:18px;font-weight:600;border-top:2px solid var(--color-border-strong);padding-top:14px;margin-top:6px;}
+    .summary-label{color:var(--color-content-secondary);}
+    .summary-value{font-family:var(--font-ui);font-weight:500;}
+    .shipping-note{font-size:12px;color:var(--color-content-secondary);margin-top:-4px;margin-bottom:4px;}
+    .shipping-free{color:var(--color-feedback-success-text);font-weight:500;}
+    .btn-checkout{display:block;width:100%;padding:14px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-family:var(--font-ui);font-size:14px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;text-align:center;text-decoration:none;margin-top:20px;transition:background 0.15s;}
+    .btn-checkout:hover{background:#333;}
+    .summary-trust{margin-top:16px;display:flex;flex-direction:column;gap:8px;}
+    .trust-mini{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--color-content-secondary);}
+    .pay-icons{display:flex;gap:6px;flex-wrap:wrap;margin-top:12px;padding-top:12px;border-top:1px solid var(--color-border-default);}
+    .pay-icon-chip{font-family:var(--font-ui);font-size:10px;padding:3px 8px;border:1px solid var(--color-border-default);border-radius:4px;color:var(--color-content-secondary);}
+
+    /* Cross-sell section */
+    .crosssell-section{max-width:1440px;margin:0 auto;padding:0 32px 64px;border-top:1px solid var(--color-border-default);}
+    .section-title{font-family:var(--font-display);font-size:26px;font-weight:400;padding:32px 0 20px;}
+    .crosssell-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+    .cs-card{display:flex;align-items:center;gap:12px;padding:12px;border:1px solid var(--color-border-default);border-radius:var(--radius-card);cursor:pointer;transition:box-shadow 0.15s;}
+    .cs-card:hover{box-shadow:0 2px 12px rgba(0,0,0,0.06);}
+    .cs-img{width:56px;height:56px;background:var(--color-surface-raised);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+    .cs-name{font-size:13px;font-weight:500;line-height:1.3;margin-bottom:3px;}
+    .cs-price{font-family:var(--font-ui);font-size:13px;}
+    .cs-add{margin-left:auto;flex-shrink:0;padding:6px 12px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-size:11px;font-family:var(--font-ui);cursor:pointer;}
+
+    /* Empty cart */
+    .empty-cart{text-align:center;padding:80px 32px;}
+    .empty-icon{font-size:64px;margin-bottom:24px;opacity:0.4;}
+    .empty-title{font-family:var(--font-display);font-size:32px;font-weight:400;margin-bottom:12px;}
+    .empty-sub{font-size:16px;color:var(--color-content-secondary);margin-bottom:32px;}
+    .btn-shop{display:inline-block;padding:13px 32px;background:var(--color-surface-inverse);color:white;border-radius:var(--radius-pill);font-size:14px;font-weight:500;text-decoration:none;font-family:var(--font-ui);letter-spacing:0.08em;}
+  </style>
+</head>
+<body>
+
+  <nav class="ds-nav">
+    <a href="#" class="ds-nav-brand">Hederae DS</a>
+    <div class="ds-nav-links">
+      <span class="ds-tag-pill">GENERIC · SHOP</span>
+      <a href="shop-prodotto.html">← Prodotto</a>
+      <a href="shop-checkout.html">Checkout →</a>
+    </div>
+  </nav>
+
+  <div class="ds-hero">
+    <h1>Shop — Carrello</h1>
+    <p>Pagina carrello con tabella prodotti, aggiornamento quantità, rimozione, coupon code, riepilogo ordine con spedizione calcolata, trust badge, metodi di pagamento accettati e cross-sell (frequentemente acquistati insieme). Variante carrello vuoto.</p>
+    <div class="ds-tags">
+      <span class="ds-tag">Tabella prodotti</span><span class="ds-tag">Qty update</span><span class="ds-tag">Coupon</span><span class="ds-tag">Riepilogo</span><span class="ds-tag">Spedizione gratuita</span><span class="ds-tag">Cross-sell</span><span class="ds-tag">Empty state</span>
+    </div>
+  </div>
+
+  <div class="demo-controls">
+    <span class="demo-label">Stato</span>
+    <div class="demo-btns">
+      <button class="demo-btn active" onclick="showState('s-cart', this)">Carrello (3 prodotti)</button>
+      <button class="demo-btn" onclick="showState('s-empty', this)">Carrello vuoto</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════ CARRELLO CON PRODOTTI ═══════════ -->
+  <div id="s-cart" class="page-preview">
+    <header class="sh-header">
+      <a href="#" class="sh-logo">Negozio</a>
+      <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="#">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Negozio</a><span class="breadcrumb-sep">›</span>
+      <span>Carrello</span>
+    </div>
+
+    <div class="cart-layout">
+      <div>
+        <h1 class="cart-main-title">Carrello (3)</h1>
+
+        <table class="cart-table" aria-label="Prodotti nel carrello">
+          <thead>
+            <tr>
+              <th style="width:50%;">Prodotto</th>
+              <th>Quantità</th>
+              <th>Prezzo</th>
+              <th>Totale</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- Riga 1 -->
+            <tr>
+              <td>
+                <div class="cart-item-cell">
+                  <div class="cart-item-img">📚</div>
+                  <div>
+                    <p class="cart-item-name">Manuale del Capo Scout — Ed. 2024</p>
+                    <p class="cart-item-variant">Formato: Cartaceo</p>
+                    <button class="cart-item-remove">Rimuovi</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="qty-group" role="group" aria-label="Quantità">
+                  <button class="qty-btn">−</button>
+                  <input class="qty-val" type="number" value="1" min="1" aria-label="Quantità">
+                  <button class="qty-btn">+</button>
+                </div>
+              </td>
+              <td>
+                <span class="item-price-old">€24,90</span>
+                <span class="item-price">€19,90</span>
+              </td>
+              <td><span class="item-price">€19,90</span></td>
+            </tr>
+
+            <!-- Riga 2 -->
+            <tr>
+              <td>
+                <div class="cart-item-cell">
+                  <div class="cart-item-img">👕</div>
+                  <div>
+                    <p class="cart-item-name">Camicia Estivale Branca E/G</p>
+                    <p class="cart-item-variant">Taglia: M · Colore: Beige</p>
+                    <button class="cart-item-remove">Rimuovi</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="qty-group">
+                  <button class="qty-btn">−</button>
+                  <input class="qty-val" type="number" value="2">
+                  <button class="qty-btn">+</button>
+                </div>
+              </td>
+              <td><span class="item-price">€29,00</span></td>
+              <td><span class="item-price">€58,00</span></td>
+            </tr>
+
+            <!-- Riga 3 — PDF -->
+            <tr>
+              <td>
+                <div class="cart-item-cell">
+                  <div class="cart-item-img" style="background:#F0F4FF;">📄</div>
+                  <div>
+                    <p class="cart-item-name">Kit Piste L/C PDF — 2024/25</p>
+                    <p class="cart-item-variant">Formato: Download digitale</p>
+                    <button class="cart-item-remove">Rimuovi</button>
+                  </div>
+                </div>
+              </td>
+              <td>
+                <div class="qty-group">
+                  <button class="qty-btn" disabled style="opacity:0.3;">−</button>
+                  <input class="qty-val" type="number" value="1" disabled style="background:var(--color-surface-card);">
+                  <button class="qty-btn" disabled style="opacity:0.3;">+</button>
+                </div>
+                <p style="font-size:11px;color:var(--color-content-secondary);margin-top:4px;">Solo digitale</p>
+              </td>
+              <td><span class="item-price">€8,00</span></td>
+              <td><span class="item-price">€8,00</span></td>
+            </tr>
+          </tbody>
+        </table>
+
+        <!-- Coupon -->
+        <div class="coupon-section">
+          <p class="coupon-title">🏷 Hai un codice sconto?</p>
+          <div class="coupon-form">
+            <input type="text" class="coupon-input" placeholder="Inserisci codice coupon" aria-label="Codice coupon">
+            <button class="coupon-btn">Applica</button>
+          </div>
+        </div>
+
+        <!-- Coupon applicato (esempio) -->
+        <div class="coupon-section" style="margin-top:12px;">
+          <div class="coupon-success">
+            <span>✓</span>
+            <div>
+              <strong>Codice SCOUT10 applicato</strong> — 10% di sconto sul totale
+              <button style="margin-left:12px;background:none;border:none;font-size:12px;text-decoration:underline;cursor:pointer;color:var(--color-feedback-success-text);">Rimuovi</button>
+            </div>
+          </div>
+        </div>
+
+        <a href="shop-catalogo.html" class="continue-link">← Continua lo shopping</a>
+      </div>
+
+      <!-- Order Summary -->
+      <aside>
+        <div class="order-summary">
+          <h2 class="summary-title">Riepilogo ordine</h2>
+
+          <div class="summary-row">
+            <span class="summary-label">Subtotale (3 articoli)</span>
+            <span class="summary-value">€85,90</span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">Sconto SCOUT10 (−10%)</span>
+            <span class="summary-value" style="color:var(--color-feedback-success-text);">−€8,59</span>
+          </div>
+          <div class="summary-row">
+            <div>
+              <span class="summary-label">Spedizione</span>
+              <p class="shipping-note">Standard 3–5 gg lavorativi</p>
+            </div>
+            <div style="text-align:right;">
+              <span class="summary-value shipping-free">GRATIS</span>
+              <p class="shipping-note" style="text-align:right;">sopra €50 ✓</p>
+            </div>
+          </div>
+          <div class="summary-row">
+            <span class="summary-label">IVA (22%)</span>
+            <span class="summary-value">€14,10</span>
+          </div>
+          <div class="summary-row total">
+            <span>Totale</span>
+            <span class="summary-value">€77,31</span>
+          </div>
+
+          <a href="shop-checkout.html" class="btn-checkout">Procedi al checkout →</a>
+
+          <div class="summary-trust">
+            <div class="trust-mini">🔒 Checkout sicuro crittografato</div>
+            <div class="trust-mini">↩️ Reso gratuito entro 30 giorni</div>
+            <div class="trust-mini">🎓 Carta del Docente accettata</div>
+          </div>
+
+          <div class="pay-icons" aria-label="Metodi di pagamento accettati">
+            <span class="pay-icon-chip">VISA</span>
+            <span class="pay-icon-chip">MC</span>
+            <span class="pay-icon-chip">AMEX</span>
+            <span class="pay-icon-chip">PayPal</span>
+            <span class="pay-icon-chip">Bonifico</span>
+            <span class="pay-icon-chip">🎓 Docente</span>
+            <span class="pay-icon-chip">18app</span>
+            <span class="pay-icon-chip">Satispay</span>
+          </div>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Cross-sell -->
+    <div class="crosssell-section">
+      <h2 class="section-title">Frequentemente acquistati insieme</h2>
+      <div class="crosssell-grid">
+        <div class="cs-card">
+          <div class="cs-img">📖</div>
+          <div>
+            <p class="cs-name">La Route — Guida R/S</p>
+            <p class="cs-price">€15,00</p>
+          </div>
+          <button class="cs-add">+ Aggiungi</button>
+        </div>
+        <div class="cs-card">
+          <div class="cs-img">🗒</div>
+          <div>
+            <p class="cs-name">Quaderno Campo Estivo</p>
+            <p class="cs-price">€12,50</p>
+          </div>
+          <button class="cs-add">+ Aggiungi</button>
+        </div>
+        <div class="cs-card">
+          <div class="cs-img">🎭</div>
+          <div>
+            <p class="cs-name">Foulard Gruppo Scout</p>
+            <p class="cs-price">€10,20</p>
+          </div>
+          <button class="cs-add">+ Aggiungi</button>
+        </div>
+        <div class="cs-card">
+          <div class="cs-img">📝</div>
+          <div>
+            <p class="cs-name">Dispense Corso Capi A</p>
+            <p class="cs-price">€5,00</p>
+          </div>
+          <button class="cs-add">+ Aggiungi</button>
+        </div>
+      </div>
+    </div>
+  </div><!-- /s-cart -->
+
+  <!-- ═══════════════════════════════ CARRELLO VUOTO ═════════════════ -->
+  <div id="s-empty" class="page-preview" hidden>
+    <header class="sh-header">
+      <a href="#" class="sh-logo">Negozio</a>
+      <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
+    </header>
+    <div style="max-width:1440px;margin:0 auto;padding:0 32px;">
+      <h1 style="font-family:var(--font-display);font-size:32px;font-weight:400;margin:24px 0;">Carrello (0)</h1>
+      <div class="empty-cart">
+        <div class="empty-icon">🛒</div>
+        <h2 class="empty-title">Il tuo carrello è vuoto</h2>
+        <p class="empty-sub">Sfoglia il nostro catalogo e aggiungi i prodotti che ti interessano.</p>
+        <a href="shop-catalogo.html" class="btn-shop">Sfoglia il catalogo</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function showState(id, btn){
+      document.querySelectorAll('.page-preview').forEach(el=>el.hidden=true);
+      document.querySelectorAll('.demo-btn').forEach(b=>b.classList.remove('active'));
+      document.getElementById(id).hidden=false; btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

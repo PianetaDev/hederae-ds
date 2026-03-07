@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ricerca Documenti — SUSDEF · Page Template</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── SUSDEF BRAND TOKENS (inline — in produzione arrivano da susdef.css) ─── */
+    [data-brand="susdef"] {
+      /* Surface */
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-surface-overlay: rgba(1,62,57,0.5);
+
+      /* Content */
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+
+      /* Border */
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+
+      /* Interactive */
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-bg:     transparent;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+
+      /* Brand */
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+
+      /* Feedback */
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+
+      /* Sector colors */
+      --color-sector-ecoinnovazione-primary:    #FF8C01;
+      --color-sector-ecoinnovazione-muted:      #FFF1D9;
+      --color-sector-energia-clima-primary:     #2792B9;
+      --color-sector-energia-clima-muted:       #D9EEF7;
+      --color-sector-economia-circolare-primary:#BEBFF8;
+      --color-sector-economia-circolare-muted:  #EEEEFF;
+      --color-sector-mobilita-sostenibile-primary: #CE9B62;
+      --color-sector-mobilita-sostenibile-muted:   #F5EAD8;
+      --color-sector-green-city-primary:        #B9284F;
+      --color-sector-green-city-muted:          #F7D4DC;
+      --color-sector-agroecologia-primary:      #FFC310;
+      --color-sector-agroecologia-muted:        #FFF7D9;
+      --color-sector-stati-generali-primary:    #9EDFC9;
+      --color-sector-stati-generali-muted:      #E5F7F2;
+      --color-sector-corsi-formazione-primary:  #F993C5;
+      --color-sector-corsi-formazione-muted:    #FEE8F3;
+
+      /* Typography */
+      --font-display:  'IBM Plex Serif', Georgia, serif;
+      --font-heading:  'IBM Plex Serif', Georgia, serif;
+      --font-body:     'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:       'IBM Plex Mono', monospace;
+    }
+
+    /* ─── RESET & BASE ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .page-wrapper { min-height: 100vh; }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ─── HEADER (surface-inverse) ─── */
+    .site-header {
+      background-color: var(--color-surface-inverse);
+      color: var(--color-content-inverse);
+      padding: 16px 0;
+    }
+    .site-header .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .site-logo {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: var(--color-content-inverse);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      text-decoration: none;
+      opacity: 0.9;
+    }
+    .site-nav {
+      display: flex;
+      gap: 32px;
+    }
+    .site-nav a {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: rgba(255,255,255,0.8);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero {
+      background-color: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 48px 0 32px;
+    }
+    .page-hero h1 {
+      font-family: var(--font-display);
+      font-size: 56px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--color-content-brand);
+      margin-bottom: 8px;
+    }
+    .page-hero p {
+      font-size: 18px;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── SEARCH BAR ─── */
+    .search-bar-section {
+      background-color: var(--color-surface-raised);
+      padding: 24px 0 32px;
+    }
+    .search-bar-wrapper {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+    .search-input-container {
+      flex: 1;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 14px 20px 14px 52px;
+      font-family: var(--font-body);
+      font-size: 18px;
+      border: 2px solid var(--color-border-default);
+      border-radius: 4px;
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.3);
+    }
+    .search-input::placeholder { color: var(--color-content-secondary); }
+    .search-icon {
+      position: absolute;
+      left: 18px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--color-content-secondary);
+      font-size: 20px;
+    }
+    .btn-primary {
+      padding: 14px 28px;
+      font-family: var(--font-ui);
+      font-size: 16px;
+      font-weight: 400;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background-color 0.15s;
+    }
+    .btn-primary:hover { background-color: var(--color-interactive-primary-bg-hover); }
+    .btn-primary:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+
+    .search-modes {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .mode-chip {
+      padding: 6px 14px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 20px;
+      background: transparent;
+      color: var(--color-content-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .mode-chip.active {
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border-color: var(--color-interactive-primary-bg);
+    }
+    .mode-chip:hover:not(.active) {
+      border-color: var(--color-content-brand);
+      color: var(--color-content-brand);
+    }
+
+    /* ─── MAIN LAYOUT: filters sidebar + results ─── */
+    .search-layout {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      gap: 40px;
+      padding: 40px 0 80px;
+    }
+
+    /* ─── FILTERS SIDEBAR ─── */
+    .filters-panel { }
+
+    .filters-title {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .filter-group { margin-bottom: 28px; }
+    .filter-group-label {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 10px;
+    }
+
+    /* Document type tabs */
+    .doc-type-tabs {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+    .doc-type-tab {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 10px 12px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      border: none;
+      border-radius: 4px;
+      background: transparent;
+      color: var(--color-content-primary);
+      cursor: pointer;
+      text-align: left;
+      transition: background-color 0.1s;
+    }
+    .doc-type-tab:hover { background-color: var(--color-surface-card); }
+    .doc-type-tab.active {
+      background-color: var(--color-surface-card);
+      font-weight: 600;
+      color: var(--color-content-brand);
+    }
+    .tab-count {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      background: var(--color-surface-deep);
+      padding: 2px 8px;
+      border-radius: 10px;
+    }
+
+    /* Sector filter chips */
+    .sector-chips {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .sector-chip {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      background: transparent;
+      cursor: pointer;
+      transition: all 0.15s;
+      text-align: left;
+    }
+    .sector-chip:hover { border-color: currentColor; }
+    .sector-chip.active { border-width: 2px; }
+    .sector-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .sector-chip-label {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-content-primary);
+      line-height: 1.3;
+    }
+    .sector-chip-count {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: var(--color-content-secondary);
+      margin-left: auto;
+    }
+
+    /* Year filter */
+    .year-select {
+      width: 100%;
+      padding: 10px 12px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      appearance: none;
+      cursor: pointer;
+    }
+    .year-select:focus {
+      outline: none;
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.3);
+    }
+
+    /* Language toggle */
+    .lang-toggle {
+      display: flex;
+      gap: 4px;
+    }
+    .lang-btn {
+      padding: 8px 16px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--color-content-secondary);
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+    .lang-btn.active {
+      background-color: var(--color-surface-card);
+      border-color: var(--color-content-brand);
+      color: var(--color-content-brand);
+      font-weight: 600;
+    }
+
+    .clear-filters {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-decoration: underline;
+      padding: 0;
+    }
+    .clear-filters:hover { color: var(--color-content-primary); }
+
+    /* ─── RESULTS AREA ─── */
+    .results-area { min-width: 0; }
+
+    .results-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 24px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .results-count {
+      font-family: var(--font-body);
+      font-size: 16px;
+      color: var(--color-content-secondary);
+    }
+    .results-count strong {
+      color: var(--color-content-primary);
+      font-weight: 600;
+    }
+    .sort-select {
+      padding: 8px 12px;
+      font-family: var(--font-ui);
+      font-size: 13px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      cursor: pointer;
+    }
+
+    /* Active filters strip */
+    .active-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .active-filter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 20px;
+      color: var(--color-content-primary);
+    }
+    .active-filter-tag .remove {
+      cursor: pointer;
+      opacity: 0.5;
+      font-size: 14px;
+      line-height: 1;
+    }
+    .active-filter-tag .remove:hover { opacity: 1; }
+
+    /* ─── DOCUMENT CARD ─── */
+    .doc-card {
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 16px;
+      transition: box-shadow 0.15s, border-color 0.15s;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 16px;
+      align-items: start;
+    }
+    .doc-card:hover {
+      box-shadow: 0 4px 16px rgba(1,62,57,0.1);
+      border-color: var(--color-border-strong);
+    }
+    .doc-card-left { min-width: 0; }
+
+    .doc-card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+    .doc-type-badge {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 2px;
+      background: var(--color-surface-deep);
+      color: var(--color-content-secondary);
+    }
+    .sector-badge {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      padding: 3px 10px;
+      border-radius: 2px;
+      font-weight: 400;
+    }
+    .doc-year {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+    .doc-lang {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 2px 6px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 2px;
+      color: var(--color-content-secondary);
+    }
+
+    .doc-card-title {
+      font-family: var(--font-heading);
+      font-size: 20px;
+      font-weight: 500;
+      line-height: 1.3;
+      color: var(--color-content-primary);
+      margin-bottom: 8px;
+      text-decoration: none;
+    }
+    a.doc-card-title:hover { color: var(--color-content-brand); }
+    .doc-card-author {
+      font-size: 14px;
+      color: var(--color-content-secondary);
+      margin-bottom: 12px;
+    }
+    .doc-card-excerpt {
+      font-size: 16px;
+      color: var(--color-content-secondary);
+      line-height: 1.5;
+      margin-bottom: 16px;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    /* Highlight (search match) */
+    .doc-card-excerpt mark,
+    .search-highlight {
+      background-color: var(--color-brand-accent);
+      color: var(--color-content-primary);
+      padding: 0 2px;
+      border-radius: 2px;
+    }
+
+    .doc-card-footer {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .doc-card-stat {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    /* Version indicator on card */
+    .doc-version-indicator {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: var(--color-content-secondary);
+      padding: 3px 8px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px;
+      background: var(--color-surface-raised);
+    }
+    .doc-version-indicator.latest {
+      color: var(--color-feedback-success-text);
+      border-color: #9ECAB1;
+      background: var(--color-feedback-success-bg);
+    }
+
+    /* Related versions (collapsed) */
+    .doc-versions-list {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .doc-versions-title {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 8px;
+    }
+    .version-row {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 6px 0;
+      font-size: 14px;
+      border-bottom: 1px dashed var(--color-border-default);
+    }
+    .version-row:last-child { border-bottom: none; }
+    .version-year {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-content-brand);
+      min-width: 40px;
+    }
+    .version-label {
+      color: var(--color-content-secondary);
+      flex: 1;
+    }
+    .version-lang {
+      font-family: var(--font-ui);
+      font-size: 10px;
+      padding: 2px 5px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 2px;
+      color: var(--color-content-secondary);
+    }
+    .version-link {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-brand);
+      text-decoration: none;
+    }
+    .version-link:hover { text-decoration: underline; }
+
+    /* Card right column (PDF thumb) */
+    .doc-card-thumb {
+      width: 80px;
+      height: 100px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: var(--color-content-secondary);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+      position: relative;
+      overflow: hidden;
+    }
+    .doc-card-thumb::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background-color: var(--color-brand-primary);
+    }
+
+    /* ─── PAGINATION ─── */
+    .pagination {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      margin-top: 40px;
+      padding-top: 24px;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .page-btn {
+      min-width: 40px;
+      height: 40px;
+      padding: 0 12px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      background: transparent;
+      color: var(--color-content-primary);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.1s;
+    }
+    .page-btn:hover { border-color: var(--color-content-brand); color: var(--color-content-brand); }
+    .page-btn.active {
+      background-color: var(--color-interactive-primary-bg);
+      border-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+    }
+    .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       STATE: LOADING (skeleton)
+    ═══════════════════════════════════════════════════════════════ */
+    .skeleton {
+      background: linear-gradient(90deg, var(--color-surface-card) 25%, var(--color-surface-deep) 37%, var(--color-surface-card) 63%);
+      background-size: 400% 100%;
+      animation: skeleton-loading 1.4s ease infinite;
+      border-radius: 3px;
+    }
+    @keyframes skeleton-loading {
+      0%   { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .skeleton-card {
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 24px;
+      margin-bottom: 16px;
+      display: grid;
+      grid-template-columns: 1fr 80px;
+      gap: 16px;
+    }
+    .skeleton-line { height: 14px; margin-bottom: 8px; }
+    .skeleton-title { height: 22px; width: 75%; margin-bottom: 10px; }
+    .skeleton-thumb { height: 100px; width: 80px; border-radius: 3px; }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       STATE: AI Q&A (question mode)
+    ═══════════════════════════════════════════════════════════════ */
+    .ai-answer-panel {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-left: 4px solid var(--color-brand-primary);
+      border-radius: 4px;
+      padding: 28px;
+      margin-bottom: 32px;
+    }
+    .ai-answer-label {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 16px;
+    }
+    .ai-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background-color: var(--color-brand-primary);
+    }
+    .ai-answer-text {
+      font-size: 18px;
+      line-height: 1.6;
+      color: var(--color-content-primary);
+      margin-bottom: 20px;
+    }
+    .ai-sources {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+    .ai-source-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 8px;
+    }
+    .ai-source-chip {
+      padding: 4px 10px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 3px;
+      font-size: 12px;
+      color: var(--color-content-brand);
+      text-decoration: none;
+    }
+    .ai-source-chip:hover { border-color: var(--color-content-brand); }
+    .ai-disclaimer {
+      margin-top: 16px;
+      font-size: 13px;
+      color: var(--color-content-secondary);
+      padding: 10px 14px;
+      background: var(--color-surface-card);
+      border-radius: 3px;
+    }
+    .ai-results-divider {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin: 24px 0 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .ai-results-divider::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--color-border-default);
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       STATE: NO RESULTS
+    ═══════════════════════════════════════════════════════════════ */
+    .no-results {
+      text-align: center;
+      padding: 80px 40px;
+    }
+    .no-results-icon {
+      font-size: 48px;
+      margin-bottom: 20px;
+      opacity: 0.3;
+    }
+    .no-results-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      color: var(--color-content-primary);
+      margin-bottom: 12px;
+    }
+    .no-results-desc {
+      font-size: 18px;
+      color: var(--color-content-secondary);
+      max-width: 480px;
+      margin: 0 auto 28px;
+      line-height: 1.5;
+    }
+    .no-results-suggestions {
+      font-size: 14px;
+      color: var(--color-content-secondary);
+      line-height: 2;
+    }
+    .no-results-suggestions a {
+      color: var(--color-content-brand);
+    }
+
+
+    /* ═══════════════════════════════════════════════════════════════
+       STATE: EMPTY / DEFAULT (no query yet)
+    ═══════════════════════════════════════════════════════════════ */
+    .empty-state {
+      padding: 48px 0;
+    }
+    .empty-state-title {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 20px;
+    }
+    .category-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .category-card {
+      padding: 20px;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.15s;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .category-card:hover {
+      border-color: var(--color-content-brand);
+      box-shadow: 0 2px 8px rgba(1,62,57,0.1);
+    }
+    .category-card-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+    .category-card-label {
+      font-family: var(--font-body);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      line-height: 1.3;
+    }
+    .category-card-count {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── STATE SWITCHER (demo) ─── */
+    .state-switcher {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #1a1a2e;
+      color: white;
+      padding: 16px;
+      border-radius: 8px;
+      z-index: 100;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      min-width: 160px;
+    }
+    .state-switcher h4 {
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-bottom: 10px;
+    }
+    .state-btn {
+      display: block;
+      width: 100%;
+      padding: 6px 10px;
+      margin-bottom: 4px;
+      background: rgba(255,255,255,0.1);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      transition: background 0.1s;
+    }
+    .state-btn:hover, .state-btn.active { background: var(--color-brand-primary); }
+
+    /* ─── SECTIONS VISIBILITY ─── */
+    [data-state-view] { display: none; }
+    [data-state-view].visible { display: block; }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background-color: var(--color-surface-inverse);
+      color: rgba(255,255,255,0.7);
+      padding: 40px 0;
+      margin-top: 80px;
+    }
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .footer-logo {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      color: rgba(255,255,255,0.9);
+      letter-spacing: 0.1em;
+    }
+    .footer-copy {
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DEMO STATE SWITCHER ─── -->
+  <nav class="state-switcher" aria-label="Template states (demo only)">
+    <h4>Stato pagina</h4>
+    <button class="state-btn active" onclick="showState('default')">① Default (empty)</button>
+    <button class="state-btn" onclick="showState('loading')">② Loading</button>
+    <button class="state-btn" onclick="showState('results')">③ Risultati</button>
+    <button class="state-btn" onclick="showState('ai')">④ AI Q&amp;A</button>
+    <button class="state-btn" onclick="showState('noresults')">⑤ Nessun risultato</button>
+  </nav>
+
+  <div class="page-wrapper" data-brand="susdef">
+
+    <!-- ─── HEADER ─── -->
+    <header class="site-header" role="banner">
+      <div class="container">
+        <a href="#" class="site-logo">Fondazione Sviluppo Sostenibile</a>
+        <nav class="site-nav">
+          <a href="#">Ricerca</a>
+          <a href="#">Settori</a>
+          <a href="#">Strumenti</a>
+          <a href="#">Formazione</a>
+          <a href="#">Chi siamo</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ─── PAGE HERO ─── -->
+    <section class="page-hero" aria-label="Intestazione pagina">
+      <div class="container">
+        <h1>Biblioteca documenti</h1>
+        <p>Rapporti, ricerche e presentazioni su economia verde, energia e sostenibilità</p>
+      </div>
+    </section>
+
+    <!-- ─── SEARCH BAR ─── -->
+    <section class="search-bar-section" aria-label="Ricerca">
+      <div class="container">
+        <div class="search-bar-wrapper" role="search">
+          <div class="search-input-container">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input
+              type="search"
+              class="search-input"
+              placeholder="Cerca per titolo, autore, parola chiave…"
+              id="main-search"
+              aria-label="Campo di ricerca"
+              autocomplete="off"
+              value="economia circolare 2023"
+            >
+          </div>
+          <button class="btn-primary" type="submit" aria-label="Avvia ricerca">Cerca</button>
+        </div>
+
+        <!-- Search mode chips -->
+        <div class="search-modes" role="group" aria-label="Modalità di ricerca">
+          <button class="mode-chip active" aria-pressed="true">🔍 Ricerca classica</button>
+          <button class="mode-chip" aria-pressed="false">🤖 Fai una domanda</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ─── MAIN CONTENT ─── -->
+    <main id="main" class="container">
+      <div class="search-layout">
+
+        <!-- ─── FILTERS SIDEBAR ─── -->
+        <aside aria-label="Filtri di ricerca">
+          <p class="filters-title">Filtra per</p>
+
+          <!-- Tipo documento -->
+          <div class="filter-group" role="group" aria-labelledby="filter-tipo">
+            <p class="filter-group-label" id="filter-tipo">Tipo documento</p>
+            <div class="doc-type-tabs" role="list">
+              <button class="doc-type-tab active" role="listitem" aria-pressed="true">
+                Tutti <span class="tab-count">2.019</span>
+              </button>
+              <button class="doc-type-tab" role="listitem" aria-pressed="false">
+                Documenti <span class="tab-count">326</span>
+              </button>
+              <button class="doc-type-tab" role="listitem" aria-pressed="false">
+                Library <span class="tab-count">368</span>
+              </button>
+              <button class="doc-type-tab" role="listitem" aria-pressed="false">
+                Presentazioni <span class="tab-count">385</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Settore tematico -->
+          <div class="filter-group" role="group" aria-labelledby="filter-settore">
+            <p class="filter-group-label" id="filter-settore">Settore tematico</p>
+            <div class="sector-chips">
+              <button class="sector-chip" style="color: var(--color-sector-ecoinnovazione-primary);" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-ecoinnovazione-primary);"></span>
+                <span class="sector-chip-label">Ecoinnovazione e imprenditorialità</span>
+                <span class="sector-chip-count">284</span>
+              </button>
+              <button class="sector-chip active" style="color: var(--color-sector-economia-circolare-primary); border-color: var(--color-sector-economia-circolare-primary);" aria-pressed="true">
+                <span class="sector-dot" style="background: #7B7CF4;"></span>
+                <span class="sector-chip-label">Economia circolare</span>
+                <span class="sector-chip-count">212</span>
+              </button>
+              <button class="sector-chip" style="color: var(--color-sector-energia-clima-primary);" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-energia-clima-primary);"></span>
+                <span class="sector-chip-label">Energia e clima</span>
+                <span class="sector-chip-count">318</span>
+              </button>
+              <button class="sector-chip" style="color: var(--color-sector-mobilita-sostenibile-primary);" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-mobilita-sostenibile-primary);"></span>
+                <span class="sector-chip-label">Mobilità sostenibile</span>
+                <span class="sector-chip-count">156</span>
+              </button>
+              <button class="sector-chip" style="color: var(--color-sector-green-city-primary);" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-green-city-primary);"></span>
+                <span class="sector-chip-label">Green city</span>
+                <span class="sector-chip-count">198</span>
+              </button>
+              <button class="sector-chip" style="color: var(--color-sector-agroecologia-primary);" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-agroecologia-primary);"></span>
+                <span class="sector-chip-label">Agroecologia</span>
+                <span class="sector-chip-count">143</span>
+              </button>
+              <button class="sector-chip" style="color: #5BB8A0;" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-stati-generali-primary);"></span>
+                <span class="sector-chip-label">Stati generali</span>
+                <span class="sector-chip-count">89</span>
+              </button>
+              <button class="sector-chip" style="color: #D45B9A;" aria-pressed="false">
+                <span class="sector-dot" style="background: var(--color-sector-corsi-formazione-primary);"></span>
+                <span class="sector-chip-label">Corsi e formazione</span>
+                <span class="sector-chip-count">61</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Anno -->
+          <div class="filter-group">
+            <p class="filter-group-label" id="filter-anno">Anno</p>
+            <select class="year-select" aria-labelledby="filter-anno">
+              <option value="">Tutti gli anni</option>
+              <option value="2024">2024</option>
+              <option value="2023" selected>2023</option>
+              <option value="2022">2022</option>
+              <option value="2021">2021</option>
+              <option value="2020">2020</option>
+              <option value="older">Precedenti</option>
+            </select>
+          </div>
+
+          <!-- Lingua -->
+          <div class="filter-group">
+            <p class="filter-group-label">Lingua</p>
+            <div class="lang-toggle" role="group" aria-label="Filtra per lingua">
+              <button class="lang-btn active" aria-pressed="true">IT</button>
+              <button class="lang-btn" aria-pressed="false">EN</button>
+              <button class="lang-btn" aria-pressed="false">Tutti</button>
+            </div>
+          </div>
+
+          <button class="clear-filters" type="button">Rimuovi tutti i filtri</button>
+        </aside>
+
+        <!-- ─── RESULTS AREA ─── -->
+        <div class="results-area" role="main" aria-live="polite" aria-atomic="true">
+
+
+          <!-- ════════════════════════════════════════
+               STATE 1: DEFAULT (no search yet)
+          ════════════════════════════════════════ -->
+          <div data-state-view="default" class="empty-state visible">
+            <p class="empty-state-title">Sfoglia per settore</p>
+
+            <div class="category-grid" role="list" aria-label="Settori tematici">
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-ecoinnovazione-primary);"></span>
+                <span class="category-card-label">Ecoinnovazione e imprenditorialità</span>
+                <span class="category-card-count">284 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-energia-clima-primary);"></span>
+                <span class="category-card-label">Energia e clima</span>
+                <span class="category-card-count">318 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: #7B7CF4;"></span>
+                <span class="category-card-label">Economia circolare</span>
+                <span class="category-card-count">212 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-mobilita-sostenibile-primary);"></span>
+                <span class="category-card-label">Mobilità sostenibile</span>
+                <span class="category-card-count">156 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-green-city-primary);"></span>
+                <span class="category-card-label">Green city</span>
+                <span class="category-card-count">198 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-agroecologia-primary);"></span>
+                <span class="category-card-label">Agroecologia</span>
+                <span class="category-card-count">143 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-stati-generali-primary);"></span>
+                <span class="category-card-label">Stati generali</span>
+                <span class="category-card-count">89 documenti</span>
+              </a>
+              <a href="#" class="category-card" role="listitem">
+                <span class="category-card-dot" style="background: var(--color-sector-corsi-formazione-primary);"></span>
+                <span class="category-card-label">Corsi e formazione</span>
+                <span class="category-card-count">61 documenti</span>
+              </a>
+            </div>
+
+            <p class="empty-state-title" style="margin-top: 40px;">Più ricercati</p>
+            <div class="active-filters">
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">PNRR</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Emissioni CO2</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Economia verde</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Rinnovabili</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Transizione ecologica</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Riciclo</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Sostenibilità urbana</a>
+              <a href="#" class="active-filter-tag" style="cursor: pointer; text-decoration: none;">Biodiversità</a>
+            </div>
+          </div>
+
+
+          <!-- ════════════════════════════════════════
+               STATE 2: LOADING (skeleton)
+          ════════════════════════════════════════ -->
+          <div data-state-view="loading">
+            <div style="margin-bottom: 24px; padding-bottom: 16px; border-bottom: 1px solid var(--color-border-default);">
+              <div class="skeleton skeleton-line" style="width: 180px;"></div>
+            </div>
+
+            <!-- Skeleton cards -->
+            <div class="skeleton-card" aria-hidden="true">
+              <div>
+                <div class="skeleton skeleton-line" style="width: 120px;"></div>
+                <div class="skeleton skeleton-title"></div>
+                <div class="skeleton skeleton-line" style="width: 60%;"></div>
+                <div class="skeleton skeleton-line" style="width: 90%; margin-top: 16px;"></div>
+                <div class="skeleton skeleton-line" style="width: 80%;"></div>
+              </div>
+              <div class="skeleton skeleton-thumb"></div>
+            </div>
+            <div class="skeleton-card" aria-hidden="true">
+              <div>
+                <div class="skeleton skeleton-line" style="width: 100px;"></div>
+                <div class="skeleton skeleton-title" style="width: 85%;"></div>
+                <div class="skeleton skeleton-line" style="width: 55%;"></div>
+                <div class="skeleton skeleton-line" style="width: 95%; margin-top: 16px;"></div>
+                <div class="skeleton skeleton-line" style="width: 70%;"></div>
+              </div>
+              <div class="skeleton skeleton-thumb"></div>
+            </div>
+            <div class="skeleton-card" aria-hidden="true">
+              <div>
+                <div class="skeleton skeleton-line" style="width: 140px;"></div>
+                <div class="skeleton skeleton-title" style="width: 70%;"></div>
+                <div class="skeleton skeleton-line" style="width: 65%;"></div>
+                <div class="skeleton skeleton-line" style="width: 88%; margin-top: 16px;"></div>
+                <div class="skeleton skeleton-line" style="width: 60%;"></div>
+              </div>
+              <div class="skeleton skeleton-thumb"></div>
+            </div>
+
+            <p style="text-align: center; font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary); margin-top: 20px;">Ricerca in corso…</p>
+          </div>
+
+
+          <!-- ════════════════════════════════════════
+               STATE 3: KEYWORD RESULTS
+          ════════════════════════════════════════ -->
+          <div data-state-view="results">
+
+            <!-- Results header -->
+            <div class="results-header">
+              <p class="results-count">
+                <strong>47</strong> risultati per "<strong>economia circolare 2023</strong>"
+              </p>
+              <select class="sort-select" aria-label="Ordina risultati">
+                <option value="relevance">Più rilevanti</option>
+                <option value="date">Più recenti</option>
+                <option value="downloads">Più scaricati</option>
+              </select>
+            </div>
+
+            <!-- Active filter tags -->
+            <div class="active-filters" aria-label="Filtri attivi">
+              <span class="active-filter-tag">
+                Economia circolare
+                <span class="remove" role="button" aria-label="Rimuovi filtro settore" tabindex="0">×</span>
+              </span>
+              <span class="active-filter-tag">
+                Anno: 2023
+                <span class="remove" role="button" aria-label="Rimuovi filtro anno" tabindex="0">×</span>
+              </span>
+              <span class="active-filter-tag">
+                IT
+                <span class="remove" role="button" aria-label="Rimuovi filtro lingua" tabindex="0">×</span>
+              </span>
+            </div>
+
+            <!-- Card 1: con versioni multiple -->
+            <article class="doc-card" aria-labelledby="doc-1-title">
+              <div class="doc-card-left">
+                <div class="doc-card-meta">
+                  <span class="doc-type-badge">Rapporto</span>
+                  <span class="sector-badge" style="background: var(--color-sector-economia-circolare-muted); color: #4B4CB8;">Economia circolare</span>
+                  <span class="doc-year">2023</span>
+                  <span class="doc-lang">IT</span>
+                  <span class="doc-version-indicator latest">● Versione più recente</span>
+                </div>
+                <a href="documento.html" class="doc-card-title" id="doc-1-title">
+                  Rapporto sull'<mark>Economia Circolare</mark> in Italia 2023
+                </a>
+                <p class="doc-card-author">Fondazione Sviluppo Sostenibile · Scuola Superiore Sant'Anna</p>
+                <p class="doc-card-excerpt">
+                  L'analisi evidenzia i progressi dell'<mark>economia circolare</mark> nel contesto italiano, con particolare attenzione ai settori manifatturiero e agroalimentare. Il rapporto include dati aggiornati al <mark>2023</mark> su tassi di riciclo, riduzione degli scarti e impatto occupazionale.
+                </p>
+                <div class="doc-card-footer">
+                  <span class="doc-card-stat">📄 142 pagine</span>
+                  <span class="doc-card-stat">⬇ 2.847 download</span>
+                  <span class="doc-card-stat">📦 4.2 MB</span>
+                </div>
+
+                <!-- Versioni correlate -->
+                <div class="doc-versions-list">
+                  <p class="doc-versions-title">Versioni precedenti</p>
+                  <div class="version-row">
+                    <span class="version-year">2022</span>
+                    <span class="version-label">Rapporto sull'Economia Circolare in Italia 2022</span>
+                    <span class="version-lang">IT</span>
+                    <a href="#" class="version-link">Apri →</a>
+                  </div>
+                  <div class="version-row">
+                    <span class="version-year">2021</span>
+                    <span class="version-label">Rapporto sull'Economia Circolare in Italia 2021</span>
+                    <span class="version-lang">IT</span>
+                    <a href="#" class="version-link">Apri →</a>
+                  </div>
+                  <div class="version-row">
+                    <span class="version-year">2023</span>
+                    <span class="version-label">The Circular Economy in Italy — Executive Summary</span>
+                    <span class="version-lang">EN</span>
+                    <a href="#" class="version-link">Apri →</a>
+                  </div>
+                </div>
+              </div>
+              <div class="doc-card-thumb" aria-hidden="true">PDF</div>
+            </article>
+
+            <!-- Card 2: singola versione -->
+            <article class="doc-card" aria-labelledby="doc-2-title">
+              <div class="doc-card-left">
+                <div class="doc-card-meta">
+                  <span class="doc-type-badge">Analisi</span>
+                  <span class="sector-badge" style="background: var(--color-sector-economia-circolare-muted); color: #4B4CB8;">Economia circolare</span>
+                  <span class="doc-year">2023</span>
+                  <span class="doc-lang">IT</span>
+                </div>
+                <a href="#" class="doc-card-title" id="doc-2-title">
+                  Modelli di business per l'<mark>economia circolare</mark>: una guida operativa per le PMI
+                </a>
+                <p class="doc-card-author">Lorenzo Bianchi · ENEA</p>
+                <p class="doc-card-excerpt">
+                  La guida analizza 24 casi studio di piccole e medie imprese che hanno adottato modelli di <mark>economia circolare</mark>, identificando i fattori critici di successo e le barriere principali.
+                </p>
+                <div class="doc-card-footer">
+                  <span class="doc-card-stat">📄 88 pagine</span>
+                  <span class="doc-card-stat">⬇ 1.203 download</span>
+                  <span class="doc-card-stat">📦 2.8 MB</span>
+                </div>
+              </div>
+              <div class="doc-card-thumb" aria-hidden="true">PDF</div>
+            </article>
+
+            <!-- Card 3: presentazione -->
+            <article class="doc-card" aria-labelledby="doc-3-title">
+              <div class="doc-card-left">
+                <div class="doc-card-meta">
+                  <span class="doc-type-badge">Presentazione</span>
+                  <span class="sector-badge" style="background: var(--color-sector-economia-circolare-muted); color: #4B4CB8;">Economia circolare</span>
+                  <span class="doc-year">2023</span>
+                  <span class="doc-lang">IT</span>
+                  <span class="doc-lang">EN</span>
+                </div>
+                <a href="#" class="doc-card-title" id="doc-3-title">
+                  Stati Generali della Green <mark>Economy</mark> — slide plenaria <mark>2023</mark>
+                </a>
+                <p class="doc-card-author">Edo Ronchi · Fondazione Sviluppo Sostenibile</p>
+                <p class="doc-card-excerpt">
+                  Slide della sessione plenaria degli Stati Generali della Green Economy, presentazione degli scenari di transizione verso l'<mark>economia circolare</mark> al 2030.
+                </p>
+                <div class="doc-card-footer">
+                  <span class="doc-card-stat">📄 48 slide</span>
+                  <span class="doc-card-stat">⬇ 4.521 download</span>
+                  <span class="doc-card-stat">📦 8.1 MB</span>
+                </div>
+              </div>
+              <div class="doc-card-thumb" aria-hidden="true">PDF</div>
+            </article>
+
+            <!-- Pagination -->
+            <nav class="pagination" aria-label="Pagine dei risultati">
+              <button class="page-btn" disabled aria-label="Pagina precedente">←</button>
+              <button class="page-btn active" aria-current="page">1</button>
+              <button class="page-btn">2</button>
+              <button class="page-btn">3</button>
+              <span style="padding: 0 8px; color: var(--color-content-secondary); font-family: var(--font-ui); font-size: 14px;">…</span>
+              <button class="page-btn">10</button>
+              <button class="page-btn" aria-label="Pagina successiva">→</button>
+            </nav>
+          </div>
+
+
+          <!-- ════════════════════════════════════════
+               STATE 4: AI Q&A
+          ════════════════════════════════════════ -->
+          <div data-state-view="ai">
+
+            <div class="results-header">
+              <p class="results-count">Risposta AI a: "<strong>Come sta evolvendo l'economia circolare in Italia?</strong>"</p>
+            </div>
+
+            <!-- AI answer panel -->
+            <div class="ai-answer-panel" role="region" aria-label="Risposta AI">
+              <div class="ai-answer-label">
+                <span class="ai-dot"></span>
+                Sintesi AI · basata su 12 documenti della biblioteca
+              </div>
+              <p class="ai-answer-text">
+                L'economia circolare in Italia ha registrato progressi significativi negli ultimi tre anni. Secondo il <em>Rapporto sull'Economia Circolare 2023</em>, il tasso di utilizzo circolare dei materiali è aumentato dal 18,3% al 21,4%, posizionando l'Italia tra i paesi europei più virtuosi. I settori con le migliori performance sono la carta e il vetro, mentre la plastica rimane la sfida principale.
+              </p>
+              <p class="ai-answer-text">
+                Il PNRR ha allocato circa 5,4 miliardi di euro per la transizione verso l'economia circolare, con focus su impianti di riciclo, bioeconomia e simbiosi industriale. Le PMI mostrano crescente interesse ma incontrano barriere di accesso ai finanziamenti e carenza di competenze specifiche.
+              </p>
+              <div class="ai-sources">
+                Fonti utilizzate (12 documenti):
+                <div class="ai-source-chips">
+                  <a href="documento.html" class="ai-source-chip">📄 Rapporto EC in Italia 2023</a>
+                  <a href="#" class="ai-source-chip">📄 Modelli di business PMI 2023</a>
+                  <a href="#" class="ai-source-chip">📄 PNRR e Green Economy 2022</a>
+                  <a href="#" class="ai-source-chip">📄 + 9 altri</a>
+                </div>
+              </div>
+              <p class="ai-disclaimer">
+                ⚠️ Questa risposta è generata automaticamente da intelligenza artificiale sulla base dei documenti nella biblioteca. Verifica sempre le fonti prima di citare o utilizzare queste informazioni in contesti ufficiali.
+              </p>
+            </div>
+
+            <!-- Divider to documents below -->
+            <div class="ai-results-divider">Documenti correlati</div>
+
+            <!-- Document cards (same as results state) -->
+            <article class="doc-card" aria-labelledby="ai-doc-1-title">
+              <div class="doc-card-left">
+                <div class="doc-card-meta">
+                  <span class="doc-type-badge">Rapporto</span>
+                  <span class="sector-badge" style="background: var(--color-sector-economia-circolare-muted); color: #4B4CB8;">Economia circolare</span>
+                  <span class="doc-year">2023</span>
+                  <span class="doc-lang">IT</span>
+                  <span class="doc-version-indicator latest">● Versione più recente</span>
+                </div>
+                <a href="documento.html" class="doc-card-title" id="ai-doc-1-title">
+                  Rapporto sull'Economia Circolare in Italia 2023
+                </a>
+                <p class="doc-card-author">Fondazione Sviluppo Sostenibile · Scuola Superiore Sant'Anna</p>
+                <p class="doc-card-excerpt">Analisi dei progressi dell'economia circolare nel contesto italiano, con dati aggiornati su tassi di riciclo, riduzione degli scarti e impatto occupazionale.</p>
+                <div class="doc-card-footer">
+                  <span class="doc-card-stat">📄 142 pagine</span>
+                  <span class="doc-card-stat">⬇ 2.847 download</span>
+                </div>
+              </div>
+              <div class="doc-card-thumb" aria-hidden="true">PDF</div>
+            </article>
+
+            <article class="doc-card" aria-labelledby="ai-doc-2-title">
+              <div class="doc-card-left">
+                <div class="doc-card-meta">
+                  <span class="doc-type-badge">Analisi</span>
+                  <span class="sector-badge" style="background: var(--color-sector-economia-circolare-muted); color: #4B4CB8;">Economia circolare</span>
+                  <span class="doc-year">2023</span>
+                  <span class="doc-lang">IT</span>
+                </div>
+                <a href="#" class="doc-card-title" id="ai-doc-2-title">
+                  Modelli di business per l'economia circolare: una guida operativa per le PMI
+                </a>
+                <p class="doc-card-author">Lorenzo Bianchi · ENEA</p>
+                <p class="doc-card-excerpt">24 casi studio di PMI che hanno adottato modelli circolari: fattori di successo e barriere.</p>
+                <div class="doc-card-footer">
+                  <span class="doc-card-stat">📄 88 pagine</span>
+                  <span class="doc-card-stat">⬇ 1.203 download</span>
+                </div>
+              </div>
+              <div class="doc-card-thumb" aria-hidden="true">PDF</div>
+            </article>
+          </div>
+
+
+          <!-- ════════════════════════════════════════
+               STATE 5: NO RESULTS
+          ════════════════════════════════════════ -->
+          <div data-state-view="noresults">
+            <div class="results-header">
+              <p class="results-count">
+                <strong>0</strong> risultati per "<strong>plastic tax 2019</strong>"
+              </p>
+            </div>
+
+            <div class="no-results">
+              <div class="no-results-icon" aria-hidden="true">📭</div>
+              <h2 class="no-results-title">Nessun documento trovato</h2>
+              <p class="no-results-desc">
+                La tua ricerca per "<strong>plastic tax 2019</strong>" non ha prodotto risultati con i filtri selezionati.
+              </p>
+              <div class="no-results-suggestions">
+                <p>Prova a:</p>
+                <p><a href="#">Rimuovere i filtri attivi</a></p>
+                <p><a href="#">Cercare "plastic tax"</a> senza il filtro anno</p>
+                <p><a href="#">Sfogliare il settore Economia circolare</a></p>
+                <p>Oppure <a href="#">fai una domanda</a> all'AI della biblioteca</p>
+              </div>
+
+              <div style="margin-top: 40px; padding: 24px; background: var(--color-surface-raised); border-radius: 4px; border: 1px solid var(--color-border-default); max-width: 480px; margin-left: auto; margin-right: auto;">
+                <p style="font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 12px;">Documenti recenti su argomenti simili</p>
+                <a href="#" style="display: block; font-family: var(--font-body); font-size: 16px; color: var(--color-content-brand); text-decoration: none; padding: 8px 0; border-bottom: 1px solid var(--color-border-default);">Fiscalità ambientale e tasse verdi (2023)</a>
+                <a href="#" style="display: block; font-family: var(--font-body); font-size: 16px; color: var(--color-content-brand); text-decoration: none; padding: 8px 0;">Incentivi per l'economia circolare in Europa (2022)</a>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /results-area -->
+      </div><!-- /search-layout -->
+    </main>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+        <span class="footer-copy">© 2025 · Template Hederae DS v0.1.0 · Brand: Susdef</span>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <!-- ─── STATE SWITCHER SCRIPT ─── -->
+  <script>
+    function showState(state) {
+      document.querySelectorAll('[data-state-view]').forEach(el => el.classList.remove('visible'));
+      const target = document.querySelector('[data-state-view="' + state + '"]');
+      if (target) target.classList.add('visible');
+      document.querySelectorAll('.state-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+    }
+  </script>
+</body>
+</html>

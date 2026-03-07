@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- BEST PRACTICE: redirect pages non indicizzate. La pagina di destinazione verrà indicizzata. -->
+  <meta name="robots" content="noindex, follow">
+  <title>Reindirizzamento — SUSDEF · Page Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+      --color-sector-economia-circolare-muted: #EEEEFF;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── HEADER ─── */
+    .site-header { background-color: var(--color-surface-inverse); padding: 16px 0; }
+    .site-header .container { display: flex; align-items: center; justify-content: space-between; }
+    .site-logo {
+      font-family: var(--font-ui); font-size: 14px; color: var(--color-content-inverse);
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: 0.9;
+    }
+    .site-nav { display: flex; gap: 32px; }
+    .site-nav a {
+      font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.8);
+      text-decoration: none; letter-spacing: 0.05em;
+    }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+
+    /* ─── MAIN STAGE ─── */
+    .redirect-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+    }
+
+    .redirect-card {
+      max-width: 680px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ─── REDIRECT ICON & LABEL ─── */
+    .redirect-icon {
+      font-size: 52px;
+      display: block;
+      margin-bottom: 16px;
+    }
+    .redirect-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 20px;
+    }
+    .redirect-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--color-content-primary);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .redirect-desc {
+      font-size: 18px;
+      color: var(--color-content-secondary);
+      line-height: 1.6;
+      margin-bottom: 28px;
+      max-width: 520px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .redirect-desc strong { color: var(--color-content-primary); }
+
+    /* ─── COUNTDOWN RING ─── */
+    .countdown-wrap {
+      position: relative;
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+    }
+    .countdown-svg { transform: rotate(-90deg); }
+    .countdown-ring-bg {
+      fill: none; stroke: var(--color-surface-deep); stroke-width: 4;
+    }
+    .countdown-ring-fill {
+      fill: none;
+      stroke: var(--color-brand-primary);
+      stroke-width: 4;
+      stroke-linecap: round;
+      stroke-dasharray: 188.5;  /* 2πr = 2 * π * 30 */
+      stroke-dashoffset: 0;
+      transition: stroke-dashoffset 1s linear;
+    }
+    .countdown-num {
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+      font-family: var(--font-ui);
+      font-size: 28px;
+      color: var(--color-content-brand);
+      font-weight: 400;
+    }
+
+    /* ─── DESTINATION PREVIEW ─── */
+    .destination-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-left: 4px solid var(--color-brand-primary);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 0 auto 32px;
+      max-width: 520px;
+      text-align: left;
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .dest-thumb {
+      width: 44px;
+      height: 54px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 2px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 9px;
+      color: var(--color-content-disabled);
+      position: relative;
+      overflow: hidden;
+    }
+    .dest-thumb::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--color-brand-primary);
+    }
+    .dest-info {}
+    .dest-meta {
+      display: flex; gap: 6px; margin-bottom: 6px; flex-wrap: wrap;
+    }
+    .dest-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      padding: 2px 7px; background: var(--color-surface-deep);
+      border-radius: 2px; color: var(--color-content-secondary);
+    }
+    .dest-title {
+      font-family: var(--font-heading); font-size: 17px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.3; margin-bottom: 4px;
+    }
+    .dest-author { font-size: 13px; color: var(--color-content-secondary); }
+    .dest-url {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-disabled);
+      margin-top: 6px; word-break: break-all;
+    }
+
+    /* ─── URL CHANGE DIFF ─── */
+    .url-diff {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 0 auto 28px;
+      max-width: 520px;
+      text-align: left;
+    }
+    .url-diff-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 12px;
+    }
+    .url-row {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 8px 0; font-family: var(--font-ui); font-size: 13px;
+    }
+    .url-row + .url-row { border-top: 1px solid var(--color-border-default); }
+    .url-tag {
+      font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 2px 7px; border-radius: 2px; flex-shrink: 0; margin-top: 1px;
+    }
+    .url-tag.old { background: var(--color-feedback-error-bg); color: var(--color-feedback-error-text); }
+    .url-tag.new { background: var(--color-feedback-success-bg); color: var(--color-feedback-success-text); }
+    .url-text {
+      word-break: break-all; color: var(--color-content-secondary); line-height: 1.5;
+    }
+    .url-text .match { color: var(--color-content-primary); }
+
+    /* ─── EXTERNAL DOMAIN WARNING ─── */
+    .external-warning {
+      background: var(--color-feedback-warning-bg);
+      border: 1px solid #F0D98A;
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 0 auto 28px;
+      max-width: 520px;
+      text-align: left;
+    }
+    .ext-warn-title {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-feedback-warning-text);
+      margin-bottom: 8px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ext-warn-desc { font-size: 15px; color: var(--color-content-primary); line-height: 1.5; margin-bottom: 10px; }
+    .ext-domain {
+      font-family: var(--font-ui); font-size: 14px;
+      background: rgba(0,0,0,0.05); padding: 8px 12px;
+      border-radius: 3px; word-break: break-all;
+      color: var(--color-content-primary);
+    }
+
+    /* ─── DISAMBIGUATION (più documenti simili) ─── */
+    .disambig-list {
+      display: flex; flex-direction: column; gap: 10px;
+      margin: 0 auto 32px; max-width: 560px; text-align: left;
+    }
+    .disambig-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 14px 16px;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      text-decoration: none;
+      transition: all 0.15s;
+    }
+    .disambig-item:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: 0 2px 8px rgba(1,62,57,0.08);
+    }
+    .disambig-item:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+    .disambig-num {
+      font-family: var(--font-ui); font-size: 18px; color: var(--color-surface-deep);
+      min-width: 28px; text-align: right; flex-shrink: 0;
+    }
+    .disambig-info { flex: 1; min-width: 0; }
+    .disambig-meta {
+      display: flex; gap: 6px; margin-bottom: 4px; flex-wrap: wrap;
+    }
+    .disambig-badge {
+      font-family: var(--font-ui); font-size: 10px;
+      padding: 2px 6px; background: var(--color-surface-deep);
+      border-radius: 2px; color: var(--color-content-secondary);
+    }
+    .disambig-title {
+      font-size: 15px; font-weight: 600; color: var(--color-content-primary);
+      line-height: 1.3; margin-bottom: 2px;
+    }
+    .disambig-author { font-size: 12px; color: var(--color-content-secondary); }
+    .disambig-arrow {
+      font-family: var(--font-ui); font-size: 16px; color: var(--color-content-disabled);
+      flex-shrink: 0;
+    }
+    .disambig-item:hover .disambig-arrow { color: var(--color-content-brand); }
+
+    /* ─── PROGRESS BAR (version redirect) ─── */
+    .version-progress {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 0 auto 24px;
+      max-width: 520px;
+      text-align: left;
+    }
+    .version-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      font-family: var(--font-ui);
+      font-size: 12px;
+    }
+    .v-step {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+    }
+    .v-step-dot {
+      width: 28px; height: 28px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .v-step-dot.done { background: var(--color-brand-primary); color: white; }
+    .v-step-dot.active { background: var(--color-brand-accent); color: var(--color-content-brand); border: 2px solid var(--color-brand-primary); }
+    .v-step-dot.pending { background: var(--color-surface-deep); color: var(--color-content-disabled); }
+    .v-step-label { font-size: 11px; color: var(--color-content-secondary); text-align: center; line-height: 1.2; }
+    .v-step-line { flex: 0 0 24px; height: 1px; background: var(--color-border-default); margin-top: -14px; }
+    .v-step-line.done { background: var(--color-brand-primary); }
+
+    /* ─── ACTIONS ─── */
+    .redirect-actions {
+      display: flex; flex-wrap: wrap; gap: 12px;
+      justify-content: center; margin-bottom: 36px;
+    }
+    .btn-primary {
+      padding: 13px 26px; font-family: var(--font-ui); font-size: 15px;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none; border-radius: 4px; cursor: pointer;
+      text-decoration: none; display: inline-flex; align-items: center; gap: 8px;
+      transition: background-color 0.15s;
+    }
+    .btn-primary:hover { background-color: var(--color-interactive-primary-bg-hover); }
+    .btn-primary:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+    .btn-secondary {
+      padding: 12px 24px; font-family: var(--font-ui); font-size: 15px;
+      background: transparent; color: var(--color-interactive-secondary-label);
+      border: 1px solid var(--color-interactive-secondary-border);
+      border-radius: 4px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.15s;
+    }
+    .btn-secondary:hover { background: var(--color-surface-raised); }
+
+    .btn-danger {
+      padding: 12px 24px; font-family: var(--font-ui); font-size: 15px;
+      background: transparent; color: var(--color-feedback-error-text);
+      border: 1px solid var(--color-feedback-error-text);
+      border-radius: 4px; cursor: pointer; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 8px; transition: all 0.15s;
+    }
+    .btn-danger:hover { background: var(--color-feedback-error-bg); }
+    .btn-danger:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+
+    /* ─── TECH DETAIL ─── */
+    .tech-detail {
+      margin-top: 28px; text-align: left;
+      border: 1px solid var(--color-border-default); border-radius: 4px; overflow: hidden;
+    }
+    .tech-detail summary {
+      padding: 12px 16px; font-family: var(--font-ui); font-size: 12px;
+      letter-spacing: 0.06em; color: var(--color-content-secondary); cursor: pointer;
+      background: var(--color-surface-raised); user-select: none; list-style: none;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .tech-detail summary::after { content: '▸'; font-size: 10px; }
+    .tech-detail[open] summary::after { content: '▾'; }
+    .tech-detail summary:hover { color: var(--color-content-primary); }
+    .tech-content {
+      padding: 16px; font-family: var(--font-ui); font-size: 12px;
+      color: var(--color-content-secondary); line-height: 1.8;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .tech-content p { margin-bottom: 6px; }
+    .tech-content strong { color: var(--color-content-primary); }
+    .tech-content code {
+      background: var(--color-surface-card); padding: 1px 5px; border-radius: 2px;
+      color: var(--color-content-brand);
+    }
+
+    /* ─── STATE SWITCHER ─── */
+    .state-switcher {
+      position: fixed; top: 80px; right: 20px;
+      background: #1a1a2e; color: white;
+      padding: 16px; border-radius: 8px; z-index: 100;
+      font-family: var(--font-ui); font-size: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3); min-width: 220px;
+    }
+    .state-switcher h4 {
+      color: rgba(255,255,255,0.4); letter-spacing: 0.1em; text-transform: uppercase;
+      font-size: 10px; margin-bottom: 10px;
+    }
+    .state-btn {
+      display: block; width: 100%; padding: 7px 10px; margin-bottom: 3px;
+      background: rgba(255,255,255,0.08); border: none; border-radius: 4px;
+      color: white; cursor: pointer; text-align: left; font-family: var(--font-ui);
+      font-size: 11px; transition: background 0.1s; line-height: 1.4;
+    }
+    .state-btn:hover, .state-btn.active { background: var(--color-brand-primary); }
+
+    [data-state] { display: none; }
+    [data-state].visible { display: block; }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background-color: var(--color-surface-inverse);
+      color: rgba(255,255,255,0.7); padding: 32px 0;
+    }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; }
+    .footer-copy { font-size: 13px; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DEMO STATE SWITCHER ─── -->
+  <nav class="state-switcher" aria-label="Template states (demo only)">
+    <h4>Tipo reindirizzamento</h4>
+    <button class="state-btn active" onclick="showState('version-redirect')">📄 Versione spostata (301)</button>
+    <button class="state-btn" onclick="showState('slug-changed')">🔗 Slug cambiato (301)</button>
+    <button class="state-btn" onclick="showState('external-redirect')">🌐 Link esterno (safety)</button>
+    <button class="state-btn" onclick="showState('disambiguation')">❓ Disambiguazione</button>
+    <button class="state-btn" onclick="showState('auto-redirect')">⚡ Redirect automatico</button>
+  </nav>
+
+  <div class="page-wrapper" data-brand="susdef">
+
+    <!-- ─── HEADER ─── -->
+    <header class="site-header" role="banner">
+      <div class="container">
+        <a href="#" class="site-logo">Fondazione Sviluppo Sostenibile</a>
+        <nav class="site-nav">
+          <a href="search.html">Ricerca</a>
+          <a href="#">Settori</a>
+          <a href="#">Chi siamo</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ─── REDIRECT STAGE ─── -->
+    <main id="main" class="redirect-stage" role="main">
+      <div class="container">
+
+
+        <!-- ════════════════════════════════════════
+             301 VERSIONE SPOSTATA
+             HTTP: 301 Moved Permanently (lato server)
+             Questa pagina è il fallback human-readable per utenti
+             che arrivano da bookmark o link vecchi
+             Trigger: URL vecchio /biblioteca/ec-2022 → /biblioteca/ec-2023
+             Best practice: mostrare context della versione precedente
+             · link diretto al successore · countdown breve (5s)
+        ════════════════════════════════════════ -->
+        <div data-state="version-redirect" class="redirect-card visible" role="main">
+          <span class="redirect-icon" aria-hidden="true">📅</span>
+          <p class="redirect-label">Reindirizzamento versione</p>
+          <h1 class="redirect-title">Questo documento ha una versione più recente</h1>
+          <p class="redirect-desc">
+            Stai cercando il rapporto del <strong>2022</strong>. Esiste un'edizione aggiornata al <strong>2023</strong> con dati più recenti.
+          </p>
+
+          <!-- Countdown SVG -->
+          <div class="countdown-wrap" aria-hidden="true">
+            <svg class="countdown-svg" width="80" height="80" viewBox="0 0 80 80">
+              <circle class="countdown-ring-bg" cx="40" cy="40" r="30"/>
+              <circle class="countdown-ring-fill" id="countdown-ring" cx="40" cy="40" r="30"/>
+            </svg>
+            <span class="countdown-num" id="countdown-num">5</span>
+          </div>
+
+          <!-- Destination preview -->
+          <div class="destination-card" aria-label="Destinazione reindirizzamento">
+            <div class="dest-thumb" aria-hidden="true">PDF</div>
+            <div class="dest-info">
+              <div class="dest-meta">
+                <span class="dest-badge">Rapporto</span>
+                <span class="dest-badge" style="background: #EEEEFF; color: #4B4CB8;">Economia circolare</span>
+                <span class="dest-badge" style="background: #E6F4EA; color: #1B7A3E;">Versione più recente</span>
+              </div>
+              <p class="dest-title">Rapporto sull'Economia Circolare in Italia 2023</p>
+              <p class="dest-author">Fondazione Sviluppo Sostenibile · Scuola Superiore Sant'Anna</p>
+              <p class="dest-url">fondazionesvilupposostenibile.org/biblioteca/economia-circolare-italia-2023</p>
+            </div>
+          </div>
+
+          <div class="redirect-actions">
+            <a href="documento.html" class="btn-primary">→ Vai all'edizione 2023</a>
+            <a href="#" class="btn-secondary">Resta sull'edizione 2022</a>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 301 Moved Permanently (inviato dal server)</p>
+              <p><strong>Header:</strong> <code>Location: /biblioteca/economia-circolare-italia-2023</code></p>
+              <p><strong>Questa pagina:</strong> fallback human-readable per browser che non seguono il redirect automaticamente (raro) o per utenti che vogliono scegliere.</p>
+              <p><strong>SEO:</strong> Il 301 trasferisce il PageRank al nuovo URL. Google re-indicizza la nuova pagina entro giorni.</p>
+              <p><strong>Canonical:</strong> La pagina 2023 ha <code>&lt;link rel="canonical" href="...2023"&gt;</code></p>
+              <p><strong>Countdown:</strong> 5s → redirect automatico. L'utente può interrompere con "Resta sull'edizione 2022".</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             301 SLUG CAMBIATO
+             HTTP: 301 Moved Permanently
+             Trigger: slug rinominato per SEO o correzione
+             es: /biblioteca/rapporto-ec → /biblioteca/economia-circolare-italia-2023
+             Best practice: mostrare vecchio e nuovo URL chiaramente
+             · aggiornare tutti i link interni nel CMS
+        ════════════════════════════════════════ -->
+        <div data-state="slug-changed" class="redirect-card" role="main">
+          <span class="redirect-icon" aria-hidden="true">🔗</span>
+          <p class="redirect-label">Indirizzo aggiornato</p>
+          <h1 class="redirect-title">L'indirizzo di questa pagina è cambiato</h1>
+          <p class="redirect-desc">
+            Il documento è stato spostato a un nuovo indirizzo. Aggiorna i tuoi preferiti o i link che puntano a questo documento.
+          </p>
+
+          <!-- URL diff -->
+          <div class="url-diff" aria-label="Confronto vecchio e nuovo URL">
+            <p class="url-diff-title">Cambio indirizzo</p>
+            <div class="url-row">
+              <span class="url-tag old">Vecchio</span>
+              <span class="url-text">/biblioteca/<span class="match">rapporto-ec</span></span>
+            </div>
+            <div class="url-row">
+              <span class="url-tag new">Nuovo</span>
+              <span class="url-text">/biblioteca/<span class="match">economia-circolare-italia-2023</span></span>
+            </div>
+          </div>
+
+          <!-- Destination preview -->
+          <div class="destination-card">
+            <div class="dest-thumb" aria-hidden="true">PDF</div>
+            <div class="dest-info">
+              <div class="dest-meta">
+                <span class="dest-badge">Rapporto</span>
+                <span class="dest-badge" style="background: #EEEEFF; color: #4B4CB8;">Economia circolare</span>
+              </div>
+              <p class="dest-title">Rapporto sull'Economia Circolare in Italia 2023</p>
+              <p class="dest-author">Fondazione Sviluppo Sostenibile</p>
+              <p class="dest-url">fondazionesvilupposostenibile.org/biblioteca/economia-circolare-italia-2023</p>
+            </div>
+          </div>
+
+          <div class="redirect-actions">
+            <a href="documento.html" class="btn-primary">Vai al documento →</a>
+            <button class="btn-secondary" onclick="navigator.clipboard?.writeText('https://fondazionesvilupposostenibile.org/biblioteca/economia-circolare-italia-2023')">
+              📋 Copia nuovo URL
+            </button>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 301 Moved Permanently</p>
+              <p><strong>Vecchio slug:</strong> <code>rapporto-ec</code></p>
+              <p><strong>Nuovo slug:</strong> <code>economia-circolare-italia-2023</code></p>
+              <p><strong>Motivo cambio:</strong> ottimizzazione SEO — slug più descrittivo con anno e keywords.</p>
+              <p><strong>⚠️ Azione richiesta:</strong> aggiornare tutti i link interni nel CMS (WordPress: fare search&replace in DB con WP-CLI o plugin Velvet Blues).</p>
+              <p><strong>Sitemap:</strong> rigenera sitemap.xml per rimuovere il vecchio URL.</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             REDIRECT ESTERNO (safety page)
+             HTTP: 200 (pagina di avviso, non redirect HTTP)
+             Trigger: link a dominio esterno da un documento PDF o pagina
+             Best practice: avvisare che si sta uscendo dal sito
+             · mostrare dominio di destinazione chiaramente
+             · permettere di tornare indietro
+             Utile per: link nei PDF, link in articoli verso fonti esterne
+        ════════════════════════════════════════ -->
+        <div data-state="external-redirect" class="redirect-card" role="main">
+          <span class="redirect-icon" aria-hidden="true">🌐</span>
+          <p class="redirect-label">Link esterno</p>
+          <h1 class="redirect-title">Stai per uscire dal sito della Fondazione</h1>
+          <p class="redirect-desc">
+            Stai per essere reindirizzato a un sito esterno. La Fondazione Sviluppo Sostenibile non è responsabile del contenuto di siti di terze parti.
+          </p>
+
+          <!-- External domain warning -->
+          <div class="external-warning" role="alert" aria-live="polite">
+            <p class="ext-warn-title">⚠️ Dominio esterno</p>
+            <p class="ext-warn-desc">Stai per visitare il sito di:</p>
+            <p class="ext-domain">https://ec.europa.eu/environment/topics/circular-economy/</p>
+          </div>
+
+          <div class="redirect-actions">
+            <a href="https://ec.europa.eu/environment/topics/circular-economy/" class="btn-primary" rel="noopener noreferrer" target="_blank">
+              Vai al sito esterno →
+            </a>
+            <a href="documento.html" class="btn-secondary">← Torna al documento</a>
+          </div>
+
+          <p style="font-size: 13px; color: var(--color-content-secondary); margin-bottom: 32px;">
+            Il link proviene dal documento: <a href="documento.html" style="color: var(--color-content-brand);">Rapporto EC in Italia 2023</a>
+          </p>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 200 (questa è una pagina interstitial, non un redirect HTTP)</p>
+              <p><strong>Pattern:</strong> <code>/esci?url=https%3A%2F%2Fec.europa.eu%2F…</code></p>
+              <p><strong>Sicurezza:</strong> validare e whitelist-are URL di destinazione — mai accettare URL arbitrari (open redirect vulnerability).</p>
+              <p><strong>Attributi link:</strong> usare sempre <code>rel="noopener noreferrer"</code> + <code>target="_blank"</code> per link esterni.</p>
+              <p><strong>Quando usarla:</strong> opzionale per link in articoli, <strong>obbligatoria</strong> per link estratti da PDF (non controllabili).</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             DISAMBIGUAZIONE
+             HTTP: 200 (scelta utente richiesta)
+             Trigger: query di ricerca ambigua che corrisponde a
+             più documenti con titolo quasi identico
+             es: "economia circolare" → 8 documenti molto simili
+             Oppure: URL che corrisponde a più versioni anno
+             Best practice: mostrare le opzioni in ordine anno DESC
+             · evidenziare "più recente" · max 5-6 opzioni
+        ════════════════════════════════════════ -->
+        <div data-state="disambiguation" class="redirect-card" role="main">
+          <span class="redirect-icon" aria-hidden="true">❓</span>
+          <p class="redirect-label">Scegli il documento</p>
+          <h1 class="redirect-title">Quale documento stai cercando?</h1>
+          <p class="redirect-desc">
+            L'indirizzo corrisponde a più documenti nella biblioteca. Seleziona la versione che ti interessa.
+          </p>
+
+          <!-- Document options list -->
+          <div class="disambig-list" role="list" aria-label="Documenti corrispondenti">
+
+            <a href="documento.html" class="disambig-item" role="listitem" aria-label="Rapporto 2023, versione più recente">
+              <span class="disambig-num" aria-hidden="true">01</span>
+              <div class="disambig-info">
+                <div class="disambig-meta">
+                  <span class="disambig-badge">Rapporto</span>
+                  <span class="disambig-badge">2023</span>
+                  <span class="disambig-badge" style="background: #E6F4EA; color: #1B7A3E;">● Più recente</span>
+                  <span class="disambig-badge">IT</span>
+                </div>
+                <p class="disambig-title">Rapporto sull'Economia Circolare in Italia 2023</p>
+                <p class="disambig-author">Fondazione Sviluppo Sostenibile · Sc. Superiore Sant'Anna</p>
+              </div>
+              <span class="disambig-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a href="#" class="disambig-item" role="listitem">
+              <span class="disambig-num" aria-hidden="true">02</span>
+              <div class="disambig-info">
+                <div class="disambig-meta">
+                  <span class="disambig-badge">Rapporto</span>
+                  <span class="disambig-badge">2022</span>
+                  <span class="disambig-badge">IT</span>
+                </div>
+                <p class="disambig-title">Rapporto sull'Economia Circolare in Italia 2022</p>
+                <p class="disambig-author">Fondazione Sviluppo Sostenibile</p>
+              </div>
+              <span class="disambig-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a href="#" class="disambig-item" role="listitem">
+              <span class="disambig-num" aria-hidden="true">03</span>
+              <div class="disambig-info">
+                <div class="disambig-meta">
+                  <span class="disambig-badge">Executive Summary</span>
+                  <span class="disambig-badge">2023</span>
+                  <span class="disambig-badge">EN</span>
+                </div>
+                <p class="disambig-title">The Circular Economy in Italy — Executive Summary 2023</p>
+                <p class="disambig-author">Fondazione Sviluppo Sostenibile</p>
+              </div>
+              <span class="disambig-arrow" aria-hidden="true">→</span>
+            </a>
+
+            <a href="#" class="disambig-item" role="listitem">
+              <span class="disambig-num" aria-hidden="true">04</span>
+              <div class="disambig-info">
+                <div class="disambig-meta">
+                  <span class="disambig-badge">Rapporto</span>
+                  <span class="disambig-badge">2021</span>
+                  <span class="disambig-badge">IT</span>
+                </div>
+                <p class="disambig-title">Rapporto sull'Economia Circolare in Italia 2021</p>
+                <p class="disambig-author">Fondazione Sviluppo Sostenibile</p>
+              </div>
+              <span class="disambig-arrow" aria-hidden="true">→</span>
+            </a>
+
+          </div>
+
+          <div class="redirect-actions">
+            <a href="search.html" class="btn-secondary">↩ Torna alla ricerca</a>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 200 (scelta attiva dell'utente)</p>
+              <p><strong>Trigger:</strong> URL <code>/biblioteca/economia-circolare-italia</code> senza anno — corrisponde a 4 documenti in DB.</p>
+              <p><strong>Alternativa:</strong> fare redirect automatico all'edizione più recente con <code>301</code> e mostrare lista versioni nella sidebar del documento (come in <code>documento.html</code>).</p>
+              <p><strong>Raccomandazione:</strong> preferire redirect 301 automatico alla versione più recente — meno attrito. Disambiguazione solo se l'anno è semanticamente importante per l'utente (es. ricerca storica).</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             REDIRECT AUTOMATICO (countdown)
+             HTTP: 200 + meta refresh (o JS redirect)
+             Trigger: URL temporaneo dopo download, login, invio form
+             Best practice: 3-5s countdown + link "non reindirizzare"
+             · accessibilità: annunciare il redirect agli screen reader
+        ════════════════════════════════════════ -->
+        <div data-state="auto-redirect" class="redirect-card" role="main">
+          <span class="redirect-icon" aria-hidden="true">⚡</span>
+
+          <!-- Animazione passi del processo -->
+          <div class="version-progress" aria-label="Progressione operazione">
+            <div class="version-steps" role="list">
+              <div class="v-step" role="listitem">
+                <div class="v-step-dot done" aria-label="Completato">✓</div>
+                <span class="v-step-label">Email verificata</span>
+              </div>
+              <div class="v-step-line done"></div>
+              <div class="v-step" role="listitem">
+                <div class="v-step-dot done" aria-label="Completato">✓</div>
+                <span class="v-step-label">PDF preparato</span>
+              </div>
+              <div class="v-step-line done"></div>
+              <div class="v-step" role="listitem">
+                <div class="v-step-dot active" aria-label="In corso">↓</div>
+                <span class="v-step-label">Reindirizzo al download</span>
+              </div>
+              <div class="v-step-line"></div>
+              <div class="v-step" role="listitem">
+                <div class="v-step-dot pending" aria-label="In attesa">4</div>
+                <span class="v-step-label">Download avviato</span>
+              </div>
+            </div>
+          </div>
+
+          <p class="redirect-label">Tutto pronto</p>
+          <h1 class="redirect-title">Il download inizierà automaticamente</h1>
+          <p class="redirect-desc">
+            Stai per scaricare <strong>Rapporto EC in Italia 2023</strong>. Se il download non parte, clicca il pulsante.
+          </p>
+
+          <!-- Countdown SVG (fast: 3s) -->
+          <div class="countdown-wrap" aria-hidden="true">
+            <svg class="countdown-svg" width="80" height="80" viewBox="0 0 80 80">
+              <circle class="countdown-ring-bg" cx="40" cy="40" r="30"/>
+              <circle class="countdown-ring-fill" id="auto-ring" cx="40" cy="40" r="30"/>
+            </svg>
+            <span class="countdown-num" id="auto-num">3</span>
+          </div>
+
+          <!-- Annuncio accessibilità per screen reader -->
+          <p role="status" aria-live="polite" style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0,0,0,0);">
+            Il download inizierà tra 3 secondi. Premi Annulla per fermare il reindirizzamento.
+          </p>
+
+          <div class="redirect-actions">
+            <a href="#" class="btn-primary" id="manual-download">⬇ Scarica ora (PDF · 4.2 MB)</a>
+            <button class="btn-danger" onclick="cancelAutoRedirect()">✕ Annulla</button>
+          </div>
+
+          <p style="font-size: 13px; color: var(--color-content-secondary); margin-top: 8px;">
+            Link valido per: <strong>59 minuti</strong> · <a href="documento.html" style="color: var(--color-content-brand);">Torna alla pagina documento</a>
+          </p>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 200 + JavaScript <code>setTimeout(redirect, 3000)</code></p>
+              <p><strong>Non usare</strong> <code>&lt;meta http-equiv="refresh"&gt;</code> — non interrompibile, problemi con screen reader.</p>
+              <p><strong>Accessibilità:</strong> annunciare il countdown via <code>aria-live="polite"</code>, offrire sempre "Annulla".</p>
+              <p><strong>Signed URL:</strong> generato al momento del gate email, scade in 1h (JWT + S3/CDN signed URL).</p>
+              <p><strong>Watermark:</strong> il PDF scaricato include <code>marco@enea.it</code> e timestamp nel footer di ogni pagina.</p>
+            </div>
+          </details>
+        </div>
+
+
+      </div><!-- /container -->
+    </main>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+        <span class="footer-copy">© 2025 · Template Hederae DS v0.1.0 · Brand: Susdef</span>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <script>
+    // ─── State switcher ───
+    function showState(state) {
+      document.querySelectorAll('[data-state]').forEach(el => el.classList.remove('visible'));
+      const target = document.querySelector('[data-state="' + state + '"]');
+      if (target) target.classList.add('visible');
+      document.querySelectorAll('.state-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      // Reset countdowns
+      if (state === 'version-redirect') startCountdown('countdown-ring', 'countdown-num', 5);
+      if (state === 'auto-redirect') startCountdown('auto-ring', 'auto-num', 3);
+    }
+
+    // ─── Countdown SVG ───
+    let countdownTimers = [];
+    function startCountdown(ringId, numId, seconds) {
+      // Clear any previous
+      countdownTimers.forEach(clearInterval);
+      countdownTimers = [];
+      const ring = document.getElementById(ringId);
+      const num = document.getElementById(numId);
+      if (!ring || !num) return;
+      const circumference = 188.5;
+      let remaining = seconds;
+      ring.style.strokeDashoffset = '0';
+      num.textContent = remaining;
+      const interval = setInterval(() => {
+        remaining--;
+        if (remaining <= 0) {
+          clearInterval(interval);
+          num.textContent = '0';
+          ring.style.strokeDashoffset = circumference.toString();
+          return;
+        }
+        num.textContent = remaining;
+        const pct = 1 - (remaining / seconds);
+        ring.style.strokeDashoffset = (circumference * pct).toString();
+      }, 1000);
+      countdownTimers.push(interval);
+    }
+
+    // ─── Auto-redirect cancel ───
+    let redirectTimer = null;
+    function cancelAutoRedirect() {
+      clearTimeout(redirectTimer);
+      countdownTimers.forEach(clearInterval);
+      const num = document.getElementById('auto-num');
+      const ring = document.getElementById('auto-ring');
+      if (num) num.textContent = '–';
+      if (ring) ring.style.stroke = '#D9D4C9';
+      event.target.textContent = '✓ Annullato';
+      event.target.disabled = true;
+    }
+
+    // Start countdown on page load for default state
+    document.addEventListener('DOMContentLoaded', () => {
+      startCountdown('countdown-ring', 'countdown-num', 5);
+    });
+  </script>
+</body>
+</html>

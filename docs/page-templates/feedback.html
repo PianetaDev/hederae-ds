@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Feedback Components — SUSDEF · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── HEADER ─── */
+    .site-header { background: var(--color-surface-inverse); padding: 16px 0; }
+    .site-header .container { display: flex; align-items: center; justify-content: space-between; }
+    .site-logo { font-family: var(--font-ui); font-size: 14px; color: var(--color-content-inverse); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: 0.9; }
+    .site-nav { display: flex; gap: 32px; }
+    .site-nav a { font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.8); text-decoration: none; letter-spacing: 0.05em; }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero { background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border-default); padding: 48px 0 40px; margin-bottom: 56px; }
+    .page-hero h1 { font-family: var(--font-display); font-size: 48px; font-weight: 400; color: var(--color-content-brand); margin-bottom: 10px; }
+    .page-hero p { font-size: 18px; color: var(--color-content-secondary); max-width: 580px; line-height: 1.5; }
+
+    /* ─── CATALOG LAYOUT ─── */
+    .catalog-body { padding: 0 0 100px; }
+
+    .component-section { margin-bottom: 80px; }
+    .component-section-header {
+      display: flex; align-items: flex-start; gap: 32px;
+      margin-bottom: 32px; padding-bottom: 20px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .component-number {
+      font-family: var(--font-ui); font-size: 32px; color: var(--color-surface-deep);
+      line-height: 1; flex-shrink: 0; padding-top: 4px;
+    }
+    .component-meta {}
+    .component-name { font-family: var(--font-display); font-size: 28px; font-weight: 500; color: var(--color-content-primary); margin-bottom: 6px; }
+    .component-desc { font-size: 16px; color: var(--color-content-secondary); line-height: 1.5; margin-bottom: 10px; }
+    .component-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .ctag {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      padding: 3px 9px; border-radius: 10px;
+      background: var(--color-surface-card); border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary);
+    }
+    .ctag.placement { background: var(--color-feedback-info-bg); color: var(--color-feedback-info-text); border-color: #B0D0EE; }
+
+    /* ─── STATES GRID ─── */
+    .states-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+      gap: 20px;
+    }
+    .state-box {
+      border: 1px solid var(--color-border-default);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+    .state-box-label {
+      padding: 8px 14px;
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      background: var(--color-surface-raised); border-bottom: 1px solid var(--color-border-default);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .state-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--color-content-disabled); }
+    .state-dot.active { background: var(--color-feedback-success-text); }
+    .state-box-content { padding: 24px; background: var(--color-surface-page); }
+
+    /* ─── CONTEXT STRIP (simula pagina reale) ─── */
+    .context-strip {
+      padding: 12px 14px; background: var(--color-surface-card);
+      border-bottom: 1px solid var(--color-border-default);
+      font-size: 12px; color: var(--color-content-secondary);
+      font-family: var(--font-ui); letter-spacing: 0.04em;
+    }
+
+    /* ════════════════════════════════════════════════════
+       COMPONENT A: MICRO-FEEDBACK INLINE
+       Thumbs up/down + optional text
+       Embeds: bottom of documento.html, bottom of search results,
+               bottom of errori.html (ogni stato)
+    ════════════════════════════════════════════════════ */
+
+    .micro-feedback {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--color-border-default);
+      background: var(--color-surface-raised);
+    }
+    .micro-feedback-question {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary); flex-shrink: 0;
+    }
+    .thumb-btn {
+      width: 34px; height: 34px;
+      display: flex; align-items: center; justify-content: center;
+      background: transparent;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+      transition: all 0.12s;
+      flex-shrink: 0;
+    }
+    .thumb-btn:hover { border-color: var(--color-content-brand); background: var(--color-surface-page); transform: scale(1.05); }
+    .thumb-btn:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+    .thumb-btn.selected-up {
+      background: var(--color-feedback-success-bg);
+      border-color: #9ECAB1; color: var(--color-feedback-success-text);
+    }
+    .thumb-btn.selected-down {
+      background: var(--color-feedback-error-bg);
+      border-color: #E8B4AF; color: var(--color-feedback-error-text);
+    }
+
+    /* Expanded text area */
+    .micro-feedback-expand {
+      display: flex; flex-direction: column; gap: 10px;
+      padding: 14px 18px;
+      border-top: 1px dashed var(--color-border-default);
+      background: var(--color-surface-raised);
+    }
+    .micro-feedback-expand label {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+    }
+    .micro-feedback-textarea {
+      width: 100%; padding: 10px 12px;
+      font-family: var(--font-body); font-size: 15px;
+      border: 1px solid var(--color-border-default); border-radius: 4px;
+      background: var(--color-surface-page); color: var(--color-content-primary);
+      resize: vertical; min-height: 80px; outline: none;
+    }
+    .micro-feedback-textarea:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.25);
+    }
+    .micro-feedback-textarea::placeholder { color: var(--color-content-disabled); font-size: 14px; }
+    .micro-feedback-actions { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-sm-primary {
+      padding: 8px 16px; font-family: var(--font-ui); font-size: 13px;
+      background: var(--color-interactive-primary-bg); color: var(--color-interactive-primary-label);
+      border: none; border-radius: 3px; cursor: pointer; transition: background 0.12s;
+    }
+    .btn-sm-primary:hover { background: var(--color-interactive-primary-bg-hover); }
+    .btn-sm-secondary {
+      padding: 8px 14px; font-family: var(--font-ui); font-size: 13px;
+      background: transparent; color: var(--color-content-secondary);
+      border: 1px solid var(--color-border-default); border-radius: 3px; cursor: pointer;
+    }
+    .btn-sm-secondary:hover { color: var(--color-content-primary); border-color: var(--color-content-secondary); }
+
+    /* Submitted / thank you state */
+    .micro-feedback-thanks {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 18px;
+      background: var(--color-feedback-success-bg);
+      border-top: 1px solid #9ECAB1;
+    }
+    .thanks-icon { font-size: 18px; }
+    .thanks-text { font-family: var(--font-ui); font-size: 13px; color: var(--color-feedback-success-text); }
+    .thanks-undo { font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary); text-decoration: underline; cursor: pointer; margin-left: auto; }
+    .thanks-undo:hover { color: var(--color-content-primary); }
+
+    /* ════════════════════════════════════════════════════
+       COMPONENT B: AI SUMMARY ACCURACY
+       Star/dot rating + reason chips + optional text
+       Embeds: after AI summary section in documento.html
+    ════════════════════════════════════════════════════ */
+
+    .ai-feedback {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .ai-feedback-header {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ai-feedback-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .ai-feedback-label::before {
+      content: ''; display: inline-block; width: 6px; height: 6px;
+      border-radius: 50%; background: var(--color-brand-primary);
+    }
+    .ai-feedback-skip {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-disabled);
+      cursor: pointer; text-decoration: none;
+    }
+    .ai-feedback-skip:hover { color: var(--color-content-secondary); }
+
+    .ai-feedback-body { padding: 20px; }
+    .ai-feedback-question {
+      font-size: 16px; color: var(--color-content-primary); margin-bottom: 18px; font-weight: 600;
+    }
+
+    /* Star rating */
+    .star-row { display: flex; align-items: center; gap: 6px; margin-bottom: 20px; }
+    .star-btn {
+      font-size: 24px; background: none; border: none; cursor: pointer;
+      padding: 2px; transition: transform 0.1s;
+      color: var(--color-surface-deep); /* unselected */
+      line-height: 1;
+    }
+    .star-btn:hover, .star-btn.filled { color: #E0A800; } /* amber */
+    .star-btn:focus-visible { outline: 2px solid var(--color-border-focus); border-radius: 2px; }
+    .star-btn:hover { transform: scale(1.15); }
+    .star-label { font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary); margin-left: 8px; }
+
+    /* Reason chips */
+    .reason-chips-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-content-secondary); margin-bottom: 10px;
+    }
+    .reason-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 16px; }
+    .reason-chip {
+      padding: 6px 14px; font-family: var(--font-ui); font-size: 12px;
+      border: 1px solid var(--color-border-default); border-radius: 20px;
+      background: var(--color-surface-page); color: var(--color-content-secondary);
+      cursor: pointer; transition: all 0.1s; user-select: none;
+    }
+    .reason-chip:hover { border-color: var(--color-content-brand); color: var(--color-content-primary); }
+    .reason-chip.selected {
+      background: var(--color-surface-inverse); color: var(--color-content-inverse);
+      border-color: var(--color-surface-inverse);
+    }
+    .reason-chip:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+
+    /* Optional detail textarea */
+    .ai-feedback-optional {
+      margin-bottom: 16px;
+    }
+    .ai-feedback-optional label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-content-secondary); display: block; margin-bottom: 8px;
+    }
+    .ai-feedback-textarea {
+      width: 100%; padding: 10px 12px;
+      font-family: var(--font-body); font-size: 15px;
+      border: 1px solid var(--color-border-default); border-radius: 4px;
+      background: var(--color-surface-page); color: var(--color-content-primary);
+      resize: vertical; min-height: 72px; outline: none;
+    }
+    .ai-feedback-textarea:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.25);
+    }
+    .ai-feedback-textarea::placeholder { color: var(--color-content-disabled); font-size: 14px; }
+    .ai-feedback-footer {
+      display: flex; align-items: center; gap: 10px; justify-content: flex-end;
+    }
+    .ai-feedback-privacy {
+      font-size: 12px; color: var(--color-content-disabled); flex: 1;
+    }
+
+    /* Submitted state */
+    .ai-feedback-submitted {
+      padding: 28px 20px; text-align: center;
+    }
+    .submitted-icon { font-size: 36px; display: block; margin-bottom: 12px; }
+    .submitted-title {
+      font-family: var(--font-display); font-size: 22px; font-weight: 400;
+      color: var(--color-content-primary); margin-bottom: 6px;
+    }
+    .submitted-desc { font-size: 15px; color: var(--color-content-secondary); }
+
+    /* ════════════════════════════════════════════════════
+       COMPONENT C: SEARCH SATISFACTION
+       Post-risultati: "Hai trovato quello che cercavi?"
+       Embeds: bottom of results area in search.html
+               also: bottom of AI Q&A results
+    ════════════════════════════════════════════════════ */
+
+    .search-satisfaction {
+      padding: 20px 24px;
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+    }
+    .sat-question {
+      font-size: 16px; color: var(--color-content-secondary); flex: 1;
+      min-width: 200px;
+    }
+    .sat-question strong { color: var(--color-content-primary); }
+    .sat-actions { display: flex; gap: 8px; flex-wrap: wrap; }
+    .sat-btn {
+      padding: 9px 20px; font-family: var(--font-ui); font-size: 14px;
+      border: 1px solid var(--color-border-default); border-radius: 4px;
+      background: var(--color-surface-page); color: var(--color-content-secondary);
+      cursor: pointer; transition: all 0.12s;
+    }
+    .sat-btn:hover { border-color: var(--color-content-brand); color: var(--color-content-primary); }
+    .sat-btn.yes:hover, .sat-btn.yes.selected {
+      background: var(--color-feedback-success-bg);
+      border-color: #9ECAB1; color: var(--color-feedback-success-text);
+    }
+    .sat-btn.no:hover, .sat-btn.no.selected {
+      background: var(--color-feedback-error-bg);
+      border-color: #E8B4AF; color: var(--color-feedback-error-text);
+    }
+    .sat-btn:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+
+    /* No result follow-up */
+    .sat-followup {
+      width: 100%; margin-top: 8px;
+      padding-top: 14px; border-top: 1px dashed var(--color-border-default);
+    }
+    .sat-followup-label {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 10px;
+    }
+    .sat-followup-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+    .sat-followup-chip {
+      padding: 5px 13px; font-family: var(--font-ui); font-size: 12px;
+      border: 1px solid var(--color-border-default); border-radius: 20px;
+      background: var(--color-surface-page); color: var(--color-content-secondary);
+      cursor: pointer; transition: all 0.1s;
+    }
+    .sat-followup-chip:hover, .sat-followup-chip.selected {
+      border-color: var(--color-content-brand); color: var(--color-content-primary);
+    }
+    .sat-followup-chip.selected {
+      background: var(--color-surface-card); font-weight: 600;
+    }
+    .sat-followup-input {
+      width: 100%; padding: 10px 12px;
+      font-family: var(--font-body); font-size: 15px;
+      border: 1px solid var(--color-border-default); border-radius: 4px;
+      background: var(--color-surface-page); color: var(--color-content-primary); outline: none;
+      margin-bottom: 12px;
+    }
+    .sat-followup-input:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.25);
+    }
+    .sat-followup-input::placeholder { color: var(--color-content-disabled); font-size: 14px; }
+
+    /* Satisfied follow-up — encourage email subscribe or deeper explore */
+    .sat-positive-followup {
+      width: 100%; margin-top: 8px;
+      padding-top: 14px; border-top: 1px dashed var(--color-border-default);
+      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
+    }
+    .sat-positive-text { font-size: 15px; color: var(--color-content-secondary); flex: 1; }
+    .btn-outline-sm {
+      padding: 8px 16px; font-family: var(--font-ui); font-size: 13px;
+      background: transparent; color: var(--color-content-brand);
+      border: 1px solid var(--color-content-brand); border-radius: 4px;
+      cursor: pointer; text-decoration: none; transition: all 0.12s;
+      white-space: nowrap;
+    }
+    .btn-outline-sm:hover { background: var(--color-surface-raised); }
+
+    /* Submitted */
+    .sat-submitted {
+      width: 100%; padding: 14px 0 0;
+      border-top: 1px dashed var(--color-border-default);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .sat-submitted-text {
+      font-family: var(--font-ui); font-size: 13px; color: var(--color-feedback-success-text);
+    }
+
+    /* ─── DESIGN SPEC PANEL ─── */
+    .spec-panel {
+      background: #0F1B2D;
+      color: rgba(255,255,255,0.85);
+      border-radius: 6px;
+      padding: 24px;
+      margin-top: 28px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      line-height: 1.8;
+    }
+    .spec-panel h4 {
+      font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 14px;
+    }
+    .spec-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; }
+    .spec-item {}
+    .spec-key { color: rgba(255,255,255,0.45); font-size: 11px; margin-bottom: 3px; }
+    .spec-val { color: white; }
+    .spec-val code { color: #D8EC28; background: rgba(216,236,40,0.1); padding: 1px 5px; border-radius: 2px; }
+    .spec-rule {
+      margin-top: 14px; padding-top: 14px;
+      border-top: 1px solid rgba(255,255,255,0.1);
+      color: rgba(255,255,255,0.6); font-size: 12px; line-height: 1.8;
+    }
+    .spec-rule strong { color: rgba(255,255,255,0.9); }
+
+    /* ─── DIVIDER / section separator ─── */
+    hr.section-div {
+      border: none; border-top: 1px solid var(--color-border-default); margin: 56px 0;
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer { background: var(--color-surface-inverse); padding: 32px 0; margin-top: 80px; }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; }
+    .footer-copy { font-size: 13px; color: rgba(255,255,255,0.6); }
+  </style>
+</head>
+<body>
+<div data-brand="susdef">
+
+  <!-- ─── HEADER ─── -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="index.html" class="site-logo">← Page Templates</a>
+      <nav class="site-nav">
+        <a href="search.html">Ricerca</a>
+        <a href="documento.html">Documento</a>
+        <a href="errori.html">Errori</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── HERO ─── -->
+  <div class="page-hero">
+    <div class="container">
+      <h1>Componenti feedback</h1>
+      <p>Tre componenti per raccogliere segnali dagli utenti — inline, contestuali e non intrusivi. Ogni componente mostra tutti gli stati interattivi.</p>
+    </div>
+  </div>
+
+  <main class="catalog-body">
+    <div class="container">
+
+
+      <!-- ════════════════════════════════════════════════════
+           A — MICRO-FEEDBACK INLINE
+      ════════════════════════════════════════════════════ -->
+      <section class="component-section" aria-labelledby="comp-a-title">
+
+        <div class="component-section-header">
+          <div class="component-number">A</div>
+          <div class="component-meta">
+            <h2 class="component-name" id="comp-a-title">Micro-feedback inline</h2>
+            <p class="component-desc">Thumbs up/down con testo opzionale. Componente ultra-leggero per raccogliere segnali rapidi ad alto volume. Nessun interruzione al flusso — l'utente può ignorarlo completamente.</p>
+            <div class="component-tags">
+              <span class="ctag">Volume alto</span>
+              <span class="ctag">Low friction</span>
+              <span class="ctag">Thumbs</span>
+              <span class="ctag">Optional text</span>
+              <span class="ctag placement">📄 documento.html — footer</span>
+              <span class="ctag placement">🔍 search.html — bottom risultati</span>
+              <span class="ctag placement">⚠ errori.html — ogni stato</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="states-grid">
+
+          <!-- STATE: Idle -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot"></span>Idle — riposo</div>
+            <div class="context-strip">📄 documento.html · dopo download gate</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="micro-feedback" role="group" aria-label="Valuta questa pagina">
+                <span class="micro-feedback-question">Questa pagina è stata utile?</span>
+                <button class="thumb-btn" aria-label="Sì, utile" title="Sì">👍</button>
+                <button class="thumb-btn" aria-label="No, non utile" title="No">👎</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Positive selected, text closed -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Selezionato positivo — testo chiuso</div>
+            <div class="context-strip">📄 documento.html · utente ha cliccato 👍</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="micro-feedback" role="group" aria-label="Valuta questa pagina">
+                <span class="micro-feedback-question">Grazie! Vuoi aggiungere qualcosa?</span>
+                <button class="thumb-btn selected-up" aria-label="Sì, utile" aria-pressed="true">👍</button>
+                <button class="thumb-btn" aria-label="No, non utile" aria-pressed="false">👎</button>
+              </div>
+              <div class="micro-feedback-expand">
+                <label for="fb-pos-text-a">Cosa hai trovato utile? <span style="opacity:.5; font-weight: normal;">(opzionale)</span></label>
+                <textarea id="fb-pos-text-a" class="micro-feedback-textarea" placeholder="Es. La sintesi AI era precisa, i punti chiave erano chiari…" rows="3"></textarea>
+                <div class="micro-feedback-actions">
+                  <button class="btn-sm-secondary">Salta</button>
+                  <button class="btn-sm-primary">Invia feedback</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Negative selected, text open with chips -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Selezionato negativo — motivazione</div>
+            <div class="context-strip">📄 documento.html · utente ha cliccato 👎</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="micro-feedback" role="group" aria-label="Valuta questa pagina">
+                <span class="micro-feedback-question">Ci dispiace. Cosa è andato storto?</span>
+                <button class="thumb-btn" aria-label="Sì, utile" aria-pressed="false">👍</button>
+                <button class="thumb-btn selected-down" aria-label="No, non utile" aria-pressed="true">👎</button>
+              </div>
+              <div class="micro-feedback-expand">
+                <label>Seleziona il problema:</label>
+                <div style="display: flex; flex-wrap: wrap; gap: 7px; margin-bottom: 12px;">
+                  <button class="reason-chip" aria-pressed="false">Informazioni non trovate</button>
+                  <button class="reason-chip selected" aria-pressed="true">Link non funzionante</button>
+                  <button class="reason-chip" aria-pressed="false">Errore di caricamento</button>
+                  <button class="reason-chip" aria-pressed="false">Documento sbagliato</button>
+                </div>
+                <textarea class="micro-feedback-textarea" placeholder="Descrivi il problema (opzionale)…" rows="2"></textarea>
+                <div class="micro-feedback-actions" style="margin-top: 10px;">
+                  <button class="btn-sm-secondary">Annulla</button>
+                  <button class="btn-sm-primary">Invia segnalazione</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Submitted -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Inviato — grazie</div>
+            <div class="context-strip">📄 documento.html · dopo invio</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="micro-feedback-thanks" role="status" aria-live="polite">
+                <span class="thanks-icon">✅</span>
+                <span class="thanks-text">Grazie per il feedback!</span>
+                <button class="thanks-undo" aria-label="Annulla invio feedback">Annulla</button>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /states-grid -->
+
+        <!-- Spec panel -->
+        <div class="spec-panel">
+          <h4>Specifiche componente A</h4>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <p class="spec-key">Trigger invio</p>
+              <p class="spec-val">Click thumbs → espande testo → "Invia" o "Salta" (anche il solo click thumbs senza testo è un segnale valido)</p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Dati inviati</p>
+              <p class="spec-val"><code>page_url</code>, <code>sentiment</code> (+1/-1), <code>reason[]</code>, <code>text?</code>, <code>session_id</code></p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Persistenza</p>
+              <p class="spec-val">localStorage: nascondere dopo risposta, non mostrare di nuovo per 30gg sulla stessa pagina</p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Accessibilità</p>
+              <p class="spec-val"><code>role="group"</code> sul wrapper · <code>aria-label</code> su ogni thumb · <code>aria-pressed</code> per stato · <code>aria-live="polite"</code> sul thank you</p>
+            </div>
+          </div>
+          <div class="spec-rule">
+            <strong>Regola UX:</strong> non mostrare il box testo opzionale finché l'utente non ha cliccato un thumb. Il testo è sempre opzionale — "Salta" deve essere sempre visibile. · <strong>Negativo:</strong> mostrare sempre i chip di motivazione (aiutano il product team a categorizzare) · <strong>Non bloccare</strong> il contenuto sotto il componente.
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="section-div">
+
+
+      <!-- ════════════════════════════════════════════════════
+           B — AI SUMMARY ACCURACY
+      ════════════════════════════════════════════════════ -->
+      <section class="component-section" aria-labelledby="comp-b-title">
+
+        <div class="component-section-header">
+          <div class="component-number">B</div>
+          <div class="component-meta">
+            <h2 class="component-name" id="comp-b-title">AI Summary accuracy</h2>
+            <p class="component-desc">Valutazione qualitativa della sintesi generata dall'AI. I dati alimentano direttamente il pipeline di miglioramento (fine-tuning del prompt, soglia di confidenza, rilevamento allucinazioni). Visibile solo sotto il blocco sintesi AI, non altrove.</p>
+            <div class="component-tags">
+              <span class="ctag">Star rating</span>
+              <span class="ctag">Reason chips</span>
+              <span class="ctag">Optional detail</span>
+              <span class="ctag">Collassabile</span>
+              <span class="ctag placement">📄 documento.html — dopo blocco sintesi AI</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="states-grid">
+
+          <!-- STATE: Idle (collassato) -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot"></span>Idle — collassato</div>
+            <div class="context-strip">📄 documento.html · dopo "Sintesi AI" section</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="ai-feedback">
+                <div class="ai-feedback-header">
+                  <span class="ai-feedback-label">Valuta la sintesi AI</span>
+                  <a href="#" class="ai-feedback-skip" role="button">Non ora</a>
+                </div>
+                <div class="ai-feedback-body">
+                  <p class="ai-feedback-question">Quanto è accurata questa sintesi?</p>
+                  <div class="star-row" role="group" aria-label="Valutazione da 1 a 5 stelle">
+                    <button class="star-btn" aria-label="1 stella">★</button>
+                    <button class="star-btn" aria-label="2 stelle">★</button>
+                    <button class="star-btn" aria-label="3 stelle">★</button>
+                    <button class="star-btn" aria-label="4 stelle">★</button>
+                    <button class="star-btn" aria-label="5 stelle">★</button>
+                    <span class="star-label">Clicca per valutare</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Rating selezionato, chip visibili -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Rating selezionato — 3 stelle</div>
+            <div class="context-strip">📄 documento.html · utente ha selezionato 3★</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="ai-feedback">
+                <div class="ai-feedback-header">
+                  <span class="ai-feedback-label">Valuta la sintesi AI</span>
+                  <a href="#" class="ai-feedback-skip" role="button">Non ora</a>
+                </div>
+                <div class="ai-feedback-body">
+                  <p class="ai-feedback-question">Cosa non ti ha convinto?</p>
+                  <div class="star-row" role="group" aria-label="Valutazione">
+                    <button class="star-btn filled" aria-label="1 stella" aria-pressed="false">★</button>
+                    <button class="star-btn filled" aria-label="2 stelle" aria-pressed="false">★</button>
+                    <button class="star-btn filled" aria-label="3 stelle" aria-pressed="true">★</button>
+                    <button class="star-btn" aria-label="4 stelle" aria-pressed="false">★</button>
+                    <button class="star-btn" aria-label="5 stelle" aria-pressed="false">★</button>
+                    <span class="star-label" style="color: #E0A800;">Abbastanza accurata</span>
+                  </div>
+
+                  <p class="reason-chips-label">Cosa miglioreresti?</p>
+                  <div class="reason-chips" role="group" aria-label="Motivi">
+                    <button class="reason-chip selected" aria-pressed="true">Troppo generica</button>
+                    <button class="reason-chip" aria-pressed="false">Dati errati</button>
+                    <button class="reason-chip" aria-pressed="false">Manca contesto</button>
+                    <button class="reason-chip" aria-pressed="false">Traduzione scadente</button>
+                    <button class="reason-chip" aria-pressed="false">Non corrisponde al documento</button>
+                    <button class="reason-chip" aria-pressed="false">Troppo lunga</button>
+                  </div>
+
+                  <div class="ai-feedback-optional">
+                    <label for="ai-fb-detail">Dettaglio <span style="opacity:.5; font-weight: normal;">(opzionale)</span></label>
+                    <textarea id="ai-fb-detail" class="ai-feedback-textarea" placeholder="Es. Il secondo paragrafo parla di plastica ma il documento è sui metalli…" rows="2"></textarea>
+                  </div>
+
+                  <div class="ai-feedback-footer">
+                    <p class="ai-feedback-privacy">Il feedback è anonimo e usato solo per migliorare la sintesi AI.</p>
+                    <button class="btn-sm-secondary">Annulla</button>
+                    <button class="btn-sm-primary">Invia</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Rating alto, 5 stelle — form ridotto -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Rating alto — 5 stelle</div>
+            <div class="context-strip">📄 documento.html · utente ha selezionato 5★</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="ai-feedback">
+                <div class="ai-feedback-header">
+                  <span class="ai-feedback-label">Valuta la sintesi AI</span>
+                </div>
+                <div class="ai-feedback-body">
+                  <p class="ai-feedback-question">Ottimo! Vuoi aggiungere qualcosa?</p>
+                  <div class="star-row" role="group" aria-label="Valutazione">
+                    <button class="star-btn filled" aria-pressed="false" aria-label="1★">★</button>
+                    <button class="star-btn filled" aria-pressed="false" aria-label="2★">★</button>
+                    <button class="star-btn filled" aria-pressed="false" aria-label="3★">★</button>
+                    <button class="star-btn filled" aria-pressed="false" aria-label="4★">★</button>
+                    <button class="star-btn filled" aria-pressed="true" aria-label="5★">★</button>
+                    <span class="star-label" style="color: #E0A800;">Eccellente</span>
+                  </div>
+
+                  <div class="ai-feedback-optional">
+                    <label for="ai-fb-pos">Commento positivo <span style="opacity:.5; font-weight: normal;">(opzionale)</span></label>
+                    <textarea id="ai-fb-pos" class="ai-feedback-textarea" placeholder="Cosa ha funzionato bene?" rows="2"></textarea>
+                  </div>
+
+                  <div class="ai-feedback-footer">
+                    <p class="ai-feedback-privacy">Il feedback è anonimo.</p>
+                    <button class="btn-sm-secondary">Salta</button>
+                    <button class="btn-sm-primary">Invia</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Submitted -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Inviato</div>
+            <div class="context-strip">📄 documento.html · dopo invio</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="ai-feedback">
+                <div class="ai-feedback-submitted" role="status" aria-live="polite">
+                  <span class="submitted-icon">🤖</span>
+                  <p class="submitted-title">Grazie per aver valutato la sintesi</p>
+                  <p class="submitted-desc">Il tuo feedback aiuta a migliorare le sintesi AI per tutti gli utenti della biblioteca.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /states-grid -->
+
+        <!-- Spec panel -->
+        <div class="spec-panel">
+          <h4>Specifiche componente B</h4>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <p class="spec-key">Dati inviati</p>
+              <p class="spec-val"><code>document_id</code>, <code>ai_model_version</code>, <code>rating</code> (1-5), <code>reasons[]</code>, <code>detail?</code>, <code>session_id</code></p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Chip condizionali</p>
+              <p class="spec-val">Mostrare chip negativi solo se rating ≤ 3. Rating 4-5: solo box testo opzionale.</p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">AI pipeline use</p>
+              <p class="spec-val">Rating ≤ 2 + reason "Dati errati" → flag per revisione umana del chunk sorgente</p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Persistenza</p>
+              <p class="spec-val">Nascondere se già valutato (localStorage per document_id). Non mostrare su mobile se schermo &lt;480px — integra nella pagina dedicata.</p>
+            </div>
+          </div>
+          <div class="spec-rule">
+            <strong>Versione AI da tracciare:</strong> loggare sempre il model version e il prompt hash per correlare i feedback con i miglioramenti del pipeline. · <strong>Privacy:</strong> nessun dato personale — solo session_id anonimo e document_id. · <strong>"Non ora":</strong> sempre presente, click salva preferenza per 7gg.
+          </div>
+        </div>
+
+      </section>
+
+      <hr class="section-div">
+
+
+      <!-- ════════════════════════════════════════════════════
+           C — SEARCH SATISFACTION
+      ════════════════════════════════════════════════════ -->
+      <section class="component-section" aria-labelledby="comp-c-title">
+
+        <div class="component-section-header">
+          <div class="component-number">C</div>
+          <div class="component-meta">
+            <h2 class="component-name" id="comp-c-title">Search satisfaction</h2>
+            <p class="component-desc">Appare al termine della lista risultati, o dopo 30 secondi di permanenza sulla pagina risultati. Misura la qualità del motore di ricerca e rivela i gap di contenuto. Il "No" apre un follow-up di categorizzazione.</p>
+            <div class="component-tags">
+              <span class="ctag">Post-search</span>
+              <span class="ctag">Yes/No</span>
+              <span class="ctag">Gap analysis</span>
+              <span class="ctag placement">🔍 search.html — bottom risultati (dopo l'ultima card)</span>
+              <span class="ctag placement">🤖 search.html — bottom AI Q&A results</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="states-grid">
+
+          <!-- STATE: Idle -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot"></span>Idle — riposo</div>
+            <div class="context-strip">🔍 search.html · bottom risultati per "economia circolare 2023"</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="search-satisfaction" role="group" aria-label="Soddisfazione ricerca">
+                <p class="sat-question">Hai trovato quello che cercavi per <strong>"economia circolare 2023"</strong>?</p>
+                <div class="sat-actions">
+                  <button class="sat-btn yes" aria-label="Sì, ho trovato quello che cercavo">✓ Sì</button>
+                  <button class="sat-btn no" aria-label="No, non ho trovato quello che cercavo">✗ No</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Positive — follow-up CTA -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Soddisfatto — follow-up leggero</div>
+            <div class="context-strip">🔍 search.html · utente ha risposto "Sì"</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="search-satisfaction" role="group" style="flex-wrap: wrap;">
+                <p class="sat-question">Hai trovato quello che cercavi?</p>
+                <div class="sat-actions">
+                  <button class="sat-btn yes selected" aria-pressed="true">✓ Sì</button>
+                  <button class="sat-btn no" aria-pressed="false">✗ No</button>
+                </div>
+                <div class="sat-positive-followup" role="status" aria-live="polite">
+                  <p class="sat-positive-text">Vuoi ricevere aggiornamenti quando vengono pubblicati nuovi documenti su questo tema?</p>
+                  <a href="#" class="btn-outline-sm">🔔 Iscriviti agli aggiornamenti</a>
+                  <button class="btn-sm-secondary" style="font-size: 12px; padding: 7px 12px;">No grazie</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Negative — follow-up chips -->
+          <div class="state-box" style="grid-column: span 2;">
+            <div class="state-box-label"><span class="state-dot active"></span>Non soddisfatto — categorizzazione gap</div>
+            <div class="context-strip">🔍 search.html · utente ha risposto "No"</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="search-satisfaction" role="group" style="flex-wrap: wrap;">
+                <p class="sat-question">Hai trovato quello che cercavi?</p>
+                <div class="sat-actions">
+                  <button class="sat-btn yes" aria-pressed="false">✓ Sì</button>
+                  <button class="sat-btn no selected" aria-pressed="true">✗ No</button>
+                </div>
+
+                <div class="sat-followup" role="group" aria-live="polite">
+                  <p class="sat-followup-label">Cosa è successo?</p>
+                  <div class="sat-followup-chips">
+                    <button class="sat-followup-chip selected" aria-pressed="true">Il documento che cercavo non c'è</button>
+                    <button class="sat-followup-chip" aria-pressed="false">I risultati non erano rilevanti</button>
+                    <button class="sat-followup-chip" aria-pressed="false">Cercavo un anno specifico</button>
+                    <button class="sat-followup-chip" aria-pressed="false">Cercavo in inglese</button>
+                    <button class="sat-followup-chip" aria-pressed="false">Troppi risultati, difficile orientarsi</button>
+                    <button class="sat-followup-chip" aria-pressed="false">Altro</button>
+                  </div>
+                  <input
+                    type="text"
+                    class="sat-followup-input"
+                    placeholder="Cosa stavi cercando esattamente? (opzionale — ci aiuta ad aggiungere documenti mancanti)"
+                    aria-label="Descrizione di cosa stavi cercando"
+                  >
+                  <div style="display: flex; justify-content: flex-end; gap: 8px;">
+                    <button class="btn-sm-secondary">Annulla</button>
+                    <button class="btn-sm-primary">Invia</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: Submitted -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot active"></span>Inviato — grazie</div>
+            <div class="context-strip">🔍 search.html · dopo invio</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="search-satisfaction">
+                <div class="sat-submitted" role="status" aria-live="polite">
+                  <span style="font-size: 20px;">✅</span>
+                  <p class="sat-submitted-text">Grazie! Il tuo feedback ci aiuta a migliorare la biblioteca.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- STATE: AI Q&A variant -->
+          <div class="state-box">
+            <div class="state-box-label"><span class="state-dot"></span>Variante AI Q&A</div>
+            <div class="context-strip">🤖 search.html · dopo risposta AI + documenti correlati</div>
+            <div class="state-box-content" style="padding: 0;">
+              <div class="search-satisfaction" role="group" aria-label="Soddisfazione risposta AI">
+                <p class="sat-question">La risposta AI è stata utile?</p>
+                <div class="sat-actions">
+                  <button class="sat-btn yes" aria-label="Sì, utile">✓ Sì</button>
+                  <button class="sat-btn no" aria-label="No, non utile">✗ No</button>
+                  <button class="sat-btn" aria-label="In parte" style="border-color: #B0D0EE; color: var(--color-feedback-info-text);">~ In parte</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div><!-- /states-grid -->
+
+        <!-- Spec panel -->
+        <div class="spec-panel">
+          <h4>Specifiche componente C</h4>
+          <div class="spec-grid">
+            <div class="spec-item">
+              <p class="spec-key">Trigger display</p>
+              <p class="spec-val">Scroll al fondo della lista risultati, OPPURE 30s di permanenza sulla pagina (whichever first). NON su 0 risultati (usa errore nessun risultato).</p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Dati inviati</p>
+              <p class="spec-val"><code>query</code>, <code>result_count</code>, <code>satisfied</code> (bool/partial), <code>reason?</code>, <code>missing_text?</code>, <code>filters_active[]</code></p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Gap analysis</p>
+              <p class="spec-val">Il campo <code>missing_text</code> è oro per il content team: rivela documenti mancanti dalla biblioteca. Esportare settimanalmente.</p>
+            </div>
+            <div class="spec-item">
+              <p class="spec-key">Variante AI Q&A</p>
+              <p class="spec-val">Aggiungere opzione "~ In parte" — comune nelle risposte AI. Dati vanno al pipeline RAG, non solo al content team.</p>
+            </div>
+          </div>
+          <div class="spec-rule">
+            <strong>Rate limiting:</strong> mostrare max 1 volta per sessione. Se l'utente ha già risposto nella sessione corrente, non mostrarlo. · <strong>Mobile:</strong> collassare il followup negativo in un modal separato per non creare scroll-trap. · <strong>Analytics:</strong> tracciare <code>search_satisfaction_rate</code> come KPI principale del motore di ricerca (target &gt;70% sì).
+          </div>
+        </div>
+
+      </section>
+
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer">
+    <div class="container footer-inner">
+      <span class="footer-logo">Hederae DS · Susdef Templates</span>
+      <span class="footer-copy">© 2025 Pianeta Studio · v0.1.0 · Marzo 2026</span>
+    </div>
+  </footer>
+
+</div><!-- /data-brand -->
+</body>
+</html>

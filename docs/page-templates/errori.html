@@ -1,0 +1,983 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- BEST PRACTICE: error pages non devono essere indicizzate -->
+  <meta name="robots" content="noindex, nofollow">
+  <title>Errore — SUSDEF · Page Templates</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+      --color-sector-economia-circolare-muted: #EEEEFF;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .page-wrapper { min-height: 100vh; display: flex; flex-direction: column; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── HEADER (surface-inverse) ─── */
+    .site-header {
+      background-color: var(--color-surface-inverse);
+      padding: 16px 0;
+    }
+    .site-header .container { display: flex; align-items: center; justify-content: space-between; }
+    .site-logo {
+      font-family: var(--font-ui); font-size: 14px; color: var(--color-content-inverse);
+      letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; opacity: 0.9;
+    }
+    .site-nav { display: flex; gap: 32px; }
+    .site-nav a {
+      font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.8);
+      text-decoration: none; letter-spacing: 0.05em;
+    }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+
+    /* ─── ERROR STAGE (centrato, flex grow) ─── */
+    .error-stage {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 80px 24px;
+    }
+
+    .error-card {
+      max-width: 640px;
+      width: 100%;
+      text-align: center;
+    }
+
+    /* ─── ERROR CODE ─── */
+    .error-code {
+      font-family: var(--font-ui);
+      font-size: 96px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+      /* default: neutral */
+      color: var(--color-surface-deep);
+    }
+    .error-code.code-4xx { color: #E8D5D5; }
+    .error-code.code-410 { color: #E9E3D7; }
+    .error-code.code-403 { color: #FDE8C8; }
+    .error-code.code-401 { color: #FDE8C8; }
+    .error-code.code-5xx { color: #FDECEA; }
+    .error-code.code-503 { color: #E3F2FD; }
+    .error-code.code-link { color: #FFF8E1; }
+    .error-code.code-maint { color: #E3F2FD; }
+
+    /* ─── ERROR ICON (above code) ─── */
+    .error-icon {
+      font-size: 56px;
+      display: block;
+      margin-bottom: 16px;
+      line-height: 1;
+    }
+
+    /* ─── TEXT ─── */
+    .error-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 20px;
+    }
+    .error-title {
+      font-family: var(--font-display);
+      font-size: 40px;
+      font-weight: 400;
+      color: var(--color-content-primary);
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+    .error-desc {
+      font-size: 18px;
+      color: var(--color-content-secondary);
+      line-height: 1.6;
+      margin-bottom: 32px;
+      max-width: 480px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .error-desc strong { color: var(--color-content-primary); }
+    .error-desc code {
+      font-family: var(--font-ui);
+      font-size: 14px;
+      background: var(--color-surface-card);
+      padding: 2px 6px;
+      border-radius: 3px;
+    }
+
+    /* ─── ACTIONS ─── */
+    .error-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 48px;
+    }
+    .btn-primary {
+      padding: 13px 26px;
+      font-family: var(--font-ui);
+      font-size: 15px;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: background-color 0.15s;
+    }
+    .btn-primary:hover { background-color: var(--color-interactive-primary-bg-hover); }
+    .btn-primary:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+    .btn-secondary {
+      padding: 12px 24px;
+      font-family: var(--font-ui);
+      font-size: 15px;
+      background: transparent;
+      color: var(--color-interactive-secondary-label);
+      border: 1px solid var(--color-interactive-secondary-border);
+      border-radius: 4px;
+      cursor: pointer;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.15s;
+    }
+    .btn-secondary:hover { background: var(--color-surface-raised); }
+    .btn-secondary:focus-visible { outline: 3px solid var(--color-border-focus); outline-offset: 2px; }
+
+    /* ─── INLINE SEARCH ─── */
+    .error-search {
+      display: flex;
+      gap: 8px;
+      max-width: 480px;
+      margin: 0 auto 40px;
+    }
+    .error-search input {
+      flex: 1;
+      padding: 12px 16px;
+      font-family: var(--font-body);
+      font-size: 16px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      outline: none;
+    }
+    .error-search input:focus {
+      border-color: var(--color-border-focus);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.3);
+    }
+    .error-search input::placeholder { color: var(--color-content-disabled); }
+    .error-search button {
+      padding: 12px 20px;
+      font-family: var(--font-ui);
+      font-size: 14px;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .error-search button:hover { background-color: var(--color-interactive-primary-bg-hover); }
+
+    /* ─── HELPFUL LINKS ─── */
+    .helpful-links {
+      border-top: 1px solid var(--color-border-default);
+      padding-top: 28px;
+    }
+    .helpful-title {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 14px;
+    }
+    .helpful-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: center;
+    }
+    .helpful-link {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-content-brand);
+      text-decoration: none;
+      padding: 6px 14px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 20px;
+      background: var(--color-surface-raised);
+      transition: all 0.1s;
+    }
+    .helpful-link:hover {
+      border-color: var(--color-content-brand);
+      background: var(--color-surface-page);
+    }
+
+    /* ─── TECHNICAL DETAIL (expandable) ─── */
+    .tech-detail {
+      margin-top: 36px;
+      text-align: left;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .tech-detail summary {
+      padding: 12px 16px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      color: var(--color-content-secondary);
+      cursor: pointer;
+      background: var(--color-surface-raised);
+      user-select: none;
+      list-style: none;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .tech-detail summary::after { content: '▸'; font-size: 10px; }
+    .tech-detail[open] summary::after { content: '▾'; }
+    .tech-detail summary:hover { color: var(--color-content-primary); }
+    .tech-content {
+      padding: 16px;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      line-height: 1.8;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .tech-content p { margin-bottom: 6px; }
+    .tech-content strong { color: var(--color-content-primary); }
+
+    /* ─── MAINTENANCE SPECIFIC ─── */
+    .maintenance-progress {
+      max-width: 400px;
+      margin: 0 auto 32px;
+    }
+    .progress-label {
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+    .progress-bar {
+      height: 4px;
+      background: var(--color-surface-deep);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+    .progress-fill {
+      height: 100%;
+      background: var(--color-brand-primary);
+      border-radius: 2px;
+      animation: progress-pulse 2s ease-in-out infinite;
+    }
+    @keyframes progress-pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .maintenance-eta {
+      font-family: var(--font-ui);
+      font-size: 13px;
+      color: var(--color-content-secondary);
+      margin-top: 10px;
+    }
+
+    /* ─── TOMBSTONE (410 archiviato) ─── */
+    .tombstone-info {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 20px 24px;
+      margin: 0 auto 32px;
+      max-width: 480px;
+      text-align: left;
+    }
+    .tombstone-meta {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-bottom: 8px;
+    }
+    .tombstone-title {
+      font-family: var(--font-body);
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      line-height: 1.3;
+      margin-bottom: 6px;
+    }
+    .tombstone-author {
+      font-size: 13px;
+      color: var(--color-content-secondary);
+    }
+    .tombstone-reason {
+      margin-top: 12px;
+      padding: 8px 12px;
+      background: var(--color-feedback-warning-bg);
+      border: 1px solid #F0D98A;
+      border-radius: 3px;
+      font-size: 13px;
+      color: var(--color-feedback-warning-text);
+    }
+
+    /* ─── LINK SCADUTO SPECIFIC ─── */
+    .timer-display {
+      font-family: var(--font-ui);
+      font-size: 64px;
+      color: var(--color-surface-deep);
+      margin-bottom: 8px;
+      letter-spacing: 0.05em;
+    }
+    .timer-label {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-content-disabled);
+      margin-bottom: 28px;
+    }
+    .link-scaduto-doc {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      padding: 16px 20px;
+      margin: 0 auto 28px;
+      max-width: 440px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      text-align: left;
+    }
+    .link-doc-thumb {
+      width: 36px;
+      height: 44px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 2px;
+      flex-shrink: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-ui);
+      font-size: 8px;
+      color: var(--color-content-disabled);
+    }
+    .link-doc-info {}
+    .link-doc-title {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: 3px;
+      line-height: 1.3;
+    }
+    .link-doc-meta {
+      font-family: var(--font-ui);
+      font-size: 11px;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── STATE SWITCHER ─── */
+    .state-switcher {
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: #1a1a2e;
+      color: white;
+      padding: 16px;
+      border-radius: 8px;
+      z-index: 100;
+      font-family: var(--font-ui);
+      font-size: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+      min-width: 200px;
+    }
+    .state-switcher h4 {
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      font-size: 10px;
+      margin-bottom: 10px;
+    }
+    .state-btn {
+      display: block;
+      width: 100%;
+      padding: 7px 10px;
+      margin-bottom: 3px;
+      background: rgba(255,255,255,0.08);
+      border: none;
+      border-radius: 4px;
+      color: white;
+      cursor: pointer;
+      text-align: left;
+      font-family: var(--font-ui);
+      font-size: 11px;
+      transition: background 0.1s;
+      line-height: 1.4;
+    }
+    .state-btn:hover, .state-btn.active { background: var(--color-brand-primary); }
+    .state-btn .http-code {
+      display: inline-block;
+      min-width: 32px;
+      font-weight: bold;
+      opacity: 0.7;
+    }
+
+    [data-state] { display: none; }
+    [data-state].visible { display: block; }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background-color: var(--color-surface-inverse);
+      color: rgba(255,255,255,0.7);
+      padding: 32px 0;
+    }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; }
+    .footer-logo { font-family: var(--font-ui); font-size: 14px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; }
+    .footer-copy { font-size: 13px; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DEMO STATE SWITCHER ─── -->
+  <nav class="state-switcher" aria-label="Template states (demo only)">
+    <h4>Stato errore</h4>
+    <button class="state-btn active" onclick="showState('404-generic')"><span class="http-code">404</span> Non trovato (generico)</button>
+    <button class="state-btn" onclick="showState('404-doc')"><span class="http-code">404</span> Documento non trovato</button>
+    <button class="state-btn" onclick="showState('410')"><span class="http-code">410</span> Documento archiviato</button>
+    <button class="state-btn" onclick="showState('403')"><span class="http-code">403</span> Accesso negato</button>
+    <button class="state-btn" onclick="showState('401')"><span class="http-code">401</span> Login richiesto</button>
+    <button class="state-btn" onclick="showState('500')"><span class="http-code">500</span> Errore del server</button>
+    <button class="state-btn" onclick="showState('link-scaduto')"><span class="http-code">—</span> Link scaduto</button>
+    <button class="state-btn" onclick="showState('503')"><span class="http-code">503</span> Manutenzione</button>
+  </nav>
+
+  <div class="page-wrapper" data-brand="susdef">
+
+    <!-- ─── HEADER ─── -->
+    <header class="site-header" role="banner">
+      <div class="container">
+        <a href="#" class="site-logo">Fondazione Sviluppo Sostenibile</a>
+        <nav class="site-nav">
+          <a href="search.html">Ricerca</a>
+          <a href="#">Settori</a>
+          <a href="#">Chi siamo</a>
+        </nav>
+      </div>
+    </header>
+
+    <!-- ─── ERROR STAGE ─── -->
+    <main id="main" class="error-stage" role="main">
+      <div class="container">
+
+
+        <!-- ════════════════════════════════════════
+             404 GENERICO
+             HTTP: 404 Not Found
+             Trigger: URL non corrisponde a nessuna risorsa
+             Best practice: sempre noindex · cerca direttamente · 3 link utili max
+        ════════════════════════════════════════ -->
+        <div data-state="404-generic" class="error-card visible" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">🗺️</span>
+          <div class="error-code code-4xx" aria-label="Errore 404">404</div>
+          <p class="error-label">Pagina non trovata</p>
+          <h1 class="error-title">Questa pagina non esiste</h1>
+          <p class="error-desc">
+            L'indirizzo che hai inserito non corrisponde a nessuna pagina del sito. Potrebbe essere stato spostato, rinominato o l'URL potrebbe contenere un errore di battitura.
+          </p>
+
+          <!-- Inline search — utente può cercare senza tornare alla home -->
+          <form role="search" aria-label="Cerca nella biblioteca" class="error-search">
+            <input
+              type="search"
+              placeholder="Cerca nella biblioteca…"
+              aria-label="Campo di ricerca"
+              autocomplete="off"
+            >
+            <button type="submit">Cerca</button>
+          </form>
+
+          <div class="error-actions">
+            <a href="index.html" class="btn-primary">← Vai alla home</a>
+            <a href="search.html" class="btn-secondary">Biblioteca documenti</a>
+          </div>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Sezioni utili</p>
+            <div class="helpful-list">
+              <a href="#" class="helpful-link">Economia circolare</a>
+              <a href="#" class="helpful-link">Energia e clima</a>
+              <a href="#" class="helpful-link">Ecoinnovazione</a>
+              <a href="#" class="helpful-link">Corsi e formazione</a>
+              <a href="#" class="helpful-link">Contatti</a>
+            </div>
+          </div>
+
+          <!-- Dettaglio tecnico per admin/debug (nascosto utenti) -->
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 404 Not Found</p>
+              <p><strong>URL richiesta:</strong> <code>/biblioteca/documento-inesistente-xyz</code></p>
+              <p><strong>Timestamp:</strong> 2025-11-08T14:32:10Z</p>
+              <p><strong>Request ID:</strong> req_8f3a2b1c9d</p>
+              <p style="margin-top: 12px; font-size: 11px;">Se pensi che questa pagina dovrebbe esistere, <a href="#" style="color: var(--color-content-brand);">segnala il problema</a>.</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             404 DOCUMENTO SPECIFICO
+             HTTP: 404 Not Found
+             Trigger: /biblioteca/[slug] non trovato in DB
+             Best practice: suggerire ricerca dello stesso termine · mostrare link alla lista
+        ════════════════════════════════════════ -->
+        <div data-state="404-doc" class="error-card" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">📄</span>
+          <div class="error-code code-4xx" aria-label="Errore 404">404</div>
+          <p class="error-label">Documento non trovato</p>
+          <h1 class="error-title">Questo documento non è nella biblioteca</h1>
+          <p class="error-desc">
+            Il documento <strong>economia-circolare-pmi-2019</strong> non è presente nella biblioteca o l'URL non è corretto.
+          </p>
+
+          <!-- Search pre-filled con il termine dell'URL -->
+          <form role="search" aria-label="Cerca documento simile" class="error-search">
+            <input
+              type="search"
+              value="economia circolare pmi"
+              aria-label="Campo di ricerca"
+            >
+            <button type="submit">Cerca</button>
+          </form>
+
+          <div class="error-actions">
+            <a href="search.html" class="btn-primary">Cerca in biblioteca</a>
+            <a href="#" class="btn-secondary">Sfoglia Economia circolare</a>
+          </div>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Documenti recenti su questo tema</p>
+            <div class="helpful-list">
+              <a href="documento.html" class="helpful-link">📄 Rapporto EC in Italia 2023</a>
+              <a href="#" class="helpful-link">📄 Modelli business PMI 2023</a>
+              <a href="#" class="helpful-link">📄 PMI e Green Economy 2022</a>
+            </div>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 404 Not Found</p>
+              <p><strong>Slug cercato:</strong> <code>economia-circolare-pmi-2019</code></p>
+              <p><strong>Elasticsearch query:</strong> zero hits su indice <code>susdef_documents_v2</code></p>
+              <p><strong>Possibile causa:</strong> documento mai esistito, slug cambiato, o non ancora indicizzato.</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             410 DOCUMENTO ARCHIVIATO (tombstone)
+             HTTP: 410 Gone
+             Trigger: documento esisteva, ora rimosso/sostituito
+             Best practice: PRESERVA l'URL (tombstone), NON fare redirect a 404
+             → i siti esterni che linkano trovano un messaggio significativo
+             → Google delistizza più velocemente un 410 che un 404
+        ════════════════════════════════════════ -->
+        <div data-state="410" class="error-card" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">🗃️</span>
+          <div class="error-code code-410" aria-label="Errore 410">410</div>
+          <p class="error-label">Documento archiviato</p>
+          <h1 class="error-title">Questo documento è stato archiviato</h1>
+          <p class="error-desc">
+            Il documento non è più disponibile nella biblioteca. Di seguito le informazioni sull'ultima versione pubblica.
+          </p>
+
+          <!-- Tombstone: mostra info sul documento rimosso -->
+          <div class="tombstone-info" aria-label="Informazioni documento archiviato">
+            <p class="tombstone-meta">Documento rimosso il 15 settembre 2024</p>
+            <p class="tombstone-title">Rapporto sull'Economia Circolare in Italia — Edizione 2018</p>
+            <p class="tombstone-author">Fondazione Sviluppo Sostenibile · 2018 · IT · #0342</p>
+            <div class="tombstone-reason">
+              ⚠️ Questo documento è stato sostituito da un'edizione più aggiornata. I dati statistici potrebbero non essere più validi.
+            </div>
+          </div>
+
+          <div class="error-actions">
+            <a href="documento.html" class="btn-primary">📄 Vai all'edizione 2023 →</a>
+            <a href="search.html" class="btn-secondary">Cerca versioni precedenti</a>
+          </div>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Versioni disponibili</p>
+            <div class="helpful-list">
+              <a href="documento.html" class="helpful-link">2023 (più recente)</a>
+              <a href="#" class="helpful-link">2022</a>
+              <a href="#" class="helpful-link">2021</a>
+              <a href="#" class="helpful-link">2020</a>
+              <a href="#" class="helpful-link">2019</a>
+            </div>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 410 Gone — permanente, non un errore temporaneo</p>
+              <p><strong>Document ID:</strong> <code>#0342</code></p>
+              <p><strong>Rimosso:</strong> 2024-09-15 da admin <code>admin@fondazionesvilupposostenibile.org</code></p>
+              <p><strong>Motivo archivio:</strong> Sostituito da documento #1047 (2023)</p>
+              <p><strong>Successore:</strong> <code>/biblioteca/economia-circolare-italia-2023</code></p>
+              <p><strong>SEO note:</strong> 410 segnala ai crawler di delistizzare in modo definitivo. NON usare 404 per documenti sostituiti.</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             403 ACCESSO NEGATO
+             HTTP: 403 Forbidden
+             Trigger: utente autenticato ma non ha i permessi
+             (es: tentativo di scaricare senza completare gate,
+              o accesso a endpoint admin)
+             Best practice: NON mostrare dettagli sulla struttura interna
+        ════════════════════════════════════════ -->
+        <div data-state="403" class="error-card" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">🔒</span>
+          <div class="error-code code-403" aria-label="Errore 403">403</div>
+          <p class="error-label">Accesso negato</p>
+          <h1 class="error-title">Non hai i permessi per accedere a questa risorsa</h1>
+          <p class="error-desc">
+            La risorsa esiste ma non è accessibile con il tuo livello di autorizzazione. Se hai già effettuato l'accesso, contatta il supporto.
+          </p>
+
+          <div class="error-actions">
+            <a href="#" class="btn-primary">🔑 Accedi al tuo account</a>
+            <a href="documento.html" class="btn-secondary">Torna alla pagina documento</a>
+          </div>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Hai bisogno di aiuto?</p>
+            <div class="helpful-list">
+              <a href="#" class="helpful-link">Crea un account gratuito</a>
+              <a href="#" class="helpful-link">Contatta il supporto</a>
+              <a href="search.html" class="helpful-link">Sfoglia la biblioteca</a>
+            </div>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 403 Forbidden</p>
+              <p><strong>Causa:</strong> Richiesta di download senza signed URL valido.</p>
+              <p><strong>User:</strong> <code>anonimo</code> (nessun cookie di sessione)</p>
+              <p><strong>⚠️ Non esporre mai</strong> dettagli sulla struttura interna (path, nomi tabelle, ecc.).</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             401 LOGIN RICHIESTO
+             HTTP: 401 Unauthorized
+             Trigger: accesso a endpoint /api/download/* senza token
+             Differenza con 403: 401 = non autenticato, 403 = autenticato ma senza permesso
+             Best practice: mostrare form login inline se possibile
+        ════════════════════════════════════════ -->
+        <div data-state="401" class="error-card" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">👤</span>
+          <div class="error-code code-401" aria-label="Errore 401">401</div>
+          <p class="error-label">Accesso richiesto</p>
+          <h1 class="error-title">Devi accedere per scaricare il documento</h1>
+          <p class="error-desc">
+            Il download dei documenti è gratuito e richiede solo un indirizzo email. Inserisci la tua email per ricevere il link di download.
+          </p>
+
+          <!-- Form inline — più efficiente di un redirect separato -->
+          <form style="max-width: 360px; margin: 0 auto 32px;" novalidate>
+            <div style="margin-bottom: 12px; text-align: left;">
+              <label for="auth-email" style="display: block; font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 6px;">Email</label>
+              <input type="email" id="auth-email" placeholder="nome@organizzazione.it" autocomplete="email"
+                style="width: 100%; padding: 12px 16px; font-family: var(--font-body); font-size: 16px; border: 1px solid var(--color-border-default); border-radius: 4px; background: var(--color-surface-page); color: var(--color-content-primary); outline: none;">
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%;">
+              Ricevi link di download
+            </button>
+          </form>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Oppure</p>
+            <div class="helpful-list">
+              <a href="documento.html" class="helpful-link">← Torna alla pagina documento</a>
+              <a href="search.html" class="helpful-link">Sfoglia la biblioteca</a>
+            </div>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 401 Unauthorized</p>
+              <p><strong>Header:</strong> <code>WWW-Authenticate: Bearer realm="susdef-docs"</code></p>
+              <p><strong>Differenza 401 vs 403:</strong> 401 = credenziali mancanti, 403 = credenziali presenti ma insufficienti.</p>
+              <p><strong>Flow:</strong> email → token firmato (JWT 1h) → redirect a documento con <code>?token=xxx</code></p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             500 SERVER ERROR
+             HTTP: 500 Internal Server Error
+             Trigger: Elasticsearch giù, LLM timeout, DB error
+             Best practice: messaggio vago (sicurezza) · retry automatico · alert ops
+             NON mostrare stack trace o dettagli interni all'utente finale
+        ════════════════════════════════════════ -->
+        <div data-state="500" class="error-card" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">⚙️</span>
+          <div class="error-code code-5xx" aria-label="Errore 500">500</div>
+          <p class="error-label">Errore del server</p>
+          <h1 class="error-title">Qualcosa è andato storto</h1>
+          <p class="error-desc">
+            Si è verificato un problema tecnico durante l'elaborazione della tua richiesta. Il nostro team è già stato notificato. Riprova tra qualche minuto.
+          </p>
+
+          <div class="error-actions">
+            <button class="btn-primary" onclick="window.location.reload()">↺ Riprova</button>
+            <a href="search.html" class="btn-secondary">Torna alla biblioteca</a>
+          </div>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Nel frattempo</p>
+            <div class="helpful-list">
+              <a href="#" class="helpful-link">Verifica lo stato del servizio</a>
+              <a href="#" class="helpful-link">Segnala il problema</a>
+              <a href="index.html" class="helpful-link">Homepage</a>
+            </div>
+          </div>
+
+          <!-- NON mostrare stack trace in produzione — solo in dettaglio tecnico -->
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico (solo sviluppatori)</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 500 Internal Server Error</p>
+              <p><strong>Request ID:</strong> <code>req_9a8b7c6d5e</code></p>
+              <p><strong>Causa (log interno):</strong> Elasticsearch timeout dopo 30s su query <code>susdef_documents_v2</code></p>
+              <p><strong>Timestamp:</strong> 2025-11-08T15:44:22Z</p>
+              <p><strong>⚠️ In produzione</strong> nascondere questo dettaglio. Esporre solo request ID per il supporto.</p>
+              <p style="margin-top: 8px;"><strong>Retry policy:</strong> automatic retry 3x con exponential backoff (500ms, 1s, 2s).</p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             LINK SCADUTO (Signed URL expired)
+             HTTP: 200 (pagina funzionale, non errore HTTP)
+             Trigger: Signed URL del PDF scaricato >1h fa
+             Best practice: ri-generare il link senza re-autenticazione
+             → email già confermata → CTA diretta
+        ════════════════════════════════════════ -->
+        <div data-state="link-scaduto" class="error-card" role="main" aria-live="polite">
+          <div class="timer-display" aria-hidden="true">0:00</div>
+          <p class="timer-label">Link di download scaduto</p>
+
+          <p class="error-label">Download non più disponibile</p>
+          <h1 class="error-title">Il link è scaduto</h1>
+          <p class="error-desc">
+            Per sicurezza, i link di download sono validi <strong>1 ora</strong> dalla generazione. Puoi richiederne uno nuovo gratuitamente.
+          </p>
+
+          <!-- Doc context — l'utente ricorda quale documento voleva -->
+          <div class="link-scaduto-doc" aria-label="Documento da scaricare">
+            <div class="link-doc-thumb" aria-hidden="true">PDF</div>
+            <div class="link-doc-info">
+              <p class="link-doc-title">Rapporto sull'Economia Circolare in Italia 2023</p>
+              <p class="link-doc-meta">Fondazione Sviluppo Sostenibile · PDF · 142 pag. · 4.2 MB</p>
+            </div>
+          </div>
+
+          <div class="error-actions">
+            <button class="btn-primary">
+              ↺ Genera nuovo link per marco@enea.it
+            </button>
+          </div>
+
+          <p style="font-size: 14px; color: var(--color-content-secondary); margin-bottom: 28px;">
+            Non sei tu? <a href="#" style="color: var(--color-content-brand);">Inserisci un'altra email</a>
+          </p>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Oppure</p>
+            <div class="helpful-list">
+              <a href="documento.html" class="helpful-link">← Torna alla pagina documento</a>
+              <a href="search.html" class="helpful-link">Cerca altri documenti</a>
+            </div>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 200 (pagina funzionale, non errore server)</p>
+              <p><strong>Signed URL:</strong> scaduto alle 15:44 UTC (generato alle 14:44 UTC)</p>
+              <p><strong>Token:</strong> <code>dl_abc123…xyz</code> — firma JWT HS256 scaduta</p>
+              <p><strong>Email:</strong> <code>marco@enea.it</code> (cookie di sessione presente)</p>
+              <p><strong>Flow rigenerazione:</strong> email già verificata → skip form → genera nuovo JWT 1h → redirect a signed S3/CDN URL</p>
+              <p><strong>Watermark:</strong> nuovo PDF include <code>marco@enea.it + timestamp</code></p>
+            </div>
+          </details>
+        </div>
+
+
+        <!-- ════════════════════════════════════════
+             503 MANUTENZIONE
+             HTTP: 503 Service Unavailable
+             Trigger: deploy, reindex Elasticsearch, aggiornamento sistema
+             Best practice: Retry-After header · ETA visibile · status page link
+             → usare header HTTP: Retry-After: 1800
+        ════════════════════════════════════════ -->
+        <div data-state="503" class="error-card" role="alert" aria-live="polite">
+          <span class="error-icon" aria-hidden="true">🔧</span>
+          <div class="error-code code-maint" aria-label="Errore 503">503</div>
+          <p class="error-label">Manutenzione programmata</p>
+          <h1 class="error-title">Il servizio è temporaneamente non disponibile</h1>
+          <p class="error-desc">
+            Stiamo aggiornando la biblioteca documenti. Il servizio sarà di nuovo disponibile alle <strong>16:30</strong> di oggi.
+          </p>
+
+          <!-- Progress bar animata -->
+          <div class="maintenance-progress" aria-label="Avanzamento manutenzione">
+            <div class="progress-label">
+              <span>Aggiornamento in corso</span>
+              <span>~25 min rimanenti</span>
+            </div>
+            <div class="progress-bar" role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100">
+              <div class="progress-fill" style="width: 65%;"></div>
+            </div>
+            <p class="maintenance-eta">Iniziato alle 15:45 · Fine prevista 16:30</p>
+          </div>
+
+          <div class="error-actions">
+            <a href="#" class="btn-primary">📊 Verifica stato servizio</a>
+            <a href="#" class="btn-secondary">🔔 Notificami</a>
+          </div>
+
+          <div class="helpful-links">
+            <p class="helpful-title">Cosa sta succedendo</p>
+            <div class="helpful-list" style="justify-content: center; text-align: left; flex-direction: column; align-items: center;">
+              <span style="font-size: 14px; color: var(--color-content-secondary); line-height: 2;">
+                ✅ Backup completato &nbsp;·&nbsp; ✅ Database aggiornato &nbsp;·&nbsp; ⏳ Re-indicizzazione Elasticsearch &nbsp;·&nbsp; ⬜ Verifica AI pipeline
+              </span>
+            </div>
+          </div>
+
+          <details class="tech-detail">
+            <summary>Dettaglio tecnico</summary>
+            <div class="tech-content">
+              <p><strong>HTTP Status:</strong> 503 Service Unavailable</p>
+              <p><strong>Header:</strong> <code>Retry-After: 1500</code> (secondi, ~25 min)</p>
+              <p><strong>Causa:</strong> Re-indicizzazione Elasticsearch post-migrazione schema v2→v3</p>
+              <p><strong>Impatto:</strong> solo ricerca e download. La pagina principale è servita da CDN (statica).</p>
+              <p><strong>Manutenzione programmata:</strong> sempre comunicare con almeno 48h di anticipo via newsletter e banner.</p>
+            </div>
+          </details>
+        </div>
+
+
+      </div><!-- /container -->
+    </main>
+
+    <!-- ─── FOOTER ─── -->
+    <footer class="site-footer" role="contentinfo">
+      <div class="container footer-inner">
+        <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+        <span class="footer-copy">© 2025 · Template Hederae DS v0.1.0 · Brand: Susdef</span>
+      </div>
+    </footer>
+
+  </div><!-- /page-wrapper -->
+
+  <script>
+    function showState(state) {
+      document.querySelectorAll('[data-state]').forEach(el => el.classList.remove('visible'));
+      const target = document.querySelector('[data-state="' + state + '"]');
+      if (target) target.classList.add('visible');
+      document.querySelectorAll('.state-btn').forEach(btn => btn.classList.remove('active'));
+      event.target.classList.add('active');
+      // Aggiorna title e <html lang> per accessibilità
+      const labels = {
+        '404-generic': '404 — Pagina non trovata',
+        '404-doc': '404 — Documento non trovato',
+        '410': '410 — Documento archiviato',
+        '403': '403 — Accesso negato',
+        '401': '401 — Accesso richiesto',
+        '500': '500 — Errore del server',
+        'link-scaduto': 'Link scaduto — Download',
+        '503': '503 — Manutenzione'
+      };
+      document.title = (labels[state] || state) + ' · SUSDEF';
+    }
+  </script>
+</body>
+</html>

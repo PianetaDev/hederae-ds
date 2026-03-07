@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="agesci">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Pagina Donazione — AGESCI · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── AGESCI BRAND TOKENS ──────────────────────────────────────────── */
+    [data-brand="agesci"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F5F5F5;
+      --color-surface-card:    #EDEDED;
+      --color-surface-deep:    #D9D9D9;
+      --color-surface-inverse: #000000;
+      --color-content-primary:   #000000;
+      --color-content-secondary: #5C5C5C;
+      --color-content-disabled:  #B0B0B0;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #000000;
+      --color-border-default:    #E0E0E0;
+      --color-border-strong:     #000000;
+      --color-border-focus:      #000000;
+      --color-interactive-primary-bg:       #000000;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #333333;
+      --color-interactive-secondary-border: #000000;
+      --color-interactive-secondary-label:  #000000;
+      --color-brand-primary:   #000000;
+      --color-brand-secondary: #5C5C5C;
+      --color-brand-accent:    #000000;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-pill:  40px;
+      --radius-card:  16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── DS WRAPPER STYLES ─────────────────────────────────────────────── */
+    .ds-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    .ds-nav {
+      background: var(--color-surface-inverse);
+      padding: 12px 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .ds-nav .ds-container { display: flex; align-items: center; justify-content: space-between; }
+    .ds-nav-brand { font-family: var(--font-ui); font-size: 13px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
+    .ds-nav-links { display: flex; gap: 24px; align-items: center; }
+    .ds-nav-links a { font-family: var(--font-ui); font-size: 12px; color: rgba(255,255,255,0.6); text-decoration: none; letter-spacing: 0.05em; }
+    .ds-nav-links a:hover { color: rgba(255,255,255,0.9); }
+    .ds-nav-badge { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-family: var(--font-ui); font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+
+    .ds-hero {
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 48px 0 40px;
+      margin-bottom: 0;
+    }
+    .ds-hero h1 { font-family: var(--font-display); font-size: 42px; font-weight: 400; color: var(--color-content-brand); margin-bottom: 10px; }
+    .ds-hero p { font-size: 17px; color: var(--color-content-secondary); max-width: 600px; line-height: 1.6; margin-bottom: 16px; }
+    .ds-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .ds-tag {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      padding: 3px 10px; border-radius: 10px;
+      background: var(--color-surface-card); border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary);
+    }
+    .ds-tag.brand { background: #F0F0F0; color: #000; border-color: #CCC; font-weight: 500; }
+    .ds-tag.variant { background: var(--color-feedback-info-bg); color: var(--color-feedback-info-text); border-color: #B0D0EE; }
+
+    /* ─── DEMO SWITCHER ────────────────────────────────────────────────── */
+    .demo-controls {
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 20px 0;
+    }
+    .demo-controls .ds-container { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
+    .variant-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); }
+    .variant-btns { display: flex; gap: 0; border: 1px solid var(--color-border-strong); border-radius: 4px; overflow: hidden; }
+    .variant-btn {
+      padding: 8px 20px; font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.05em;
+      background: transparent; border: none; cursor: pointer;
+      color: var(--color-content-secondary); transition: all 0.15s;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .variant-btn + .variant-btn { border-left: 1px solid var(--color-border-strong); }
+    .variant-btn.active { background: var(--color-surface-inverse); color: var(--color-content-inverse); }
+    .variant-btn:hover:not(.active) { background: var(--color-surface-card); }
+    .vbadge {
+      display: inline-flex; align-items: center; justify-content: center;
+      width: 20px; height: 20px; border-radius: 50%;
+      font-size: 11px; font-weight: 600;
+      background: var(--color-border-default); color: var(--color-content-secondary);
+    }
+    .variant-btn.active .vbadge { background: rgba(255,255,255,0.2); color: white; }
+
+    .demo-spec {
+      background: #FFF8F0; border: 1px solid #E8D5B0; border-radius: 4px;
+      padding: 12px 16px; margin-left: auto;
+    }
+    .demo-spec dl { display: flex; gap: 24px; flex-wrap: wrap; }
+    .demo-spec dt { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: #856400; margin-bottom: 2px; }
+    .demo-spec dd { font-size: 13px; color: var(--color-content-primary); }
+
+    /* ─── PAGE PREVIEW ─────────────────────────────────────────────────── */
+    .page-preview { border-top: 3px solid var(--color-border-default); }
+    .page-preview[hidden] { display: none; }
+    .ab-diff-note {
+      background: var(--color-feedback-info-bg); border-left: 3px solid var(--color-feedback-info-text);
+      padding: 10px 16px; font-size: 13px; color: var(--color-feedback-info-text);
+      font-family: var(--font-ui);
+    }
+
+    /* ─── AGESCI SITE COMPONENTS ───────────────────────────────────────── */
+
+    /* Header */
+    .ag-header {
+      background: var(--color-surface-inverse);
+      padding: 0 48px;
+      height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ag-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .ag-logo-icon {
+      width: 48px; height: 60px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 60'%3E%3Cpath d='M24 2 C22 8 16 10 12 16 C8 22 10 30 14 34 C16 36 18 37 20 37 C21 37 22 36 22 35 L22 30 L20 28 C18 26 17 24 17 22 C17 18 20 15 24 15 C28 15 31 18 31 22 C31 24 30 26 28 28 L26 30 L26 35 C26 36 27 37 28 37 C30 37 32 36 34 34 C38 30 40 22 36 16 C32 10 26 8 24 2Z M20 40 C18 40 16 42 16 44 C16 48 20 52 24 56 C28 52 32 48 32 44 C32 42 30 40 28 40 C27 40 26 41 25 41.5 L24 42 L23 41.5 C22 41 21 40 20 40Z' fill='white'/%3E%3C/svg%3E") no-repeat center/contain;
+      flex-shrink: 0;
+    }
+    .ag-logo-text { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: white; letter-spacing: 0.15em; text-transform: uppercase; }
+    .ag-header-tagline { font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.75); }
+
+    /* Main layout */
+    .ag-main { max-width: 1344px; margin: 0 auto; padding: 0 48px; }
+
+    /* Hero section */
+    .ag-hero { padding: 56px 0 0; display: grid; grid-template-columns: 1fr 465px; gap: 48px; align-items: start; }
+    .ag-hero-left {}
+    .ag-hero-title { font-family: var(--font-display); font-size: 44px; font-weight: 400; line-height: 1.15; color: var(--color-content-primary); margin-bottom: 24px; }
+    .ag-hero-body { font-size: 17px; line-height: 1.7; color: var(--color-content-secondary); margin-bottom: 40px; }
+    .ag-hero-body strong, .ag-hero-body b { color: var(--color-content-primary); font-weight: 600; }
+    .ag-hero-body a { color: var(--color-content-primary); text-decoration: underline; }
+
+    /* Projects list */
+    .ag-projects h2 { font-family: var(--font-display); font-size: 24px; font-weight: 400; margin-bottom: 12px; color: var(--color-content-primary); }
+    .ag-projects p { font-size: 15px; color: var(--color-content-secondary); margin-bottom: 20px; line-height: 1.5; }
+    .ag-project-list { list-style: none; border-top: 1px solid var(--color-border-default); }
+    .ag-project-item { border-bottom: 1px solid var(--color-border-default); }
+    .ag-project-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; text-decoration: none;
+      color: var(--color-content-primary); font-size: 16px;
+      transition: color 0.15s;
+    }
+    .ag-project-link:hover { color: var(--color-content-secondary); }
+    .ag-project-link .arrow { font-size: 18px; color: var(--color-content-secondary); }
+
+    /* Donation form card */
+    .ag-form-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-card);
+      padding: 32px;
+      position: sticky; top: 96px;
+    }
+    .ag-form-title { font-family: var(--font-display); font-size: 20px; font-weight: 400; margin-bottom: 8px; }
+    .ag-form-subtitle { font-size: 13px; color: var(--color-content-secondary); margin-bottom: 24px; line-height: 1.5; }
+
+    /* Frequency switcher */
+    .freq-switcher { display: flex; border: 1px solid var(--color-border-strong); border-radius: var(--radius-pill); overflow: hidden; margin-bottom: 24px; }
+    .freq-btn {
+      flex: 1; padding: 10px; text-align: center;
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+      background: transparent; border: none; cursor: pointer; transition: all 0.15s;
+      color: var(--color-content-secondary);
+    }
+    .freq-btn.active { background: var(--color-surface-inverse); color: var(--color-content-inverse); }
+
+    /* Amount pills */
+    .amount-list { display: flex; flex-direction: column; gap: 8px; margin-bottom: 24px; }
+    .amount-label {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border-radius: var(--radius-pill);
+      border: 1px solid var(--color-border-default);
+      cursor: pointer; transition: all 0.15s;
+    }
+    .amount-label:has(input:checked),
+    .amount-label.selected {
+      background: var(--color-surface-inverse);
+      border-color: var(--color-surface-inverse);
+      color: var(--color-content-inverse);
+    }
+    .amount-label input[type="radio"] { display: none; }
+    .amount-radio-indicator {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid currentColor; flex-shrink: 0;
+      position: relative;
+    }
+    .amount-label.selected .amount-radio-indicator::after {
+      content: ''; position: absolute; inset: 3px;
+      background: white; border-radius: 50%;
+    }
+    .amount-value { font-family: var(--font-ui); font-size: 16px; font-weight: 500; }
+    .amount-tier { font-size: 13px; opacity: 0.75; margin-left: auto; }
+
+    /* Form fields */
+    .form-group { margin-bottom: 16px; }
+    .form-group label { display: block; font-size: 13px; font-weight: 500; margin-bottom: 4px; color: var(--color-content-secondary); }
+    .form-input {
+      width: 100%; padding: 10px 14px;
+      border: 1px solid var(--color-border-default); border-radius: 6px;
+      font-family: var(--font-body); font-size: 15px;
+      color: var(--color-content-primary); background: var(--color-surface-page);
+      outline: none; transition: border-color 0.15s;
+    }
+    .form-input::placeholder { color: var(--color-content-disabled); }
+    .form-input:focus { border-color: var(--color-border-focus); }
+    .form-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* Privacy note */
+    .privacy-note { font-size: 12px; color: var(--color-content-disabled); line-height: 1.4; margin-bottom: 20px; }
+
+    /* CTA button */
+    .btn-primary-full {
+      display: block; width: 100%;
+      padding: 14px; text-align: center;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      font-family: var(--font-ui); font-size: 15px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+      border: none; border-radius: var(--radius-pill); cursor: pointer;
+      text-decoration: none; margin-bottom: 10px;
+      transition: background 0.15s;
+    }
+    .btn-primary-full:hover { background: var(--color-interactive-primary-bg-hover); }
+    .by-mydonor { display: block; text-align: center; font-size: 12px; color: var(--color-content-disabled); text-decoration: none; }
+    .by-mydonor:hover { color: var(--color-content-secondary); }
+
+    /* Payment methods (version B) */
+    .payment-radio-list { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; }
+    .payment-radio-item {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 16px; border: 1px solid var(--color-border-default); border-radius: 8px;
+      cursor: pointer;
+    }
+    .payment-radio-item.selected { border-color: var(--color-border-strong); }
+    .pay-indicator {
+      width: 18px; height: 18px; border-radius: 50%;
+      border: 2px solid var(--color-border-default); flex-shrink: 0;
+      position: relative;
+    }
+    .payment-radio-item.selected .pay-indicator {
+      border-color: var(--color-border-strong);
+    }
+    .payment-radio-item.selected .pay-indicator::after {
+      content: ''; position: absolute; inset: 3px;
+      background: var(--color-surface-inverse); border-radius: 50%;
+    }
+    .pay-label { font-size: 15px; flex: 1; }
+    .pay-logos { display: flex; gap: 4px; align-items: center; margin-left: auto; }
+    .pay-logo-chip {
+      font-family: var(--font-ui); font-size: 9px; padding: 2px 5px;
+      border: 1px solid var(--color-border-default); border-radius: 3px;
+      color: var(--color-content-secondary); font-weight: 500;
+    }
+
+    /* Riepilogo */
+    .riepilogo {
+      background: var(--color-surface-card); border-radius: 8px;
+      padding: 16px; margin-bottom: 20px;
+    }
+    .riepilogo h4 { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 12px; }
+    .riepilogo-row { display: flex; justify-content: space-between; font-size: 14px; padding: 4px 0; color: var(--color-content-secondary); }
+    .riepilogo-row.total { border-top: 1px solid var(--color-border-default); margin-top: 8px; padding-top: 10px; font-size: 16px; font-weight: 600; color: var(--color-content-primary); }
+
+    /* ─── BELOW-FOLD SECTIONS ──────────────────────────────────────────── */
+    .ag-section { padding: 56px 0; border-top: 1px solid var(--color-border-default); }
+    .ag-section-title { font-family: var(--font-display); font-size: 28px; font-weight: 400; margin-bottom: 8px; }
+    .ag-section-sub { font-size: 15px; color: var(--color-content-secondary); margin-bottom: 32px; max-width: 600px; line-height: 1.6; }
+
+    /* Altri modi per donare */
+    .ag-altri-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+    .ag-card {
+      background: var(--color-surface-raised); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-card); padding: 32px;
+    }
+    .ag-card h3 { font-family: var(--font-display); font-size: 20px; font-weight: 400; margin-bottom: 16px; }
+    .ag-altri-list { list-style: none; }
+    .ag-altri-list li { padding: 8px 0; border-bottom: 1px solid var(--color-border-default); }
+    .ag-altri-list li:last-child { border-bottom: none; }
+    .ag-altri-list a { color: var(--color-content-primary); text-decoration: none; font-size: 15px; font-weight: 500; text-decoration: underline; }
+
+    /* Kit promozionale */
+    .kit-card {
+      background: var(--color-surface-raised); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-card); padding: 32px;
+    }
+    .kit-header { display: flex; align-items: center; gap: 16px; margin-bottom: 8px; }
+    .kit-icon {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--color-surface-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .kit-meta { font-size: 13px; color: var(--color-content-secondary); }
+    .kit-title { font-family: var(--font-display); font-size: 18px; margin-bottom: 4px; }
+    .kit-desc { font-size: 15px; color: var(--color-content-secondary); margin-bottom: 20px; line-height: 1.5; }
+    .kit-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 24px; border: 1px solid var(--color-border-strong);
+      border-radius: var(--radius-pill); font-size: 14px; font-weight: 500;
+      text-decoration: none; color: var(--color-content-primary);
+      transition: background 0.15s;
+    }
+    .kit-btn:hover { background: var(--color-surface-card); }
+
+    /* FAQ */
+    .faq-list { border-top: 1px solid var(--color-border-default); }
+    .faq-item { border-bottom: 1px solid var(--color-border-default); }
+    .faq-item summary {
+      padding: 18px 0; font-size: 16px; font-weight: 500;
+      cursor: pointer; display: flex; justify-content: space-between; align-items: center;
+      list-style: none;
+    }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary .faq-icon { font-size: 20px; color: var(--color-content-secondary); transition: transform 0.2s; }
+    .faq-item[open] summary .faq-icon { transform: rotate(45deg); }
+    .faq-body { padding: 0 0 20px; font-size: 15px; color: var(--color-content-secondary); line-height: 1.7; max-width: 720px; }
+
+    /* Lista sostenitori + Testimonials */
+    .ag-social-proof { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 32px; }
+    .sostenitori-list { list-style: none; }
+    .sostenitore-item { display: flex; flex-direction: column; padding: 12px 0; border-bottom: 1px solid var(--color-border-default); }
+    .sostenitore-item:first-child { border-top: 1px solid var(--color-border-default); }
+    .sostenitore-name { font-size: 15px; font-weight: 500; }
+    .sostenitore-date { font-size: 13px; color: var(--color-content-secondary); }
+    .leggi-piu { font-size: 14px; color: var(--color-content-secondary); text-decoration: underline; cursor: pointer; margin-top: 12px; display: inline-block; }
+    .testimonial-card {
+      background: var(--color-surface-raised); border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-card); padding: 24px;
+    }
+    .test-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--color-surface-deep); margin-bottom: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: var(--color-content-disabled);
+      font-family: var(--font-ui);
+    }
+    .test-name { font-weight: 600; font-size: 15px; margin-bottom: 2px; }
+    .test-date { font-size: 13px; color: var(--color-content-secondary); margin-bottom: 14px; }
+    .test-body { font-size: 14px; color: var(--color-content-secondary); line-height: 1.6; }
+
+    /* Stats banner */
+    .ag-stats-banner { background: var(--color-surface-raised); border-top: 1px solid var(--color-border-default); padding: 56px 0; }
+    .ag-stats-inner { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; }
+    .ag-stats-desc { font-size: 15px; color: var(--color-content-secondary); line-height: 1.7; max-width: 440px; }
+    .ag-stats-kpis { display: flex; gap: 40px; }
+    .ag-kpi-item { text-align: center; }
+    .ag-kpi-value { font-family: var(--font-ui); font-size: 56px; font-weight: 500; line-height: 1; display: block; }
+    .ag-kpi-label { font-size: 13px; color: var(--color-content-secondary); margin-top: 6px; }
+
+    /* Footer */
+    .ag-footer { background: var(--color-surface-inverse); color: white; padding: 48px 0 32px; }
+    .ag-footer-grid { display: grid; grid-template-columns: 2fr 2fr 2fr; gap: 48px; margin-bottom: 40px; }
+    .ag-footer-col {}
+    .ag-footer-col h4 { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
+    .ag-footer-col p { font-size: 14px; color: rgba(255,255,255,0.7); line-height: 1.7; margin-bottom: 12px; }
+    .ag-footer-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.6); text-decoration: none; margin-bottom: 6px; }
+    .ag-footer-col a:hover { color: white; }
+    .ag-footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.12);
+      padding-top: 24px;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .ag-footer-address { font-size: 13px; color: rgba(255,255,255,0.5); font-family: var(--font-ui); }
+    .ag-footer-links { display: flex; gap: 24px; }
+    .ag-footer-links a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .ag-footer-links a:hover { color: white; }
+
+    /* Diff highlight for B variant */
+    .diff-highlight {
+      outline: 2px dashed var(--color-feedback-info-text);
+      outline-offset: 4px;
+      border-radius: 6px;
+    }
+    .diff-label {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      background: var(--color-feedback-info-bg); color: var(--color-feedback-info-text);
+      padding: 2px 8px; border-radius: 4px; display: inline-block; margin-bottom: 8px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DS META NAVIGATION ──────────────────────────────────────────── -->
+  <nav class="ds-nav" aria-label="Hederae DS navigation">
+    <div class="ds-container">
+      <a href="#" class="ds-nav-brand">Hederae DS</a>
+      <div class="ds-nav-links">
+        <span class="ds-nav-badge">AGESCI</span>
+        <a href="index.html">← Catalog</a>
+        <a href="#">Page Templates</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── DS PAGE HERO ────────────────────────────────────────────────── -->
+  <div class="ds-hero">
+    <div class="ds-container">
+      <h1>Pagina Donazione — Dona ora</h1>
+      <p>Template per la pagina dell'Albo Sostenitori AGESCI. Due varianti A/B: il form semplificato richiede solo l'email, il form completo raccoglie tutti i dati personali e mostra il riepilogo con metodi di pagamento espliciti.</p>
+      <div class="ds-tags">
+        <span class="ds-tag brand">AGESCI</span>
+        <span class="ds-tag">sostenitori.agesci.it/dona-ora</span>
+        <span class="ds-tag variant">Variante A — Form email</span>
+        <span class="ds-tag variant">Variante B — Form completo</span>
+        <span class="ds-tag">2 colonne</span>
+        <span class="ds-tag">MyDonor</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── DEMO CONTROLS ───────────────────────────────────────────────── -->
+  <div class="demo-controls">
+    <div class="ds-container">
+      <span class="variant-label">Variante</span>
+      <div class="variant-btns">
+        <button class="variant-btn active" onclick="showVariant('va', this)">
+          <span class="vbadge">A</span>
+          Form semplificato (email + CTA)
+        </button>
+        <button class="variant-btn" onclick="showVariant('vb', this)">
+          <span class="vbadge">B</span>
+          Form completo (dati personali + riepilogo)
+        </button>
+      </div>
+      <div class="demo-spec">
+        <dl>
+          <div><dt>URL</dt><dd>sostenitori.agesci.it/dona-ora</dd></div>
+          <div><dt>Brand</dt><dd>AGESCI</dd></div>
+          <div><dt>Gateway</dt><dd>MyDonor</dd></div>
+        </dl>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- VARIANTE A — Form semplificato                                     -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div id="va" class="page-preview">
+
+    <!-- AGESCI Site Header -->
+    <header class="ag-header">
+      <a href="#" class="ag-logo">
+        <span class="ag-logo-icon" aria-hidden="true"></span>
+        <span class="ag-logo-text">AGESCI</span>
+      </a>
+      <p class="ag-header-tagline">Sostenitori Agesci. Insieme, sempre.</p>
+    </header>
+
+    <!-- Hero: 2 columns -->
+    <div class="ag-main">
+      <div class="ag-hero">
+
+        <!-- Left column: copy + projects -->
+        <div class="ag-hero-left">
+          <h1 class="ag-hero-title">Diventa un sostenitore Agesci</h1>
+          <div class="ag-hero-body">
+            <p>Se sei maggiorenne, non sei iscritto o sei scaduto voluto esserti, e <strong>condividi i valori e i principi dell'AGESCI</strong>, scegli di diventare oggi un sostenitore AGESCI.</p>
+            <br>
+            <p>Da oltre 50 anni, <strong><a href="#">l'educazione non formale</a></strong> è il cuore e il metodo della proposta di AGESCI: ogni giorno nell'educazione non formale si propone ai giovani dagli 8 ai 20 anni, affiancandoli in percorsi creativi, consapevoli e responsabili. Grazie all'<a href="#">Albo Sostenitori</a>, puoi contribuire anche tu a tenere vivo e a diffondere il metodo, credendo nei giovani e nella loro formazione.</p>
+          </div>
+
+          <!-- Projects -->
+          <div class="ag-projects">
+            <h2>I progetti che potrai sostenere</h2>
+            <p>Ogni anno i progetti cui destinare i fondi raccolti grazie ai sostenitori AGESCI verranno scelti in occasione del Consiglio generale.</p>
+            <ul class="ag-project-list">
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+            </ul>
+          </div>
+        </div><!-- /left -->
+
+        <!-- Right column: form card (Version A – simplified) -->
+        <div class="ag-hero-right">
+          <div class="ag-form-card">
+            <h2 class="ag-form-title">Scegli la tua frequenza di donazione</h2>
+            <p class="ag-form-subtitle">La tua donazione minima è di €50, ma puoi donare fino a €1.000 per diventare un sostenitore AGESCI</p>
+
+            <div class="freq-switcher" role="group" aria-label="Frequenza donazione">
+              <button class="freq-btn" type="button">UNA TANTUM</button>
+              <button class="freq-btn active" type="button" aria-pressed="true">ANNUALE</button>
+            </div>
+
+            <div class="amount-list" role="radiogroup" aria-label="Importo donazione">
+              <label class="amount-label">
+                <input type="radio" name="amount-a" value="50">
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€50</span>
+                <span class="amount-tier">Farfalla Contributor</span>
+              </label>
+              <label class="amount-label selected" aria-checked="true">
+                <input type="radio" name="amount-a" value="100" checked>
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€100</span>
+                <span class="amount-tier">Volpe Contributor</span>
+              </label>
+              <label class="amount-label">
+                <input type="radio" name="amount-a" value="200">
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€200</span>
+                <span class="amount-tier">Orso Contributor</span>
+              </label>
+              <label class="amount-label">
+                <input type="radio" name="amount-a" value="custom">
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€ Importo personalizzato</span>
+              </label>
+            </div>
+
+            <div class="form-group">
+              <label for="email-a">Indirizzo email</label>
+              <input id="email-a" type="email" class="form-input" placeholder="nome@esempio.it">
+            </div>
+
+            <p class="privacy-note">Verranno trattati nel rispetto dell'art. 13 e 14 REG. UE N. 2016/679 e dell'art. 13 del d.lgs n. 196 del 30/06/2003.</p>
+
+            <button class="btn-primary-full" type="submit">DONA ORA</button>
+            <a href="#" class="by-mydonor">By MyDonor</a>
+          </div>
+        </div><!-- /right -->
+      </div><!-- /hero grid -->
+
+      <!-- ── ALTRI MODI PER DONARE + KIT PROMOZIONALE ── -->
+      <div class="ag-section">
+        <div class="ag-altri-grid">
+          <div class="ag-card">
+            <h3>Altri modi per donare</h3>
+            <ul class="ag-altri-list">
+              <li><a href="#">5x1000</a></li>
+              <li><a href="#">Nome campagna</a></li>
+              <li><a href="#">Nome campagna</a></li>
+            </ul>
+            <a href="#" class="leggi-piu">Leggi di più</a>
+          </div>
+          <div class="kit-card">
+            <p style="font-size:15px; color:var(--color-content-secondary); margin-bottom:16px;">Invita un tuo amico a diventare un sostenitore</p>
+            <p class="kit-desc">Scarica il kit promozionale, al suo interno troverai materiali da condividere sui canali social...</p>
+            <div class="kit-header">
+              <span class="kit-icon">📦</span>
+              <div>
+                <div class="kit-title">Kit promozionale</div>
+                <div class="kit-meta">20GB / 60GB · 3 Files</div>
+              </div>
+            </div>
+            <br>
+            <div style="display:flex; gap:12px;">
+              <button class="kit-btn" type="button">↓ PAUSA</button>
+              <button class="kit-btn" type="button">CANCELLA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── FAQ ── -->
+      <div class="ag-section">
+        <h2 class="ag-section-title">FAQ</h2>
+        <p class="ag-section-sub">Unisciti a noi! Con il tuo sostegno, diventi parte di un progetto educativo che cambia la vita di molti giovani e costruisce un futuro migliore per tutta la società.</p>
+        <details class="faq-item">
+          <summary>Chi può diventare un sostenitore? <span class="faq-icon" aria-hidden="true">+</span></summary>
+          <p class="faq-body">Può diventare sostenitore AGESCI chiunque sia maggiorenne, condivida i valori fondanti dell'associazione e desideri contribuire economicamente ai suoi progetti educativi. Non è necessario essere iscritti o avere un legame precedente con lo scautismo.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Come abbiamo destinato i fondi ricevuti nel 2024? <span class="faq-icon" aria-hidden="true">+</span></summary>
+          <p class="faq-body">I fondi raccolti nel 2024 sono stati destinati ai progetti selezionati in occasione del Consiglio Generale. Il rendiconto dettagliato è disponibile nella sezione Trasparenza del sito.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Come abbiamo destinato i fondi ricevuti nel 2023? <span class="faq-icon" aria-hidden="true">+</span></summary>
+          <p class="faq-body">Nel 2023 i fondi hanno supportato tre aree prioritarie: formazione dei capi, accessibilità alle attività scout e digitalizzazione degli archivi storici. Maggiori dettagli sono disponibili nel report annuale.</p>
+        </details>
+      </div>
+
+      <!-- ── LISTA SOSTENITORI + TESTIMONIALS ── -->
+      <div class="ag-section">
+        <div class="ag-social-proof">
+          <!-- Lista sostenitori -->
+          <div>
+            <h2 style="font-family:var(--font-display); font-size:22px; font-weight:400; margin-bottom:16px;">Lista sostenitori</h2>
+            <ul class="sostenitori-list">
+              <li class="sostenitore-item">
+                <span class="sostenitore-name">Mario Rossi</span>
+                <span class="sostenitore-date">ha donato il 26 aprile</span>
+              </li>
+              <li class="sostenitore-item">
+                <span class="sostenitore-name">Andrea Macino</span>
+                <span class="sostenitore-date">ha donato il 25 aprile</span>
+              </li>
+              <li class="sostenitore-item">
+                <span class="sostenitore-name">Alessia Lobenedetto</span>
+                <span class="sostenitore-date">ha donato il 24 aprile</span>
+              </li>
+              <li class="sostenitore-item">
+                <span class="sostenitore-name">Eleonora Amato</span>
+                <span class="sostenitore-date">ha donato il 23 aprile</span>
+              </li>
+            </ul>
+            <a href="#" class="leggi-piu">Leggi di più</a>
+          </div>
+
+          <!-- Testimonial 1 -->
+          <div class="testimonial-card">
+            <div class="test-avatar" aria-hidden="true">A</div>
+            <div class="test-name">Annarita</div>
+            <div class="test-date">23 Settembre 2022</div>
+            <p class="test-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur vulputat odio sit amet fundandum. Consectetur vulputat odio sit amet odio vulputat. Consectetur vulputat odio amet vulputat amet consectetur.</p>
+          </div>
+
+          <!-- Testimonial 2 -->
+          <div class="testimonial-card">
+            <div class="test-avatar" aria-hidden="true">M</div>
+            <div class="test-name">Mario</div>
+            <div class="test-date">23 Settembre 2022</div>
+            <p class="test-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur vulputat odio sit amet fundandum. Consectetur vulputat odio sit amet odio vulputat. Consectetur vulputat odio amet vulputat amet consectetur.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /ag-main -->
+
+    <!-- ── STATS BANNER ── -->
+    <div class="ag-stats-banner">
+      <div class="ag-main">
+        <div class="ag-stats-inner">
+          <p class="ag-stats-desc">L'Associazione Guide e Scouts Cattolici Italiani (AGESCI), che conta 182.000 soci, è il'associazione giovane nell'educazione che si propone di contribuire, nel tempo libero e nella attività extra-scolastiche, alla formazione della persona secondo i principi e il metodo della scautismo, adattato ai ragazzi e alle ragazze nella realtà sociale italiana di oggi.</p>
+          <div class="ag-stats-kpis">
+            <div class="ag-kpi-item">
+              <span class="ag-kpi-value">400+</span>
+              <span class="ag-kpi-label">Kpi</span>
+            </div>
+            <div class="ag-kpi-item">
+              <span class="ag-kpi-value">40</span>
+              <span class="ag-kpi-label">Kpi</span>
+            </div>
+            <div class="ag-kpi-item">
+              <span class="ag-kpi-value">30</span>
+              <span class="ag-kpi-label">Kpi</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── AGESCI FOOTER ── -->
+    <footer class="ag-footer" aria-label="Footer AGESCI">
+      <div class="ag-main">
+        <div class="ag-footer-grid">
+          <div class="ag-footer-col">
+            <h4>AGESCI</h4>
+            <p>Associazione Guide e Scouts Cattolici Italiani<br>
+               APS · Piazza Pasquale Paoli, 18<br>
+               00186 ROMA<br>
+               tel. +39.06-681661</p>
+            <a href="#">CF: 000000000000</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+          <div class="ag-footer-col">
+            <h4>Agevolazioni Fiscali</h4>
+            <p>Le donazioni all'AGESCI sono fiscalmente <strong style="color:white;">deducibili</strong> o <strong style="color:white;">detraibili</strong> a seconda della modalità di erogazione. Verifica con il tuo consulente fiscale la tipologia più adatta alla tua situazione.</p>
+            <a href="#">Scopri di più</a>
+          </div>
+          <div class="ag-footer-col">
+            <h4>Disiscrizione</h4>
+            <p>Se vuoi smettere di ricevere comunicazioni dall'Albo Sostenitori, puoi disiscriverti in qualsiasi momento.</p>
+            <a href="#">Disiscriviti</a>
+          </div>
+        </div>
+        <div class="ag-footer-bottom">
+          <span class="ag-footer-address">© 2025 AGESCI · APS Piazza Pasquale Paoli, 18 - 00186 ROMA - tel. +39.06-681661</span>
+          <div class="ag-footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /va -->
+
+
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <!-- VARIANTE B — Form completo con dati personali                      -->
+  <!-- ═══════════════════════════════════════════════════════════════════ -->
+  <div id="vb" class="page-preview" hidden>
+
+    <div class="ab-diff-note" role="note">
+      ↕ Differenza rispetto alla variante A: il form richiede tutti i dati anagrafici, mostra un riepilogo donazione e metodi di pagamento espliciti con radio button.
+    </div>
+
+    <!-- AGESCI Site Header (identical) -->
+    <header class="ag-header">
+      <a href="#" class="ag-logo">
+        <span class="ag-logo-icon" aria-hidden="true"></span>
+        <span class="ag-logo-text">AGESCI</span>
+      </a>
+      <p class="ag-header-tagline">Sostenitori Agesci. Insieme, sempre.</p>
+    </header>
+
+    <!-- Hero: 2 columns -->
+    <div class="ag-main">
+      <div class="ag-hero">
+
+        <!-- Left column (identical to A) -->
+        <div class="ag-hero-left">
+          <h1 class="ag-hero-title">Diventa un sostenitore Agesci</h1>
+          <div class="ag-hero-body">
+            <p>Se sei maggiorenne, non sei iscritto o sei scaduto voluto esserti, e <strong>condividi i valori e i principi dell'AGESCI</strong>, scegli di diventare oggi un sostenitore AGESCI.</p>
+            <br>
+            <p>Da oltre 50 anni, <strong><a href="#">l'educazione non formale</a></strong> è il cuore e il metodo della proposta di AGESCI: ogni giorno nell'educazione non formale si propone ai giovani dagli 8 ai 20 anni, affiancandoli in percorsi creativi, consapevoli e responsabili. Grazie all'<a href="#">Albo Sostenitori</a>, puoi contribuire anche tu a tenere vivo e a diffondere il metodo, credendo nei giovani e nella loro formazione.</p>
+          </div>
+          <div class="ag-projects">
+            <h2>I progetti che potrai sostenere</h2>
+            <p>Ogni anno i progetti cui destinare i fondi raccolti grazie ai sostenitori AGESCI verranno scelti in occasione del Consiglio generale.</p>
+            <ul class="ag-project-list">
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+              <li class="ag-project-item"><a href="#" class="ag-project-link">Nome progetto <span class="arrow">→</span></a></li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Right column: FULL form (Version B) -->
+        <div class="ag-hero-right">
+          <div class="ag-form-card diff-highlight">
+            <span class="diff-label">↕ DIFFERISCE DA VARIANTE A</span>
+            <h2 class="ag-form-title">Scegli la tua frequenza di donazione</h2>
+            <p class="ag-form-subtitle">La tua donazione minima è di €50, ma puoi donare fino a €1.000 per diventare un sostenitore AGESCI</p>
+
+            <div class="freq-switcher" role="group" aria-label="Frequenza donazione">
+              <button class="freq-btn" type="button">UNA TANTUM</button>
+              <button class="freq-btn active" type="button" aria-pressed="true">ANNUALE</button>
+            </div>
+
+            <div class="amount-list" role="radiogroup" aria-label="Importo donazione">
+              <label class="amount-label">
+                <input type="radio" name="amount-b" value="50">
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€50</span>
+                <span class="amount-tier">Farfalla Contributor</span>
+              </label>
+              <label class="amount-label selected" aria-checked="true">
+                <input type="radio" name="amount-b" value="100" checked>
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€100</span>
+                <span class="amount-tier">Volpe Contributor</span>
+              </label>
+              <label class="amount-label">
+                <input type="radio" name="amount-b" value="200">
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€200</span>
+                <span class="amount-tier">Orso Contributor</span>
+              </label>
+              <label class="amount-label">
+                <input type="radio" name="amount-b" value="custom">
+                <span class="amount-radio-indicator" aria-hidden="true"></span>
+                <span class="amount-value">€ Importo personalizzato</span>
+              </label>
+            </div>
+
+            <!-- Personal data form -->
+            <h3 style="font-size:16px; font-weight:600; margin-bottom:6px;">Compila il form con i tuoi dati</h3>
+            <p class="privacy-note">Verranno trattati nel rispetto dell'art. 13 e 14 REG. UE N. 2016/679 e dell'art. 13 del d.lgs n. 196 del 30/06/2003.</p>
+
+            <div class="form-grid-2">
+              <div class="form-group">
+                <label for="nome-b">Nome</label>
+                <input id="nome-b" type="text" class="form-input" placeholder="Mario">
+              </div>
+              <div class="form-group">
+                <label for="cognome-b">Cognome</label>
+                <input id="cognome-b" type="text" class="form-input" placeholder="Rossi">
+              </div>
+              <div class="form-group">
+                <label for="dob-b">Data di nascita</label>
+                <input id="dob-b" type="date" class="form-input">
+              </div>
+              <div class="form-group">
+                <label for="phone-b">Numero di cellulare</label>
+                <input id="phone-b" type="tel" class="form-input" placeholder="+39 333 456 7890">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email-b">Indirizzo email</label>
+              <input id="email-b" type="email" class="form-input" placeholder="nome@esempio.it">
+            </div>
+            <div class="form-group">
+              <label for="cf-b">Codice fiscale</label>
+              <input id="cf-b" type="text" class="form-input" placeholder="RSSMRA80A01H501T" style="text-transform:uppercase; font-family:var(--font-ui); letter-spacing:0.05em;">
+            </div>
+
+            <!-- Riepilogo -->
+            <p style="font-size:13px; font-weight:500; margin-bottom:8px;">Scegli la modalità di pagamento.</p>
+            <p class="privacy-note" style="margin-bottom:16px;">Questa donazione è un pagamento sicuro crittografato.</p>
+
+            <div class="riepilogo" aria-label="Riepilogo donazione">
+              <h4>Riepilogo donazione</h4>
+              <div class="riepilogo-row">
+                <span>Importo donazione</span><span>€100</span>
+              </div>
+              <div class="riepilogo-row">
+                <span>Frequenza</span><span>Una tantum</span>
+              </div>
+              <div class="riepilogo-row total">
+                <span>Totale</span><span>100€</span>
+              </div>
+            </div>
+
+            <!-- Payment methods -->
+            <div class="payment-radio-list" role="radiogroup" aria-label="Metodo di pagamento">
+              <label class="payment-radio-item selected">
+                <span class="pay-indicator" aria-hidden="true"></span>
+                <span class="pay-label">Carta di credito</span>
+                <span class="pay-logos">
+                  <span class="pay-logo-chip">MC</span>
+                  <span class="pay-logo-chip">VISA</span>
+                  <span class="pay-logo-chip">AMEX</span>
+                </span>
+              </label>
+              <label class="payment-radio-item">
+                <span class="pay-indicator" aria-hidden="true"></span>
+                <span class="pay-label">PayPal</span>
+                <span class="pay-logos"><span class="pay-logo-chip" style="color:#003087; border-color:#003087;">PayPal</span></span>
+              </label>
+              <label class="payment-radio-item">
+                <span class="pay-indicator" aria-hidden="true"></span>
+                <span class="pay-label">Bonifico Bancario</span>
+                <span style="font-size:18px; margin-left:auto;">🏦</span>
+              </label>
+            </div>
+
+            <button class="btn-primary-full" type="submit">DONA ORA</button>
+            <a href="#" class="by-mydonor">By MyDonor</a>
+          </div>
+        </div><!-- /right -->
+      </div><!-- /hero grid -->
+
+      <!-- Below fold sections (identical to A) -->
+      <div class="ag-section">
+        <div class="ag-altri-grid">
+          <div class="ag-card">
+            <h3>Altri modi per donare</h3>
+            <ul class="ag-altri-list">
+              <li><a href="#">5x1000</a></li>
+              <li><a href="#">Nome campagna</a></li>
+              <li><a href="#">Nome campagna</a></li>
+            </ul>
+            <a href="#" class="leggi-piu">Leggi di più</a>
+          </div>
+          <div class="kit-card">
+            <p style="font-size:15px; color:var(--color-content-secondary); margin-bottom:16px;">Invita un tuo amico a diventare un sostenitore</p>
+            <p class="kit-desc">Scarica il kit promozionale, al suo interno troverai materiali da condividere sui canali social...</p>
+            <div class="kit-header">
+              <span class="kit-icon">📦</span>
+              <div>
+                <div class="kit-title">Kit promozionale</div>
+                <div class="kit-meta">20GB / 60GB · 3 Files</div>
+              </div>
+            </div>
+            <br>
+            <div style="display:flex; gap:12px;">
+              <button class="kit-btn" type="button">↓ PAUSA</button>
+              <button class="kit-btn" type="button">CANCELLA</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ag-section">
+        <h2 class="ag-section-title">FAQ</h2>
+        <p class="ag-section-sub">Unisciti a noi! Con il tuo sostegno, diventi parte di un progetto educativo che cambia la vita di molti giovani e costruisce un futuro migliore per tutta la società.</p>
+        <details class="faq-item">
+          <summary>Chi può diventare un sostenitore? <span class="faq-icon" aria-hidden="true">+</span></summary>
+          <p class="faq-body">Può diventare sostenitore AGESCI chiunque sia maggiorenne e condivida i valori fondanti dell'associazione.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Come abbiamo destinato i fondi ricevuti nel 2024? <span class="faq-icon" aria-hidden="true">+</span></summary>
+          <p class="faq-body">I fondi raccolti nel 2024 sono stati destinati ai progetti selezionati in occasione del Consiglio Generale.</p>
+        </details>
+        <details class="faq-item">
+          <summary>Come abbiamo destinato i fondi ricevuti nel 2023? <span class="faq-icon" aria-hidden="true">+</span></summary>
+          <p class="faq-body">Nel 2023 i fondi hanno supportato tre aree prioritarie: formazione dei capi, accessibilità alle attività scout e digitalizzazione degli archivi.</p>
+        </details>
+      </div>
+
+      <div class="ag-section">
+        <div class="ag-social-proof">
+          <div>
+            <h2 style="font-family:var(--font-display); font-size:22px; font-weight:400; margin-bottom:16px;">Lista sostenitori</h2>
+            <ul class="sostenitori-list">
+              <li class="sostenitore-item"><span class="sostenitore-name">Mario Rossi</span><span class="sostenitore-date">ha donato il 26 aprile</span></li>
+              <li class="sostenitore-item"><span class="sostenitore-name">Andrea Macino</span><span class="sostenitore-date">ha donato il 25 aprile</span></li>
+              <li class="sostenitore-item"><span class="sostenitore-name">Alessia Lobenedetto</span><span class="sostenitore-date">ha donato il 24 aprile</span></li>
+              <li class="sostenitore-item"><span class="sostenitore-name">Eleonora Amato</span><span class="sostenitore-date">ha donato il 23 aprile</span></li>
+            </ul>
+            <a href="#" class="leggi-piu">Leggi di più</a>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-avatar" aria-hidden="true">A</div>
+            <div class="test-name">Annarita</div>
+            <div class="test-date">23 Settembre 2022</div>
+            <p class="test-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur vulputat odio sit amet fundandum. Consectetur vulputat odio amet vulputat amet consectetur.</p>
+          </div>
+          <div class="testimonial-card">
+            <div class="test-avatar" aria-hidden="true">M</div>
+            <div class="test-name">Mario</div>
+            <div class="test-date">23 Settembre 2022</div>
+            <p class="test-body">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Consectetur vulputat odio sit amet fundandum. Consectetur vulputat odio amet vulputat amet consectetur.</p>
+          </div>
+        </div>
+      </div>
+    </div><!-- /ag-main -->
+
+    <div class="ag-stats-banner">
+      <div class="ag-main">
+        <div class="ag-stats-inner">
+          <p class="ag-stats-desc">L'Associazione Guide e Scouts Cattolici Italiani (AGESCI), che conta 182.000 soci, è l'associazione giovane nell'educazione che si propone di contribuire, nel tempo libero e nella attività extra-scolastiche, alla formazione della persona secondo i principi e il metodo della scautismo, adattato ai ragazzi e alle ragazze nella realtà sociale italiana di oggi.</p>
+          <div class="ag-stats-kpis">
+            <div class="ag-kpi-item"><span class="ag-kpi-value">400+</span><span class="ag-kpi-label">Kpi</span></div>
+            <div class="ag-kpi-item"><span class="ag-kpi-value">40</span><span class="ag-kpi-label">Kpi</span></div>
+            <div class="ag-kpi-item"><span class="ag-kpi-value">30</span><span class="ag-kpi-label">Kpi</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <footer class="ag-footer">
+      <div class="ag-main">
+        <div class="ag-footer-grid">
+          <div class="ag-footer-col">
+            <h4>AGESCI</h4>
+            <p>Associazione Guide e Scouts Cattolici Italiani<br>APS · Piazza Pasquale Paoli, 18<br>00186 ROMA<br>tel. +39.06-681661</p>
+            <a href="#">CF: 000000000000</a>
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+          <div class="ag-footer-col">
+            <h4>Agevolazioni Fiscali</h4>
+            <p>Le donazioni all'AGESCI sono fiscalmente <strong style="color:white;">deducibili</strong> o <strong style="color:white;">detraibili</strong>. Verifica con il tuo consulente fiscale la tipologia più adatta.</p>
+            <a href="#">Scopri di più</a>
+          </div>
+          <div class="ag-footer-col">
+            <h4>Disiscrizione</h4>
+            <p>Se vuoi smettere di ricevere comunicazioni dall'Albo Sostenitori, puoi disiscriverti in qualsiasi momento.</p>
+            <a href="#">Disiscriviti</a>
+          </div>
+        </div>
+        <div class="ag-footer-bottom">
+          <span class="ag-footer-address">© 2025 AGESCI · APS Piazza Pasquale Paoli, 18 - 00186 ROMA - tel. +39.06-681661</span>
+          <div class="ag-footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Cookie Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /vb -->
+
+  <!-- ─── JS ─────────────────────────────────────────────────────────── -->
+  <script>
+    function showVariant(id, btn) {
+      document.querySelectorAll('.page-preview').forEach(el => { el.hidden = true; });
+      document.querySelectorAll('.variant-btn').forEach(b => b.classList.remove('active'));
+      document.getElementById(id).hidden = false;
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="generic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Shop — Checkout · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-surface-page:#FFFFFF; --color-surface-raised:#F7F7F7; --color-surface-card:#F0F0F0;
+      --color-surface-deep:#E0E0E0; --color-surface-inverse:#111111;
+      --color-content-primary:#111111; --color-content-secondary:#6B6B6B; --color-content-disabled:#BBBBBB;
+      --color-border-default:#E5E5E5; --color-border-strong:#111111;
+      --color-feedback-success-bg:#E6F4EA; --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:#FFF8E1; --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:#FDECEA; --color-feedback-error-text:#C62828;
+      --color-feedback-info-bg:#E3F2FD; --color-feedback-info-text:#1565C0;
+      --font-display:'IBM Plex Serif',Georgia,serif; --font-body:'IBM Plex Sans',system-ui,sans-serif; --font-ui:'IBM Plex Mono',monospace;
+      --radius-pill:40px; --radius-card:12px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--color-surface-page);color:var(--color-content-primary);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+    .ds-nav{background:var(--color-surface-inverse);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+    .ds-nav-brand{font-family:var(--font-ui);font-size:12px;color:rgba(255,255,255,0.9);letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;}
+    .ds-nav-links{display:flex;gap:20px;align-items:center;}
+    .ds-nav-links a{font-family:var(--font-ui);font-size:11px;color:rgba(255,255,255,0.6);text-decoration:none;}
+    .ds-tag-pill{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-family:var(--font-ui);font-size:10px;padding:2px 8px;border-radius:10px;}
+    .ds-hero{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:40px 24px;}
+    .ds-hero h1{font-family:var(--font-display);font-size:36px;font-weight:400;margin-bottom:8px;}
+    .ds-hero p{font-size:15px;color:var(--color-content-secondary);max-width:580px;margin-bottom:14px;line-height:1.6;}
+    .ds-tags{display:flex;gap:6px;flex-wrap:wrap;}
+    .ds-tag{font-family:var(--font-ui);font-size:10px;padding:2px 8px;border-radius:8px;background:var(--color-surface-card);border:1px solid var(--color-border-default);color:var(--color-content-secondary);}
+    .demo-controls{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:14px 24px;display:flex;align-items:center;gap:24px;flex-wrap:wrap;}
+    .demo-label{font-family:var(--font-ui);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-secondary);}
+    .demo-btns{display:flex;border:1px solid var(--color-border-strong);border-radius:4px;overflow:hidden;flex-wrap:wrap;}
+    .demo-btn{padding:7px 14px;font-family:var(--font-ui);font-size:11px;background:transparent;border:none;cursor:pointer;color:var(--color-content-secondary);}
+    .demo-btn+.demo-btn{border-left:1px solid var(--color-border-strong);}
+    .demo-btn.active{background:var(--color-surface-inverse);color:white;}
+    .page-preview[hidden]{display:none;}
+    .page-preview{border-top:2px solid var(--color-border-default);}
+
+    /* ─── CHECKOUT COMPONENTS ─────────────────────────────────────────── */
+
+    /* Simplified header for checkout */
+    .co-header{background:var(--color-surface-page);border-bottom:1px solid var(--color-border-default);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .co-logo{font-family:var(--font-display);font-size:22px;font-weight:500;text-decoration:none;color:var(--color-content-primary);}
+    .co-secure{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-content-secondary);}
+
+    /* Progress indicator */
+    .co-progress{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:16px 32px;}
+    .co-progress-inner{display:flex;align-items:center;justify-content:center;gap:0;max-width:600px;margin:0 auto;}
+    .co-step{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--color-content-disabled);}
+    .co-step.done{color:var(--color-feedback-success-text);}
+    .co-step.active{color:var(--color-content-primary);}
+    .co-step-num{width:28px;height:28px;border-radius:50%;border:2px solid currentColor;display:flex;align-items:center;justify-content:center;font-family:var(--font-ui);font-size:12px;font-weight:600;flex-shrink:0;}
+    .co-step.done .co-step-num{background:var(--color-feedback-success-text);border-color:var(--color-feedback-success-text);color:white;}
+    .co-step.done .co-step-num::after{content:'✓';}
+    .co-step.done .co-step-num span{display:none;}
+    .co-step-line{flex:1;height:2px;background:var(--color-surface-deep);margin:0 8px;}
+    .co-step-line.done{background:var(--color-feedback-success-text);}
+
+    /* Main layout */
+    .co-layout{display:grid;grid-template-columns:1fr 380px;gap:48px;padding:32px 32px 64px;max-width:1440px;margin:0 auto;}
+
+    /* Form cards */
+    .co-card{background:var(--color-surface-page);border:1px solid var(--color-border-default);border-radius:var(--radius-card);padding:28px;margin-bottom:20px;}
+    .co-card-title{font-family:var(--font-display);font-size:20px;font-weight:400;margin-bottom:20px;}
+    .co-card-done{background:var(--color-surface-raised);opacity:0.7;}
+
+    /* Form inputs */
+    .form-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+    .form-group{margin-bottom:14px;}
+    .form-label{display:block;font-size:13px;font-weight:500;color:var(--color-content-secondary);margin-bottom:4px;}
+    .form-label .required{color:var(--color-feedback-error-text);}
+    .form-input{width:100%;padding:10px 14px;border:1px solid var(--color-border-default);border-radius:8px;font-size:15px;font-family:var(--font-body);color:var(--color-content-primary);background:white;transition:border-color 0.15s;outline:none;}
+    .form-input:focus{border-color:var(--color-border-strong);}
+    .form-input.prefilled{background:var(--color-surface-raised);color:var(--color-content-secondary);}
+    .form-select{width:100%;padding:10px 14px;border:1px solid var(--color-border-default);border-radius:8px;font-size:15px;font-family:var(--font-body);background:white;cursor:pointer;}
+    .form-check{display:flex;align-items:flex-start;gap:10px;font-size:14px;cursor:pointer;margin-bottom:10px;}
+    .form-check input{width:16px;height:16px;margin-top:2px;accent-color:var(--color-surface-inverse);flex-shrink:0;}
+    .form-check-label{line-height:1.5;}
+    .form-check-label a{color:var(--color-content-primary);}
+
+    /* Guest / Login toggle */
+    .login-toggle{display:flex;gap:0;border:1px solid var(--color-border-default);border-radius:8px;overflow:hidden;margin-bottom:20px;}
+    .login-tab{flex:1;padding:11px;text-align:center;font-size:14px;font-weight:500;cursor:pointer;background:transparent;border:none;transition:all 0.15s;color:var(--color-content-secondary);}
+    .login-tab.active{background:var(--color-surface-inverse);color:white;}
+
+    /* Shipping methods */
+    .shipping-methods{display:flex;flex-direction:column;gap:10px;}
+    .shipping-option{display:flex;align-items:center;gap:14px;padding:14px 16px;border:1px solid var(--color-border-default);border-radius:8px;cursor:pointer;transition:all 0.15s;}
+    .shipping-option.selected{border-color:var(--color-border-strong);}
+    .ship-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--color-border-default);flex-shrink:0;position:relative;}
+    .shipping-option.selected .ship-radio{border-color:var(--color-border-strong);}
+    .shipping-option.selected .ship-radio::after{content:'';position:absolute;inset:3px;background:var(--color-surface-inverse);border-radius:50%;}
+    .ship-info{flex:1;}
+    .ship-name{font-size:14px;font-weight:500;}
+    .ship-desc{font-size:12px;color:var(--color-content-secondary);}
+    .ship-price{font-family:var(--font-ui);font-size:15px;font-weight:500;}
+    .ship-free{color:var(--color-feedback-success-text);}
+
+    /* Payment methods */
+    .payment-methods{display:flex;flex-direction:column;gap:12px;}
+    .pay-option{border:1px solid var(--color-border-default);border-radius:10px;overflow:hidden;transition:border-color 0.15s;}
+    .pay-option.selected{border-color:var(--color-border-strong);}
+    .pay-option-header{display:flex;align-items:center;gap:14px;padding:14px 16px;cursor:pointer;}
+    .pay-radio{width:18px;height:18px;border-radius:50%;border:2px solid var(--color-border-default);flex-shrink:0;position:relative;}
+    .pay-option.selected .pay-radio{border-color:var(--color-border-strong);}
+    .pay-option.selected .pay-radio::after{content:'';position:absolute;inset:3px;background:var(--color-surface-inverse);border-radius:50%;}
+    .pay-name{font-size:15px;font-weight:500;flex:1;}
+    .pay-logos{display:flex;gap:4px;align-items:center;}
+    .pay-logo-chip{font-family:var(--font-ui);font-size:9px;padding:2px 6px;border:1px solid var(--color-border-default);border-radius:3px;color:var(--color-content-secondary);}
+    .pay-details{padding:0 16px 16px 48px;display:none;}
+    .pay-option.selected .pay-details{display:block;}
+    .pay-note{font-size:13px;color:var(--color-content-secondary);line-height:1.5;margin-bottom:12px;}
+    .cc-fields{display:flex;flex-direction:column;gap:10px;}
+    .cc-row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+
+    /* Docente / 18app special */
+    .pay-special-note{background:var(--color-feedback-info-bg);border:1px solid #B0D0EE;border-radius:8px;padding:12px 14px;font-size:13px;color:var(--color-feedback-info-text);margin-bottom:10px;}
+
+    /* Checkout summary */
+    .co-summary{background:var(--color-surface-raised);border:1px solid var(--color-border-default);border-radius:var(--radius-card);padding:24px;position:sticky;top:80px;}
+    .co-summary-title{font-family:var(--font-display);font-size:20px;font-weight:400;margin-bottom:16px;}
+    .co-items{margin-bottom:16px;}
+    .co-item-row{display:flex;align-items:center;gap:12px;padding:8px 0;border-bottom:1px solid var(--color-border-default);}
+    .co-item-img{width:48px;height:48px;background:var(--color-surface-card);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;position:relative;}
+    .co-item-badge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--color-surface-inverse);color:white;font-family:var(--font-ui);font-size:10px;display:flex;align-items:center;justify-content:center;}
+    .co-item-name{flex:1;font-size:13px;line-height:1.3;}
+    .co-item-price{font-family:var(--font-ui);font-size:13px;font-weight:500;white-space:nowrap;}
+    .co-summary-rows{border-top:1px solid var(--color-border-default);padding-top:12px;}
+    .co-row{display:flex;justify-content:space-between;font-size:13px;padding:5px 0;}
+    .co-row-label{color:var(--color-content-secondary);}
+    .co-row-val{font-family:var(--font-ui);font-weight:500;}
+    .co-total{display:flex;justify-content:space-between;font-size:17px;font-weight:600;padding:12px 0 0;border-top:2px solid var(--color-border-strong);margin-top:8px;}
+    .co-total-val{font-family:var(--font-ui);}
+
+    /* CTA button */
+    .btn-pay{display:block;width:100%;padding:14px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-family:var(--font-ui);font-size:14px;letter-spacing:0.1em;text-transform:uppercase;cursor:pointer;text-align:center;margin-top:20px;transition:background 0.15s;}
+    .btn-pay:hover{background:#333;}
+    .btn-next{display:block;width:100%;padding:13px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-family:var(--font-ui);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-align:center;margin-top:20px;transition:background 0.15s;}
+    .btn-next:hover{background:#333;}
+    .co-legal{font-size:11px;color:var(--color-content-disabled);text-align:center;margin-top:12px;line-height:1.5;}
+    .co-legal a{color:var(--color-content-secondary);}
+
+    /* FAQ section */
+    .co-faq{margin-top:24px;}
+    .co-faq-title{font-family:var(--font-ui);font-size:11px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-secondary);margin-bottom:12px;}
+    .co-faq details{border-bottom:1px solid var(--color-border-default);}
+    .co-faq summary{padding:12px 0;font-size:13px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;align-items:center;list-style:none;}
+    .co-faq summary::-webkit-details-marker{display:none;}
+    .co-faq-body{font-size:13px;color:var(--color-content-secondary);padding:0 0 12px;line-height:1.6;}
+
+    /* ─── CONFIRMATION PAGE ─────────────────────────────── */
+    .conf-header{background:var(--color-surface-inverse);padding:24px 32px;display:flex;align-items:center;gap:16px;}
+    .conf-logo{font-family:var(--font-display);font-size:22px;font-weight:500;color:white;text-decoration:none;}
+    .conf-layout{max-width:800px;margin:0 auto;padding:48px 32px;}
+    .conf-success-box{background:var(--color-feedback-success-bg);border:1px solid #9ECAB1;border-radius:var(--radius-card);padding:32px;text-align:center;margin-bottom:40px;}
+    .conf-check{font-size:48px;margin-bottom:12px;}
+    .conf-title{font-family:var(--font-display);font-size:32px;font-weight:400;margin-bottom:8px;color:var(--color-feedback-success-text);}
+    .conf-sub{font-size:16px;color:var(--color-content-secondary);}
+    .conf-order-id{font-family:var(--font-ui);font-size:14px;background:rgba(0,0,0,0.05);padding:8px 16px;border-radius:20px;display:inline-block;margin-top:12px;}
+    .conf-section{border:1px solid var(--color-border-default);border-radius:var(--radius-card);padding:24px;margin-bottom:20px;}
+    .conf-section-title{font-family:var(--font-ui);font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--color-content-secondary);margin-bottom:16px;}
+    .conf-items-list{display:flex;flex-direction:column;gap:12px;}
+    .conf-item{display:flex;gap:14px;align-items:center;}
+    .conf-item-img{width:56px;height:56px;background:var(--color-surface-raised);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0;}
+    .conf-item-name{flex:1;font-size:14px;font-weight:500;}
+    .conf-item-meta{font-size:12px;color:var(--color-content-secondary);}
+    .conf-item-price{font-family:var(--font-ui);font-size:14px;font-weight:500;}
+    .conf-total-row{display:flex;justify-content:space-between;font-size:15px;font-weight:600;padding-top:12px;border-top:1px solid var(--color-border-default);margin-top:12px;}
+    .conf-grid-2{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+    .conf-info-label{font-size:12px;color:var(--color-content-secondary);margin-bottom:4px;}
+    .conf-info-value{font-size:14px;font-weight:500;line-height:1.5;}
+    .conf-steps{display:flex;flex-direction:column;gap:14px;}
+    .conf-step-item{display:flex;gap:14px;align-items:flex-start;}
+    .conf-step-icon{width:36px;height:36px;border-radius:50%;background:var(--color-surface-card);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+    .conf-step-text h4{font-size:14px;font-weight:600;margin-bottom:2px;}
+    .conf-step-text p{font-size:13px;color:var(--color-content-secondary);}
+    .conf-ctas{display:flex;gap:16px;margin-top:32px;}
+    .btn-conf-primary{flex:1;padding:13px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-family:var(--font-ui);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-align:center;text-decoration:none;}
+    .btn-conf-secondary{flex:1;padding:13px;background:transparent;color:var(--color-content-primary);border:1px solid var(--color-border-strong);border-radius:var(--radius-pill);font-family:var(--font-ui);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;text-align:center;text-decoration:none;}
+  </style>
+</head>
+<body>
+
+  <nav class="ds-nav">
+    <a href="#" class="ds-nav-brand">Hederae DS</a>
+    <div class="ds-nav-links">
+      <span class="ds-tag-pill">GENERIC · SHOP</span>
+      <a href="shop-carrello.html">← Carrello</a>
+    </div>
+  </nav>
+
+  <div class="ds-hero">
+    <h1>Shop — Checkout + Conferma ordine</h1>
+    <p>Flusso checkout a 4 step: indirizzo spedizione (con guest/login), metodo di spedizione, pagamento (tutti i metodi italiani: Carta, PayPal, Bonifico, Carta Docente, 18app, Satispay, Contrassegno) con FAQ inline, e pagina di conferma ordine con next steps.</p>
+    <div class="ds-tags">
+      <span class="ds-tag">4 step</span><span class="ds-tag">Guest checkout</span><span class="ds-tag">Carta + PayPal + Bonifico</span><span class="ds-tag">Carta Docente</span><span class="ds-tag">18app</span><span class="ds-tag">Satispay</span><span class="ds-tag">Contrassegno</span><span class="ds-tag">GDPR consent</span><span class="ds-tag">FAQ inline</span><span class="ds-tag">Order confirmation</span>
+    </div>
+  </div>
+
+  <div class="demo-controls">
+    <span class="demo-label">Step</span>
+    <div class="demo-btns">
+      <button class="demo-btn active" onclick="showState('s-step1', this)">1 — Indirizzo</button>
+      <button class="demo-btn" onclick="showState('s-step2', this)">2 — Spedizione</button>
+      <button class="demo-btn" onclick="showState('s-step3', this)">3 — Pagamento</button>
+      <button class="demo-btn" onclick="showState('s-conf', this)">✓ Conferma ordine</button>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ STEP 1 — INDIRIZZO ════════════════════ -->
+  <div id="s-step1" class="page-preview">
+    <header class="co-header">
+      <a href="#" class="co-logo">Negozio</a>
+      <span class="co-secure">🔒 Checkout sicuro</span>
+    </header>
+
+    <div class="co-progress">
+      <div class="co-progress-inner">
+        <div class="co-step active"><span class="co-step-num"><span>1</span></span> Indirizzo</div>
+        <div class="co-step-line"></div>
+        <div class="co-step"><span class="co-step-num"><span>2</span></span> Spedizione</div>
+        <div class="co-step-line"></div>
+        <div class="co-step"><span class="co-step-num"><span>3</span></span> Pagamento</div>
+        <div class="co-step-line"></div>
+        <div class="co-step"><span class="co-step-num"><span>✓</span></span> Conferma</div>
+      </div>
+    </div>
+
+    <div class="co-layout">
+      <div>
+        <!-- Guest / Login toggle -->
+        <div class="co-card">
+          <p class="co-card-title">Accedi o continua come ospite</p>
+          <div class="login-toggle" role="group" aria-label="Modalità accesso">
+            <button class="login-tab" type="button">Accedi</button>
+            <button class="login-tab active" type="button" aria-pressed="true">Ospite (senza account)</button>
+          </div>
+          <p style="font-size:13px;color:var(--color-content-secondary);margin-bottom:14px;">Nessuna registrazione richiesta. Riceverai la conferma dell'ordine via email.</p>
+          <div class="form-group">
+            <label class="form-label" for="co-email">Email <span class="required">*</span></label>
+            <input id="co-email" type="email" class="form-input" placeholder="nome@esempio.it">
+          </div>
+          <div class="form-check">
+            <input type="checkbox" id="co-newsletter">
+            <label class="form-check-label" for="co-newsletter">Iscriviti alla newsletter per ricevere offerte e aggiornamenti (opzionale)</label>
+          </div>
+        </div>
+
+        <!-- Shipping address -->
+        <div class="co-card">
+          <p class="co-card-title">Indirizzo di spedizione</p>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="co-nome">Nome <span class="required">*</span></label>
+              <input id="co-nome" type="text" class="form-input" placeholder="Mario">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="co-cognome">Cognome <span class="required">*</span></label>
+              <input id="co-cognome" type="text" class="form-input" placeholder="Rossi">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="co-via">Via e numero civico <span class="required">*</span></label>
+            <input id="co-via" type="text" class="form-input" placeholder="Via Esempio, 1">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="co-via2">Appartamento, interno, scala (opzionale)</label>
+            <input id="co-via2" type="text" class="form-input" placeholder="Scala B, interno 4">
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="co-cap">CAP <span class="required">*</span></label>
+              <input id="co-cap" type="text" class="form-input" placeholder="00100" maxlength="5" pattern="[0-9]{5}">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="co-citta">Città <span class="required">*</span></label>
+              <input id="co-citta" type="text" class="form-input" placeholder="Roma">
+            </div>
+          </div>
+
+          <div class="form-grid-2">
+            <div class="form-group">
+              <label class="form-label" for="co-prov">Provincia <span class="required">*</span></label>
+              <select id="co-prov" class="form-select">
+                <option value="">Seleziona…</option>
+                <option value="RM">Roma (RM)</option>
+                <option value="MI">Milano (MI)</option>
+                <option value="NA">Napoli (NA)</option>
+                <option value="TO">Torino (TO)</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="co-telefono">Telefono <span class="required">*</span></label>
+              <input id="co-telefono" type="tel" class="form-input" placeholder="+39 333 456 7890">
+            </div>
+          </div>
+
+          <!-- Billing different from shipping -->
+          <div class="form-check" style="margin-top:8px;">
+            <input type="checkbox" id="co-billing-diff">
+            <label class="form-check-label" for="co-billing-diff">Indirizzo di fatturazione diverso da quello di spedizione</label>
+          </div>
+
+          <!-- B2B / Fattura -->
+          <div class="form-check">
+            <input type="checkbox" id="co-b2b">
+            <label class="form-check-label" for="co-b2b">Intestare la fattura a un'associazione o ente (inserisci P.IVA / C.F.)</label>
+          </div>
+
+          <!-- Codice fiscale field -->
+          <div class="form-group" style="margin-top:8px;">
+            <label class="form-label" for="co-cf">Codice fiscale (per fattura)</label>
+            <input id="co-cf" type="text" class="form-input" placeholder="RSSMRA80A01H501T" style="font-family:var(--font-ui);letter-spacing:0.05em;text-transform:uppercase;">
+          </div>
+
+          <div class="form-check" style="margin-top:8px;">
+            <input type="checkbox" id="co-save-addr">
+            <label class="form-check-label" for="co-save-addr">Salva questo indirizzo per i prossimi acquisti</label>
+          </div>
+
+          <button class="btn-next" type="button" onclick="showState('s-step2', document.querySelector('.demo-btn:nth-child(2)'))">Continua alla spedizione →</button>
+        </div>
+      </div>
+
+      <!-- Summary sidebar -->
+      <aside>
+        <div class="co-summary">
+          <p class="co-summary-title">Il tuo ordine</p>
+          <div class="co-items">
+            <div class="co-item-row"><div class="co-item-img">📚<span class="co-item-badge">1</span></div><div class="co-item-name">Manuale Capo Scout 2024<div style="font-size:11px;color:var(--color-content-secondary);">Cartaceo</div></div><span class="co-item-price">€19,90</span></div>
+            <div class="co-item-row"><div class="co-item-img">👕<span class="co-item-badge">2</span></div><div class="co-item-name">Camicia E/G — Taglia M<div style="font-size:11px;color:var(--color-content-secondary);">Beige</div></div><span class="co-item-price">€58,00</span></div>
+            <div class="co-item-row"><div class="co-item-img" style="background:#F0F4FF;">📄<span class="co-item-badge">1</span></div><div class="co-item-name">Kit Piste L/C PDF</div><span class="co-item-price">€8,00</span></div>
+          </div>
+          <div class="co-summary-rows">
+            <div class="co-row"><span class="co-row-label">Subtotale</span><span class="co-row-val">€85,90</span></div>
+            <div class="co-row"><span class="co-row-label">Sconto SCOUT10</span><span class="co-row-val" style="color:var(--color-feedback-success-text);">−€8,59</span></div>
+            <div class="co-row"><span class="co-row-label">Spedizione</span><span class="co-row-val" style="color:var(--color-feedback-success-text);">Gratis</span></div>
+          </div>
+          <div class="co-total"><span>Totale</span><span class="co-total-val">€77,31</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ STEP 2 — SPEDIZIONE ═══════════════════ -->
+  <div id="s-step2" class="page-preview" hidden>
+    <header class="co-header"><a href="#" class="co-logo">Negozio</a><span class="co-secure">🔒 Checkout sicuro</span></header>
+    <div class="co-progress">
+      <div class="co-progress-inner">
+        <div class="co-step done"><span class="co-step-num"><span>1</span></span> Indirizzo</div>
+        <div class="co-step-line done"></div>
+        <div class="co-step active"><span class="co-step-num"><span>2</span></span> Spedizione</div>
+        <div class="co-step-line"></div>
+        <div class="co-step"><span class="co-step-num"><span>3</span></span> Pagamento</div>
+        <div class="co-step-line"></div>
+        <div class="co-step"><span class="co-step-num"><span>4</span></span> Conferma</div>
+      </div>
+    </div>
+    <div class="co-layout">
+      <div>
+        <!-- Indirizzo confermato (collapsed) -->
+        <div class="co-card co-card-done" style="display:flex;justify-content:space-between;align-items:center;">
+          <div><p style="font-size:12px;color:var(--color-content-secondary);margin-bottom:2px;">Spedire a:</p><p style="font-size:14px;font-weight:500;">Mario Rossi — Via Esempio, 1 — 00100 Roma (RM)</p></div>
+          <button style="font-size:13px;text-decoration:underline;color:var(--color-content-secondary);background:none;border:none;cursor:pointer;">Modifica</button>
+        </div>
+
+        <div class="co-card">
+          <p class="co-card-title">Metodo di spedizione</p>
+          <div class="shipping-methods" role="radiogroup">
+            <div class="shipping-option selected">
+              <div class="ship-radio" aria-hidden="true"></div>
+              <div class="ship-info">
+                <p class="ship-name">📦 Spedizione standard</p>
+                <p class="ship-desc">3–5 giorni lavorativi · GLS / BRT</p>
+              </div>
+              <span class="ship-price ship-free">GRATIS</span>
+            </div>
+            <div class="shipping-option">
+              <div class="ship-radio" aria-hidden="true"></div>
+              <div class="ship-info">
+                <p class="ship-name">🚀 Spedizione express</p>
+                <p class="ship-desc">1–2 giorni lavorativi · Consegna garantita</p>
+              </div>
+              <span class="ship-price">€5,90</span>
+            </div>
+            <div class="shipping-option">
+              <div class="ship-radio" aria-hidden="true"></div>
+              <div class="ship-info">
+                <p class="ship-name">🏢 Ritiro in sede</p>
+                <p class="ship-desc">Piazza Pasquale Paoli, 18 — Roma · Lun-Ven 9:00–17:00</p>
+              </div>
+              <span class="ship-price ship-free">GRATIS</span>
+            </div>
+          </div>
+          <button class="btn-next" type="button" onclick="showState('s-step3', document.querySelector('.demo-btn:nth-child(3)'))">Continua al pagamento →</button>
+        </div>
+      </div>
+      <aside>
+        <div class="co-summary">
+          <p class="co-summary-title">Il tuo ordine</p>
+          <div class="co-items"><div class="co-item-row"><div class="co-item-img">📚<span class="co-item-badge">1</span></div><div class="co-item-name">Manuale Capo Scout 2024</div><span class="co-item-price">€19,90</span></div><div class="co-item-row"><div class="co-item-img">👕<span class="co-item-badge">2</span></div><div class="co-item-name">Camicia E/G — Taglia M</div><span class="co-item-price">€58,00</span></div><div class="co-item-row"><div class="co-item-img" style="background:#F0F4FF;">📄<span class="co-item-badge">1</span></div><div class="co-item-name">Kit Piste L/C PDF</div><span class="co-item-price">€8,00</span></div></div>
+          <div class="co-summary-rows"><div class="co-row"><span class="co-row-label">Subtotale</span><span class="co-row-val">€85,90</span></div><div class="co-row"><span class="co-row-label">Sconto</span><span class="co-row-val" style="color:var(--color-feedback-success-text);">−€8,59</span></div><div class="co-row"><span class="co-row-label">Spedizione standard</span><span class="co-row-val" style="color:var(--color-feedback-success-text);">Gratis</span></div></div>
+          <div class="co-total"><span>Totale</span><span class="co-total-val">€77,31</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ STEP 3 — PAGAMENTO ════════════════════ -->
+  <div id="s-step3" class="page-preview" hidden>
+    <header class="co-header"><a href="#" class="co-logo">Negozio</a><span class="co-secure">🔒 Checkout sicuro</span></header>
+    <div class="co-progress">
+      <div class="co-progress-inner">
+        <div class="co-step done"><span class="co-step-num"><span>1</span></span> Indirizzo</div>
+        <div class="co-step-line done"></div>
+        <div class="co-step done"><span class="co-step-num"><span>2</span></span> Spedizione</div>
+        <div class="co-step-line done"></div>
+        <div class="co-step active"><span class="co-step-num"><span>3</span></span> Pagamento</div>
+        <div class="co-step-line"></div>
+        <div class="co-step"><span class="co-step-num"><span>4</span></span> Conferma</div>
+      </div>
+    </div>
+    <div class="co-layout">
+      <div>
+        <!-- Indirizzo collapsed -->
+        <div class="co-card co-card-done" style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;">
+          <div><p style="font-size:12px;color:var(--color-content-secondary);margin-bottom:2px;">Spedire a · Standard (Gratis)</p><p style="font-size:14px;font-weight:500;">Mario Rossi — Via Esempio, 1 — Roma</p></div>
+          <button style="font-size:13px;text-decoration:underline;background:none;border:none;cursor:pointer;color:var(--color-content-secondary);">Modifica</button>
+        </div>
+
+        <!-- Payment methods -->
+        <div class="co-card">
+          <p class="co-card-title">Metodo di pagamento</p>
+
+          <div class="payment-methods" role="radiogroup" aria-label="Scegli metodo di pagamento">
+
+            <!-- 1. Carta di credito/debito -->
+            <div class="pay-option selected">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">💳 Carta di credito / debito</span>
+                <div class="pay-logos">
+                  <span class="pay-logo-chip">VISA</span>
+                  <span class="pay-logo-chip">MC</span>
+                  <span class="pay-logo-chip">AMEX</span>
+                </div>
+              </div>
+              <div class="pay-details">
+                <div class="cc-fields">
+                  <div class="form-group">
+                    <label class="form-label">Numero carta</label>
+                    <input type="text" class="form-input" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number">
+                  </div>
+                  <div class="cc-row">
+                    <div class="form-group">
+                      <label class="form-label">Scadenza</label>
+                      <input type="text" class="form-input" placeholder="MM / AA" maxlength="7" autocomplete="cc-exp">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label">CVV</label>
+                      <input type="text" class="form-input" placeholder="123" maxlength="4" autocomplete="cc-csc">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label">Intestatario carta</label>
+                    <input type="text" class="form-input" placeholder="MARIO ROSSI" autocomplete="cc-name">
+                  </div>
+                </div>
+                <p style="font-size:12px;color:var(--color-content-secondary);margin-top:8px;">🔒 Transazione protetta con crittografia SSL · Powered by Stripe</p>
+              </div>
+            </div>
+
+            <!-- 2. PayPal -->
+            <div class="pay-option">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">🅿️ PayPal</span>
+                <div class="pay-logos"><span class="pay-logo-chip" style="color:#003087;border-color:#003087;">PayPal</span></div>
+              </div>
+              <div class="pay-details">
+                <p class="pay-note">Verrai reindirizzato su PayPal per completare il pagamento in sicurezza. Supporta anche <strong>PayPal a rate</strong> (Pay Later) per importi idonei.</p>
+              </div>
+            </div>
+
+            <!-- 3. Bonifico bancario -->
+            <div class="pay-option">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">🏦 Bonifico bancario</span>
+              </div>
+              <div class="pay-details">
+                <p class="pay-note">L'ordine viene messo in attesa fino al ricevimento del bonifico (2–3 giorni bancari). Le coordinate IBAN saranno inviate via email dopo la conferma.</p>
+                <div style="background:var(--color-surface-card);border-radius:8px;padding:12px;font-family:var(--font-ui);font-size:13px;line-height:1.8;">
+                  <div>Intestato a: <strong>Associazione Esempio APS</strong></div>
+                  <div>IBAN: IT60 X054 2811 1010 0000 0123 456</div>
+                  <div>Causale: Ordine #[numero-ordine]</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 4. Carta del Docente -->
+            <div class="pay-option">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">🎓 Carta del Docente</span>
+                <div class="pay-logos"><span class="pay-logo-chip" style="color:#005A9C;border-color:#005A9C;">Docente</span></div>
+              </div>
+              <div class="pay-details">
+                <div class="pay-special-note">
+                  ℹ️ La Carta del Docente copre solo i prodotti ammissibili (libri, materiali formativi). Gli articoli non ammissibili verranno separati in un secondo ordine.
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Inserisci il codice buono</label>
+                  <input type="text" class="form-input" placeholder="Esempio: A1B2C3D4E5F6G7H8I9J0" style="font-family:var(--font-ui);letter-spacing:0.05em;">
+                </div>
+                <p style="font-size:12px;color:var(--color-content-secondary);">Genera il buono su <a href="#" style="color:var(--color-content-primary);">cartadeldocente.istruzione.it</a> prima di completare l'acquisto.</p>
+              </div>
+            </div>
+
+            <!-- 5. 18app / Carta della Cultura -->
+            <div class="pay-option">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">🎭 18app / Carta della Cultura</span>
+                <div class="pay-logos"><span class="pay-logo-chip" style="color:#5A189A;border-color:#5A189A;">18app</span></div>
+              </div>
+              <div class="pay-details">
+                <div class="pay-special-note">
+                  ℹ️ Disponibile per i nati nel 2006 (anno di riferimento corrente). Il saldo copre libri e prodotti editoriali.
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Codice buono Carta della Cultura</label>
+                  <input type="text" class="form-input" placeholder="Inserisci il codice buono" style="font-family:var(--font-ui);">
+                </div>
+              </div>
+            </div>
+
+            <!-- 6. Satispay -->
+            <div class="pay-option">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">⚡ Satispay</span>
+                <div class="pay-logos"><span class="pay-logo-chip" style="color:#E63946;border-color:#E63946;">Satispay</span></div>
+              </div>
+              <div class="pay-details">
+                <p class="pay-note">Verrai reindirizzato sull'app Satispay per approvare il pagamento con il tuo smartphone. Il pagamento è istantaneo.</p>
+              </div>
+            </div>
+
+            <!-- 7. Contrassegno -->
+            <div class="pay-option">
+              <div class="pay-option-header">
+                <div class="pay-radio" aria-hidden="true"></div>
+                <span class="pay-name">💶 Contrassegno (pagamento alla consegna)</span>
+              </div>
+              <div class="pay-details">
+                <p class="pay-note">Paghi in contanti o con POS al corriere al momento della consegna. <strong>Maggiorazione: +€3,00</strong>. Non disponibile per prodotti digitali.</p>
+                <div style="background:var(--color-feedback-warning-bg);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--color-feedback-warning-text);">⚠️ Non disponibile per ordini con articoli digitali (PDF, eBook).</div>
+              </div>
+            </div>
+
+          </div><!-- /payment-methods -->
+
+          <!-- GDPR / Consenso -->
+          <div style="margin-top:24px;padding-top:20px;border-top:1px solid var(--color-border-default);">
+            <div class="form-check">
+              <input type="checkbox" id="co-terms" required>
+              <label class="form-check-label" for="co-terms">
+                Ho letto e accetto i <a href="#">Termini e condizioni</a> e la <a href="#">Privacy Policy</a> <span style="color:var(--color-feedback-error-text);">*</span>
+              </label>
+            </div>
+            <div class="form-check">
+              <input type="checkbox" id="co-marketing">
+              <label class="form-check-label" for="co-marketing">
+                Acconsento al trattamento dei dati per finalità di marketing (facoltativo)
+              </label>
+            </div>
+          </div>
+
+          <button class="btn-pay" type="button" onclick="showState('s-conf', document.querySelector('.demo-btn:nth-child(4)'))">
+            🔒 Paga €77,31 ora
+          </button>
+          <p class="co-legal">Cliccando "Paga ora" confermi che hai letto e accettato i Termini e Condizioni. Il tuo pagamento è protetto dalla tecnologia SSL. <a href="#">Privacy Policy</a> · <a href="#">Recesso</a></p>
+
+          <!-- FAQ inline -->
+          <div class="co-faq">
+            <p class="co-faq-title">Domande frequenti sul pagamento</p>
+            <details class="co-faq"><summary>Il pagamento è sicuro? <span>+</span></summary><p class="co-faq-body">Sì. Tutte le transazioni sono crittografate con SSL. Non conserviamo i dati della tua carta: il pagamento viene processato direttamente da Stripe (PCI DSS Level 1).</p></details>
+            <details class="co-faq"><summary>Posso pagare a rate? <span>+</span></summary><p class="co-faq-body">Sì, tramite PayPal Pay Later per ordini idonei. Al momento non offriamo rateizzazione tramite altri provider.</p></details>
+            <details class="co-faq"><summary>Ricevo fattura? <span>+</span></summary><p class="co-faq-body">Sì. La ricevuta fiscale o fattura viene inviata via email entro 24 ore dalla conferma del pagamento. Per fatture intestate a enti, inserisci P.IVA o C.F. al passaggio precedente.</p></details>
+            <details class="co-faq"><summary>Posso annullare l'ordine dopo il pagamento? <span>+</span></summary><p class="co-faq-body">Puoi annullare l'ordine entro 1 ora dal pagamento, prima che venga messo in lavorazione. Successivamente puoi richiedere il reso entro 30 giorni dalla consegna.</p></details>
+            <details class="co-faq"><summary>Cosa succede se il pagamento fallisce? <span>+</span></summary><p class="co-faq-body">Il carrello viene conservato e puoi riprovare con lo stesso o un metodo di pagamento diverso. Non vengono addebitati importi in caso di pagamento non andato a buon fine.</p></details>
+          </div>
+        </div>
+      </div>
+
+      <!-- Summary sidebar -->
+      <aside>
+        <div class="co-summary">
+          <p class="co-summary-title">Il tuo ordine</p>
+          <div class="co-items"><div class="co-item-row"><div class="co-item-img">📚<span class="co-item-badge">1</span></div><div class="co-item-name">Manuale Capo Scout 2024</div><span class="co-item-price">€19,90</span></div><div class="co-item-row"><div class="co-item-img">👕<span class="co-item-badge">2</span></div><div class="co-item-name">Camicia E/G — Taglia M</div><span class="co-item-price">€58,00</span></div><div class="co-item-row"><div class="co-item-img" style="background:#F0F4FF;">📄<span class="co-item-badge">1</span></div><div class="co-item-name">Kit Piste L/C PDF</div><span class="co-item-price">€8,00</span></div></div>
+          <div class="co-summary-rows"><div class="co-row"><span class="co-row-label">Subtotale</span><span class="co-row-val">€85,90</span></div><div class="co-row"><span class="co-row-label">Sconto SCOUT10</span><span class="co-row-val" style="color:var(--color-feedback-success-text);">−€8,59</span></div><div class="co-row"><span class="co-row-label">Spedizione standard</span><span class="co-row-val" style="color:var(--color-feedback-success-text);">Gratis</span></div><div class="co-row"><span class="co-row-label">IVA (22%)</span><span class="co-row-val">€14,10</span></div></div>
+          <div class="co-total"><span>Totale</span><span class="co-total-val">€77,31</span></div>
+        </div>
+      </aside>
+    </div>
+  </div>
+
+  <!-- ════════════════════════ CONFERMA ORDINE ═══════════════════════ -->
+  <div id="s-conf" class="page-preview" hidden>
+    <header class="conf-header">
+      <a href="#" class="conf-logo">Negozio</a>
+    </header>
+
+    <div class="conf-layout">
+      <!-- Success box -->
+      <div class="conf-success-box" role="status">
+        <div class="conf-check">✅</div>
+        <h1 class="conf-title">Grazie per il tuo ordine!</h1>
+        <p class="conf-sub">Una conferma è stata inviata a <strong>mario.rossi@esempio.it</strong></p>
+        <span class="conf-order-id">Ordine #2024-00847</span>
+      </div>
+
+      <!-- Riepilogo prodotti -->
+      <div class="conf-section">
+        <p class="conf-section-title">Prodotti ordinati</p>
+        <div class="conf-items-list">
+          <div class="conf-item">
+            <div class="conf-item-img">📚</div>
+            <div><p class="conf-item-name">Manuale del Capo Scout — Ed. 2024</p><p class="conf-item-meta">Cartaceo · Qty 1</p></div>
+            <span class="conf-item-price">€19,90</span>
+          </div>
+          <div class="conf-item">
+            <div class="conf-item-img">👕</div>
+            <div><p class="conf-item-name">Camicia Estivale Branca E/G</p><p class="conf-item-meta">Taglia M · Beige · Qty 2</p></div>
+            <span class="conf-item-price">€58,00</span>
+          </div>
+          <div class="conf-item">
+            <div class="conf-item-img" style="background:#F0F4FF;">📄</div>
+            <div><p class="conf-item-name">Kit Piste L/C PDF 2024/25</p><p class="conf-item-meta">Download digitale · Qty 1</p></div>
+            <span class="conf-item-price">€8,00</span>
+          </div>
+        </div>
+        <div class="conf-total-row"><span>Totale pagato</span><span>€77,31</span></div>
+      </div>
+
+      <!-- Dettagli spedizione / pagamento -->
+      <div class="conf-section">
+        <p class="conf-section-title">Dettagli ordine</p>
+        <div class="conf-grid-2">
+          <div>
+            <p class="conf-info-label">Indirizzo di spedizione</p>
+            <p class="conf-info-value">Mario Rossi<br>Via Esempio, 1<br>00100 Roma (RM)</p>
+          </div>
+          <div>
+            <p class="conf-info-label">Metodo di spedizione</p>
+            <p class="conf-info-value">📦 Spedizione standard<br><span style="font-size:13px;color:var(--color-content-secondary);">Consegna prevista: 12–14 marzo 2026</span></p>
+          </div>
+          <div style="margin-top:16px;">
+            <p class="conf-info-label">Metodo di pagamento</p>
+            <p class="conf-info-value">💳 Carta di credito<br><span style="font-size:13px;color:var(--color-content-secondary);">•••• •••• •••• 4242</span></p>
+          </div>
+          <div style="margin-top:16px;">
+            <p class="conf-info-label">Sconto applicato</p>
+            <p class="conf-info-value" style="color:var(--color-feedback-success-text);">SCOUT10 — −€8,59</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Download digitali -->
+      <div class="conf-section" style="background:var(--color-feedback-info-bg);border-color:#B0D0EE;">
+        <p class="conf-section-title" style="color:var(--color-feedback-info-text);">📥 Download immediato disponibile</p>
+        <div class="conf-item" style="margin-bottom:0;">
+          <div class="conf-item-img" style="background:white;">📄</div>
+          <div><p class="conf-item-name">Kit Piste L/C PDF 2024/25</p><p class="conf-item-meta">Il link è disponibile per 72 ore · Ti arriverà anche via email</p></div>
+          <a href="#" style="padding:8px 18px;background:var(--color-surface-inverse);color:white;border-radius:var(--radius-pill);font-size:13px;text-decoration:none;font-family:var(--font-ui);letter-spacing:0.05em;">↓ Scarica</a>
+        </div>
+      </div>
+
+      <!-- Cosa succede adesso -->
+      <div class="conf-section">
+        <p class="conf-section-title">Cosa succede adesso?</p>
+        <div class="conf-steps">
+          <div class="conf-step-item">
+            <span class="conf-step-icon">📧</span>
+            <div class="conf-step-text">
+              <h4>Email di conferma</h4>
+              <p>Riceverai la ricevuta fiscale e il riepilogo ordine su mario.rossi@esempio.it entro pochi minuti.</p>
+            </div>
+          </div>
+          <div class="conf-step-item">
+            <span class="conf-step-icon">📦</span>
+            <div class="conf-step-text">
+              <h4>Preparazione ordine</h4>
+              <p>Il tuo ordine verrà preparato entro 1–2 giorni lavorativi dal nostro magazzino.</p>
+            </div>
+          </div>
+          <div class="conf-step-item">
+            <span class="conf-step-icon">🚚</span>
+            <div class="conf-step-text">
+              <h4>Spedizione e tracciamento</h4>
+              <p>Riceverai un'email con il codice di tracciamento GLS/BRT non appena il pacco sarà consegnato al corriere.</p>
+            </div>
+          </div>
+          <div class="conf-step-item">
+            <span class="conf-step-icon">🏠</span>
+            <div class="conf-step-text">
+              <h4>Consegna prevista: 12–14 marzo 2026</h4>
+              <p>Il corriere ti contatterà per concordare la consegna se non sei disponibile.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CTAs -->
+      <div class="conf-ctas">
+        <a href="#" class="btn-conf-primary">Traccia il tuo ordine</a>
+        <a href="shop-catalogo.html" class="btn-conf-secondary">Continua lo shopping</a>
+      </div>
+    </div>
+  </div><!-- /s-conf -->
+
+  <script>
+    function showState(id, btn){
+      document.querySelectorAll('.page-preview').forEach(el=>el.hidden=true);
+      document.querySelectorAll('.demo-btn').forEach(b=>b.classList.remove('active'));
+      document.getElementById(id).hidden=false;
+      if(btn) btn.classList.add('active');
+      else document.querySelector(`[onclick*="${id}"]`)?.classList.add('active');
+    }
+  </script>
+</body>
+</html>

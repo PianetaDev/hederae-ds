@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="agesci">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Pagina Campagna Fundraising — AGESCI · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── AGESCI BRAND TOKENS ──────────────────────────────────────────── */
+    [data-brand="agesci"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F5F5F5;
+      --color-surface-card:    #EDEDED;
+      --color-surface-deep:    #D9D9D9;
+      --color-surface-inverse: #000000;
+      --color-content-primary:   #000000;
+      --color-content-secondary: #5C5C5C;
+      --color-content-disabled:  #B0B0B0;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #000000;
+      --color-border-default:    #E0E0E0;
+      --color-border-strong:     #000000;
+      --color-border-focus:      #000000;
+      --color-interactive-primary-bg:       #000000;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #333333;
+      --color-interactive-secondary-border: #000000;
+      --color-interactive-secondary-label:  #000000;
+      --color-brand-primary:   #000000;
+      --color-brand-secondary: #5C5C5C;
+      --color-brand-accent:    #000000;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:  #FFF8E1;
+      --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:    #FDECEA;
+      --color-feedback-error-text:  #C62828;
+      --color-feedback-info-bg:     #E3F2FD;
+      --color-feedback-info-text:   #1565C0;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-pill:  40px;
+      --radius-card:  16px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── DS WRAPPER ────────────────────────────────────────────────────── */
+    .ds-container { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    .ds-nav {
+      background: var(--color-surface-inverse);
+      padding: 12px 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .ds-nav .ds-container { display: flex; align-items: center; justify-content: space-between; }
+    .ds-nav-brand { font-family: var(--font-ui); font-size: 13px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
+    .ds-nav-links { display: flex; gap: 24px; align-items: center; }
+    .ds-nav-links a { font-family: var(--font-ui); font-size: 12px; color: rgba(255,255,255,0.6); text-decoration: none; letter-spacing: 0.05em; }
+    .ds-nav-links a:hover { color: rgba(255,255,255,0.9); }
+    .ds-nav-badge { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); font-family: var(--font-ui); font-size: 11px; padding: 2px 8px; border-radius: 10px; }
+
+    .ds-hero {
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 48px 0 40px;
+    }
+    .ds-hero h1 { font-family: var(--font-display); font-size: 42px; font-weight: 400; color: var(--color-content-brand); margin-bottom: 10px; }
+    .ds-hero p { font-size: 17px; color: var(--color-content-secondary); max-width: 600px; line-height: 1.6; margin-bottom: 16px; }
+    .ds-tags { display: flex; gap: 8px; flex-wrap: wrap; }
+    .ds-tag { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em; padding: 3px 10px; border-radius: 10px; background: var(--color-surface-card); border: 1px solid var(--color-border-default); color: var(--color-content-secondary); }
+    .ds-tag.brand { background: #F0F0F0; color: #000; border-color: #CCC; font-weight: 500; }
+
+    /* ─── PAGE PREVIEW ──────────────────────────────────────────────────── */
+    .page-preview { border-top: 3px solid var(--color-border-default); }
+
+    /* ─── AGESCI SITE HEADER ────────────────────────────────────────────── */
+    .ag-header {
+      background: var(--color-surface-inverse);
+      padding: 0 48px;
+      height: 80px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .ag-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+    .ag-logo-icon {
+      width: 40px; height: 50px;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 48 60'%3E%3Cpath d='M24 2 C22 8 16 10 12 16 C8 22 10 30 14 34 C16 36 18 37 20 37 C21 37 22 36 22 35 L22 30 L20 28 C18 26 17 24 17 22 C17 18 20 15 24 15 C28 15 31 18 31 22 C31 24 30 26 28 28 L26 30 L26 35 C26 36 27 37 28 37 C30 37 32 36 34 34 C38 30 40 22 36 16 C32 10 26 8 24 2Z M20 40 C18 40 16 42 16 44 C16 48 20 52 24 56 C28 52 32 48 32 44 C32 42 30 40 28 40 C27 40 26 41 25 41.5 L24 42 L23 41.5 C22 41 21 40 20 40Z' fill='white'/%3E%3C/svg%3E") no-repeat center/contain;
+      flex-shrink: 0;
+    }
+    .ag-logo-text { font-family: var(--font-body); font-size: 14px; font-weight: 600; color: white; letter-spacing: 0.15em; text-transform: uppercase; }
+    .ag-header-right { display: flex; align-items: center; gap: 16px; }
+    .ag-header-tagline { font-family: var(--font-body); font-size: 17px; color: rgba(255,255,255,0.75); }
+    .btn-follow {
+      padding: 8px 20px; border: 1px solid rgba(255,255,255,0.5); border-radius: 40px;
+      color: white; font-size: 14px; font-weight: 500; text-decoration: none; background: transparent;
+      transition: border-color 0.15s;
+    }
+    .btn-follow:hover { border-color: white; }
+
+    /* ─── MAIN LAYOUT ───────────────────────────────────────────────────── */
+    .ag-main { max-width: 1344px; margin: 0 auto; padding: 0 48px; }
+
+    /* Campaign hero layout: content left + widget right */
+    .campaign-hero { padding: 48px 0 0; display: grid; grid-template-columns: 1fr 380px; gap: 56px; align-items: start; }
+    .campaign-content {}
+    .campaign-aside {}
+
+    /* Campaign title area */
+    .campaign-eyebrow { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 12px; }
+    .campaign-title { font-family: var(--font-display); font-size: 52px; font-weight: 400; line-height: 1.1; color: var(--color-content-primary); margin-bottom: 16px; }
+    .campaign-meta { font-size: 14px; color: var(--color-content-secondary); margin-bottom: 24px; }
+
+    /* Content tabs */
+    .content-tabs { display: flex; gap: 0; border-bottom: 1px solid var(--color-border-default); margin-bottom: 32px; align-items: center; }
+    .content-tab {
+      padding: 10px 20px; font-size: 15px; font-weight: 500;
+      border-bottom: 2px solid transparent; margin-bottom: -1px;
+      cursor: pointer; text-decoration: none; color: var(--color-content-secondary);
+      transition: color 0.15s;
+    }
+    .content-tab.active { color: var(--color-content-primary); border-bottom-color: var(--color-content-primary); }
+    .content-tab:hover:not(.active) { color: var(--color-content-primary); }
+    .content-tab-spacer { flex: 1; }
+    .tab-profile-link { font-size: 14px; color: var(--color-content-secondary); text-decoration: underline; cursor: pointer; padding: 10px 0; }
+
+    /* Article body */
+    .campaign-body { font-size: 16px; line-height: 1.75; color: var(--color-content-secondary); margin-bottom: 24px; }
+    .campaign-body p { margin-bottom: 16px; }
+
+    /* Blockquote */
+    .campaign-quote {
+      border-left: none; padding: 24px 0;
+      position: relative; margin: 32px 0;
+    }
+    .campaign-quote::before {
+      content: '\201C'; font-family: var(--font-display); font-size: 80px; line-height: 0.6;
+      color: var(--color-border-default); position: absolute; left: 0; top: 20px;
+    }
+    .campaign-quote blockquote {
+      font-family: var(--font-display); font-style: italic;
+      font-size: 20px; line-height: 1.6; color: var(--color-content-primary);
+      padding-left: 48px; margin-bottom: 12px;
+    }
+    .campaign-quote cite { font-size: 13px; color: var(--color-content-secondary); padding-left: 48px; display: block; }
+
+    /* Campaign KPIs */
+    .campaign-kpis { display: flex; gap: 48px; padding: 32px 0; border-top: 1px solid var(--color-border-default); border-bottom: 1px solid var(--color-border-default); margin: 32px 0; }
+    .camp-kpi-value { font-family: var(--font-ui); font-size: 48px; font-weight: 500; display: block; }
+    .camp-kpi-label { font-size: 13px; color: var(--color-content-secondary); }
+
+    /* Body text detail */
+    .campaign-body-detail { font-size: 15px; line-height: 1.7; color: var(--color-content-secondary); margin-bottom: 24px; }
+
+    /* Mostra di più toggle */
+    .mostra-piu { font-size: 15px; font-weight: 500; text-decoration: underline; cursor: pointer; color: var(--color-content-primary); background: none; border: none; padding: 0; margin-bottom: 32px; }
+
+    /* Bottom CTAs */
+    .campaign-ctas { display: flex; gap: 16px; margin-bottom: 24px; }
+    .btn-primary {
+      padding: 13px 32px; background: var(--color-interactive-primary-bg); color: var(--color-interactive-primary-label);
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+      border: none; border-radius: var(--radius-pill); cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn-primary:hover { background: var(--color-interactive-primary-bg-hover); }
+    .btn-secondary {
+      padding: 13px 32px; background: transparent; color: var(--color-interactive-secondary-label);
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+      border: 1px solid var(--color-interactive-secondary-border); border-radius: var(--radius-pill); cursor: pointer; text-decoration: none;
+      transition: background 0.15s;
+    }
+    .btn-secondary:hover { background: var(--color-surface-raised); }
+
+    /* ─── DONATION WIDGET (aside) ────────────────────────────────────── */
+    .donation-widget {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-card);
+      padding: 28px;
+      position: sticky; top: 96px;
+    }
+
+    /* Progress bar */
+    .progress-section { margin-bottom: 20px; }
+    .progress-amounts { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+    .progress-raised { font-family: var(--font-ui); font-size: 32px; font-weight: 500; }
+    .progress-goal { font-size: 14px; color: var(--color-content-secondary); }
+    .progress-bar { height: 6px; background: var(--color-surface-deep); border-radius: 3px; overflow: hidden; margin-bottom: 6px; }
+    .progress-fill { height: 100%; background: var(--color-content-primary); border-radius: 3px; width: 88%; }
+    .progress-pct { font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary); }
+
+    .widget-btn-primary {
+      display: block; width: 100%; padding: 13px;
+      background: var(--color-interactive-primary-bg); color: var(--color-interactive-primary-label);
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500;
+      border: none; border-radius: var(--radius-pill); cursor: pointer; text-align: center; text-decoration: none;
+      margin-bottom: 10px; transition: background 0.15s;
+    }
+    .widget-btn-primary:hover { background: var(--color-interactive-primary-bg-hover); }
+    .widget-btn-secondary {
+      display: block; width: 100%; padding: 12px;
+      background: transparent; color: var(--color-content-primary);
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.08em; text-transform: uppercase;
+      border: 1px solid var(--color-border-strong); border-radius: var(--radius-pill);
+      cursor: pointer; text-align: center; text-decoration: none; margin-bottom: 12px;
+      transition: background 0.15s;
+    }
+    .widget-btn-secondary:hover { background: var(--color-surface-card); }
+    .by-mydonor-sm { display: block; text-align: center; font-size: 11px; color: var(--color-content-disabled); text-decoration: none; margin-bottom: 24px; }
+
+    .widget-divider { height: 1px; background: var(--color-border-default); margin: 20px 0; }
+
+    /* Donations list in widget */
+    .donations-title { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 12px; }
+    .donations-list { list-style: none; }
+    .donation-item { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--color-border-default); font-size: 14px; }
+    .donation-item:last-child { border-bottom: none; }
+    .donation-name { font-weight: 500; }
+    .donation-amount { font-family: var(--font-ui); color: var(--color-content-secondary); }
+    .vedi-tutte { font-size: 13px; text-decoration: underline; color: var(--color-content-secondary); cursor: pointer; margin-top: 8px; display: inline-block; }
+
+    /* Organizzatore section */
+    .organizzatore { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--color-border-default); }
+    .org-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--color-content-disabled); margin-bottom: 10px; }
+    .org-profile { display: flex; align-items: center; gap: 12px; margin-bottom: 8px; }
+    .org-avatar {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--color-surface-deep); flex-shrink: 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; color: var(--color-content-disabled); font-family: var(--font-ui);
+    }
+    .org-name { font-size: 15px; font-weight: 600; }
+    .org-sub { font-size: 13px; color: var(--color-content-secondary); }
+    .org-link { font-size: 13px; text-decoration: underline; color: var(--color-content-secondary); cursor: pointer; }
+
+    /* ─── CONDIVIDERE AIUTA SECTION ─────────────────────────────────── */
+    .ag-section { border-top: 1px solid var(--color-border-default); padding: 56px 0; }
+    .ag-section-title { font-family: var(--font-display); font-size: 28px; font-weight: 400; margin-bottom: 10px; }
+    .condividi-sub { font-size: 17px; color: var(--color-content-secondary); margin-bottom: 32px; line-height: 1.5; max-width: 600px; }
+
+    .condividi-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+    .condividi-card {
+      border: 1px solid var(--color-border-default); border-radius: var(--radius-card); overflow: hidden;
+    }
+    .condividi-card-img {
+      background: var(--color-surface-card); height: 180px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .condividi-card-img-placeholder { font-size: 36px; opacity: 0.3; }
+    .condividi-card-body { padding: 20px; }
+    .condividi-card-title { font-family: var(--font-display); font-size: 18px; font-weight: 400; margin-bottom: 6px; line-height: 1.3; }
+    .condividi-card-progress { height: 4px; background: var(--color-surface-deep); border-radius: 2px; overflow: hidden; margin: 12px 0 8px; }
+    .condividi-card-progress-fill { height: 100%; background: var(--color-content-primary); border-radius: 2px; width: 88%; }
+    .condividi-card-meta { font-size: 13px; color: var(--color-content-secondary); }
+    .condividi-card-org { font-size: 13px; color: var(--color-content-secondary); margin-top: 8px; }
+
+    .social-share { margin-top: 32px; }
+    .social-share-label { font-size: 14px; font-weight: 500; margin-bottom: 14px; }
+    .social-btns { display: flex; gap: 12px; }
+    .social-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 16px; border: 1px solid var(--color-border-default); border-radius: 8px;
+      font-size: 14px; font-weight: 500; text-decoration: none; color: var(--color-content-primary);
+      transition: background 0.15s;
+    }
+    .social-btn:hover { background: var(--color-surface-raised); }
+    .social-icon { font-size: 16px; }
+
+    /* ─── ALTRE CAMPAGNE ────────────────────────────────────────────── */
+    .altre-campagne-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 32px; }
+    .campagna-card {
+      border: 1px solid var(--color-border-default); border-radius: var(--radius-card); overflow: hidden;
+      text-decoration: none; color: inherit; transition: box-shadow 0.15s;
+    }
+    .campagna-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .campagna-card-img { background: var(--color-surface-card); height: 140px; display: flex; align-items: center; justify-content: center; }
+    .campagna-card-body { padding: 18px; }
+    .campagna-card-title { font-family: var(--font-display); font-size: 17px; font-weight: 400; margin-bottom: 8px; line-height: 1.4; }
+    .campagna-card-progress { height: 3px; background: var(--color-surface-deep); border-radius: 2px; overflow: hidden; margin: 12px 0 6px; }
+    .campagna-card-progress-fill { height: 100%; background: var(--color-content-primary); border-radius: 2px; }
+    .campagna-card-meta { font-size: 13px; color: var(--color-content-secondary); }
+
+    /* ─── AGESCI FULL FOOTER ────────────────────────────────────────── */
+    .ag-footer-full { background: var(--color-surface-inverse); color: white; }
+
+    /* Newsletter bar */
+    .ag-footer-newsletter {
+      background: var(--color-surface-inverse); padding: 40px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .ag-footer-newsletter-inner { display: flex; align-items: center; justify-content: space-between; gap: 32px; flex-wrap: wrap; }
+    .ag-footer-newsletter-label { font-size: 22px; font-family: var(--font-display); color: white; }
+    .ag-footer-newsletter-form { display: flex; gap: 0; border-radius: var(--radius-pill); overflow: hidden; border: 1px solid rgba(255,255,255,0.3); }
+    .ag-footer-newsletter-input {
+      padding: 10px 20px; background: transparent; border: none;
+      color: white; font-family: var(--font-body); font-size: 15px; flex: 1; min-width: 240px;
+      outline: none;
+    }
+    .ag-footer-newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+    .ag-footer-newsletter-btn {
+      padding: 10px 20px; background: white; color: black;
+      border: none; cursor: pointer; font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    /* Follow us */
+    .ag-footer-follow {
+      padding: 32px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+      display: flex; align-items: center; gap: 32px; flex-wrap: wrap;
+    }
+    .ag-footer-follow-label { font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+    .ag-footer-social-links { display: flex; gap: 24px; }
+    .ag-footer-social-links a { font-size: 14px; color: rgba(255,255,255,0.7); text-decoration: none; }
+    .ag-footer-social-links a:hover { color: white; }
+
+    /* Nav columns */
+    .ag-footer-nav { padding: 48px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+    .ag-footer-nav-col h4 {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+      color: rgba(255,255,255,0.4); margin-bottom: 16px;
+    }
+    .ag-footer-nav-col a { display: block; font-size: 14px; color: rgba(255,255,255,0.65); text-decoration: none; margin-bottom: 7px; }
+    .ag-footer-nav-col a:hover { color: white; }
+
+    /* Bottom bar */
+    .ag-footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.1);
+      padding: 24px 0;
+      display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px;
+    }
+    .ag-footer-bottom-left { display: flex; flex-direction: column; gap: 4px; }
+    .ag-footer-copyright { font-size: 13px; color: rgba(255,255,255,0.4); font-family: var(--font-ui); }
+    .ag-footer-address { font-size: 12px; color: rgba(255,255,255,0.35); font-family: var(--font-ui); }
+    .ag-footer-links { display: flex; gap: 24px; }
+    .ag-footer-links a { font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; }
+    .ag-footer-links a:hover { color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- ─── DS META NAVIGATION ──────────────────────────────────────────── -->
+  <nav class="ds-nav" aria-label="Hederae DS navigation">
+    <div class="ds-container">
+      <a href="#" class="ds-nav-brand">Hederae DS</a>
+      <div class="ds-nav-links">
+        <span class="ds-nav-badge">AGESCI</span>
+        <a href="index.html">← Catalog</a>
+        <a href="#">Page Templates</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ─── DS PAGE HERO ────────────────────────────────────────────────── -->
+  <div class="ds-hero">
+    <div class="ds-container">
+      <h1>Pagina Campagna Fundraising</h1>
+      <p>Template per le campagne di raccolta fondi individuali su AGESCI. Struttura in due colonne: contenuto editoriale a sinistra, widget di donazione sticky a destra. Include il footer completo del sito AGESCI con navigazione, social e newsletter.</p>
+      <div class="ds-tags">
+        <span class="ds-tag brand">AGESCI</span>
+        <span class="ds-tag">2 colonne + widget</span>
+        <span class="ds-tag">Footer navigazione completa</span>
+        <span class="ds-tag">MyDonor</span>
+        <span class="ds-tag">Progress bar</span>
+        <span class="ds-tag">Social sharing</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── PAGE PREVIEW ────────────────────────────────────────────────── -->
+  <div class="page-preview">
+
+    <!-- AGESCI Site Header with "Segui" button -->
+    <header class="ag-header">
+      <a href="#" class="ag-logo">
+        <span class="ag-logo-icon" aria-hidden="true"></span>
+        <span class="ag-logo-text">AGESCI</span>
+      </a>
+      <div class="ag-header-right">
+        <p class="ag-header-tagline">Sostenitori Agesci. Insieme, sempre.</p>
+        <a href="#" class="btn-follow">Segui</a>
+      </div>
+    </header>
+
+    <!-- ── CAMPAIGN HERO: 2 col layout ── -->
+    <div class="ag-main">
+      <div class="campaign-hero">
+
+        <!-- LEFT: editorial content -->
+        <div class="campaign-content">
+          <p class="campaign-eyebrow">Creata il 13 Marzo 2026</p>
+          <h1 class="campaign-title">Titolo della campagna</h1>
+
+          <!-- Content tabs -->
+          <nav class="content-tabs" aria-label="Sezioni campagna">
+            <a href="#" class="content-tab active">Contenuto</a>
+            <a href="#" class="content-tab">Esperti e trouvaille</a>
+            <span class="content-tab-spacer"></span>
+            <a href="#" class="tab-profile-link">leggi profilo →</a>
+          </nav>
+
+          <!-- Article body -->
+          <div class="campaign-body">
+            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce at sem sed ipsum congue ultricies quis purus. Ut pharetra bibendum fermentum. Donec malesuada turpis. Mauris elementum, libero nam malesuada porta, odio nulla urna purus, sit bibendum felis augue vel turpis.</p>
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce at sem sed ipsum congue ultricies quis purus. Ut pharetra bibendum fermentum. Donec malesuada turpis. Mauris elementum, libero nam malesuada porta, odio nulla urna purus, sit bibendum felis augue vel turpis.</p>
+          </div>
+
+          <h2 style="font-family: var(--font-display); font-size: 28px; font-weight: 400; margin-bottom: 20px;">Sottotitolo</h2>
+
+          <!-- Blockquote -->
+          <div class="campaign-quote">
+            <blockquote>Nullam laoreet lacus at leo suscipit, nec dignissim nisi pharetra. Curabitur quam lectus, pellentesque sit amet nisi id, rhoncus cursus turpis.</blockquote>
+            <cite>— Autore Cognome</cite>
+          </div>
+
+          <div class="campaign-body">
+            <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Fusce at sem sed ipsum congue ultricies. Donec malesuada turpis. Mauris elementum, libero nam malesuada porta, odio nulla urna purus, sit bibendum felis augue vel turpis.</p>
+          </div>
+
+          <!-- KPIs -->
+          <div class="campaign-kpis" role="region" aria-label="Risultati campagna">
+            <div>
+              <span class="camp-kpi-value">+1000</span>
+              <span class="camp-kpi-label">Kpi</span>
+            </div>
+            <div>
+              <span class="camp-kpi-value">+1000</span>
+              <span class="camp-kpi-label">Kpi</span>
+            </div>
+            <div>
+              <span class="camp-kpi-value">+1000</span>
+              <span class="camp-kpi-label">Kpi</span>
+            </div>
+          </div>
+
+          <p class="campaign-body-detail">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+
+          <button class="mostra-piu" type="button" aria-expanded="false">Mostra di più</button>
+
+          <!-- Bottom CTAs -->
+          <div class="campaign-ctas">
+            <a href="#widget" class="btn-primary">Fai una donazione</a>
+            <button class="btn-secondary" type="button">↗ Condividi</button>
+          </div>
+        </div><!-- /campaign-content -->
+
+        <!-- RIGHT: donation widget -->
+        <div class="campaign-aside">
+          <div class="donation-widget" id="widget">
+
+            <!-- Progress -->
+            <div class="progress-section">
+              <div class="progress-amounts">
+                <span class="progress-raised">€ 1.600</span>
+                <span class="progress-goal">su 1,8 mila €</span>
+              </div>
+              <div class="progress-bar" role="progressbar" aria-valuenow="88" aria-valuemin="0" aria-valuemax="100" aria-label="Progresso raccolta">
+                <div class="progress-fill"></div>
+              </div>
+              <span class="progress-pct">88% dell'obiettivo raggiunto</span>
+            </div>
+
+            <a href="#" class="widget-btn-primary">Fai una donazione</a>
+            <a href="#" class="widget-btn-secondary">↗ Condividi</a>
+            <a href="#" class="by-mydonor-sm">By MyDonor</a>
+
+            <div class="widget-divider"></div>
+
+            <!-- Donations list -->
+            <p class="donations-title">Donazioni</p>
+            <ul class="donations-list">
+              <li class="donation-item">
+                <span class="donation-name">Nome Cognome</span>
+                <span class="donation-amount">€50</span>
+              </li>
+              <li class="donation-item">
+                <span class="donation-name">Nome Cognome</span>
+                <span class="donation-amount">€100</span>
+              </li>
+              <li class="donation-item">
+                <span class="donation-name">Nome Cognome</span>
+                <span class="donation-amount">€30</span>
+              </li>
+              <li class="donation-item">
+                <span class="donation-name">Nome Cognome</span>
+                <span class="donation-amount">€200</span>
+              </li>
+            </ul>
+            <a href="#" class="vedi-tutte">Vedi tutte →</a>
+
+            <!-- Organizzatore -->
+            <div class="organizzatore">
+              <p class="org-label">Organizzata da:</p>
+              <div class="org-profile">
+                <span class="org-avatar" aria-hidden="true">LC</span>
+                <div>
+                  <div class="org-name">Lupetti e Coccinelle</div>
+                  <div class="org-sub">Gruppo AGESCI</div>
+                </div>
+              </div>
+              <a href="#" class="org-link">Vedi profilo →</a>
+            </div>
+          </div>
+        </div><!-- /campaign-aside -->
+
+      </div><!-- /campaign-hero -->
+
+      <!-- ── CONDIVIDERE AIUTA ── -->
+      <div class="ag-section">
+        <h2 class="ag-section-title">Condividere aiuta</h2>
+        <p class="condividi-sub">ogni condivisione può ispirare 50 euro in donazioni: più persone raggiungi, più riesci ad aiutare una persona.</p>
+
+        <div class="condividi-grid">
+          <!-- Campaign preview card (what gets shared) -->
+          <div class="condividi-card">
+            <div class="condividi-card-img">
+              <span class="condividi-card-img-placeholder">🏕</span>
+            </div>
+            <div class="condividi-card-body">
+              <div class="condividi-card-title">Titolo della campagna lorem ipsum dolor sit</div>
+              <div style="display:flex; gap:8px; align-items:center; font-size:13px; color:var(--color-content-secondary); margin-top:6px;">
+                <span>€ 1.600 all'obiettivo</span>
+              </div>
+              <div class="condividi-card-progress">
+                <div class="condividi-card-progress-fill"></div>
+              </div>
+              <div class="condividi-card-meta">€ 1.600 raccolti</div>
+              <div class="condividi-card-org">di Lupetti e Coccinelle</div>
+            </div>
+          </div>
+
+          <!-- Social sharing -->
+          <div>
+            <div class="social-share">
+              <p class="social-share-label">Condividi sui social</p>
+              <div class="social-btns">
+                <a href="#" class="social-btn"><span class="social-icon">f</span> Facebook</a>
+                <a href="#" class="social-btn"><span class="social-icon">in</span> LinkedIn</a>
+                <a href="#" class="social-btn"><span class="social-icon">✕</span> X</a>
+                <a href="#" class="social-btn"><span class="social-icon">💬</span> WhatsApp</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── ALTRE CAMPAGNE ── -->
+      <div class="ag-section">
+        <h2 class="ag-section-title">Altre campagne</h2>
+        <div class="altre-campagne-grid">
+          <a href="#" class="campagna-card">
+            <div class="campagna-card-img"><span style="font-size:32px; opacity:0.3;">🏕</span></div>
+            <div class="campagna-card-body">
+              <div class="campagna-card-title">Nome campagna</div>
+              <div class="campagna-card-progress"><div class="campagna-card-progress-fill" style="width:72%"></div></div>
+              <div class="campagna-card-meta">€ 1.600 raccolti</div>
+              <div style="font-size:12px; color:var(--color-content-disabled); margin-top:4px;">di Organizzatore</div>
+            </div>
+          </a>
+          <a href="#" class="campagna-card">
+            <div class="campagna-card-img"><span style="font-size:32px; opacity:0.3;">⛺</span></div>
+            <div class="campagna-card-body">
+              <div class="campagna-card-title">Nome campagna</div>
+              <div class="campagna-card-progress"><div class="campagna-card-progress-fill" style="width:45%"></div></div>
+              <div class="campagna-card-meta">€ 1.600 raccolti</div>
+              <div style="font-size:12px; color:var(--color-content-disabled); margin-top:4px;">di Organizzatore</div>
+            </div>
+          </a>
+          <a href="#" class="campagna-card">
+            <div class="campagna-card-img"><span style="font-size:32px; opacity:0.3;">🌿</span></div>
+            <div class="campagna-card-body">
+              <div class="campagna-card-title">Nome campagna</div>
+              <div class="campagna-card-progress"><div class="campagna-card-progress-fill" style="width:91%"></div></div>
+              <div class="campagna-card-meta">€ 1.600 raccolti</div>
+              <div style="font-size:12px; color:var(--color-content-disabled); margin-top:4px;">di Organizzatore</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div><!-- /ag-main -->
+
+
+    <!-- ─── AGESCI FULL FOOTER ─────────────────────────────────────────── -->
+    <footer class="ag-footer-full" aria-label="Footer AGESCI">
+
+      <!-- Newsletter -->
+      <div class="ag-footer-newsletter">
+        <div class="ag-main">
+          <div class="ag-footer-newsletter-inner">
+            <p class="ag-footer-newsletter-label">Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer psum dolor sot.</p>
+            <form class="ag-footer-newsletter-form" onsubmit="return false;">
+              <input type="email" class="ag-footer-newsletter-input" placeholder="La tua email" aria-label="Email per newsletter">
+              <button type="submit" class="ag-footer-newsletter-btn">ISCRIVITI →</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Follow us -->
+      <div class="ag-main">
+        <div class="ag-footer-follow">
+          <span class="ag-footer-follow-label">Follow us</span>
+          <div class="ag-footer-social-links">
+            <a href="#">Facebook</a>
+            <a href="#">Instagram</a>
+            <a href="#">Youtube</a>
+            <a href="#">LinkedIn</a>
+          </div>
+        </div>
+
+        <!-- Navigation columns -->
+        <div class="ag-footer-nav">
+          <div class="ag-footer-nav-col">
+            <h4>Chi siamo</h4>
+            <a href="#">Cos'è lo Scautismo</a>
+            <a href="#">Cos'è l'AGESCI</a>
+            <a href="#">Patto associativo</a>
+            <a href="#">Organigramma</a>
+            <a href="#">Codice Etico</a>
+            <a href="#">Ufficio Stampa</a>
+            <a href="#">Contatti</a>
+          </div>
+          <div class="ag-footer-nav-col">
+            <h4>Utilità</h4>
+            <a href="#">Area documenti</a>
+            <a href="#">Helpdesk</a>
+            <a href="#">BuonaCaccia</a>
+            <a href="#">BuonaStrada</a>
+            <a href="#">Posta elettronica AGESCI</a>
+            <a href="#">Assicurazioni</a>
+            <a href="#">Uniformi</a>
+            <a href="#">Editoria</a>
+            <a href="#">Comunità Basi AGESCI</a>
+            <a href="#">Archivi AGESCI</a>
+          </div>
+          <div class="ag-footer-nav-col">
+            <h4>Link</h4>
+            <a href="#">Ente Nazionale Mario di Carpegna</a>
+            <a href="#">Fiordaliso srl sb</a>
+            <a href="#">Federazione Italiana dello Scautismo</a>
+            <a href="#">CICG</a>
+            <a href="#">CICS</a>
+            <a href="#">WOSM</a>
+            <a href="#">WAGGGS</a>
+            <a href="#">Roma Scout Center</a>
+          </div>
+          <div class="ag-footer-nav-col">
+            <h4>Attività</h4>
+            <a href="#">eventi e campi</a>
+            <a href="#">Hub</a>
+            <a href="#">documenti</a>
+            <a href="#">Contenuti salvati</a>
+          </div>
+        </div>
+
+        <!-- Bottom bar -->
+        <div class="ag-footer-bottom">
+          <div class="ag-footer-bottom-left">
+            <span class="ag-footer-copyright">© 2025 AGESCI — Associazione Guide e Scouts Cattolici Italiani</span>
+            <span class="ag-footer-address">APS · Piazza Pasquale Paoli, 18 - 00186 ROMA - tel. +39.06-681661</span>
+          </div>
+          <div class="ag-footer-links">
+            <a href="#">Cookie Policy</a>
+            <a href="#">Privacy Policy</a>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+  </div><!-- /page-preview -->
+
+</body>
+</html>

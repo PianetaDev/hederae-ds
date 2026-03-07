@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="generic">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Shop — Scheda Prodotto · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --color-surface-page:#FFFFFF; --color-surface-raised:#F7F7F7; --color-surface-card:#F0F0F0;
+      --color-surface-deep:#E0E0E0; --color-surface-inverse:#111111;
+      --color-content-primary:#111111; --color-content-secondary:#6B6B6B; --color-content-disabled:#BBBBBB;
+      --color-content-inverse:#FFFFFF; --color-border-default:#E5E5E5; --color-border-strong:#111111;
+      --color-interactive-primary-bg:#111111; --color-interactive-primary-label:#FFFFFF; --color-interactive-primary-bg-hover:#333333;
+      --color-feedback-success-bg:#E6F4EA; --color-feedback-success-text:#1B7A3E;
+      --color-feedback-warning-bg:#FFF8E1; --color-feedback-warning-text:#856400;
+      --color-feedback-error-bg:#FDECEA; --color-feedback-error-text:#C62828;
+      --color-feedback-info-bg:#E3F2FD; --color-feedback-info-text:#1565C0;
+      --font-display:'IBM Plex Serif',Georgia,serif; --font-body:'IBM Plex Sans',system-ui,sans-serif; --font-ui:'IBM Plex Mono',monospace;
+      --radius-pill:40px; --radius-card:12px;
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--color-surface-page);color:var(--color-content-primary);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}
+
+    /* DS nav */
+    .ds-nav{background:var(--color-surface-inverse);padding:12px 24px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:200;}
+    .ds-nav-brand{font-family:var(--font-ui);font-size:12px;color:rgba(255,255,255,0.9);letter-spacing:0.1em;text-transform:uppercase;text-decoration:none;}
+    .ds-nav-links{display:flex;gap:20px;align-items:center;}
+    .ds-nav-links a{font-family:var(--font-ui);font-size:11px;color:rgba(255,255,255,0.6);text-decoration:none;}
+    .ds-tag-pill{background:rgba(255,255,255,0.1);color:rgba(255,255,255,0.7);font-family:var(--font-ui);font-size:10px;padding:2px 8px;border-radius:10px;}
+    .ds-hero{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:40px 24px;}
+    .ds-hero h1{font-family:var(--font-display);font-size:36px;font-weight:400;margin-bottom:8px;}
+    .ds-hero p{font-size:15px;color:var(--color-content-secondary);max-width:580px;margin-bottom:14px;line-height:1.6;}
+    .ds-tags{display:flex;gap:6px;flex-wrap:wrap;}
+    .ds-tag{font-family:var(--font-ui);font-size:10px;padding:2px 8px;border-radius:8px;background:var(--color-surface-card);border:1px solid var(--color-border-default);color:var(--color-content-secondary);}
+    .demo-controls{background:var(--color-surface-raised);border-bottom:1px solid var(--color-border-default);padding:14px 24px;display:flex;align-items:center;gap:24px;}
+    .demo-label{font-family:var(--font-ui);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-secondary);}
+    .demo-btns{display:flex;border:1px solid var(--color-border-strong);border-radius:4px;overflow:hidden;}
+    .demo-btn{padding:7px 16px;font-family:var(--font-ui);font-size:11px;background:transparent;border:none;cursor:pointer;color:var(--color-content-secondary);}
+    .demo-btn+.demo-btn{border-left:1px solid var(--color-border-strong);}
+    .demo-btn.active{background:var(--color-surface-inverse);color:white;}
+    .page-preview[hidden]{display:none;}
+    .page-preview{border-top:2px solid var(--color-border-default);}
+
+    /* Site header */
+    .sh-header{background:var(--color-surface-page);border-bottom:1px solid var(--color-border-default);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
+    .sh-logo{font-family:var(--font-display);font-size:22px;font-weight:500;text-decoration:none;color:var(--color-content-primary);}
+    .sh-nav{display:flex;gap:28px;}
+    .sh-nav a{font-size:14px;color:var(--color-content-secondary);text-decoration:none;font-weight:500;}
+    .sh-header-right{display:flex;gap:16px;align-items:center;}
+    .sh-cart-btn{display:flex;align-items:center;gap:8px;padding:8px 16px;border:1px solid var(--color-border-default);border-radius:var(--radius-pill);font-size:14px;font-weight:500;text-decoration:none;color:var(--color-content-primary);position:relative;}
+    .sh-cart-badge{position:absolute;top:-6px;right:-6px;width:18px;height:18px;border-radius:50%;background:var(--color-surface-inverse);color:white;font-family:var(--font-ui);font-size:10px;display:flex;align-items:center;justify-content:center;}
+
+    /* Breadcrumb */
+    .breadcrumb{padding:14px 32px;font-size:13px;color:var(--color-content-secondary);display:flex;gap:6px;}
+    .breadcrumb a{color:var(--color-content-secondary);text-decoration:none;}
+    .breadcrumb-sep{color:var(--color-content-disabled);}
+
+    /* Product layout */
+    .product-layout{display:grid;grid-template-columns:1fr 460px;gap:56px;padding:0 32px 64px;max-width:1440px;margin:0 auto;}
+
+    /* Gallery */
+    .gallery{}
+    .gallery-main{background:var(--color-surface-raised);border:1px solid var(--color-border-default);border-radius:var(--radius-card);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:96px;margin-bottom:12px;position:relative;overflow:hidden;}
+    .gallery-zoom{position:absolute;top:12px;right:12px;width:36px;height:36px;background:white;border:1px solid var(--color-border-default);border-radius:8px;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;}
+    .gallery-thumbs{display:flex;gap:8px;}
+    .gallery-thumb{width:72px;height:72px;border:1px solid var(--color-border-default);border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:28px;cursor:pointer;background:var(--color-surface-raised);transition:border-color 0.15s;}
+    .gallery-thumb.active,.gallery-thumb:hover{border-color:var(--color-border-strong);}
+
+    /* Product info */
+    .product-info{}
+    .product-breadcrumb{display:flex;gap:4px;font-family:var(--font-ui);font-size:11px;color:var(--color-content-secondary);margin-bottom:12px;flex-wrap:wrap;}
+    .product-breadcrumb span{color:var(--color-content-disabled);}
+    .product-category-tag{font-family:var(--font-ui);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-secondary);margin-bottom:8px;}
+    .product-title{font-family:var(--font-display);font-size:32px;font-weight:400;line-height:1.2;margin-bottom:12px;}
+    .product-rating-row{display:flex;align-items:center;gap:8px;margin-bottom:16px;}
+    .stars{color:#D97706;font-size:16px;}
+    .rating-score{font-family:var(--font-ui);font-size:14px;font-weight:500;}
+    .rating-link{font-size:13px;color:var(--color-content-secondary);text-decoration:underline;cursor:pointer;}
+    .product-price-block{display:flex;align-items:baseline;gap:12px;margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--color-border-default);}
+    .price-current{font-family:var(--font-ui);font-size:32px;font-weight:500;}
+    .price-old{font-family:var(--font-ui);font-size:18px;color:var(--color-content-disabled);text-decoration:line-through;}
+    .price-save{font-size:14px;color:var(--color-feedback-success-text);background:var(--color-feedback-success-bg);padding:3px 10px;border-radius:20px;font-weight:500;}
+    .price-iva{font-size:12px;color:var(--color-content-secondary);}
+    .avail-badge{display:inline-flex;align-items:center;gap:6px;font-size:13px;padding:4px 12px;border-radius:20px;font-weight:500;margin-bottom:20px;}
+    .avail-green{background:var(--color-feedback-success-bg);color:var(--color-feedback-success-text);}
+    .avail-orange{background:var(--color-feedback-warning-bg);color:var(--color-feedback-warning-text);}
+    .avail-red{background:var(--color-feedback-error-bg);color:var(--color-feedback-error-text);}
+    .avail-dot{width:8px;height:8px;border-radius:50%;background:currentColor;}
+
+    /* Variants */
+    .variant-block{margin-bottom:20px;}
+    .variant-label{font-size:13px;font-weight:600;margin-bottom:10px;display:flex;align-items:center;gap:6px;}
+    .variant-selected{color:var(--color-content-secondary);font-weight:400;}
+    .variant-options{display:flex;flex-wrap:wrap;gap:8px;}
+    .variant-btn{padding:8px 18px;border:1px solid var(--color-border-default);border-radius:8px;font-size:14px;cursor:pointer;background:white;transition:all 0.15s;}
+    .variant-btn.active{border-color:var(--color-border-strong);background:var(--color-surface-card);font-weight:500;}
+    .variant-btn.unavailable{opacity:0.4;cursor:not-allowed;position:relative;}
+    .variant-btn.unavailable::after{content:'';position:absolute;top:50%;left:0;right:0;height:1px;background:var(--color-content-disabled);transform:rotate(-8deg);}
+    .variant-color{width:32px;height:32px;border-radius:50%;cursor:pointer;border:2px solid transparent;}
+    .variant-color.active{border-color:var(--color-border-strong);outline:2px solid white;outline-offset:-4px;}
+
+    /* Qty + CTA */
+    .qty-cta{display:flex;gap:12px;align-items:center;margin-bottom:16px;}
+    .qty-input-group{display:flex;align-items:center;border:1px solid var(--color-border-default);border-radius:8px;overflow:hidden;}
+    .qty-btn{width:38px;height:44px;display:flex;align-items:center;justify-content:center;font-size:18px;cursor:pointer;background:none;border:none;color:var(--color-content-secondary);}
+    .qty-btn:hover{background:var(--color-surface-raised);}
+    .qty-value{width:44px;height:44px;text-align:center;border:none;border-left:1px solid var(--color-border-default);border-right:1px solid var(--color-border-default);font-family:var(--font-ui);font-size:15px;}
+    .btn-addtocart{flex:1;padding:13px 24px;background:var(--color-interactive-primary-bg);color:var(--color-interactive-primary-label);border:none;border-radius:var(--radius-pill);font-family:var(--font-ui);font-size:14px;letter-spacing:0.1em;text-transform:uppercase;font-weight:500;cursor:pointer;transition:background 0.15s;}
+    .btn-addtocart:hover{background:var(--color-interactive-primary-bg-hover);}
+    .btn-wishlist{padding:13px 16px;border:1px solid var(--color-border-default);border-radius:var(--radius-pill);font-size:18px;cursor:pointer;background:none;transition:background 0.15s;}
+    .btn-wishlist:hover{background:var(--color-surface-raised);}
+
+    /* Trust badges */
+    .trust-badges{display:flex;flex-direction:column;gap:10px;padding:16px;background:var(--color-surface-raised);border-radius:var(--radius-card);margin-bottom:24px;}
+    .trust-item{display:flex;align-items:center;gap:10px;font-size:13px;}
+    .trust-icon{font-size:16px;width:24px;text-align:center;}
+    .trust-text strong{display:block;font-weight:500;font-size:13px;}
+    .trust-text span{color:var(--color-content-secondary);font-size:12px;}
+
+    /* Share */
+    .share-row{display:flex;align-items:center;gap:12px;font-size:13px;color:var(--color-content-secondary);}
+    .share-btn{padding:6px 14px;border:1px solid var(--color-border-default);border-radius:20px;font-size:12px;cursor:pointer;background:none;color:var(--color-content-secondary);}
+    .share-btn:hover{background:var(--color-surface-raised);}
+
+    /* ─── PRODUCT TABS ─────────────────────────────────── */
+    .product-tabs-section{max-width:1440px;margin:0 auto;padding:0 32px 64px;}
+    .tabs-nav{display:flex;border-bottom:1px solid var(--color-border-default);margin-bottom:32px;}
+    .tab-btn{padding:12px 24px;font-size:15px;font-weight:500;border-bottom:2px solid transparent;margin-bottom:-1px;cursor:pointer;background:none;border-left:none;border-right:none;border-top:none;color:var(--color-content-secondary);transition:color 0.15s;}
+    .tab-btn.active{color:var(--color-content-primary);border-bottom-color:var(--color-content-primary);}
+    .tab-content[hidden]{display:none;}
+    .tab-description{max-width:720px;color:var(--color-content-secondary);line-height:1.7;}
+    .tab-description p{margin-bottom:16px;font-size:15px;}
+    .tab-description ul{padding-left:20px;margin-bottom:16px;}
+    .tab-description li{margin-bottom:6px;font-size:15px;}
+    .specs-table{width:100%;max-width:600px;border-collapse:collapse;}
+    .specs-table tr{border-bottom:1px solid var(--color-border-default);}
+    .specs-table td{padding:12px 8px;font-size:14px;}
+    .specs-table td:first-child{color:var(--color-content-secondary);width:200px;}
+    .review-summary{display:flex;gap:48px;align-items:center;margin-bottom:32px;padding:24px;background:var(--color-surface-raised);border-radius:var(--radius-card);}
+    .review-big-score{font-family:var(--font-ui);font-size:56px;font-weight:500;line-height:1;}
+    .review-bars{flex:1;}
+    .review-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:6px;}
+    .review-bar-label{font-size:13px;width:48px;text-align:right;}
+    .review-bar-track{flex:1;height:6px;background:var(--color-surface-deep);border-radius:3px;overflow:hidden;}
+    .review-bar-fill{height:100%;background:#D97706;border-radius:3px;}
+    .review-count{font-family:var(--font-ui);font-size:12px;color:var(--color-content-secondary);width:32px;}
+    .review-card{border-bottom:1px solid var(--color-border-default);padding:24px 0;}
+    .review-header{display:flex;justify-content:space-between;align-items:start;margin-bottom:8px;}
+    .reviewer-name{font-weight:600;font-size:15px;}
+    .review-date{font-size:13px;color:var(--color-content-secondary);}
+    .review-body{font-size:14px;color:var(--color-content-secondary);line-height:1.6;}
+    .review-verified{display:inline-flex;align-items:center;gap:4px;font-size:12px;color:var(--color-feedback-success-text);margin-top:8px;}
+
+    /* Related products */
+    .related-section{max-width:1440px;margin:0 auto;padding:0 32px 64px;}
+    .section-title{font-family:var(--font-display);font-size:28px;font-weight:400;margin-bottom:24px;}
+    .related-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+    .mini-card{text-decoration:none;color:inherit;}
+    .mini-card-img{background:var(--color-surface-raised);border:1px solid var(--color-border-default);border-radius:var(--radius-card);aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:40px;margin-bottom:10px;}
+    .mini-card:hover .mini-card-img{box-shadow:0 4px 12px rgba(0,0,0,0.08);}
+    .mini-card-name{font-size:14px;font-weight:500;margin-bottom:4px;line-height:1.3;}
+    .mini-card-price{font-family:var(--font-ui);font-size:14px;}
+
+    /* Out of stock notice */
+    .oos-notice{background:var(--color-feedback-error-bg);border:1px solid #FBCFCF;border-radius:var(--radius-card);padding:20px;margin-bottom:20px;}
+    .oos-title{font-weight:600;color:var(--color-feedback-error-text);margin-bottom:6px;}
+    .oos-body{font-size:14px;color:var(--color-content-secondary);margin-bottom:12px;}
+    .notify-form{display:flex;gap:8px;}
+    .notify-input{flex:1;padding:10px 14px;border:1px solid var(--color-border-default);border-radius:6px;font-size:14px;font-family:var(--font-body);}
+    .notify-btn{padding:10px 20px;background:var(--color-surface-inverse);color:white;border:none;border-radius:var(--radius-pill);font-size:13px;font-family:var(--font-ui);cursor:pointer;letter-spacing:0.05em;}
+    .btn-addtocart.disabled{background:var(--color-surface-deep);color:var(--color-content-disabled);cursor:not-allowed;}
+  </style>
+</head>
+<body>
+
+  <!-- DS nav -->
+  <nav class="ds-nav">
+    <a href="#" class="ds-nav-brand">Hederae DS</a>
+    <div class="ds-nav-links">
+      <span class="ds-tag-pill">GENERIC · SHOP</span>
+      <a href="shop-catalogo.html">← Catalogo</a>
+      <a href="shop-carrello.html">Carrello →</a>
+    </div>
+  </nav>
+
+  <!-- DS hero -->
+  <div class="ds-hero">
+    <h1>Shop — Scheda prodotto</h1>
+    <p>Pagina di dettaglio prodotto con galleria immagini, selettori varianti (taglia, colore), quantità, trust badge, tabs (descrizione / specifiche / recensioni) e prodotti correlati. Due stati: disponibile e esaurito con notify-me.</p>
+    <div class="ds-tags">
+      <span class="ds-tag">Galleria</span><span class="ds-tag">Varianti</span><span class="ds-tag">Trust badge</span><span class="ds-tag">Recensioni</span><span class="ds-tag">Out-of-stock</span><span class="ds-tag">Notify me</span><span class="ds-tag">Correlati</span>
+    </div>
+  </div>
+
+  <div class="demo-controls">
+    <span class="demo-label">Stato</span>
+    <div class="demo-btns">
+      <button class="demo-btn active" onclick="showState('s-instock', this)">Disponibile</button>
+      <button class="demo-btn" onclick="showState('s-oos', this)">Esaurito + Notify me</button>
+    </div>
+  </div>
+
+  <!-- ═══════════════════════════════════ IN STOCK ═══════════════════════ -->
+  <div id="s-instock" class="page-preview">
+    <header class="sh-header">
+      <a href="#" class="sh-logo">Negozio</a>
+      <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
+      <div class="sh-header-right">
+        <a href="shop-carrello.html" class="sh-cart-btn">🛒 Carrello<span class="sh-cart-badge">3</span></a>
+      </div>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="#">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Negozio</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Libri e pubblicazioni</a><span class="breadcrumb-sep">›</span>
+      <span>Manuale del Capo Scout</span>
+    </div>
+
+    <div class="product-layout">
+      <!-- Gallery -->
+      <div class="gallery">
+        <div class="gallery-main">
+          📚
+          <button class="gallery-zoom" aria-label="Ingrandisci">⤢</button>
+        </div>
+        <div class="gallery-thumbs">
+          <div class="gallery-thumb active">📚</div>
+          <div class="gallery-thumb">📖</div>
+          <div class="gallery-thumb" style="font-size:20px; color:var(--color-content-disabled);">🔍</div>
+          <div class="gallery-thumb" style="font-size:20px; color:var(--color-content-disabled);">📑</div>
+        </div>
+      </div>
+
+      <!-- Product info -->
+      <div class="product-info">
+        <span class="product-category-tag">Libri e pubblicazioni</span>
+        <h1 class="product-title">Manuale del Capo Scout — Edizione 2024</h1>
+
+        <div class="product-rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-score">4.8</span>
+          <a class="rating-link" href="#reviews">42 recensioni</a>
+        </div>
+
+        <div class="product-price-block">
+          <span class="price-old">€24,90</span>
+          <span class="price-current">€19,90</span>
+          <span class="price-save">Risparmi €5,00</span>
+        </div>
+        <p class="price-iva" style="margin-top:-14px;margin-bottom:16px;">IVA inclusa · Spedizione calcolata al checkout</p>
+
+        <span class="avail-badge avail-green"><span class="avail-dot"></span> Disponibile — spedizione in 1–2 giorni lavorativi</span>
+
+        <!-- Variant: Formato -->
+        <div class="variant-block">
+          <p class="variant-label">Formato: <span class="variant-selected">Cartaceo</span></p>
+          <div class="variant-options">
+            <button class="variant-btn active">Cartaceo</button>
+            <button class="variant-btn">PDF digitale</button>
+            <button class="variant-btn">Ebook ePub</button>
+          </div>
+        </div>
+
+        <!-- Qty + CTA -->
+        <div class="qty-cta">
+          <div class="qty-input-group" role="group" aria-label="Quantità">
+            <button class="qty-btn" aria-label="Diminuisci">−</button>
+            <input class="qty-value" type="number" value="1" min="1" max="10" aria-label="Quantità">
+            <button class="qty-btn" aria-label="Aumenta">+</button>
+          </div>
+          <button class="btn-addtocart">🛒 Aggiungi al carrello</button>
+          <button class="btn-wishlist" aria-label="Aggiungi ai desideri">♡</button>
+        </div>
+
+        <!-- Trust badges -->
+        <div class="trust-badges" role="list">
+          <div class="trust-item" role="listitem">
+            <span class="trust-icon">🚚</span>
+            <div class="trust-text">
+              <strong>Spedizione gratuita</strong>
+              <span>Per ordini superiori a €50 · Consegna in 3–5 giorni</span>
+            </div>
+          </div>
+          <div class="trust-item" role="listitem">
+            <span class="trust-icon">↩️</span>
+            <div class="trust-text">
+              <strong>Reso gratuito entro 30 giorni</strong>
+              <span>Rimborso garantito senza domande</span>
+            </div>
+          </div>
+          <div class="trust-item" role="listitem">
+            <span class="trust-icon">🔒</span>
+            <div class="trust-text">
+              <strong>Pagamento sicuro</strong>
+              <span>Carta, PayPal, Bonifico · Transazioni crittografate SSL</span>
+            </div>
+          </div>
+          <div class="trust-item" role="listitem">
+            <span class="trust-icon">🎓</span>
+            <div class="trust-text">
+              <strong>Carta del Docente accettata</strong>
+              <span>Acquisto detraibile per insegnanti</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Share -->
+        <div class="share-row">
+          <span>Condividi:</span>
+          <button class="share-btn">Facebook</button>
+          <button class="share-btn">WhatsApp</button>
+          <button class="share-btn">Copia link</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Tabs -->
+    <div class="product-tabs-section">
+      <div class="tabs-nav" role="tablist">
+        <button class="tab-btn active" role="tab" aria-selected="true" onclick="showTab('t-desc', this)">Descrizione</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('t-spec', this)">Specifiche</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('t-rev', this)" id="reviews">Recensioni (42)</button>
+        <button class="tab-btn" role="tab" aria-selected="false" onclick="showTab('t-faq', this)">FAQ</button>
+      </div>
+
+      <div id="t-desc" class="tab-content">
+        <div class="tab-description">
+          <p>Il <strong>Manuale del Capo Scout — Edizione 2024</strong> è la guida di riferimento per tutti i capi branca E/G (Esploratori e Guide). Aggiornato con le più recenti indicazioni del Comitato Nazionale, il volume raccoglie metodologia, tecniche scout, proposte di attività e strumenti di progettazione per il gruppo.</p>
+          <p>Questa edizione integra un nuovo capitolo dedicato alla <strong>progettazione per competenze</strong> e alle attività outdoor a impatto ambientale ridotto, in linea con la proposta educativa 2023–2027.</p>
+          <p>Il manuale è strutturato in tre parti:</p>
+          <ul>
+            <li><strong>Fondamenti</strong> — il metodo scout, la progressione personale, il sistema delle specialità</li>
+            <li><strong>Tecniche</strong> — orientamento, pronto soccorso, vita in natura, pionieria</li>
+            <li><strong>Strumenti per il capo</strong> — riunioni di staff, campo estivo, relazioni con le famiglie, documentazione</li>
+          </ul>
+          <p>Formato: 18 × 24 cm · 320 pagine · Copertina rigida · Carta certificata FSC</p>
+        </div>
+      </div>
+
+      <div id="t-spec" class="tab-content" hidden>
+        <table class="specs-table">
+          <tr><td>ISBN</td><td>978-88-0000-001-2</td></tr>
+          <tr><td>Edizione</td><td>2024 (7ª edizione)</td></tr>
+          <tr><td>Pagine</td><td>320</td></tr>
+          <tr><td>Formato</td><td>18 × 24 cm</td></tr>
+          <tr><td>Copertina</td><td>Rigida con alette</td></tr>
+          <tr><td>Carta</td><td>Certificata FSC · 100% riciclata</td></tr>
+          <tr><td>Lingua</td><td>Italiano</td></tr>
+          <tr><td>Branca</td><td>E/G (Esploratori e Guide)</td></tr>
+          <tr><td>Età consigliata capi</td><td>18+ anni</td></tr>
+          <tr><td>Peso spedizione</td><td>480 g</td></tr>
+          <tr><td>Cod. articolo</td><td>LIB-2024-EG-001</td></tr>
+          <tr><td>Carta del Docente</td><td>Sì, acquisto ammissibile</td></tr>
+        </table>
+      </div>
+
+      <div id="t-rev" class="tab-content" hidden>
+        <div class="review-summary">
+          <div style="text-align:center;">
+            <div class="review-big-score">4.8</div>
+            <div style="color:#D97706;font-size:20px;margin:8px 0;">★★★★★</div>
+            <div style="font-size:13px;color:var(--color-content-secondary);">42 recensioni</div>
+          </div>
+          <div class="review-bars">
+            <div class="review-bar-row"><span class="review-bar-label">5 ★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:80%"></div></div><span class="review-count">34</span></div>
+            <div class="review-bar-row"><span class="review-bar-label">4 ★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:12%;background:#D97706"></div></div><span class="review-count">5</span></div>
+            <div class="review-bar-row"><span class="review-bar-label">3 ★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:5%;background:#D97706"></div></div><span class="review-count">2</span></div>
+            <div class="review-bar-row"><span class="review-bar-label">2 ★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:2%;background:#D97706"></div></div><span class="review-count">1</span></div>
+            <div class="review-bar-row"><span class="review-bar-label">1 ★</span><div class="review-bar-track"><div class="review-bar-fill" style="width:0%"></div></div><span class="review-count">0</span></div>
+          </div>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div><div class="reviewer-name">Marco B.</div><div style="color:#D97706;font-size:14px;">★★★★★</div></div>
+            <span class="review-date">12 gennaio 2025</span>
+          </div>
+          <p class="review-body">Manuale completo e ben strutturato. L'edizione aggiornata introduce finalmente la progettazione per competenze in modo chiaro e applicabile. Lo consiglio a tutti i capi E/G.</p>
+          <span class="review-verified">✓ Acquisto verificato</span>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div><div class="reviewer-name">Alessia R.</div><div style="color:#D97706;font-size:14px;">★★★★★</div></div>
+            <span class="review-date">3 dicembre 2024</span>
+          </div>
+          <p class="review-body">Ottimo acquisto, arrivato in anticipo rispetto ai tempi stimati e in perfette condizioni. Il contenuto è eccellente, particolarmente utile la sezione sulle tecniche outdoor.</p>
+          <span class="review-verified">✓ Acquisto verificato</span>
+        </div>
+        <div class="review-card">
+          <div class="review-header">
+            <div><div class="reviewer-name">Giorgio M.</div><div style="color:#D97706;font-size:14px;">★★★☆☆</div></div>
+            <span class="review-date">15 novembre 2024</span>
+          </div>
+          <p class="review-body">Buon manuale ma avrei preferito una sezione più approfondita sulla comunicazione con i genitori. Per il resto è completo e ben illustrato.</p>
+          <span class="review-verified">✓ Acquisto verificato</span>
+        </div>
+      </div>
+
+      <div id="t-faq" class="tab-content" hidden>
+        <div style="max-width:680px;">
+          <details style="border-bottom:1px solid var(--color-border-default);padding:14px 0;">
+            <summary style="font-size:15px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;">Posso acquistarlo con la Carta del Docente? <span>+</span></summary>
+            <p style="font-size:14px;color:var(--color-content-secondary);padding-top:10px;line-height:1.6;">Sì, questo prodotto è acquistabile tramite la piattaforma Carta del Docente (18app). Seleziona "Carta del Docente" come metodo di pagamento nel checkout e segui le istruzioni per generare il buono.</p>
+          </details>
+          <details style="border-bottom:1px solid var(--color-border-default);padding:14px 0;">
+            <summary style="font-size:15px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;">Quanto tempo ci vuole per la spedizione? <span>+</span></summary>
+            <p style="font-size:14px;color:var(--color-content-secondary);padding-top:10px;line-height:1.6;">Per ordini completati prima delle 14:00 nei giorni feriali, la spedizione parte il giorno stesso. La consegna standard avviene in 3–5 giorni lavorativi. La spedizione express garantisce la consegna in 1–2 giorni.</p>
+          </details>
+          <details style="border-bottom:1px solid var(--color-border-default);padding:14px 0;">
+            <summary style="font-size:15px;font-weight:500;cursor:pointer;display:flex;justify-content:space-between;">Posso ricevere fattura per la mia associazione? <span>+</span></summary>
+            <p style="font-size:14px;color:var(--color-content-secondary);padding-top:10px;line-height:1.6;">Sì. Nel checkout, nella sezione "Dati di fatturazione", attiva l'opzione "Intestazione a ente/associazione" e inserisci il Codice Fiscale o Partita IVA dell'associazione.</p>
+          </details>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related products -->
+    <div class="related-section">
+      <h2 class="section-title">Prodotti correlati</h2>
+      <div class="related-grid">
+        <a href="#" class="mini-card"><div class="mini-card-img">📖</div><p class="mini-card-name">La Route — Guida R/S</p><span class="mini-card-price">€15,00</span></a>
+        <a href="#" class="mini-card"><div class="mini-card-img">🗒</div><p class="mini-card-name">Quaderno Campo Estivo</p><span class="mini-card-price">€12,50</span></a>
+        <a href="#" class="mini-card"><div class="mini-card-img">📄</div><p class="mini-card-name">Kit Piste L/C PDF</p><span class="mini-card-price">€8,00</span></a>
+        <a href="#" class="mini-card"><div class="mini-card-img">📝</div><p class="mini-card-name">Dispense Corso Capi A</p><span class="mini-card-price">€5,00</span></a>
+      </div>
+    </div>
+  </div><!-- /s-instock -->
+
+  <!-- ═══════════════════════════════ OUT OF STOCK ════════════════════ -->
+  <div id="s-oos" class="page-preview" hidden>
+    <header class="sh-header">
+      <a href="#" class="sh-logo">Negozio</a>
+      <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
+      <div class="sh-header-right">
+        <a href="shop-carrello.html" class="sh-cart-btn">🛒 Carrello<span class="sh-cart-badge">3</span></a>
+      </div>
+    </header>
+
+    <div class="breadcrumb">
+      <a href="#">Home</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Negozio</a><span class="breadcrumb-sep">›</span>
+      <a href="#">Gadget e accessori</a><span class="breadcrumb-sep">›</span>
+      <span>Zaino Scout Logo Ricamato</span>
+    </div>
+
+    <div class="product-layout">
+      <div class="gallery">
+        <div class="gallery-main" style="opacity:0.6;">🎒</div>
+        <div class="gallery-thumbs">
+          <div class="gallery-thumb active" style="opacity:0.6;">🎒</div>
+          <div class="gallery-thumb" style="opacity:0.5;font-size:20px;color:var(--color-content-disabled);">📐</div>
+        </div>
+      </div>
+
+      <div class="product-info">
+        <span class="product-category-tag">Gadget e accessori</span>
+        <h1 class="product-title">Zaino Scout Logo Ricamato — 30L</h1>
+
+        <div class="product-rating-row">
+          <span class="stars">★★★★★</span>
+          <span class="rating-score">4.9</span>
+          <a class="rating-link" href="#reviews">56 recensioni</a>
+        </div>
+
+        <div class="product-price-block">
+          <span class="price-current">€45,00</span>
+        </div>
+        <p class="price-iva" style="margin-top:-14px;margin-bottom:16px;">IVA inclusa</p>
+
+        <span class="avail-badge avail-red"><span class="avail-dot"></span> Esaurito — riassortimento previsto marzo 2026</span>
+
+        <!-- Notify me -->
+        <div class="oos-notice">
+          <p class="oos-title">🔔 Vuoi essere avvisato quando torna disponibile?</p>
+          <p class="oos-body">Inserisci la tua email e ti contatteremo appena il prodotto sarà di nuovo in stock. Nessuna email promozionale.</p>
+          <form class="notify-form" onsubmit="return false;">
+            <input type="email" class="notify-input" placeholder="nome@esempio.it" aria-label="Email per notifica">
+            <button type="submit" class="notify-btn">Avvisami</button>
+          </form>
+        </div>
+
+        <div class="qty-cta">
+          <div class="qty-input-group"><button class="qty-btn" disabled>−</button><input class="qty-value" type="number" value="1" disabled><button class="qty-btn" disabled>+</button></div>
+          <button class="btn-addtocart disabled" disabled>Prodotto non disponibile</button>
+        </div>
+
+        <div class="trust-badges">
+          <div class="trust-item"><span class="trust-icon">🚚</span><div class="trust-text"><strong>Spedizione gratuita sopra €50</strong><span>Consegna in 3–5 giorni</span></div></div>
+          <div class="trust-item"><span class="trust-icon">↩️</span><div class="trust-text"><strong>Reso gratuito 30 giorni</strong><span>Rimborso garantito</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Suggeriti -->
+    <div class="related-section">
+      <h2 class="section-title">Potrebbe interessarti</h2>
+      <div class="related-grid">
+        <a href="#" class="mini-card"><div class="mini-card-img">🏕</div><p class="mini-card-name">Kit Brevetti Branca L/C</p><span class="mini-card-price">€6,00</span></a>
+        <a href="#" class="mini-card"><div class="mini-card-img">🎭</div><p class="mini-card-name">Foulard Gruppo</p><span class="mini-card-price">€10,20</span></a>
+        <a href="#" class="mini-card"><div class="mini-card-img">👕</div><p class="mini-card-name">Camicia E/G Estivale</p><span class="mini-card-price">€29,00</span></a>
+        <a href="#" class="mini-card"><div class="mini-card-img">📚</div><p class="mini-card-name">Manuale Capo Scout</p><span class="mini-card-price">€19,90</span></a>
+      </div>
+    </div>
+  </div><!-- /s-oos -->
+
+  <script>
+    function showState(id, btn){
+      document.querySelectorAll('.page-preview').forEach(el=>el.hidden=true);
+      document.querySelectorAll('.demo-btn').forEach(b=>b.classList.remove('active'));
+      document.getElementById(id).hidden=false; btn.classList.add('active');
+    }
+    function showTab(id, btn){
+      document.querySelectorAll('.tab-content').forEach(el=>el.hidden=true);
+      document.querySelectorAll('.tab-btn').forEach(b=>{b.classList.remove('active');b.setAttribute('aria-selected','false');});
+      document.getElementById(id).hidden=false; btn.classList.add('active'); btn.setAttribute('aria-selected','true');
+    }
+  </script>
+</body>
+</html>
