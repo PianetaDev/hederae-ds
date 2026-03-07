@@ -1,0 +1,58 @@
+{
+  "$metadata": {
+    "name": "Hederae – Color Palette (Primitives)",
+    "description": "Raw color values. Brand-agnostic. Never use these directly in components — always reference semantic or brand tokens."
+  },
+
+  "palette": {
+
+    "green": {
+      "10":  { "$value": "#f0fded", "$type": "color", "$description": "Ultra-light green, near-white" },
+      "25":  { "$value": "#8fdb7e", "$type": "color", "$description": "Brand green — Rara primary" },
+      "30":  { "$value": "#6cca58", "$type": "color", "$description": "Deeper vibrant green" },
+      "40":  { "$value": "#4aad3a", "$type": "color", "$description": "Saturated green" },
+      "50":  { "$value": "#1c2d2d", "$type": "color", "$description": "Deep forest green — Rara card surface" },
+      "60":  { "$value": "#132020", "$type": "color", "$description": "Deeper forest" },
+      "70":  { "$value": "#0d1d1d", "$type": "color", "$description": "Near-black green — Rara background" }
+    },
+
+    "neutral": {
+      "0":   { "$value": "#ffffff", "$type": "color" },
+      "5":   { "$value": "#f9f9f9", "$type": "color", "$description": "Light content — Rara text on dark" },
+      "10":  { "$value": "#f0f0f0", "$type": "color" },
+      "20":  { "$value": "#d4d4d4", "$type": "color" },
+      "40":  { "$value": "#9a9a9a", "$type": "color", "$description": "Muted/disabled text" },
+      "60":  { "$value": "#525252", "$type": "color" },
+      "80":  { "$value": "#2a2a2a", "$type": "color" },
+      "90":  { "$value": "#1a1a1a", "$type": "color" },
+      "100": { "$value": "#000000", "$type": "color" }
+    },
+
+    "orange": {
+      "30":  { "$value": "#ffb380", "$type": "color", "$description": "Light orange" },
+      "50":  { "$value": "#FF6B33", "$type": "color", "$description": "Brand orange — Rara accent/primary CTA" },
+      "70":  { "$value": "#c44a14", "$type": "color", "$description": "Deep orange" }
+    },
+
+    "feedback": {
+      "success-light": { "$value": "#d1fadf", "$type": "color" },
+      "success":       { "$value": "#12b76a", "$type": "color" },
+      "warning-light": { "$value": "#fef3c7", "$type": "color" },
+      "warning":       { "$value": "#f59e0b", "$type": "color" },
+      "error-light":   { "$value": "#fee2e2", "$type": "color" },
+      "error":         { "$value": "#ef4444", "$type": "color" },
+      "info-light":    { "$value": "#dbeafe", "$type": "color" },
+      "info":          { "$value": "#3b82f6", "$type": "color" }
+    },
+
+    "alpha": {
+      "white-10":  { "$value": "rgba(249,249,249,0.10)", "$type": "color" },
+      "white-20":  { "$value": "rgba(249,249,249,0.20)", "$type": "color" },
+      "white-50":  { "$value": "rgba(249,249,249,0.50)", "$type": "color" },
+      "black-20":  { "$value": "rgba(0,0,0,0.20)", "$type": "color" },
+      "black-50":  { "$value": "rgba(0,0,0,0.50)", "$type": "color" },
+      "green-20":  { "$value": "rgba(143,219,126,0.20)", "$type": "color" },
+      "green-40":  { "$value": "rgba(143,219,126,0.40)", "$type": "color" }
+    }
+  }
+}

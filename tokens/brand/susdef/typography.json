@@ -1,0 +1,115 @@
+{
+  "$metadata": {
+    "name": "Susdef — Brand Typography Tokens",
+    "description": "IBM Plex family — Serif for display/headings, Sans for body, Mono for UI labels. Source: Figma 25P15_Fondazione-Sviluppo-Sostenibile node 895-3070."
+  },
+
+  "fontFamily": {
+    "display": { "$value": "IBM Plex Serif, Georgia, serif",     "$description": "Display titles (T1, H1) — editorial, authoritative" },
+    "heading":  { "$value": "IBM Plex Serif, Georgia, serif",     "$description": "Section headings H2–H3" },
+    "body":     { "$value": "IBM Plex Sans, system-ui, sans-serif", "$description": "Body copy, subtitles, captions" },
+    "ui":       { "$value": "IBM Plex Mono, monospace",           "$description": "Susdef-specific: UI labels, buttons, tags, navigation — distinctive mono feel" }
+  },
+
+  "googleFonts": [
+    "IBM+Plex+Serif:wght@400;500",
+    "IBM+Plex+Sans:wght@400;600",
+    "IBM+Plex+Mono:wght@400"
+  ],
+
+  "typeScale": {
+    "T1": {
+      "fontFamily":  { "$value": "IBM Plex Serif, Georgia, serif" },
+      "fontSize":    { "$value": "64px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "72px" },
+      "$description": "Hero display — homepage titles, editorial landmarks"
+    },
+    "H1": {
+      "fontFamily":  { "$value": "IBM Plex Serif, Georgia, serif" },
+      "fontSize":    { "$value": "56px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "64px" },
+      "$description": "Page-level heading"
+    },
+    "H2": {
+      "fontFamily":  { "$value": "IBM Plex Serif, Georgia, serif" },
+      "fontSize":    { "$value": "38px" },
+      "fontWeight":  { "$value": "500" },
+      "lineHeight":  { "$value": "48px" },
+      "$description": "Section heading — medium weight, serif"
+    },
+    "H3": {
+      "fontFamily":  { "$value": "IBM Plex Serif, Georgia, serif" },
+      "fontSize":    { "$value": "24px" },
+      "fontWeight":  { "$value": "500" },
+      "lineHeight":  { "$value": "32px" },
+      "$description": "Sub-section heading"
+    },
+    "subtitle": {
+      "fontFamily":  { "$value": "IBM Plex Sans, system-ui, sans-serif" },
+      "fontSize":    { "$value": "32px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "40px" },
+      "$description": "Subtitle / intro paragraph — sans for contrast with serif headings"
+    },
+    "body-01": {
+      "fontFamily":  { "$value": "IBM Plex Sans, system-ui, sans-serif" },
+      "fontSize":    { "$value": "24px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "32px" },
+      "$description": "Large body — feature pages, lead copy"
+    },
+    "body-02": {
+      "fontFamily":  { "$value": "IBM Plex Sans, system-ui, sans-serif" },
+      "fontSize":    { "$value": "18px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "26px" },
+      "$description": "Standard body copy"
+    },
+    "body-compact-01": {
+      "fontFamily":  { "$value": "IBM Plex Sans, system-ui, sans-serif" },
+      "fontSize":    { "$value": "16px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "24px" },
+      "$description": "Compact body — cards, sidebars"
+    },
+    "body-compact-02": {
+      "fontFamily":  { "$value": "IBM Plex Sans, system-ui, sans-serif" },
+      "fontSize":    { "$value": "14px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "24px" },
+      "$description": "Small copy — captions, meta, footnotes"
+    },
+    "button": {
+      "fontFamily":  { "$value": "IBM Plex Mono, monospace" },
+      "fontSize":    { "$value": "16px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "24px" },
+      "$description": "CTA buttons — mono gives a technical/institutional edge"
+    },
+    "label": {
+      "fontFamily":  { "$value": "IBM Plex Mono, monospace" },
+      "fontSize":    { "$value": "20px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "28px" },
+      "$description": "Large labels — sector category pills, highlighted tags"
+    },
+    "tag": {
+      "fontFamily":  { "$value": "IBM Plex Mono, monospace" },
+      "fontSize":    { "$value": "16px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "24px" },
+      "$description": "Content tags, topic chips"
+    },
+    "navigation": {
+      "fontFamily":  { "$value": "IBM Plex Mono, monospace" },
+      "fontSize":    { "$value": "16px" },
+      "fontWeight":  { "$value": "400" },
+      "lineHeight":  { "$value": "24px" },
+      "$description": "Nav items, breadcrumbs"
+    }
+  },
+
+  "note": "IBM Plex is a Google Fonts / open source family — no licensing issues. Three cuts (Serif / Sans / Mono) create a strong typographic system: Serif = editorial authority, Sans = readability, Mono = UI precision."
+}

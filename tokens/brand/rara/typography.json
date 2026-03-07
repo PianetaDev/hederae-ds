@@ -1,0 +1,18 @@
+{
+  "$metadata": {
+    "name": "Rara – Brand Typography Tokens",
+    "description": "Rara-specific typography overrides. Inherits hederae base. Source: Figma variable export."
+  },
+
+  "fontFamily": {
+    "display": { "$value": "Space Grotesk, sans-serif" },
+    "heading":  { "$value": "Space Mono, monospace" },
+    "body":     { "$value": "Sora, sans-serif" }
+  },
+
+  "googleFonts": [
+    "Space+Grotesk:wght@700",
+    "Space+Mono:wght@700",
+    "Sora:wght@400;600"
+  ]
+}

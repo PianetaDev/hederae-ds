@@ -1,0 +1,18 @@
+/**
+ * Storybook — Import all brand themes
+ * This file is only used by Storybook. In production,
+ * each Nuxt project imports only its own brand theme.
+ */
+@import '../../css/themes/rara.css';
+@import '../../css/themes/corner-table.css';
+@import '../../css/themes/susdef.css';
+@import '../../css/themes/agesci.css';
+
+/* Base body reset for story previews */
+body {
+  margin: 0;
+  background-color: var(--color-surface-page, #0d1d1d);
+  color: var(--color-content-primary, #f9f9f9);
+  font-family: var(--font-body, sans-serif);
+  -webkit-font-smoothing: antialiased;
+}

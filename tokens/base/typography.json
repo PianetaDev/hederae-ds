@@ -1,0 +1,38 @@
+{
+  "$metadata": {
+    "name": "Hederae – Typography Primitives",
+    "description": "Raw font values. Never reference these directly in components — use semantic text-role tokens instead."
+  },
+  "fontFamily": {
+    "display":  { "$value": "Space Grotesk, sans-serif", "$type": "fontFamily", "$description": "Display headings H1–H2" },
+    "heading":  { "$value": "Space Mono, monospace",    "$type": "fontFamily", "$description": "Headings H3–H4, labels, UI" },
+    "body":     { "$value": "Sora, sans-serif",          "$type": "fontFamily", "$description": "Body copy, subtitles" }
+  },
+  "fontSize": {
+    "xs":      { "$value": "14px",  "$type": "dimension" },
+    "sm":      { "$value": "16px",  "$type": "dimension" },
+    "md":      { "$value": "18px",  "$type": "dimension" },
+    "lg":      { "$value": "22px",  "$type": "dimension" },
+    "xl":      { "$value": "24px",  "$type": "dimension" },
+    "2xl":     { "$value": "32px",  "$type": "dimension" },
+    "3xl":     { "$value": "40px",  "$type": "dimension" },
+    "4xl":     { "$value": "56px",  "$type": "dimension" },
+    "5xl":     { "$value": "64px",  "$type": "dimension" },
+    "display": { "$value": "120px", "$type": "dimension", "$description": "Hero numbers / large stat" }
+  },
+  "fontWeight": {
+    "regular":   { "$value": "400", "$type": "fontWeight" },
+    "semibold":  { "$value": "600", "$type": "fontWeight" },
+    "bold":      { "$value": "700", "$type": "fontWeight" }
+  },
+  "lineHeight": {
+    "tight":   { "$value": "1",    "$type": "number" },
+    "snug":    { "$value": "1.2",  "$type": "number" },
+    "normal":  { "$value": "1.5",  "$type": "number" }
+  },
+  "letterSpacing": {
+    "tight":  { "$value": "0px",    "$type": "dimension" },
+    "normal": { "$value": "0.125em","$type": "dimension", "$description": "2px at 16px = 0.125em" },
+    "wide":   { "$value": "2em",    "$type": "dimension", "$description": "Used for labels/navigation – 32px tracking" }
+  }
+}

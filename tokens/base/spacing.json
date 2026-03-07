@@ -1,0 +1,20 @@
+{
+  "$schema": "https://design-tokens.org/schema/draft-1.0.json",
+  "$metadata": {
+    "name": "Hederae – Spacing Primitives",
+    "description": "Base spacing scale. Multiples of 4px. Use semantic spacing tokens in components, not these directly."
+  },
+  "space": {
+    "0":  { "$value": "0px",   "$type": "dimension" },
+    "1":  { "$value": "4px",   "$type": "dimension", "$description": "Micro" },
+    "2":  { "$value": "8px",   "$type": "dimension", "$description": "XSmall" },
+    "3":  { "$value": "12px",  "$type": "dimension", "$description": "Small" },
+    "4":  { "$value": "16px",  "$type": "dimension", "$description": "Medium" },
+    "6":  { "$value": "24px",  "$type": "dimension", "$description": "Large" },
+    "8":  { "$value": "32px",  "$type": "dimension", "$description": "XLarge" },
+    "12": { "$value": "48px",  "$type": "dimension", "$description": "2XLarge" },
+    "16": { "$value": "64px",  "$type": "dimension", "$description": "3XLarge" },
+    "20": { "$value": "80px",  "$type": "dimension", "$description": "4XLarge" },
+    "30": { "$value": "120px", "$type": "dimension", "$description": "5XLarge" }
+  }
+}

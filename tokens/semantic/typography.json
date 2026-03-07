@@ -1,0 +1,126 @@
+{
+  "$metadata": {
+    "name": "Hederae – Semantic Typography Tokens",
+    "description": "Typography roles. Reference these in components, not raw size/weight values."
+  },
+
+  "text": {
+    "display": {
+      "$description": "Hero display — largest heading, stat numbers",
+      "family":        "fontFamily.display",
+      "size":          "fontSize.5xl",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.tight",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "h1": {
+      "$description": "Page title",
+      "family":        "fontFamily.display",
+      "size":          "fontSize.5xl",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.tight",
+      "letterSpacing": "letterSpacing.normal",
+      "mobile-size":   "fontSize.3xl"
+    },
+    "h2": {
+      "$description": "Section title",
+      "family":        "fontFamily.display",
+      "size":          "fontSize.4xl",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.tight",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "h3": {
+      "$description": "Sub-section title",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.2xl",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.tight",
+      "letterSpacing": "letterSpacing.normal",
+      "mobile-size":   "fontSize.xl"
+    },
+    "h4": {
+      "$description": "Card title, feature name",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.xl",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.tight",
+      "letterSpacing": "letterSpacing.normal",
+      "mobile-size":   "fontSize.md"
+    },
+    "subtitle": {
+      "$description": "Intro copy under headings",
+      "family":        "fontFamily.body",
+      "size":          "fontSize.2xl",
+      "weight":        "fontWeight.semibold",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.normal",
+      "mobile-size":   "fontSize.lg"
+    },
+    "body-lg": {
+      "$description": "Primary body copy",
+      "family":        "fontFamily.body",
+      "size":          "fontSize.lg",
+      "weight":        "fontWeight.regular",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "body": {
+      "$description": "Default body copy",
+      "family":        "fontFamily.body",
+      "size":          "fontSize.md",
+      "weight":        "fontWeight.regular",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "body-sm": {
+      "$description": "Small print, captions",
+      "family":        "fontFamily.body",
+      "size":          "fontSize.sm",
+      "weight":        "fontWeight.regular",
+      "lineHeight":    "lineHeight.normal",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "label": {
+      "$description": "Category labels, tags, badges — uppercase tracking",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.sm",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.wide",
+      "transform":     "uppercase"
+    },
+    "label-compact": {
+      "$description": "Compact label, no wide tracking",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.sm",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "button": {
+      "$description": "CTA and button text",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.md",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.normal"
+    },
+    "navigation": {
+      "$description": "Nav links",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.md",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.snug",
+      "letterSpacing": "letterSpacing.wide"
+    },
+    "number": {
+      "$description": "Large data numbers / stats",
+      "family":        "fontFamily.heading",
+      "size":          "fontSize.display",
+      "weight":        "fontWeight.bold",
+      "lineHeight":    "lineHeight.tight",
+      "letterSpacing": "letterSpacing.normal"
+    }
+  }
+}

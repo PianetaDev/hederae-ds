@@ -1,0 +1,129 @@
+{
+  "$metadata": {
+    "name": "Susdef — Brand Color Tokens",
+    "description": "Fondazione Sviluppo Sostenibile. Light theme, WCAG 2.1 AA. Source: Figma 25P15_Fondazione-Sviluppo-Sostenibile, node 895-3070.",
+    "theme": "light",
+    "wcag-target": "AA",
+    "tier": "2",
+    "figma-file": "JUzRcERlVWpiwqcDQYCPF4",
+    "figma-node": "895-3070"
+  },
+
+  "brand": {
+    "id": "susdef",
+    "theme": "light"
+  },
+
+  "color": {
+    "surface": {
+      "page":    { "$value": "#FFFFFF",              "$description": "White page background" },
+      "raised":  { "$value": "#FBF9F7",              "$description": "Ui/01 — subtle off-white for section panels" },
+      "card":    { "$value": "#F4F1EB",              "$description": "Ui/02 — warm card background" },
+      "deep":    { "$value": "#E9E3D7",              "$description": "Ui/03 — deeper tinted surface (extra Susdef level)" },
+      "overlay": { "$value": "rgba(33,33,33,0.70)",  "$description": "Dark modal backdrop" },
+      "inverse": { "$value": "#013E39",              "$description": "Deep forest green — header, footer, inverse sections" }
+    },
+
+    "content": {
+      "primary":   { "$value": "#212121", "$description": "Ui/04 — near-black body text. Contrast on #FFFFFF: ~16:1 ✅ AAA" },
+      "secondary": { "$value": "#6D6D69", "$description": "Text/02 — muted gray. Contrast on #FFFFFF: ~4.9:1 ✅ AA" },
+      "disabled":  { "$value": "#A8A8A4", "$description": "Approx ~3:1 — large text only" },
+      "inverse":   { "$value": "#FFFFFF", "$description": "Text/03 — white on inverse green surface" },
+      "brand":     { "$value": "#013E39", "$description": "Susdef green — use for headings, labels. Contrast on #FFF: ~15:1 ✅ AAA" },
+      "accent":    { "$value": "#013E39", "$description": "Same as brand — secondary CTAs use dark green" }
+    },
+
+    "border": {
+      "default": { "$value": "rgba(1,62,57,0.15)",  "$description": "Subtle green-tinted border on light surface" },
+      "subtle":  { "$value": "rgba(1,62,57,0.07)",  "$description": "Very subtle divider" },
+      "brand":   { "$value": "#013E39",             "$description": "Outline color — Figma: Outline=#013E39" },
+      "focus":   { "$value": "#013E39",             "$description": "Focus ring — dark green, visible on all Susdef surfaces" }
+    },
+
+    "interactive": {
+      "primary": {
+        "bg":          { "$value": "#013E39", "$description": "Primary CTA — deep green. Contrast with white label: ~15:1 ✅ AAA" },
+        "bg-hover":    { "$value": "#025249" },
+        "bg-active":   { "$value": "#012B26" },
+        "bg-disabled": { "$value": "rgba(1,62,57,0.30)" },
+        "label":       { "$value": "#FFFFFF", "$description": "White on deep green: ~15:1 ✅ AAA" }
+      },
+      "secondary": {
+        "bg":          { "$value": "transparent" },
+        "bg-hover":    { "$value": "rgba(1,62,57,0.07)" },
+        "border":      { "$value": "#013E39" },
+        "label":       { "$value": "#013E39" }
+      },
+      "ghost": {
+        "bg-hover": { "$value": "rgba(1,62,57,0.07)" },
+        "label":    { "$value": "#013E39" }
+      },
+      "accent-cta": {
+        "$description": "Chartreuse accent — DECORATIVE USE ONLY. #C3C234 contrast on white: ~1.8:1 — NEVER for text",
+        "bg":       { "$value": "#C3C234", "$description": "⚠️ Fails WCAG AA for text — use for large graphic shapes, icon backgrounds only" },
+        "bg-hover": { "$value": "#a0a020" },
+        "label":    { "$value": "#013E39", "$description": "Dark green on chartreuse: ~8.4:1 ✅ AA — minimum size 16px" }
+      },
+      "link": {
+        "default":  { "$value": "#013E39", "$description": "Text/link — use with underline for AA compliance" },
+        "hover":    { "$value": "#025249" },
+        "visited":  { "$value": "#012B26" }
+      }
+    },
+
+    "feedback": {
+      "success-bg":   { "$value": "#d1fadf" },
+      "success-text": { "$value": "#166534", "$description": "Contrast on #d1fadf: 7.2:1 ✅ AA" },
+      "warning-bg":   { "$value": "#fef3c7" },
+      "warning-text": { "$value": "#92400e", "$description": "Contrast on #fef3c7: 7.5:1 ✅ AA" },
+      "error-bg":     { "$value": "#fee2e2" },
+      "error-text":   { "$value": "#991b1b", "$description": "Contrast on #fee2e2: 7.8:1 ✅ AA" },
+      "info-bg":      { "$value": "#dbeafe" },
+      "info-text":    { "$value": "#1e40af", "$description": "Contrast on #dbeafe: 5.2:1 ✅ AA" },
+      "notification": { "$value": "#FF3636", "$description": "Alert/notification — Figma Notification color" }
+    },
+
+    "brand": {
+      "primary":   { "$value": "#013E39", "$description": "Susdef deep forest green" },
+      "secondary": { "$value": "#C3C234", "$description": "Chartreuse — graphic accent, ⚠️ not for text" },
+      "accent":    { "$value": "#D8EC28", "$description": "Lime yellow — graphic accent, ⚠️ not for text" },
+      "muted":     { "$value": "rgba(1,62,57,0.08)", "$description": "Muted green tint for bg accents" }
+    },
+
+    "sector": {
+      "$description": "Susdef-specific: 8 thematic sector color palettes. Used for topic tags, category cards, navigation areas.",
+      "ecoinnovazione": {
+        "primary": { "$value": "#FF8C01", "$description": "Orange — Ecoinnovazione e imprenditorialità" },
+        "muted":   { "$value": "rgba(255,140,1,0.12)" }
+      },
+      "energia-clima": {
+        "primary": { "$value": "#2792B9", "$description": "Sky blue — Energia e clima" },
+        "muted":   { "$value": "rgba(39,146,185,0.12)" }
+      },
+      "economia-circolare": {
+        "primary": { "$value": "#BEBFF8", "$description": "Lavender — Economia circolare. ⚠️ Fails AA for text on white — decorative/bg use" },
+        "muted":   { "$value": "rgba(190,191,248,0.30)" }
+      },
+      "mobilita-sostenibile": {
+        "primary": { "$value": "#CE9B62", "$description": "Warm brown — Mobilità sostenibile" },
+        "muted":   { "$value": "rgba(206,155,98,0.15)" }
+      },
+      "green-city": {
+        "primary": { "$value": "#B9284F", "$description": "Crimson red — Green city" },
+        "muted":   { "$value": "rgba(185,40,79,0.10)" }
+      },
+      "agroecologia": {
+        "primary": { "$value": "#FFC310", "$description": "Golden yellow — Agroecologia" },
+        "muted":   { "$value": "rgba(255,195,16,0.15)" }
+      },
+      "stati-generali": {
+        "primary": { "$value": "#9EDFC9", "$description": "Mint green — Stati generali della green economy. ⚠️ Fails AA for text on white — bg use" },
+        "muted":   { "$value": "rgba(158,223,201,0.30)" }
+      },
+      "corsi-formazione": {
+        "primary": { "$value": "#F993C5", "$description": "Pink — Corsi di formazione. ⚠️ Fails AA for text on white — bg use" },
+        "muted":   { "$value": "rgba(249,147,197,0.20)" }
+      }
+    }
+  }
+}

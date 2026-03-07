@@ -1,0 +1,188 @@
+/**
+ * Hederae DS — Susdef Theme
+ * Brand: Fondazione Sviluppo Sostenibile
+ * Theme: Light / White + Forest Green + Chartreuse
+ * Tier: 2 — WCAG 2.1 AA required on all surfaces
+ * Source: Figma 25P15_Fondazione-Sviluppo-Sostenibile, node 895-3070
+ *
+ * ⚠️  Accessibility notes:
+ *   - #C3C234 (chartreuse) contrast on white: ~1.8:1 — NEVER use for text. Decorative shapes only.
+ *   - #D8EC28 (lime accent) contrast on white: ~1.4:1 — same restriction.
+ *   - #013E39 on white: ~15:1 AAA — safe for all text sizes.
+ *   - Light sector colors (lavender, mint, pink) fail AA for text — bg use only.
+ *   - Focus ring uses dark green on light, white on inverse green surface.
+ *
+ * Usage: <html data-brand="susdef">
+ *
+ * Extra brand-specific token: --color-sector-* for 8 thematic areas
+ */
+
+[data-brand="susdef"],
+.brand-susdef {
+
+  /* ─── Primitive Scale (shared — DO NOT CHANGE) ─────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   4px;   /* Susdef uses tighter radius — institutional, not playful */
+  --radius-md:   8px;
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px; /* Pill tags, sector chips */
+
+  /* ─── Font Families ────────────────────────────────────────── */
+
+  --font-display: "IBM Plex Serif", Georgia, serif;
+  --font-heading: "IBM Plex Serif", Georgia, serif;
+  --font-body:    "IBM Plex Sans", system-ui, sans-serif;
+  --font-ui:      "IBM Plex Mono", monospace; /* Susdef-specific: buttons, labels, nav */
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+
+  --color-surface-page:    #FFFFFF;              /* white main background */
+  --color-surface-raised:  #FBF9F7;              /* Ui/01 — subtle warm off-white */
+  --color-surface-card:    #F4F1EB;              /* Ui/02 — warm card surface */
+  --color-surface-deep:    #E9E3D7;              /* Ui/03 — deeper tinted panel (Susdef extra) */
+  --color-surface-overlay: rgba(33, 33, 33, 0.70);
+  --color-surface-inverse: #013E39;              /* deep forest green — header/footer */
+
+  /* ─── Content (Text & Icons) ───────────────────────────────── */
+
+  --color-content-primary:   #212121;            /* Ui/04 — near-black. Contrast on white: ~16:1 ✅ AAA */
+  --color-content-secondary: #6D6D69;            /* Text/02 — muted gray. Contrast on white: ~4.9:1 ✅ AA */
+  --color-content-disabled:  #A8A8A4;            /* ~3:1 — large text only */
+  --color-content-inverse:   #FFFFFF;            /* Text/03 — white on inverse green */
+  --color-content-brand:     #013E39;            /* deep green text — headings, labels ✅ AAA */
+  --color-content-accent:    #013E39;            /* secondary accent = brand green */
+
+  /* ─── Border ───────────────────────────────────────────────── */
+
+  --color-border-default: rgba(1, 62, 57, 0.15); /* subtle green-tinted border */
+  --color-border-subtle:  rgba(1, 62, 57, 0.07); /* very subtle divider */
+  --color-border-brand:   #013E39;
+  --color-border-focus:   #013E39;               /* dark green focus ring on light */
+
+  /* ─── Interactive — Primary (Dark Green CTA) ────────────────── */
+
+  --color-interactive-primary-bg:           #013E39;
+  --color-interactive-primary-bg-hover:     #025249;
+  --color-interactive-primary-bg-active:    #012B26;
+  --color-interactive-primary-bg-disabled:  rgba(1, 62, 57, 0.30);
+  --color-interactive-primary-label:        #FFFFFF;  /* white on deep green: ~15:1 ✅ AAA */
+
+  /* ─── Interactive — Secondary (Outlined green) ──────────────── */
+
+  --color-interactive-secondary-bg:          transparent;
+  --color-interactive-secondary-bg-hover:    rgba(1, 62, 57, 0.07);
+  --color-interactive-secondary-border:      #013E39;
+  --color-interactive-secondary-label:       #013E39;
+
+  /* ─── Interactive — Ghost ───────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(1, 62, 57, 0.07);
+  --color-interactive-ghost-label:    #013E39;
+
+  /* ─── Interactive — Accent (Chartreuse — graphic accent only) ── */
+  /* ⚠️  WCAG: #C3C234 on white = 1.8:1 — NEVER for text, use for shapes/icons */
+
+  --color-interactive-accent-bg:       #C3C234;
+  --color-interactive-accent-bg-hover: #a0a020;
+  --color-interactive-accent-label:    #013E39;  /* dark green on chartreuse: ~8.4:1 ✅ AA */
+
+  /* ─── Link ─────────────────────────────────────────────────── */
+
+  --color-link-default: #013E39;  /* Text/link — always underlined for AA compliance */
+  --color-link-hover:   #025249;
+  --color-link-visited: #012B26;
+
+  /* ─── Feedback ─────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   #d1fadf;
+  --color-feedback-success-text: #166534;   /* 7.2:1 ✅ AA */
+  --color-feedback-warning-bg:   #fef3c7;
+  --color-feedback-warning-text: #92400e;   /* 7.5:1 ✅ AA */
+  --color-feedback-error-bg:     #fee2e2;
+  --color-feedback-error-text:   #991b1b;   /* 7.8:1 ✅ AA */
+  --color-feedback-info-bg:      #dbeafe;
+  --color-feedback-info-text:    #1e40af;   /* 5.2:1 ✅ AA */
+  --color-feedback-notification: #FF3636;   /* Figma: Notification — alert badges */
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+
+  --color-brand-primary:   #013E39;
+  --color-brand-secondary: #C3C234;         /* ⚠️ decorative only */
+  --color-brand-accent:    #D8EC28;         /* ⚠️ decorative only */
+  --color-brand-muted:     rgba(1, 62, 57, 0.08);
+
+  /* ─── Sector Colors (Susdef-specific — 8 thematic areas) ───── */
+  /* Usage: tag backgrounds, card top-borders, category pills.    */
+  /* Text on sector-* bg: use --color-content-primary (#212121)   */
+  /* for light sectors, or #FFFFFF for dark sectors.              */
+
+  --color-sector-ecoinnovazione-primary:   #FF8C01;
+  --color-sector-ecoinnovazione-muted:     rgba(255, 140, 1, 0.12);
+
+  --color-sector-energia-clima-primary:    #2792B9;
+  --color-sector-energia-clima-muted:      rgba(39, 146, 185, 0.12);
+
+  --color-sector-economia-circolare-primary: #BEBFF8;  /* ⚠️ light — bg only */
+  --color-sector-economia-circolare-muted:   rgba(190, 191, 248, 0.30);
+
+  --color-sector-mobilita-sostenibile-primary: #CE9B62;
+  --color-sector-mobilita-sostenibile-muted:   rgba(206, 155, 98, 0.15);
+
+  --color-sector-green-city-primary:  #B9284F;
+  --color-sector-green-city-muted:    rgba(185, 40, 79, 0.10);
+
+  --color-sector-agroecologia-primary: #FFC310;
+  --color-sector-agroecologia-muted:   rgba(255, 195, 16, 0.15);
+
+  --color-sector-stati-generali-primary: #9EDFC9;    /* ⚠️ light — bg only */
+  --color-sector-stati-generali-muted:   rgba(158, 223, 201, 0.30);
+
+  --color-sector-corsi-formazione-primary: #F993C5;  /* ⚠️ light — bg only */
+  --color-sector-corsi-formazione-muted:   rgba(249, 147, 197, 0.20);
+
+  /* ─── Elevation / Shadows ───────────────────────────────────── */
+
+  --shadow-sm:         0 1px 2px 0 rgba(0,0,0,0.05), 0 1px 3px 0 rgba(0,0,0,0.08);
+  --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.07);
+  --shadow-lg:         0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.08);
+  --shadow-glow-brand: 0 0 24px 0 rgba(1, 62, 57, 0.18);
+
+  /* ─── Motion ────────────────────────────────────────────────── */
+
+  --duration-fast:     100ms;
+  --duration-normal:   200ms;
+  --duration-slow:     350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/**
+ * Susdef — Inverse Surface Override
+ * Per sezioni con --color-surface-inverse (header verde, footer, hero dark)
+ * Usare classe .surface-inverse sul container
+ */
+[data-brand="susdef"] .surface-inverse {
+  --color-content-primary:   #FFFFFF;
+  --color-content-secondary: rgba(255, 255, 255, 0.70);
+  --color-border-default:    rgba(255, 255, 255, 0.15);
+  --color-border-focus:      #D8EC28;    /* lime accent as focus ring on dark green */
+  --color-interactive-ghost-bg-hover: rgba(255, 255, 255, 0.10);
+  --color-interactive-ghost-label:    #FFFFFF;
+  --color-link-default:      #D8EC28;   /* lime link on dark green bg: ~5.9:1 ✅ AA */
+  --color-link-hover:        #C3C234;
+}

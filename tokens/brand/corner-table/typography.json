@@ -1,0 +1,14 @@
+{
+  "$metadata": {
+    "name": "Corner Table – Brand Typography Tokens",
+    "status": "DRAFT — pending Figma source extraction"
+  },
+
+  "fontFamily": {
+    "display": { "$value": "PLACEHOLDER — replace from Figma" },
+    "heading":  { "$value": "PLACEHOLDER — replace from Figma" },
+    "body":     { "$value": "PLACEHOLDER — replace from Figma" }
+  },
+
+  "googleFonts": []
+}

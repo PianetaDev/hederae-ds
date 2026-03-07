@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae DS — Tier Strategy</title>
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --cream-dark: #e8e0d0;
+    --ink: #0d1d1d;
+    --ink-mid: #2a2a2a;
+    --ink-muted: #6b6b6b;
+    --green: #8fdb7e;
+    --green-dark: #1c2d2d;
+    --orange: #FF6B33;
+    --orange-light: #fff0ea;
+    --white: #ffffff;
+    --border: rgba(13,29,29,0.12);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.5;
+    font-size: 16px;
+  }
+  a { color: var(--orange); }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink); color: var(--white);
+    padding: 14px 40px; display: flex; align-items: center; gap: 24px;
+  }
+  .nav-brand { font-weight: 700; font-size: 15px; letter-spacing: 0.05em; color: var(--green); }
+  .nav-links { display: flex; gap: 24px; margin-left: auto; }
+  .nav-links a { color: rgba(255,255,255,0.7); text-decoration: none; font-size: 13px; font-weight: 500; }
+  .nav-links a:hover { color: var(--white); }
+
+  /* LAYOUT */
+  .container { max-width: 1100px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 80px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: var(--white); padding: 80px 40px; }
+  .hero .container { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: end; }
+  .hero-label { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 16px; }
+  .hero h1 { font-size: 52px; font-weight: 700; line-height: 1; margin-bottom: 24px; }
+  .hero h1 span { color: var(--green); }
+  .hero-sub { font-size: 18px; line-height: 1.5; color: rgba(255,255,255,0.7); }
+  .hero-meta { display: flex; flex-direction: column; gap: 16px; align-self: start; padding-top: 16px; }
+  .meta-item { display: flex; flex-direction: column; gap: 4px; }
+  .meta-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.4); }
+  .meta-value { font-size: 14px; color: rgba(255,255,255,0.85); }
+  .tag { display: inline-block; padding: 3px 10px; border-radius: 100px; font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tag-green { background: rgba(143,219,126,0.15); color: var(--green); }
+  .tag-orange { background: rgba(255,107,51,0.15); color: var(--orange); }
+  .tag-gray { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); }
+
+  /* SECTIONS */
+  .section-label { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 12px; }
+  h2 { font-size: 36px; font-weight: 700; line-height: 1.1; margin-bottom: 16px; }
+  h3 { font-size: 20px; font-weight: 700; margin-bottom: 8px; }
+  .lead { font-size: 18px; color: var(--ink-mid); line-height: 1.6; max-width: 680px; margin-bottom: 48px; }
+  p { color: var(--ink-mid); line-height: 1.65; margin-bottom: 12px; }
+
+  /* TIER CARDS */
+  .tier-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 40px; }
+  .tier-card {
+    background: var(--white); padding: 28px 24px;
+    position: relative; overflow: hidden;
+  }
+  .tier-card.tier-1 { background: var(--ink); color: var(--white); }
+  .tier-card.tier-1 .tier-desc { color: rgba(255,255,255,0.65); }
+  .tier-card.tier-1 .tier-name { color: var(--green); }
+  .tier-card.tier-1 h3 { color: var(--white); }
+  .tier-card.tier-1 .tier-feature { border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.75); }
+  .tier-number {
+    font-size: 80px; font-weight: 700; line-height: 1;
+    color: rgba(0,0,0,0.05); position: absolute; right: 16px; top: 8px;
+    font-family: monospace;
+  }
+  .tier-card.tier-1 .tier-number { color: rgba(255,255,255,0.05); }
+  .tier-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 6px; }
+  .tier-card.tier-1 .tier-badge { color: var(--green); }
+  .tier-name { font-size: 22px; font-weight: 700; margin-bottom: 4px; }
+  .tier-desc { font-size: 13px; color: var(--ink-muted); margin-bottom: 20px; line-height: 1.4; }
+  .tier-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .tier-feature { font-size: 12px; padding: 5px 0; border-bottom: 1px solid var(--border); color: var(--ink-mid); }
+  .tier-feature:last-child { border-bottom: none; }
+  .check { color: var(--green); margin-right: 5px; font-weight: 700; }
+  .cross { color: var(--cream-dark); margin-right: 5px; }
+  .tier-example { margin-top: 20px; padding: 10px 12px; background: var(--cream); border-radius: 6px; font-size: 12px; font-weight: 600; }
+  .tier-card.tier-1 .tier-example { background: rgba(143,219,126,0.1); color: var(--green); }
+
+  /* CAPABILITY TABLE */
+  .cap-table { width: 100%; border-collapse: collapse; margin-top: 40px; font-size: 14px; }
+  .cap-table th { text-align: left; padding: 10px 16px; font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); border-bottom: 2px solid var(--border); }
+  .cap-table td { padding: 14px 16px; border-bottom: 1px solid var(--border); vertical-align: top; }
+  .cap-table tr:last-child td { border-bottom: none; }
+  .cap-table .cap-name { font-weight: 600; font-size: 14px; }
+  .cap-table .cap-desc { font-size: 13px; color: var(--ink-muted); }
+  .status { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 100px; }
+  .status-done { background: rgba(143,219,126,0.15); color: #2a7a20; }
+  .status-partial { background: rgba(255,167,51,0.15); color: #a05010; }
+  .status-todo { background: rgba(239,68,68,0.12); color: #b91c1c; }
+  .status-t1 { background: rgba(255,107,51,0.12); color: var(--orange); }
+  .row-highlight td { background: rgba(143,219,126,0.05); }
+
+  /* FIGMA GUIDELINES */
+  .figma-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; margin-top: 40px; }
+  .figma-card { background: var(--white); border-radius: 12px; padding: 28px; }
+  .figma-card.complex { background: var(--ink); color: var(--white); }
+  .figma-card.complex .figma-desc { color: rgba(255,255,255,0.6); }
+  .figma-card.complex .file-tree { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); }
+  .figma-tier-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+  .figma-card.complex .figma-tier-label { color: var(--green); }
+  .figma-card h3 { margin-bottom: 4px; }
+  .figma-desc { font-size: 13px; color: var(--ink-muted); margin-bottom: 20px; line-height: 1.4; }
+  .file-tree {
+    font-family: "SF Mono", "Monaco", monospace; font-size: 12px;
+    background: var(--cream); border-radius: 8px; padding: 16px;
+    line-height: 1.8; color: var(--ink-mid);
+    border: 1px solid var(--border);
+    white-space: pre;
+  }
+  .file-tree .dir { font-weight: 700; color: var(--ink); }
+  .figma-card.complex .file-tree .dir { color: var(--green); }
+  .file-tree .page { color: var(--orange); }
+  .figma-rules { list-style: none; margin-top: 20px; display: flex; flex-direction: column; gap: 8px; }
+  .figma-rule { font-size: 13px; display: flex; gap: 8px; align-items: start; line-height: 1.4; }
+  .figma-rule::before { content: "→"; color: var(--orange); font-weight: 700; flex-shrink: 0; }
+  .figma-card.complex .figma-rule { color: rgba(255,255,255,0.75); }
+
+  /* AGESCI ANALYSIS */
+  .agesci-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 40px; }
+  .agesci-section h3 { font-size: 13px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--orange); margin-bottom: 16px; }
+  .component-list { display: flex; flex-direction: column; gap: 8px; }
+  .component-item {
+    background: var(--white); border-radius: 8px; padding: 12px 16px;
+    font-size: 13px; display: flex; justify-content: space-between; align-items: center;
+  }
+  .component-name { font-weight: 600; }
+  .component-meta { font-size: 11px; color: var(--ink-muted); }
+  .priority { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; }
+  .p-critical { background: rgba(239,68,68,0.1); color: #b91c1c; }
+  .p-high { background: rgba(255,167,51,0.12); color: #a05010; }
+  .p-medium { background: rgba(59,130,246,0.1); color: #1d4ed8; }
+
+  /* ROADMAP */
+  .roadmap { display: flex; flex-direction: column; gap: 0; margin-top: 40px; }
+  .phase {
+    display: grid; grid-template-columns: 160px 1fr;
+    gap: 0; position: relative;
+  }
+  .phase::before {
+    content: ''; position: absolute;
+    left: 159px; top: 0; bottom: 0; width: 2px;
+    background: var(--border);
+  }
+  .phase-timeline {
+    padding: 24px 24px 24px 0;
+    display: flex; flex-direction: column; align-items: flex-end; gap: 6px;
+  }
+  .phase-dot {
+    width: 12px; height: 12px; border-radius: 50%;
+    background: var(--orange); position: relative; z-index: 1;
+    margin-right: -5px;
+    flex-shrink: 0;
+  }
+  .phase-label { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-muted); text-align: right; }
+  .phase-timing { font-size: 12px; color: var(--ink-muted); text-align: right; }
+  .phase-content {
+    padding: 24px 0 24px 32px;
+    border-bottom: 1px solid var(--border);
+  }
+  .phase:last-child .phase-content { border-bottom: none; }
+  .phase-title { font-size: 18px; font-weight: 700; margin-bottom: 8px; }
+  .phase-items { list-style: none; display: flex; flex-direction: column; gap: 6px; margin-top: 12px; }
+  .phase-item { font-size: 13px; color: var(--ink-mid); display: flex; gap: 8px; }
+  .phase-item::before { content: "·"; color: var(--orange); font-weight: 700; }
+  .phase-item-done::before { content: "✓"; color: #2a7a20; font-weight: 700; }
+  .phase-item-done { text-decoration: line-through; color: var(--ink-muted); opacity: 0.7; }
+  .phase-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 10px; }
+
+  /* ECOSYSTEM DIAGRAM */
+  .ecosystem { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 40px; }
+  .eco-layer { padding: 32px; }
+  .eco-layer:nth-child(1) { background: var(--green-dark); color: var(--white); }
+  .eco-layer:nth-child(2) { background: #1a3a1a; color: var(--white); }
+  .eco-layer:nth-child(3) { background: var(--ink); color: var(--white); }
+  .eco-layer-num { font-size: 11px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 8px; }
+  .eco-layer h3 { font-size: 22px; font-weight: 700; margin-bottom: 4px; color: var(--white); }
+  .eco-layer-sub { font-size: 13px; color: rgba(255,255,255,0.55); margin-bottom: 20px; }
+  .eco-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .eco-feature { font-size: 12px; color: rgba(255,255,255,0.7); padding: 5px 0; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  .eco-feature:last-child { border-bottom: none; }
+  .eco-feature strong { color: var(--green); }
+
+  /* CALLOUT */
+  .callout { background: var(--green-dark); color: var(--white); border-radius: 12px; padding: 32px; margin-top: 40px; display: grid; grid-template-columns: 1fr auto; gap: 24px; align-items: center; }
+  .callout-text h3 { color: var(--white); font-size: 20px; margin-bottom: 8px; }
+  .callout-text p { color: rgba(255,255,255,0.7); font-size: 14px; margin: 0; }
+  .callout-badge { background: var(--green); color: var(--ink); font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; padding: 8px 20px; border-radius: 100px; white-space: nowrap; }
+
+  /* RESPONSIVE HELPERS */
+  @media (max-width: 900px) {
+    .tier-grid { grid-template-columns: repeat(2, 1fr); }
+    .figma-grid { grid-template-columns: 1fr; }
+    .agesci-grid { grid-template-columns: 1fr; }
+    .ecosystem { grid-template-columns: 1fr; }
+    .hero .container { grid-template-columns: 1fr; }
+    .callout { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <span class="nav-brand">Hederae DS</span>
+  <div class="nav-links">
+    <a href="#tiers">Tier Model</a>
+    <a href="#figma">Figma Guidelines</a>
+    <a href="#capabilities">Capabilities</a>
+    <a href="#agesci">AGESCI Analysis</a>
+    <a href="#roadmap">Roadmap</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div>
+      <div class="hero-label">Pianeta Studio — Internal Strategy Doc</div>
+      <h1>Hederae DS<br><span>Tier Strategy</span></h1>
+      <p class="hero-sub">Da Rara (Tier 4) a ecosistemi digitali complessi come AGESCI (Tier 1). Come organizziamo il design system, i file Figma e la roadmap di sviluppo per competere su progetti istituzionali.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-item">
+        <span class="meta-label">Versione</span>
+        <span class="meta-value">1.0 — Marzo 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Ecosistema</span>
+        <span class="meta-value">Pianeta.green · Terra · Hederae</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Gara attiva</span>
+        <span class="meta-value" style="color:var(--green);">AGESCI — Febbraio 2026</span>
+      </div>
+      <div class="meta-item">
+        <span class="meta-label">Tier di riferimento</span>
+        <div style="display:flex;gap:6px;margin-top:4px;">
+          <span class="tag tag-green">Tier 1</span>
+          <span class="tag tag-gray">Tier 2</span>
+          <span class="tag tag-gray">Tier 3</span>
+          <span class="tag tag-gray">Tier 4</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ECOSYSTEM OVERVIEW -->
+<section style="padding:40px 0; background: var(--ink);">
+  <div class="container">
+    <div style="margin-bottom:24px; color:rgba(255,255,255,0.5); font-size:11px; font-weight:700; letter-spacing:0.2em; text-transform:uppercase;">Pianeta.green — I Tre Layer</div>
+    <div class="ecosystem">
+      <div class="eco-layer">
+        <div class="eco-layer-num">Layer 1</div>
+        <h3>Pianeta.green</h3>
+        <div class="eco-layer-sub">Infrastruttura sostenibile</div>
+        <ul class="eco-features">
+          <li class="eco-feature">Hosting <strong>100% rinnovabile</strong></li>
+          <li class="eco-feature">CDN Cloudflare · latenza &lt;20ms</li>
+          <li class="eco-feature">HTTP/3 · Brotli · WebP automatico</li>
+          <li class="eco-feature">SLA 99.7% · deploy zero-downtime</li>
+          <li class="eco-feature">Carbon budget per deploy</li>
+        </ul>
+      </div>
+      <div class="eco-layer">
+        <div class="eco-layer-num">Layer 2</div>
+        <h3>Terra</h3>
+        <div class="eco-layer-sub">Dati &amp; Servizi headless</div>
+        <ul class="eco-features">
+          <li class="eco-feature"><strong>Payload CMS</strong> open source</li>
+          <li class="eco-feature">API REST + GraphQL</li>
+          <li class="eco-feature">PostgreSQL · zero vendor lock-in</li>
+          <li class="eco-feature">Auth · ruoli · permessi granulari</li>
+          <li class="eco-feature">Integra SharePoint, CRM, payment</li>
+        </ul>
+      </div>
+      <div class="eco-layer">
+        <div class="eco-layer-num">Layer 3</div>
+        <h3>Hederae</h3>
+        <div class="eco-layer-sub">Esperienza &amp; Design System</div>
+        <ul class="eco-features">
+          <li class="eco-feature"><strong>Token-based</strong> multi-brand</li>
+          <li class="eco-feature">Vue components riutilizzabili</li>
+          <li class="eco-feature">WCAG 2.1 AA nativa</li>
+          <li class="eco-feature">Core Web Vitals target</li>
+          <li class="eco-feature">Design tokens condivisi con Figma</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TIER MODEL -->
+<section id="tiers">
+  <div class="container">
+    <div class="section-label">01 — Tier Model</div>
+    <h2>Quattro livelli di complessità</h2>
+    <p class="lead">Il tier non descrive il valore del cliente — descrive la <strong>complessità sistemica</strong> del progetto: quanti siti, quanti utenti, quanta accessibilità, quanto contenuto dinamico, quante integrazioni.</p>
+
+    <div class="tier-grid">
+
+      <!-- TIER 1 -->
+      <div class="tier-card tier-1">
+        <div class="tier-number">1</div>
+        <div class="tier-badge">Tier 1 — Ecosistema</div>
+        <div class="tier-name">Institutional</div>
+        <div class="tier-desc">Ecosistemi con 10+ siti satellite, architettura gerarchica che si replica, utenti autenticati, WCAG obbligatorio.</div>
+        <ul class="tier-features">
+          <li class="tier-feature"><span class="check">✓</span> 10+ siti satellite</li>
+          <li class="tier-feature"><span class="check">✓</span> Multi-level navigation</li>
+          <li class="tier-feature"><span class="check">✓</span> Auth + area riservata</li>
+          <li class="tier-feature"><span class="check">✓</span> WCAG 2.1 AA audit</li>
+          <li class="tier-feature"><span class="check">✓</span> API integrazioni esterne</li>
+          <li class="tier-feature"><span class="check">✓</span> Performance outdoor (3G)</li>
+          <li class="tier-feature"><span class="check">✓</span> Carbon budget</li>
+          <li class="tier-feature"><span class="check">✓</span> 60+ componenti</li>
+        </ul>
+        <div class="tier-example">↑ AGESCI · Susdef · fondazioni</div>
+      </div>
+
+      <!-- TIER 2 -->
+      <div class="tier-card">
+        <div class="tier-number">2</div>
+        <div class="tier-badge">Tier 2 — Multi-brand</div>
+        <div class="tier-name">Platform</div>
+        <div class="tier-desc">3–8 siti correlati con brand variants, content hub, ricerca, senza area autenticata complessa.</div>
+        <ul class="tier-features">
+          <li class="tier-feature"><span class="check">✓</span> 3–8 siti correlati</li>
+          <li class="tier-feature"><span class="check">✓</span> Brand variants DS</li>
+          <li class="tier-feature"><span class="check">✓</span> Content hub + filtri</li>
+          <li class="tier-feature"><span class="check">✓</span> WCAG AA base</li>
+          <li class="tier-feature"><span class="check">✓</span> Performance budgetato</li>
+          <li class="tier-feature"><span class="cross">–</span> Auth complessa</li>
+          <li class="tier-feature"><span class="cross">–</span> 10+ siti satellite</li>
+          <li class="tier-feature"><span class="check">✓</span> 40–60 componenti</li>
+        </ul>
+        <div class="tier-example">Susdef · reti tematiche</div>
+      </div>
+
+      <!-- TIER 3 -->
+      <div class="tier-card">
+        <div class="tier-number">3</div>
+        <div class="tier-badge">Tier 3 — Prodotto</div>
+        <div class="tier-name">Product</div>
+        <div class="tier-desc">1–2 siti con design forte, contenuto editoriale, brand system completo ma ecosistema circoscritto.</div>
+        <ul class="tier-features">
+          <li class="tier-feature"><span class="check">✓</span> 1–2 siti</li>
+          <li class="tier-feature"><span class="check">✓</span> Brand system completo</li>
+          <li class="tier-feature"><span class="check">✓</span> Contenuto editoriale</li>
+          <li class="tier-feature"><span class="check">✓</span> Dark e/o light theme</li>
+          <li class="tier-feature"><span class="cross">–</span> Multi-level navigation</li>
+          <li class="tier-feature"><span class="cross">–</span> API integrazioni</li>
+          <li class="tier-feature"><span class="cross">–</span> Auth complessa</li>
+          <li class="tier-feature"><span class="check">✓</span> 25–40 componenti</li>
+        </ul>
+        <div class="tier-example">Corner Table · ristoranti · studi</div>
+      </div>
+
+      <!-- TIER 4 -->
+      <div class="tier-card">
+        <div class="tier-number">4</div>
+        <div class="tier-badge">Tier 4 — Brand</div>
+        <div class="tier-name">Brand Site</div>
+        <div class="tier-desc">1 sito showcase, visual-forward, tema unico, statico o semi-statico, complessità minima.</div>
+        <ul class="tier-features">
+          <li class="tier-feature"><span class="check">✓</span> 1 sito</li>
+          <li class="tier-feature"><span class="check">✓</span> Visual forte</li>
+          <li class="tier-feature"><span class="check">✓</span> Dark o light</li>
+          <li class="tier-feature"><span class="cross">–</span> Contenuto dinamico</li>
+          <li class="tier-feature"><span class="cross">–</span> Multi-level nav</li>
+          <li class="tier-feature"><span class="cross">–</span> API integrazioni</li>
+          <li class="tier-feature"><span class="cross">–</span> Auth</li>
+          <li class="tier-feature"><span class="check">✓</span> 15–25 componenti</li>
+        </ul>
+        <div class="tier-example">↓ Rara · showroom · portfolio</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FIGMA GUIDELINES -->
+<section id="figma">
+  <div class="container">
+    <div class="section-label">02 — Figma Organization</div>
+    <h2>Come organizzare i file Figma</h2>
+    <p class="lead">La struttura del file Figma cambia radicalmente in base al tier. Più è alto il tier, più i file devono essere <strong>separati, referenziati e versionati</strong> come se fossero un prodotto software.</p>
+
+    <div class="figma-grid">
+
+      <!-- TIER 4-3 -->
+      <div class="figma-card">
+        <div class="figma-tier-label">Tier 3–4 — Un file, tutto dentro</div>
+        <h3>Single File Structure</h3>
+        <div class="figma-desc">Per progetti semplici (Rara, Corner Table). Un unico file Figma, organizzato con pagine dedicate. Gestibile da 1-2 designer.</div>
+        <div class="file-tree"><span class="dir">📁 [Brand] — Design</span>
+  <span class="page">📄 Cover</span>          ← branding del file
+  <span class="page">📄 🎨 Styles</span>       ← color/text styles, variables
+  <span class="page">📄 🧩 Components</span>   ← tutti i componenti
+  <span class="page">📄 📐 Wireframes</span>   ← layout a bassa fedeltà
+  <span class="page">📄 🖥️ Desktop</span>      ← visual design finale
+  <span class="page">📄 📱 Mobile</span>        ← responsive views
+  <span class="page">📄 🔍 Prototype</span>    ← flussi interattivi
+  <span class="page">📄 📦 Archive</span>      ← versioni precedenti</div>
+        <ul class="figma-rules">
+          <li class="figma-rule">Ogni componente nel file deve essere un <strong>Figma component</strong> (non gruppo)</li>
+          <li class="figma-rule">I Figma Variables devono rispecchiare esattamente i token JSON del DS</li>
+          <li class="figma-rule">Le pagine Archive non si cancellano — si spostano in fondo e si rinominano con data</li>
+          <li class="figma-rule">Nessun colore esplicito nei frame — sempre via styles o variables</li>
+        </ul>
+      </div>
+
+      <!-- TIER 2 -->
+      <div class="figma-card">
+        <div class="figma-tier-label">Tier 2 — Library + Products</div>
+        <h3>Multi-File System</h3>
+        <div class="figma-desc">Per ecosistemi medi (Susdef). File separato per DS Library (pubblicato come shared library) e un file per prodotto.</div>
+        <div class="file-tree"><span class="dir">📚 [Brand] — DS Library</span>  ← PUBLISH
+  <span class="page">📄 🎨 Tokens</span>
+  <span class="page">📄 🧩 Components</span>
+  <span class="page">📄 📖 Documentation</span>
+
+<span class="dir">🖥️ [Brand] — Site A</span>
+  <span class="page">📄 🗺️ IA &amp; Flows</span>
+  <span class="page">📄 📐 Wireframes</span>
+  <span class="page">📄 🎨 Visual</span>
+  <span class="page">📄 🔍 Prototype</span>
+
+<span class="dir">🖥️ [Brand] — Site B</span>
+  <span class="page">📄 ...</span></div>
+        <ul class="figma-rules">
+          <li class="figma-rule">Il DS Library è un file <strong>pubblicato come library</strong> e mai editato direttamente nei file prodotto</li>
+          <li class="figma-rule">I brand token overrides (colori, font) vivono come Figma Variables locali nel file prodotto</li>
+          <li class="figma-rule">Ogni modifica al DS Library richiede notifica al team prima del publish</li>
+        </ul>
+      </div>
+
+      <!-- TIER 1 -->
+      <div class="figma-card complex" style="grid-column: 1 / -1;">
+        <div class="figma-tier-label">Tier 1 — Enterprise Ecosystem (AGESCI)</div>
+        <h3>Team Library + Multi-Product Architecture</h3>
+        <div class="figma-desc">Per ecosistemi istituzionali. Figma Team dedicato, con DS condiviso come Team Library. Ogni prodotto (nazionale, regionale, etc.) ha file separati per fase (UX / Visual / Handoff).</div>
+        <div class="file-tree"><span class="dir">🏛️ Figma Team: [Brand] Ecosystem</span>
+  │
+  ├── <span class="dir">📚 Hederae Core Library</span>          ← TEAM PUBLISH (condivisa da Pianeta Studio)
+  │     <span class="page">📄 Primitives</span>               spacing, radius, motion, palette
+  │     <span class="page">📄 Semantic Tokens</span>          surface, content, interactive
+  │     <span class="page">📄 Base Components</span>          atoms: button, input, badge, icon...
+  │
+  ├── <span class="dir">🎨 [Brand] — Brand Library</span>        ← TEAM PUBLISH (brand-specific)
+  │     <span class="page">📄 Token Overrides</span>          variabili brand: colori, font, radius
+  │     <span class="page">📄 Brand Components</span>         molecole branded: navbar, footer, hero
+  │     <span class="page">📄 Iconography</span>              icon set del brand
+  │     <span class="page">📄 Illustration</span>             illustrazioni, assets grafici
+  │
+  ├── <span class="dir">📐 [Brand] — UX Architecture</span>      ← working file (non pubblicato)
+  │     <span class="page">📄 Information Architecture</span> sitemap, gerarchia pagine
+  │     <span class="page">📄 User Flows</span>               flussi per persona (nazionale, regionale...)
+  │     <span class="page">📄 Wireframes Desktop</span>
+  │     <span class="page">📄 Wireframes Mobile</span>
+  │
+  ├── <span class="dir">🖥️ [Brand] — Visual Design</span>         ← working file
+  │     <span class="page">📄 Homepage Nazionale</span>
+  │     <span class="page">📄 Homepage Regionale</span>
+  │     <span class="page">📄 Sottosito Branca</span>
+  │     <span class="page">📄 Pagina Notizia</span>
+  │     <span class="page">📄 [pagina per tipo]...</span>
+  │
+  └── <span class="dir">📊 [Brand] — Dev Handoff</span>           ← handoff file
+        <span class="page">📄 Component Specs</span>          annotazioni, stati, responsive
+        <span class="page">📄 Token Reference</span>          mappa token → CSS var
+        <span class="page">📄 Accessibility Notes</span>      checklist WCAG per componente</div>
+        <ul class="figma-rules">
+          <li class="figma-rule"><strong>Mai editare Hederae Core Library direttamente</strong> — modifiche proposte via PR nel repo GitHub hedera-design-system</li>
+          <li class="figma-rule">I file UX e Visual sono separati — il UX può avanzare mentre il visual è in review</li>
+          <li class="figma-rule">Ogni component nel Brand Library deve avere un <strong>Figma component story</strong> con tutti gli stati (default, hover, disabled, focus, error)</li>
+          <li class="figma-rule">Il Dev Handoff file è generato da Visual Design, mai editato manualmente</li>
+          <li class="figma-rule">Nessun "one-off design" — se un pattern esiste più di 2 volte, diventa componente</li>
+          <li class="figma-rule">Ogni pagina di Visual Design usa <strong>auto layout</strong> su tutti i frame (required per handoff accurato)</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CAPABILITIES -->
+<section id="capabilities">
+  <div class="container">
+    <div class="section-label">03 — Hederae Capability Map</div>
+    <h2>Cosa serve per il Tier 1</h2>
+    <p class="lead">Stato attuale di Hederae e gap da colmare per competere su ecosistemi istituzionali come AGESCI. Il repo <code>hedera-design-system</code> è un ottimo punto di partenza — ma mancano ancora layer critici.</p>
+
+    <table class="cap-table">
+      <thead>
+        <tr>
+          <th>Capability</th>
+          <th>Tier 4 (Rara)</th>
+          <th>Stato attuale Hederae</th>
+          <th>Tier 1 richiede</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Token System</div><div class="cap-desc">Primitivi, semantici, brand</div></td>
+          <td><span class="tag tag-green">✓ Dark completo</span></td>
+          <td><span class="status status-done">✅ Completo (4 brand)</span></td>
+          <td><span class="status status-done">✅ Dark + Light pronti</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Light Theme</div><div class="cap-desc">Tema chiaro semantico</div></td>
+          <td><span class="tag tag-green">✓ AGESCI + Susdef</span></td>
+          <td><span class="status status-done">✅ Completo (AGESCI + Susdef)</span></td>
+          <td><span class="status status-done">✅ Coperto</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Tailwind Config</div><div class="cap-desc">Multi-brand, CSS vars</div></td>
+          <td><span class="tag tag-green">✓ Rara</span></td>
+          <td><span class="status status-done">✅ 4 brand configurati</span></td>
+          <td><span class="status status-partial">+ Corner Table (pending Figma)</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Vue Components</div><div class="cap-desc">Button, Card, Nav, Form...</div></td>
+          <td><span class="tag tag-gray">Solo token</span></td>
+          <td><span class="status status-todo">❌ 0 componenti</span></td>
+          <td><span class="status status-t1">⚠️ Critico — 30+ componenti min</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Accessibilità</div><div class="cap-desc">WCAG 2.1 AA, focus, aria</div></td>
+          <td><span class="tag tag-gray">Non audit</span></td>
+          <td><span class="status status-partial">⚡ Token definiti, no audit</span></td>
+          <td><span class="status status-t1">⚠️ Critico — audit su tutti i comp.</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Navigation Patterns</div><div class="cap-desc">Multi-level, breadcrumb, tab</div></td>
+          <td><span class="tag tag-gray">Simple</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">⚠️ Critico — ecosistema gerarchico</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Content Components</div><div class="cap-desc">Card, Feed, Hub, Article</div></td>
+          <td><span class="tag tag-gray">Minimal</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">⚠️ Critico — news, eventi, documenti</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Form System</div><div class="cap-desc">Input, Select, Validation</div></td>
+          <td><span class="tag tag-gray">Non richiesto</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">Necessario — contatti, filtri</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Media Components</div><div class="cap-desc">Audio player, Video, Download</div></td>
+          <td><span class="tag tag-gray">Non richiesto</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">Necessario — contenuti multimediali</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Icon System</div><div class="cap-desc">Set coerente, SVG sprite</div></td>
+          <td><span class="tag tag-gray">Ad-hoc</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">Alto — UI icons ovunque</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Page Templates</div><div class="cap-desc">Layout compositions</div></td>
+          <td><span class="tag tag-gray">Non richiesto</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">Alto — pagine modello replicabili</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Multi-site Config</div><div class="cap-desc">Route-based theming</div></td>
+          <td><span class="tag tag-gray">1 sito</span></td>
+          <td><span class="status status-partial">⚡ data-brand ready</span></td>
+          <td><span class="status status-t1">Alto — 15+ siti, 1 route = 1 sito</span></td>
+        </tr>
+        <tr class="row-highlight">
+          <td><div class="cap-name">Storybook</div><div class="cap-desc">Documentazione componenti</div></td>
+          <td><span class="tag tag-gray">Optional</span></td>
+          <td><span class="status status-partial">⚡ 4 brand nel switcher</span></td>
+          <td><span class="status status-t1">Importante — aggiungere componenti</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">AI Workflow</div><div class="cap-desc">Claude co-pilot: token da Figma, WCAG audit, component spec</div></td>
+          <td><span class="tag tag-gray">Non richiesto</span></td>
+          <td><span class="status status-done">✅ Documentato</span></td>
+          <td><span class="status status-t1">Differenziatore di processo</span></td>
+        </tr>
+        <tr>
+          <td><div class="cap-name">Performance Tokens</div><div class="cap-desc">Image budget, LCP target</div></td>
+          <td><span class="tag tag-gray">Non richiesto</span></td>
+          <td><span class="status status-todo">❌ Mancante</span></td>
+          <td><span class="status status-t1">LCP &lt;2.5s su 3G — AGESCI outdoor</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- AGESCI ANALYSIS -->
+<section id="agesci">
+  <div class="container">
+    <div class="section-label">04 — AGESCI Tier 1 Analysis</div>
+    <h2>Cosa serve per vincere la gara</h2>
+    <p class="lead">Dal brief e dalla proposta UX (febbraio 2026): AGESCI è un ecosistema con struttura gerarchica che si <strong>replica a 4 livelli</strong> (nazionale, regionale, zona, gruppo). Il DS deve supportare questa ricorsività.</p>
+
+    <div class="agesci-grid">
+      <div class="agesci-section">
+        <h3>Architettura livelli</h3>
+        <div class="component-list">
+          <div class="component-item">
+            <div><div class="component-name">Nazionale</div><div class="component-meta">AGESCI.it — 1 sito, mappa Italia</div></div>
+            <span class="priority p-critical">Core</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Regionale</div><div class="component-meta">20 siti — mappa regionale + zone</div></div>
+            <span class="priority p-critical">Core</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Zona</div><div class="component-meta">~400 zone — stesso template</div></div>
+            <span class="priority p-high">Template</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Gruppo</div><div class="component-meta">~3500 gruppi — template base</div></div>
+            <span class="priority p-medium">Template</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Sottosito Branca</div><div class="component-meta">Lupetti, Esploratori, Rover, Scolte...</div></div>
+            <span class="priority p-high">Pattern</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agesci-section">
+        <h3>Componenti prioritari (MVP)</h3>
+        <div class="component-list">
+          <div class="component-item">
+            <div><div class="component-name">Navbar con mega-menu</div><div class="component-meta">L'Associazione + Hub + Documenti + Utilità</div></div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Hero con mappa interattiva</div><div class="component-meta">SVG Italy map, click → regione</div></div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Hub Card System</div><div class="component-meta">Card news/eventi/documenti, varianti</div></div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Topic Tag Cloud</div><div class="component-meta">Categorie tematiche con counter</div></div>
+            <span class="priority p-high">Alto</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Area Documenti</div><div class="component-meta">File list con download, stati</div></div>
+            <span class="priority p-high">Alto</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Accessi Rapidi</div><div class="component-meta">Quick links horizontal scroll</div></div>
+            <span class="priority p-high">Alto</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Audio Player</div><div class="component-meta">Inline audio per articoli</div></div>
+            <span class="priority p-medium">Medio</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Social Feed Grid</div><div class="component-meta">Multi-platform masonry feed</div></div>
+            <span class="priority p-medium">Medio</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agesci-section">
+        <h3>Token AGESCI (light theme)</h3>
+        <div class="component-list">
+          <div class="component-item">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:20px;height:20px;border-radius:4px;background:#f5f0e8;border:1px solid #ddd;flex-shrink:0;"></div>
+              <div><div class="component-name">surface.page</div><div class="component-meta">#f5f0e8 — cream off-white</div></div>
+            </div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:20px;height:20px;border-radius:4px;background:#1a1a1a;flex-shrink:0;"></div>
+              <div><div class="component-name">content.primary</div><div class="component-meta">#1a1a1a — ink dark</div></div>
+            </div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:20px;height:20px;border-radius:4px;background:#FF6B33;flex-shrink:0;"></div>
+              <div><div class="component-name">brand.primary</div><div class="component-meta">#FF6B33 — AGESCI orange</div></div>
+            </div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:20px;height:20px;border-radius:4px;background:#1a1a1a;flex-shrink:0;"></div>
+              <div><div class="component-name">interactive.primary.bg</div><div class="component-meta">#1a1a1a — black CTA</div></div>
+            </div>
+            <span class="priority p-high">Alto</span>
+          </div>
+          <div class="component-item">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <div style="width:20px;height:20px;border-radius:4px;background:#ffffff;border:1px solid #ddd;flex-shrink:0;"></div>
+              <div><div class="component-name">surface.card</div><div class="component-meta">#ffffff — card su cream</div></div>
+            </div>
+            <span class="priority p-high">Alto</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="agesci-section">
+        <h3>Performance &amp; Accessibilità</h3>
+        <div class="component-list">
+          <div class="component-item">
+            <div><div class="component-name">LCP Target</div><div class="component-meta">&lt; 2.5s — anche su connessione 3G</div></div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">WCAG 2.1 AA</div><div class="component-meta">Tutti i siti della rete, audit incluso</div></div>
+            <span class="priority p-critical">Critico</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">CLS &lt; 0.1</div><div class="component-meta">No layout shift su caricamento</div></div>
+            <span class="priority p-high">Alto</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">INP &lt; 200ms</div><div class="component-meta">Interattività percepita</div></div>
+            <span class="priority p-high">Alto</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Carbon Budget</div><div class="component-meta">Monitorato per deploy su Pianeta.green</div></div>
+            <span class="priority p-medium">Medio</span>
+          </div>
+          <div class="component-item">
+            <div><div class="component-name">Progressive Enhancement</div><div class="component-meta">Funziona su connessioni lente, outdoor</div></div>
+            <span class="priority p-high">Alto</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-text">
+        <h3>Il differenziatore: 1 route = 1 sito satellite</h3>
+        <p>Con Terra (Payload CMS) + Hederae multi-site: aggiungere AGESCI Piemonte o una nuova zona è configurare una route e assegnare un brand config — non costruire un nuovo sito. Questo è il valore competitivo principale da comunicare nella gara.</p>
+      </div>
+      <div class="callout-badge">Key Message</div>
+    </div>
+  </div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+  <div class="container">
+    <div class="section-label">05 — Roadmap</div>
+    <h2>Da Rara a AGESCI</h2>
+    <p class="lead">Quattro fasi per portare Hederae da Tier 4 a Tier 1, in parallelo con la gara AGESCI.</p>
+
+    <div class="roadmap">
+
+      <div class="phase">
+        <div class="phase-timeline">
+          <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+            <span class="phase-label">Fase 1</span>
+            <div class="phase-dot" style="background:var(--green);"></div>
+          </div>
+          <span class="phase-timing">Marzo 2026<br>2 settimane</span>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Foundation Light — Token AGESCI + Susdef <span style="background:rgba(143,219,126,0.2);color:#2a7a20;font-size:12px;font-weight:600;padding:2px 8px;border-radius:100px;margin-left:8px;">✅ Completata</span></div>
+          <p style="font-size:14px; color:var(--ink-muted);">Light theme completato per AGESCI e Susdef. Corner Table in attesa di accesso Figma desktop. AI workflow formalizzato come processo standard.</p>
+          <ul class="phase-items">
+            <li class="phase-item phase-item-done">Aggiungere <code>tokens/brand/agesci/color.json</code> con palette light</li>
+            <li class="phase-item phase-item-done">Creare <code>css/themes/agesci.css</code> con CSS custom properties</li>
+            <li class="phase-item phase-item-done">Token Susdef completi (color, typography, CSS, Tailwind)</li>
+            <li class="phase-item phase-item-done">AI Workflow formalizzato in <code>docs/AI-WORKFLOW.md</code></li>
+            <li class="phase-item">Estrarre token Corner Table da Figma desktop (nodi 378-3351/3393)</li>
+            <li class="phase-item phase-item-done">Documentare contrasti WCAG AA per tutte le combinazioni light theme</li>
+            <li class="phase-item phase-item-done">Aggiornare Storybook con tema AGESCI nel switcher</li>
+          </ul>
+          <div class="phase-tags">
+            <span class="tag tag-green">Token</span>
+            <span class="tag tag-orange">AGESCI</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-timeline">
+          <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+            <span class="phase-label">Fase 2</span>
+            <div class="phase-dot"></div>
+          </div>
+          <span class="phase-timing">Aprile 2026<br>3–4 settimane</span>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Core Components — MVP AGESCI</div>
+          <p style="font-size:14px; color:var(--ink-muted);">I componenti minimi per costruire le pagine AGESCI: navigation, card system, hero, footer. Tutti con accessibilità nativa e token semantici.</p>
+          <ul class="phase-items">
+            <li class="phase-item">Button, Badge, Tag (tutti gli stati + ARIA)</li>
+            <li class="phase-item">Navbar con mega-menu (L'Associazione dropdown)</li>
+            <li class="phase-item">Card (news, evento, documento — 3 varianti)</li>
+            <li class="phase-item">Hero Section (variante con mappa SVG)</li>
+            <li class="phase-item">Footer strutturato a colonne</li>
+            <li class="phase-item">Breadcrumb (navigation gerarchica)</li>
+            <li class="phase-item">Topic Tag Cloud</li>
+            <li class="phase-item">Storybook stories per ogni componente</li>
+          </ul>
+          <div class="phase-tags">
+            <span class="tag tag-orange">Vue Components</span>
+            <span class="tag tag-green">Storybook</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-timeline">
+          <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+            <span class="phase-label">Fase 3</span>
+            <div class="phase-dot"></div>
+          </div>
+          <span class="phase-timing">Maggio 2026<br>3–4 settimane</span>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Content &amp; Media Components</div>
+          <p style="font-size:14px; color:var(--ink-muted);">Il sistema di contenuto per Hub, Documenti, Articoli. I componenti editoriali che rendono AGESCI funzionale come piattaforma media.</p>
+          <ul class="phase-items">
+            <li class="phase-item">Hub Feed (filtri per categoria, data, tipo)</li>
+            <li class="phase-item">Area Documenti (file list, download con stati)</li>
+            <li class="phase-item">Accessi Rapidi (scroll orizzontale)</li>
+            <li class="phase-item">Audio Player (inline, WCAG compliant)</li>
+            <li class="phase-item">Social Feed Grid (multi-platform)</li>
+            <li class="phase-item">Pagina Notizia — template completo</li>
+            <li class="phase-item">Form Components (input, select, validation states)</li>
+            <li class="phase-item">Banner "Sostienici" / campagna</li>
+          </ul>
+          <div class="phase-tags">
+            <span class="tag tag-orange">Content</span>
+            <span class="tag tag-green">Media</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="phase">
+        <div class="phase-timeline">
+          <div style="display:flex;align-items:center;gap:8px;justify-content:flex-end;">
+            <span class="phase-label">Fase 4</span>
+            <div class="phase-dot" style="background:var(--ink-muted);"></div>
+          </div>
+          <span class="phase-timing">Giugno 2026+<br>ongoing</span>
+        </div>
+        <div class="phase-content">
+          <div class="phase-title">Ecosystem &amp; Governance</div>
+          <p style="font-size:14px; color:var(--ink-muted);">Multi-site configuration, page templates, performance monitoring, carbon budget integration. Hederae diventa un prodotto autonomo.</p>
+          <ul class="phase-items">
+            <li class="phase-item">Multi-site route config (Nuxt layers per sito satellite)</li>
+            <li class="phase-item">Page template library (Nazionale, Regionale, Branca, Notizia)</li>
+            <li class="phase-item">Icon system (SVG sprite, ~100 icone UI)</li>
+            <li class="phase-item">Performance token layer (image budget, lazy loading config)</li>
+            <li class="phase-item">Carbon budget integration con monitoring Pianeta.green</li>
+            <li class="phase-item">DS documentation site pubblico</li>
+            <li class="phase-item">Changelog e versioning (semantic versioning)</li>
+          </ul>
+          <div class="phase-tags">
+            <span class="tag tag-gray">Governance</span>
+            <span class="tag tag-green">Ecosystem</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<div style="background:var(--ink); color:rgba(255,255,255,0.4); padding:32px 40px; font-size:12px; display:flex; justify-content:space-between;">
+  <span><strong style="color:var(--green);">Hederae DS</strong> — Pianeta Studio S.r.l. Società Benefit</span>
+  <span>Documento interno riservato — Marzo 2026</span>
+</div>
+
+</body>
+</html>

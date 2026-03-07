@@ -1,0 +1,83 @@
+{
+  "$metadata": {
+    "name": "Hederae – Semantic Color Tokens",
+    "description": "Intent-based color tokens. These are the ONLY tokens you should reference in components. Each brand overrides these via CSS custom properties."
+  },
+
+  "color": {
+
+    "surface": {
+      "$description": "Background layers — from deepest to highest",
+      "page":     { "$description": "Main page background — darkest layer" },
+      "raised":   { "$description": "Slightly elevated surface (sections, panels)" },
+      "card":     { "$description": "Card / container background" },
+      "overlay":  { "$description": "Modals, drawers, tooltips" },
+      "inverse":  { "$description": "Inverted surface (light on dark brand)" }
+    },
+
+    "content": {
+      "$description": "Text and icon colors",
+      "primary":   { "$description": "Main body text" },
+      "secondary":  { "$description": "Supporting text, captions" },
+      "disabled":   { "$description": "Disabled state text" },
+      "inverse":    { "$description": "Text on colored/dark surfaces" },
+      "brand":      { "$description": "Text in brand color — highlights, links" },
+      "accent":     { "$description": "Text in accent color — CTAs, labels" }
+    },
+
+    "border": {
+      "$description": "Dividers and outlines",
+      "default":  { "$description": "Default border" },
+      "subtle":   { "$description": "Very subtle divider" },
+      "brand":    { "$description": "Brand-colored border" },
+      "focus":    { "$description": "Focus ring" }
+    },
+
+    "interactive": {
+      "$description": "Actionable elements: buttons, links, form controls",
+
+      "primary": {
+        "bg":           { "$description": "Primary button background" },
+        "bg-hover":     { "$description": "Primary button hover" },
+        "bg-active":    { "$description": "Primary button pressed" },
+        "bg-disabled":  { "$description": "Primary button disabled" },
+        "label":        { "$description": "Text/icon on primary button" }
+      },
+
+      "secondary": {
+        "bg":           { "$description": "Secondary button background (often transparent)" },
+        "bg-hover":     { "$description": "Secondary button hover" },
+        "border":       { "$description": "Secondary button border" },
+        "label":        { "$description": "Text/icon on secondary button" }
+      },
+
+      "ghost": {
+        "bg-hover":     { "$description": "Ghost button hover" },
+        "label":        { "$description": "Ghost button text" }
+      },
+
+      "link": {
+        "default":      { "$description": "Link color" },
+        "hover":        { "$description": "Link hover" },
+        "visited":      { "$description": "Visited link" }
+      }
+    },
+
+    "feedback": {
+      "success-bg":  { "$description": "Success background (toast, badge)" },
+      "success-text":{ "$description": "Success text" },
+      "warning-bg":  { "$description": "Warning background" },
+      "warning-text":{ "$description": "Warning text" },
+      "error-bg":    { "$description": "Error background" },
+      "error-text":  { "$description": "Error text" },
+      "info-bg":     { "$description": "Info background" },
+      "info-text":   { "$description": "Info text" }
+    },
+
+    "brand": {
+      "primary":     { "$description": "Brand's primary color (CTA, highlights)" },
+      "secondary":   { "$description": "Brand's secondary/accent color" },
+      "muted":       { "$description": "Brand color at reduced opacity" }
+    }
+  }
+}

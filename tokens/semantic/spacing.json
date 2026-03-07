@@ -1,0 +1,32 @@
+{
+  "$metadata": {
+    "name": "Hederae – Semantic Spacing Tokens",
+    "description": "Intent-named spacing. Use these in components. They map to primitive space values."
+  },
+
+  "spacing": {
+    "component": {
+      "$description": "Spacing within components (padding, gaps)",
+      "xs":   { "$value": "{space.2}", "$description": "8px — icon gap, chip padding" },
+      "sm":   { "$value": "{space.3}", "$description": "12px — tight padding" },
+      "md":   { "$value": "{space.4}", "$description": "16px — default padding" },
+      "lg":   { "$value": "{space.6}", "$description": "24px — comfortable padding" },
+      "xl":   { "$value": "{space.8}", "$description": "32px — spacious padding" }
+    },
+    "layout": {
+      "$description": "Spacing between sections and layout elements",
+      "xs":   { "$value": "{space.8}",  "$description": "32px — tight section gap" },
+      "sm":   { "$value": "{space.12}", "$description": "48px — section gap" },
+      "md":   { "$value": "{space.16}", "$description": "64px — section gap comfortable" },
+      "lg":   { "$value": "{space.20}", "$description": "80px — generous section spacing" },
+      "xl":   { "$value": "{space.30}", "$description": "120px — hero-scale spacing" }
+    },
+    "inset": {
+      "$description": "Container/page insets (horizontal padding)",
+      "sm":   { "$value": "{space.4}",  "$description": "16px — mobile" },
+      "md":   { "$value": "{space.8}",  "$description": "32px — tablet" },
+      "lg":   { "$value": "{space.12}", "$description": "48px — desktop" },
+      "xl":   { "$value": "{space.16}", "$description": "64px — wide desktop" }
+    }
+  }
+}

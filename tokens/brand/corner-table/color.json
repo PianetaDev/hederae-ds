@@ -1,0 +1,81 @@
+{
+  "$metadata": {
+    "name": "Corner Table – Brand Color Tokens",
+    "status": "DRAFT — pending Figma source extraction",
+    "description": "Maps semantic color roles to Corner Table's palette. Open Figma file 'Corner Table' (node 378-3351 or 378-3393) in the desktop app and run get_design_context to extract values.",
+    "todo": "Replace all placeholder values below once Figma tokens are extracted"
+  },
+
+  "brand": {
+    "id": "corner-table",
+    "theme": "dark"
+  },
+
+  "color": {
+    "surface": {
+      "page":    { "$value": "PLACEHOLDER", "$description": "→ Replace with main bg color from Figma" },
+      "raised":  { "$value": "PLACEHOLDER" },
+      "card":    { "$value": "PLACEHOLDER" },
+      "overlay": { "$value": "PLACEHOLDER" },
+      "inverse": { "$value": "PLACEHOLDER" }
+    },
+
+    "content": {
+      "primary":   { "$value": "PLACEHOLDER" },
+      "secondary":  { "$value": "PLACEHOLDER" },
+      "disabled":   { "$value": "PLACEHOLDER" },
+      "inverse":    { "$value": "PLACEHOLDER" },
+      "brand":      { "$value": "PLACEHOLDER", "$description": "→ Corner Table brand accent color" },
+      "accent":     { "$value": "PLACEHOLDER" }
+    },
+
+    "border": {
+      "default":  { "$value": "PLACEHOLDER" },
+      "subtle":   { "$value": "PLACEHOLDER" },
+      "brand":    { "$value": "PLACEHOLDER" },
+      "focus":    { "$value": "PLACEHOLDER" }
+    },
+
+    "interactive": {
+      "primary": {
+        "bg":          { "$value": "PLACEHOLDER", "$description": "→ Corner Table primary CTA color" },
+        "bg-hover":    { "$value": "PLACEHOLDER" },
+        "bg-active":   { "$value": "PLACEHOLDER" },
+        "bg-disabled": { "$value": "PLACEHOLDER" },
+        "label":       { "$value": "PLACEHOLDER" }
+      },
+      "secondary": {
+        "bg":       { "$value": "transparent" },
+        "bg-hover": { "$value": "PLACEHOLDER" },
+        "border":   { "$value": "PLACEHOLDER" },
+        "label":    { "$value": "PLACEHOLDER" }
+      },
+      "ghost": {
+        "bg-hover": { "$value": "PLACEHOLDER" },
+        "label":    { "$value": "PLACEHOLDER" }
+      },
+      "link": {
+        "default":  { "$value": "PLACEHOLDER" },
+        "hover":    { "$value": "PLACEHOLDER" },
+        "visited":  { "$value": "PLACEHOLDER" }
+      }
+    },
+
+    "feedback": {
+      "success-bg":   { "$value": "rgba(18,183,106,0.15)" },
+      "success-text": { "$value": "#12b76a" },
+      "warning-bg":   { "$value": "rgba(245,158,11,0.15)" },
+      "warning-text": { "$value": "#f59e0b" },
+      "error-bg":     { "$value": "rgba(239,68,68,0.15)" },
+      "error-text":   { "$value": "#ef4444" },
+      "info-bg":      { "$value": "rgba(59,130,246,0.15)" },
+      "info-text":    { "$value": "#3b82f6" }
+    },
+
+    "brand": {
+      "primary":   { "$value": "PLACEHOLDER", "$description": "→ Corner Table primary brand color" },
+      "secondary": { "$value": "PLACEHOLDER", "$description": "→ Corner Table secondary/accent color" },
+      "muted":     { "$value": "PLACEHOLDER" }
+    }
+  }
+}

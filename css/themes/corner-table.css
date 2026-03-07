@@ -1,0 +1,126 @@
+/**
+ * Hederae DS — Corner Table Theme
+ * Status: DRAFT — awaiting Figma token extraction
+ *
+ * To complete:
+ * 1. Open Figma file "Corner Table" in desktop app
+ * 2. Run get_design_context on nodes 378-3351 and 378-3393
+ * 3. Run get_variable_defs on the same nodes
+ * 4. Replace all PLACEHOLDER values below
+ *
+ * Usage: <html data-brand="corner-table">
+ */
+
+[data-brand="corner-table"],
+.brand-corner-table {
+
+  /* ─── Primitive Scale (inherited from base — DO NOT CHANGE) ── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ────────────────────────────────────────── */
+
+  --font-display: PLACEHOLDER;  /* → from Figma */
+  --font-heading: PLACEHOLDER;  /* → from Figma */
+  --font-body:    PLACEHOLDER;  /* → from Figma */
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+
+  --color-surface-page:    PLACEHOLDER;
+  --color-surface-raised:  PLACEHOLDER;
+  --color-surface-card:    PLACEHOLDER;
+  --color-surface-overlay: PLACEHOLDER;
+  --color-surface-inverse: PLACEHOLDER;
+
+  /* ─── Content ──────────────────────────────────────────────── */
+
+  --color-content-primary:   PLACEHOLDER;
+  --color-content-secondary: PLACEHOLDER;
+  --color-content-disabled:  PLACEHOLDER;
+  --color-content-inverse:   PLACEHOLDER;
+  --color-content-brand:     PLACEHOLDER;
+  --color-content-accent:    PLACEHOLDER;
+
+  /* ─── Border ───────────────────────────────────────────────── */
+
+  --color-border-default: PLACEHOLDER;
+  --color-border-subtle:  PLACEHOLDER;
+  --color-border-brand:   PLACEHOLDER;
+  --color-border-focus:   PLACEHOLDER;
+
+  /* ─── Interactive — Primary ─────────────────────────────────── */
+
+  --color-interactive-primary-bg:          PLACEHOLDER;
+  --color-interactive-primary-bg-hover:    PLACEHOLDER;
+  --color-interactive-primary-bg-active:   PLACEHOLDER;
+  --color-interactive-primary-bg-disabled: PLACEHOLDER;
+  --color-interactive-primary-label:       PLACEHOLDER;
+
+  /* ─── Interactive — Secondary ───────────────────────────────── */
+
+  --color-interactive-secondary-bg:       transparent;
+  --color-interactive-secondary-bg-hover: PLACEHOLDER;
+  --color-interactive-secondary-border:   PLACEHOLDER;
+  --color-interactive-secondary-label:    PLACEHOLDER;
+
+  /* ─── Interactive — Ghost ───────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: PLACEHOLDER;
+  --color-interactive-ghost-label:    PLACEHOLDER;
+
+  /* ─── Interactive — Link ───────────────────────────────────── */
+
+  --color-link-default: PLACEHOLDER;
+  --color-link-hover:   PLACEHOLDER;
+  --color-link-visited: PLACEHOLDER;
+
+  /* ─── Feedback (shared, brand-agnostic) ────────────────────── */
+
+  --color-feedback-success-bg:   rgba(18, 183, 106, 0.15);
+  --color-feedback-success-text: #12b76a;
+  --color-feedback-warning-bg:   rgba(245, 158, 11, 0.15);
+  --color-feedback-warning-text: #f59e0b;
+  --color-feedback-error-bg:     rgba(239, 68, 68, 0.15);
+  --color-feedback-error-text:   #ef4444;
+  --color-feedback-info-bg:      rgba(59, 130, 246, 0.15);
+  --color-feedback-info-text:    #3b82f6;
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+
+  --color-brand-primary:   PLACEHOLDER;
+  --color-brand-secondary: PLACEHOLDER;
+  --color-brand-muted:     PLACEHOLDER;
+
+  /* ─── Elevation / Shadows ──────────────────────────────────── */
+
+  --shadow-sm:        0 1px 3px 0 rgba(0,0,0,0.3), 0 1px 2px -1px rgba(0,0,0,0.3);
+  --shadow-md:        0 4px 6px -1px rgba(0,0,0,0.4), 0 2px 4px -2px rgba(0,0,0,0.4);
+  --shadow-lg:        0 10px 15px -3px rgba(0,0,0,0.5), 0 4px 6px -4px rgba(0,0,0,0.5);
+  --shadow-glow-brand: PLACEHOLDER;  /* → 0 0 24px 0 rgba(R,G,B,0.25) with brand color */
+
+  /* ─── Motion ────────────────────────────────────────────────── */
+
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}

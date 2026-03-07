@@ -1,0 +1,87 @@
+{
+  "$metadata": {
+    "name": "Rara – Brand Color Tokens",
+    "description": "Maps semantic color roles to Rara's specific palette. Source: Figma UI file node 136-20712, variable export March 2026.",
+    "website": "https://www.rarafactory.com",
+    "palette-source": "../../base/color-palette.json"
+  },
+
+  "brand": {
+    "id": "rara",
+    "theme": "dark"
+  },
+
+  "color": {
+    "surface": {
+      "page":    { "$value": "#0d1d1d", "$description": "green.70 — deepest bg" },
+      "raised":  { "$value": "#132020", "$description": "green.60 — section panels" },
+      "card":    { "$value": "#1c2d2d", "$description": "green.50 — card surface" },
+      "overlay": { "$value": "rgba(13,29,29,0.90)", "$description": "Modal/drawer backdrop" },
+      "inverse": { "$value": "#f9f9f9", "$description": "Light surface for inverted sections" }
+    },
+
+    "content": {
+      "primary":   { "$value": "#f9f9f9", "$description": "neutral.5 — main text on dark" },
+      "secondary":  { "$value": "rgba(249,249,249,0.70)", "$description": "neutral.5 70% — supporting text" },
+      "disabled":   { "$value": "rgba(249,249,249,0.35)", "$description": "neutral.5 35% — disabled" },
+      "inverse":    { "$value": "#0d1d1d", "$description": "Dark text on light surfaces" },
+      "brand":      { "$value": "#8fdb7e", "$description": "green.25 — brand-colored text" },
+      "accent":     { "$value": "#FF6B33", "$description": "orange.50 — accent-colored text" }
+    },
+
+    "border": {
+      "default":  { "$value": "rgba(249,249,249,0.12)", "$description": "Subtle white border" },
+      "subtle":   { "$value": "rgba(249,249,249,0.06)", "$description": "Very subtle divider" },
+      "brand":    { "$value": "#8fdb7e", "$description": "Brand green border" },
+      "focus":    { "$value": "#8fdb7e", "$description": "Focus ring — brand green" }
+    },
+
+    "interactive": {
+      "primary": {
+        "bg":          { "$value": "#8fdb7e", "$description": "Primary CTA bg — brand green" },
+        "bg-hover":    { "$value": "#6cca58", "$description": "Darker green on hover" },
+        "bg-active":   { "$value": "#4aad3a", "$description": "Pressed state" },
+        "bg-disabled": { "$value": "rgba(143,219,126,0.30)", "$description": "Disabled primary" },
+        "label":       { "$value": "#0d1d1d", "$description": "Dark text on green button" }
+      },
+      "secondary": {
+        "bg":          { "$value": "transparent", "$description": "Outlined button" },
+        "bg-hover":    { "$value": "rgba(143,219,126,0.10)", "$description": "Hover tint" },
+        "border":      { "$value": "#8fdb7e", "$description": "Green outline" },
+        "label":       { "$value": "#8fdb7e", "$description": "Green text" }
+      },
+      "ghost": {
+        "bg-hover":    { "$value": "rgba(249,249,249,0.08)", "$description": "Ghost hover tint" },
+        "label":       { "$value": "#f9f9f9", "$description": "White ghost text" }
+      },
+      "link": {
+        "default":  { "$value": "#8fdb7e" },
+        "hover":    { "$value": "#6cca58" },
+        "visited":  { "$value": "rgba(143,219,126,0.70)" }
+      },
+      "accent-cta": {
+        "$description": "Orange accent CTA (secondary call to action, Rara-specific)",
+        "bg":        { "$value": "#FF6B33" },
+        "bg-hover":  { "$value": "#c44a14" },
+        "label":     { "$value": "#f9f9f9" }
+      }
+    },
+
+    "feedback": {
+      "success-bg":   { "$value": "rgba(18,183,106,0.15)" },
+      "success-text": { "$value": "#12b76a" },
+      "warning-bg":   { "$value": "rgba(245,158,11,0.15)" },
+      "warning-text": { "$value": "#f59e0b" },
+      "error-bg":     { "$value": "rgba(239,68,68,0.15)" },
+      "error-text":   { "$value": "#ef4444" },
+      "info-bg":      { "$value": "rgba(59,130,246,0.15)" },
+      "info-text":    { "$value": "#3b82f6" }
+    },
+
+    "brand": {
+      "primary":   { "$value": "#8fdb7e", "$description": "Rara green — dominant brand color" },
+      "secondary": { "$value": "#FF6B33", "$description": "Orange — accent, secondary CTA" },
+      "muted":     { "$value": "rgba(143,219,126,0.20)", "$description": "Muted brand green for bg accents" }
+    }
+  }
+}

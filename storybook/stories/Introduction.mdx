@@ -1,0 +1,32 @@
+import { Meta } from '@storybook/blocks'
+
+<Meta title="Hederae DS / Introduction" />
+
+# Hederae Design System
+
+> *Hedera helix* — l'edera che cresce su strutture diverse mantenendo la stessa natura.
+
+Hederae è il design system di **Pianeta Studio**. Un unico sistema, molti brand.
+
+## Brand attivi
+
+| Brand | Status | Sito |
+|-------|--------|------|
+| **Rara** | ✅ Production | rarafactory.com |
+| **Corner Table** | 🔄 In progress | — |
+
+## Come usare questo Storybook
+
+Usa il switcher dei temi in alto a destra per alternare tra i brand.
+Ogni componente si adatta automaticamente al tema attivo via CSS custom properties.
+
+## Struttura dei token
+
+```
+Primitivi → Semantici → Brand
+```
+
+I componenti referenziano solo token **semantici** (`surface`, `content`, `interactive`…).
+I brand sovrascrivono solo il livello di mapping.
+
+Vedi [GUIDELINES.md](../docs/GUIDELINES.md) per la documentazione completa.

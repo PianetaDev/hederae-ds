@@ -1,0 +1,88 @@
+{
+  "$metadata": {
+    "name": "AGESCI — Brand Color Tokens",
+    "description": "Associazione Guide e Scouts Cattolici Italiani. Light theme, high accessibility (WCAG 2.1 AA required on all surfaces). Source: PS_Agesci_ux.pdf wireframes, Febbraio 2026.",
+    "theme": "light",
+    "wcag-target": "AA",
+    "tier": "1"
+  },
+
+  "brand": {
+    "id": "agesci",
+    "theme": "light"
+  },
+
+  "color": {
+    "surface": {
+      "page":    { "$value": "#f5f0e8", "$description": "cream off-white — main page background" },
+      "raised":  { "$value": "#ede8de", "$description": "slightly darker cream — section panels" },
+      "card":    { "$value": "#ffffff", "$description": "white card on cream background" },
+      "overlay": { "$value": "rgba(13,29,29,0.70)", "$description": "dark modal backdrop" },
+      "inverse": { "$value": "#1a1a1a", "$description": "dark surface for footer/inverted sections" }
+    },
+
+    "content": {
+      "primary":   { "$value": "#1a1a1a", "$description": "near-black — main text. Contrast on #f5f0e8: ~16:1 ✅ AAA" },
+      "secondary":  { "$value": "#5a5a5a", "$description": "medium gray — supporting text. Contrast on #f5f0e8: ~6.5:1 ✅ AA" },
+      "disabled":   { "$value": "#9a9a9a", "$description": "light gray — disabled. Contrast: ~3:1 for large text only" },
+      "inverse":    { "$value": "#f5f0e8", "$description": "cream text on dark surface (footer)" },
+      "brand":      { "$value": "#FF6B33", "$description": "AGESCI orange — brand-colored text. Only use on large text for AA" },
+      "accent":     { "$value": "#1a1a1a", "$description": "secondary accent — dark text CTAs" }
+    },
+
+    "border": {
+      "default":  { "$value": "rgba(26,26,26,0.12)", "$description": "subtle dark border on light surface" },
+      "subtle":   { "$value": "rgba(26,26,26,0.06)", "$description": "very subtle divider" },
+      "brand":    { "$value": "#FF6B33", "$description": "orange brand border" },
+      "focus":    { "$value": "#FF6B33", "$description": "focus ring — orange, visible on all light surfaces" }
+    },
+
+    "interactive": {
+      "primary": {
+        "bg":          { "$value": "#1a1a1a", "$description": "black primary button — 'Sostienici', main CTAs" },
+        "bg-hover":    { "$value": "#333333", "$description": "slightly lighter on hover" },
+        "bg-active":   { "$value": "#000000", "$description": "pure black on press" },
+        "bg-disabled": { "$value": "rgba(26,26,26,0.30)", "$description": "disabled state" },
+        "label":       { "$value": "#f5f0e8", "$description": "cream text on black button. Contrast: ~14:1 ✅ AAA" }
+      },
+      "secondary": {
+        "bg":          { "$value": "transparent", "$description": "outlined button" },
+        "bg-hover":    { "$value": "rgba(26,26,26,0.06)", "$description": "subtle hover tint" },
+        "border":      { "$value": "#1a1a1a", "$description": "dark outlined border" },
+        "label":       { "$value": "#1a1a1a", "$description": "dark text" }
+      },
+      "ghost": {
+        "bg-hover":    { "$value": "rgba(26,26,26,0.06)", "$description": "ghost hover on light" },
+        "label":       { "$value": "#1a1a1a" }
+      },
+      "accent-cta": {
+        "$description": "Orange CTA — used for category/topic labels, tags (not buttons — orange on white fails AA for body text)",
+        "bg":        { "$value": "#FF6B33", "$description": "Use only on elements ≥ 18px bold or ≥ 24px regular for AA" },
+        "bg-hover":  { "$value": "#c44a14" },
+        "label":     { "$value": "#ffffff", "$description": "Contrast #FFF on #FF6B33: ~3.1:1 — large text only ⚠️" }
+      },
+      "link": {
+        "default":  { "$value": "#FF6B33", "$description": "Use with underline for AA compliance" },
+        "hover":    { "$value": "#c44a14" },
+        "visited":  { "$value": "#9e3a10" }
+      }
+    },
+
+    "feedback": {
+      "success-bg":   { "$value": "#d1fadf" },
+      "success-text": { "$value": "#166534", "$description": "Contrast on #d1fadf: 7.2:1 ✅ AA" },
+      "warning-bg":   { "$value": "#fef3c7" },
+      "warning-text": { "$value": "#92400e", "$description": "Contrast on #fef3c7: 7.5:1 ✅ AA" },
+      "error-bg":     { "$value": "#fee2e2" },
+      "error-text":   { "$value": "#991b1b", "$description": "Contrast on #fee2e2: 7.8:1 ✅ AA" },
+      "info-bg":      { "$value": "#dbeafe" },
+      "info-text":    { "$value": "#1e40af", "$description": "Contrast on #dbeafe: 5.2:1 ✅ AA" }
+    },
+
+    "brand": {
+      "primary":   { "$value": "#FF6B33", "$description": "AGESCI orange" },
+      "secondary": { "$value": "#1a1a1a", "$description": "near-black — secondary brand identity" },
+      "muted":     { "$value": "rgba(255,107,51,0.10)", "$description": "muted orange for bg accents" }
+    }
+  }
+}

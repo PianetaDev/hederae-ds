@@ -1,0 +1,25 @@
+{
+  "$metadata": {
+    "name": "AGESCI — Brand Typography Tokens",
+    "description": "Source: PS_Agesci_ux.pdf visual design. Heavy display font for headings, clean sans for body. Note: fonts to confirm from final Figma delivery."
+  },
+
+  "fontFamily": {
+    "display": { "$value": "Cabinet Grotesk, Plus Jakarta Sans, sans-serif", "$description": "Heavy rounded sans — used for H1/H2 in wireframes. Confirm from Figma." },
+    "heading":  { "$value": "Cabinet Grotesk, Plus Jakarta Sans, sans-serif", "$description": "Same family, different weights for H3-H4" },
+    "body":     { "$value": "Inter, system-ui, sans-serif", "$description": "Clean neutral — body copy. Confirm from Figma." }
+  },
+
+  "fontWeight": {
+    "display-weight": { "$value": "800", "$description": "Extra-bold for hero headings" },
+    "heading-weight":  { "$value": "700", "$description": "Bold for section headings" },
+    "body-weight":     { "$value": "400" },
+    "body-semibold":   { "$value": "600" }
+  },
+
+  "googleFonts": [
+    "PLACEHOLDER — confermare font da Figma finale AGESCI"
+  ],
+
+  "note": "⚠️ Fonts non confermati — i wireframes mostrano un font display arrotondato heavy. Richiedere al team UX/Creative il Figma con variabili tipografiche prima di finalizzare."
+}

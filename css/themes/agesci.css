@@ -1,0 +1,150 @@
+/**
+ * Hederae DS — AGESCI Theme
+ * Brand: Associazione Guide e Scouts Cattolici Italiani
+ * Theme: Light / Cream + Orange + Black
+ * Tier: 1 — WCAG 2.1 AA required on all surfaces
+ * Source: PS_Agesci_ux.pdf wireframes, Febbraio 2026
+ *
+ * ⚠️  Accessibility notes:
+ *   - Orange (#FF6B33) fails AA on white for body text — use only for labels/headings ≥ 18px bold
+ *   - Orange on cream (#f5f0e8) ratio: ~3.4:1 — large text only
+ *   - All interactive elements have black (#1a1a1a) as primary color for AA compliance
+ *   - Focus ring: orange with 2px offset on light, white with 2px offset on dark inverse
+ *
+ * Usage: <html data-brand="agesci">
+ */
+
+[data-brand="agesci"],
+.brand-agesci {
+
+  /* ─── Primitive Scale (shared — DO NOT CHANGE) ─────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   8px;
+  --radius-md:   16px;    /* AGESCI uses md radius on cards */
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;  /* Used for pills: tags, badges, CTAs */
+
+  /* ─── Font Families ────────────────────────────────────────── */
+
+  --font-display: "Cabinet Grotesk", "Plus Jakarta Sans", sans-serif; /* ⚠️ confermare */
+  --font-heading: "Cabinet Grotesk", "Plus Jakarta Sans", sans-serif;
+  --font-body:    "Inter", system-ui, sans-serif;                     /* ⚠️ confermare */
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+
+  --color-surface-page:    #f5f0e8;  /* cream off-white */
+  --color-surface-raised:  #ede8de;  /* darker cream for sections */
+  --color-surface-card:    #ffffff;  /* white card on cream */
+  --color-surface-overlay: rgba(13, 29, 29, 0.70);
+  --color-surface-inverse: #1a1a1a;  /* dark footer/inverted sections */
+
+  /* ─── Content (Text & Icons) ───────────────────────────────── */
+
+  --color-content-primary:   #1a1a1a;              /* contrast on page: ~16:1 ✅ AAA */
+  --color-content-secondary: #5a5a5a;              /* contrast on page: ~6.5:1 ✅ AA */
+  --color-content-disabled:  #9a9a9a;              /* ~3:1 — large text only */
+  --color-content-inverse:   #f5f0e8;              /* cream on dark inverse */
+  --color-content-brand:     #FF6B33;              /* orange — large text only for AA */
+  --color-content-accent:    #1a1a1a;              /* secondary = dark */
+
+  /* ─── Border ───────────────────────────────────────────────── */
+
+  --color-border-default: rgba(26, 26, 26, 0.12);  /* subtle dark border */
+  --color-border-subtle:  rgba(26, 26, 26, 0.06);  /* very subtle divider */
+  --color-border-brand:   #FF6B33;
+  --color-border-focus:   #FF6B33;                 /* visible orange focus on light */
+
+  /* ─── Interactive — Primary (Black CTA) ────────────────────── */
+
+  --color-interactive-primary-bg:           #1a1a1a;
+  --color-interactive-primary-bg-hover:     #333333;
+  --color-interactive-primary-bg-active:    #000000;
+  --color-interactive-primary-bg-disabled:  rgba(26, 26, 26, 0.30);
+  --color-interactive-primary-label:        #f5f0e8;  /* cream on black: ~14:1 ✅ AAA */
+
+  /* ─── Interactive — Secondary (Outlined dark) ──────────────── */
+
+  --color-interactive-secondary-bg:          transparent;
+  --color-interactive-secondary-bg-hover:    rgba(26, 26, 26, 0.06);
+  --color-interactive-secondary-border:      #1a1a1a;
+  --color-interactive-secondary-label:       #1a1a1a;
+
+  /* ─── Interactive — Ghost ───────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(26, 26, 26, 0.06);
+  --color-interactive-ghost-label:    #1a1a1a;
+
+  /* ─── Interactive — Accent (Orange — labels, tags, headings) ── */
+  /* ⚠️  WCAG: use only for non-text UI or text ≥ 18px bold / 24px regular */
+
+  --color-interactive-accent-bg:       #FF6B33;
+  --color-interactive-accent-bg-hover: #c44a14;
+  --color-interactive-accent-label:    #ffffff;  /* 3.1:1 — large text only */
+
+  /* ─── Link ─────────────────────────────────────────────────── */
+
+  --color-link-default: #FF6B33;   /* underlined for AA compliance */
+  --color-link-hover:   #c44a14;
+  --color-link-visited: #9e3a10;
+
+  /* ─── Feedback ─────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   #d1fadf;
+  --color-feedback-success-text: #166534;  /* 7.2:1 ✅ AA */
+  --color-feedback-warning-bg:   #fef3c7;
+  --color-feedback-warning-text: #92400e;  /* 7.5:1 ✅ AA */
+  --color-feedback-error-bg:     #fee2e2;
+  --color-feedback-error-text:   #991b1b;  /* 7.8:1 ✅ AA */
+  --color-feedback-info-bg:      #dbeafe;
+  --color-feedback-info-text:    #1e40af;  /* 5.2:1 ✅ AA */
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+
+  --color-brand-primary:   #FF6B33;
+  --color-brand-secondary: #1a1a1a;
+  --color-brand-muted:     rgba(255, 107, 51, 0.10);
+
+  /* ─── Elevation / Shadows (lighter on light theme) ─────────── */
+
+  --shadow-sm:        0 1px 2px 0 rgba(0,0,0,0.06), 0 1px 3px 0 rgba(0,0,0,0.10);
+  --shadow-md:        0 4px 6px -1px rgba(0,0,0,0.08), 0 2px 4px -2px rgba(0,0,0,0.08);
+  --shadow-lg:        0 10px 15px -3px rgba(0,0,0,0.10), 0 4px 6px -4px rgba(0,0,0,0.10);
+  --shadow-glow-brand: 0 0 20px 0 rgba(255, 107, 51, 0.20);
+
+  /* ─── Motion ────────────────────────────────────────────────── */
+
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/**
+ * AGESCI — Inverse Surface Override
+ * Per sezioni con --color-surface-inverse (footer, banner dark)
+ * Usare classe .surface-inverse sul container
+ */
+[data-brand="agesci"] .surface-inverse {
+  --color-content-primary:   #f5f0e8;
+  --color-content-secondary: rgba(245, 240, 232, 0.70);
+  --color-border-default:    rgba(245, 240, 232, 0.15);
+  --color-border-focus:      #f5f0e8;
+  --color-interactive-ghost-bg-hover: rgba(245, 240, 232, 0.10);
+  --color-interactive-ghost-label:    #f5f0e8;
+}
