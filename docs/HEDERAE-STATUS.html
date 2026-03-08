@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae DS — Status & Log</title>
+<style>
+  :root {
+    --cream: #f5f0e8;
+    --cream-dark: #e8e0d0;
+    --ink: #0d1d1d;
+    --ink-mid: #2a2a2a;
+    --ink-muted: #6b7280;
+    --green: #8fdb7e;
+    --green-dark: #1c2d2d;
+    --green-text: #2a7a20;
+    --orange: #FF6B33;
+    --orange-light: #fff0ea;
+    --purple: #7c3aed;
+    --purple-light: #f0ebff;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --white: #ffffff;
+    --border: rgba(13,29,29,0.10);
+    --border-strong: rgba(13,29,29,0.20);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Helvetica Neue", Arial, sans-serif; background: var(--cream); color: var(--ink); line-height: 1.5; font-size: 15px; }
+  a { color: var(--orange); text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  code { font-family: "SF Mono", "Fira Code", monospace; font-size: 12px; background: var(--cream-dark); padding: 1px 5px; border-radius: 3px; }
+
+  /* NAV */
+  nav {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--ink); color: var(--white);
+    padding: 12px 40px; display: flex; align-items: center; gap: 24px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav-brand { font-weight: 700; font-size: 14px; letter-spacing: 0.06em; color: var(--green); }
+  .nav-subtitle { font-size: 12px; color: rgba(255,255,255,0.45); }
+  .nav-links { display: flex; gap: 20px; margin-left: auto; align-items: center; }
+  .nav-links a { color: rgba(255,255,255,0.6); font-size: 12px; font-weight: 500; }
+  .nav-links a:hover { color: var(--white); text-decoration: none; }
+  .nav-cta { background: var(--green); color: var(--ink) !important; padding: 5px 12px; border-radius: 4px; font-weight: 700 !important; }
+
+  /* LAYOUT */
+  .container { max-width: 1060px; margin: 0 auto; padding: 0 40px; }
+  section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+  section:last-child { border-bottom: none; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--orange); margin-bottom: 8px; }
+  h2 { font-size: 26px; font-weight: 700; margin-bottom: 6px; }
+  .lead { font-size: 15px; color: var(--ink-muted); max-width: 640px; line-height: 1.6; }
+
+  /* HERO */
+  .hero { background: var(--ink); color: var(--white); padding: 48px 40px; }
+  .hero .container { display: grid; grid-template-columns: 1fr auto; gap: 40px; align-items: start; }
+  .hero-label { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 12px; }
+  .hero h1 { font-size: 40px; font-weight: 700; line-height: 1; margin-bottom: 16px; }
+  .hero h1 span { color: var(--green); }
+  .hero-desc { font-size: 15px; color: rgba(255,255,255,0.6); max-width: 480px; line-height: 1.6; }
+  .hero-meta { display: flex; flex-direction: column; gap: 12px; min-width: 200px; }
+  .meta-row { display: flex; flex-direction: column; gap: 2px; padding: 10px 14px; background: rgba(255,255,255,0.05); border-radius: 6px; }
+  .meta-label { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.35); }
+  .meta-value { font-size: 13px; color: rgba(255,255,255,0.85); font-weight: 500; }
+  .meta-value.ok { color: var(--green); }
+  .meta-value.warn { color: #fbbf24; }
+
+  /* METRICS */
+  .metrics-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 28px; }
+  .metric-card { background: var(--white); padding: 24px 20px; }
+  .metric-profile { font-size: 10px; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 6px; }
+  .metric-name { font-size: 17px; font-weight: 700; margin-bottom: 4px; }
+  .metric-desc { font-size: 11px; color: var(--ink-muted); margin-bottom: 16px; line-height: 1.4; }
+  .progress-bar { height: 4px; background: var(--cream-dark); border-radius: 2px; margin-bottom: 6px; }
+  .progress-fill { height: 4px; border-radius: 2px; background: var(--green); }
+  .progress-pct { font-size: 22px; font-weight: 700; }
+  .metric-detail { font-size: 11px; color: var(--ink-muted); margin-top: 10px; display: flex; flex-direction: column; gap: 3px; }
+  .metric-row { display: flex; justify-content: space-between; padding: 3px 0; border-bottom: 1px solid var(--border); }
+  .metric-row:last-child { border-bottom: none; }
+  .dot-done { color: var(--green-text); }
+  .dot-partial { color: var(--orange); }
+  .dot-todo { color: var(--cream-dark); }
+  /* profile colors */
+  .p-a .metric-profile { color: var(--ink-muted); }
+  .p-b .metric-profile { color: var(--blue); }
+  .p-b .progress-fill { background: var(--blue); }
+  .p-c .metric-profile { color: var(--orange); }
+  .p-c .progress-fill { background: var(--orange); }
+  .p-d .metric-profile { color: var(--purple); }
+  .p-d .progress-fill { background: var(--purple); }
+
+  /* BRAND STATUS */
+  .brand-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; margin-top: 28px; }
+  .brand-card { background: var(--white); padding: 20px; }
+  .brand-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
+  .brand-type { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 14px; }
+  .brand-check { font-size: 12px; display: flex; flex-direction: column; gap: 4px; }
+  .brand-check-row { display: flex; justify-content: space-between; align-items: center; padding: 4px 0; border-bottom: 1px solid var(--border); }
+  .brand-check-row:last-child { border-bottom: none; }
+  .tag { display: inline-block; padding: 2px 7px; border-radius: 20px; font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .tag-done { background: rgba(143,219,126,0.18); color: var(--green-text); }
+  .tag-partial { background: rgba(255,107,51,0.12); color: var(--orange); }
+  .tag-todo { background: var(--cream-dark); color: var(--ink-muted); }
+  .tag-blocked { background: rgba(239,68,68,0.10); color: #b91c1c; }
+
+  /* PIVOT BOX */
+  .pivot-box { background: var(--ink); color: var(--white); border-radius: 8px; padding: 28px 32px; margin-top: 28px; position: relative; overflow: hidden; }
+  .pivot-box::before { content: 'PIVOT'; position: absolute; right: 24px; top: 20px; font-size: 64px; font-weight: 900; color: rgba(255,255,255,0.03); letter-spacing: -2px; }
+  .pivot-date { font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--green); margin-bottom: 6px; }
+  .pivot-title { font-size: 20px; font-weight: 700; margin-bottom: 10px; }
+  .pivot-desc { font-size: 14px; color: rgba(255,255,255,0.65); line-height: 1.6; max-width: 640px; }
+  .pivot-before-after { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 20px; }
+  .pivot-col { }
+  .pivot-col-label { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; }
+  .pivot-col-before .pivot-col-label { color: rgba(255,255,255,0.3); }
+  .pivot-col-after .pivot-col-label { color: var(--green); }
+  .pivot-item { font-size: 13px; color: rgba(255,255,255,0.7); padding: 4px 0; display: flex; gap: 8px; }
+  .pivot-item::before { content: '→'; color: var(--green); flex-shrink: 0; }
+  .pivot-col-before .pivot-item { color: rgba(255,255,255,0.35); text-decoration: line-through; }
+  .pivot-col-before .pivot-item::before { content: '✕'; color: rgba(255,255,255,0.2); }
+
+  /* LOG */
+  .log { display: flex; flex-direction: column; gap: 0; margin-top: 28px; }
+  .log-entry { display: grid; grid-template-columns: 120px 1fr; gap: 0; position: relative; }
+  .log-entry::after { content: ''; position: absolute; left: 119px; top: 0; bottom: 0; width: 1px; background: var(--border-strong); }
+  .log-date { padding: 16px 16px 16px 0; text-align: right; font-size: 11px; color: var(--ink-muted); font-weight: 600; line-height: 1.3; }
+  .log-dot { position: absolute; left: 113px; top: 20px; width: 12px; height: 12px; border-radius: 50%; background: var(--cream); border: 2px solid var(--border-strong); z-index: 1; }
+  .log-dot.pivot { background: var(--ink); border-color: var(--green); }
+  .log-dot.active { background: var(--orange); border-color: var(--orange); }
+  .log-body { padding: 14px 0 14px 28px; border-bottom: 1px solid var(--border); }
+  .log-entry:last-child .log-body { border-bottom: none; }
+  .log-type { font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 3px; }
+  .log-type.type-feat { color: var(--green-text); }
+  .log-type.type-pivot { color: var(--ink); background: var(--green); padding: 1px 5px; border-radius: 3px; display: inline-block; }
+  .log-type.type-setup { color: var(--blue); }
+  .log-type.type-fix { color: var(--orange); }
+  .log-heading { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .log-detail { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+  .log-tags { display: flex; gap: 4px; flex-wrap: wrap; margin-top: 6px; }
+  .log-tag { font-size: 10px; padding: 1px 6px; border-radius: 3px; background: var(--cream-dark); color: var(--ink-muted); font-weight: 600; }
+
+  /* INSTRUCTIONS */
+  .instruction-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 28px; }
+  .instruction-card { background: var(--white); border-radius: 6px; padding: 22px 24px; }
+  .instruction-card h3 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+  .instruction-steps { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .instruction-step { font-size: 13px; color: var(--ink-mid); display: flex; gap: 10px; line-height: 1.5; }
+  .step-num { font-size: 10px; font-weight: 700; background: var(--ink); color: var(--white); border-radius: 50%; width: 18px; height: 18px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 2px; }
+  .instruction-note { font-size: 11px; color: var(--ink-muted); margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--border); line-height: 1.5; }
+
+  /* NEXT STEPS */
+  .sprint-box { background: var(--white); border-radius: 6px; padding: 24px 28px; margin-top: 28px; }
+  .sprint-title { font-size: 16px; font-weight: 700; margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+  .sprint-badge { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; background: var(--orange-light); color: var(--orange); padding: 3px 8px; border-radius: 3px; }
+  .task-list { display: flex; flex-direction: column; gap: 6px; }
+  .task { display: flex; gap: 12px; align-items: start; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 13px; }
+  .task:last-child { border-bottom: none; }
+  .task-prio { font-size: 10px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; min-width: 64px; padding: 2px 0; text-align: right; }
+  .prio-crit { color: #b91c1c; }
+  .prio-high { color: var(--orange); }
+  .prio-med { color: var(--ink-muted); }
+  .task-name { font-weight: 600; }
+  .task-desc { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
+  .task-profile { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 3px; background: var(--cream-dark); color: var(--ink-muted); margin-left: auto; flex-shrink: 0; }
+
+  /* HOW TO ADD LOG ENTRY */
+  .how-to { background: var(--green-dark); color: rgba(255,255,255,0.7); border-radius: 6px; padding: 20px 24px; margin-top: 20px; font-size: 12px; line-height: 1.7; }
+  .how-to strong { color: var(--green); }
+  .how-to code { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); }
+
+  /* FOOTER */
+  .page-footer { background: var(--ink); color: rgba(255,255,255,0.35); padding: 24px 40px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
+  .page-footer strong { color: var(--green); }
+
+  @media (max-width: 768px) {
+    .hero .container { grid-template-columns: 1fr; }
+    .metrics-grid, .brand-grid { grid-template-columns: 1fr 1fr; }
+    .instruction-grid { grid-template-columns: 1fr; }
+    .pivot-before-after { grid-template-columns: 1fr; }
+    nav { padding: 12px 16px; }
+    .container { padding: 0 16px; }
+    section { padding: 40px 0; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-brand">Hederae DS</span>
+  <span class="nav-subtitle">Status & Log</span>
+  <div class="nav-links">
+    <a href="#profili">Profili</a>
+    <a href="#brand">Brand</a>
+    <a href="#log">Log</a>
+    <a href="#next">Prossimi step</a>
+    <a href="#istruzioni">Istruzioni</a>
+    <a href="https://pianetadev.github.io/hederae-ds/" target="_blank" class="nav-cta">→ Storybook</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="container">
+    <div>
+      <div class="hero-label">Pianeta Studio — Design System</div>
+      <h1>Hederae DS<br><span>Status & Log</span></h1>
+      <p class="hero-desc">Libreria di pattern HTML/CSS + page template multi-brand, documentata in Storybook. Base per ecosistemi informativi (Hub, Documentale, Ricerca). La parte codice/Vue arriva con Fabrizio.</p>
+    </div>
+    <div class="hero-meta">
+      <div class="meta-row">
+        <span class="meta-label">Versione</span>
+        <span class="meta-value">v0.2.0</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Ultimo aggiornamento</span>
+        <span class="meta-value">8 marzo 2026</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Deploy Storybook</span>
+        <span class="meta-value ok">● Live — GitHub Pages</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Brand attivi</span>
+        <span class="meta-value">Susdef · AGESCI · Rara · Corner Table</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Profilo attuale</span>
+        <span class="meta-value warn">▶ Profilo C (Hub editoriale)</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- PROFILI FUNZIONALI -->
+<section id="profili">
+  <div class="container">
+    <div class="section-label">01 — Profili funzionali</div>
+    <h2>A · B · C · D</h2>
+    <p class="lead">Quattro profili funzionali, ciascuno superset del precedente. Un progetto usa solo il profilo che gli serve — niente overengineering, costo di sviluppo proporzionale.</p>
+
+    <div class="metrics-grid">
+
+      <!-- PROFILO A -->
+      <div class="metric-card p-a">
+        <div class="metric-profile">Profilo A</div>
+        <div class="metric-name">Vetrina</div>
+        <div class="metric-desc">1 sito, brand forte, pagine statiche. Zero contenuto dinamico, zero login.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+        <div class="progress-pct">40%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Atomi (Button, Badge, Input…)</span><span class="dot-done">✓ 3/8</span></div>
+          <div class="metric-row"><span>Organismi (Header, Footer, Hero)</span><span class="dot-todo">— 0/4</span></div>
+          <div class="metric-row"><span>Template (Home, About, Contatti)</span><span class="dot-todo">— 0/3</span></div>
+          <div class="metric-row"><span>Token stories</span><span class="dot-done">✓ 5/5</span></div>
+        </div>
+      </div>
+
+      <!-- PROFILO B -->
+      <div class="metric-card p-b">
+        <div class="metric-profile">Profilo B</div>
+        <div class="metric-name">Vetrina + Commerce</div>
+        <div class="metric-desc">Profilo A + e-commerce. Catalogo, scheda prodotto, carrello, checkout.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
+        <div class="progress-pct">65%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Template shop (4 pagine)</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Storybook stories shop</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Organismi condivisi con A</span><span class="dot-todo">— mancanti</span></div>
+          <div class="metric-row"><span>ProductCard molecule</span><span class="dot-todo">— mancante</span></div>
+        </div>
+      </div>
+
+      <!-- PROFILO C -->
+      <div class="metric-card p-c">
+        <div class="metric-profile">Profilo C — Focus attuale</div>
+        <div class="metric-name">Hub editoriale</div>
+        <div class="metric-desc">Profilo A + contenuto organizzato + ricerca + filtri. Susdef, EPOS, reti tematiche.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <div class="progress-pct">50%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Molecole (DocCard, SectorCard…)</span><span class="dot-done">✓ 4/6</span></div>
+          <div class="metric-row"><span>Template Susdef (Home + Hub)</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Template EPOS</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>Organismi (HubHeader, FilterBar)</span><span class="dot-todo">— mancanti</span></div>
+        </div>
+      </div>
+
+      <!-- PROFILO D -->
+      <div class="metric-card p-d">
+        <div class="metric-profile">Profilo D</div>
+        <div class="metric-name">Community / Ecosystem</div>
+        <div class="metric-desc">Profilo C + auth + navigazione gerarchica + multi-sito. AGESCI, associazioni.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
+        <div class="progress-pct">10%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Token AGESCI + CSS theme</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Template campagna/donazione</span><span class="dot-partial">~ AGESCI only</span></div>
+          <div class="metric-row"><span>Navbar mega-menu</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>Auth components</span><span class="dot-todo">— mancante</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- BRAND STATUS -->
+<section id="brand">
+  <div class="container">
+    <div class="section-label">02 — Brand coverage</div>
+    <h2>4 brand · 1 DS</h2>
+    <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
+
+    <div class="brand-grid">
+
+      <div class="brand-card">
+        <div class="brand-name">Susdef</div>
+        <div class="brand-type">Hub editoriale — Profilo C</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Stories atoms</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Template Home + Hub</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Template Documento</span><span class="tag tag-partial">~ base</span></div>
+          <div class="brand-check-row"><span>Tailwind config</span><span class="tag tag-done">✓ fatto</span></div>
+        </div>
+      </div>
+
+      <div class="brand-card">
+        <div class="brand-name">AGESCI</div>
+        <div class="brand-type">Community / Ecosystem — Profilo D</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Stories atoms</span><span class="tag tag-partial">~ via switcher</span></div>
+          <div class="brand-check-row"><span>Template Campagna</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Template Donazione</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Template Hub informativo</span><span class="tag tag-todo">— mancante</span></div>
+        </div>
+      </div>
+
+      <div class="brand-card">
+        <div class="brand-name">Rara</div>
+        <div class="brand-type">Vetrina — Profilo A</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Tailwind config</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Template dedicati</span><span class="tag tag-todo">— mancante</span></div>
+          <div class="brand-check-row"><span>Stories specifiche</span><span class="tag tag-todo">— mancante</span></div>
+          <div class="brand-check-row"><span>Note Figma desktop</span><span class="tag tag-blocked">⏸ in attesa</span></div>
+        </div>
+      </div>
+
+      <div class="brand-card">
+        <div class="brand-name">Corner Table</div>
+        <div class="brand-type">Prodotto editoriale — Profilo A/C</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-partial">~ base</span></div>
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Tailwind config</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Token da Figma</span><span class="tag tag-blocked">⏸ nodi 378-3351</span></div>
+          <div class="brand-check-row"><span>Template dedicati</span><span class="tag tag-todo">— mancante</span></div>
+          <div class="brand-check-row"><span>Stories specifiche</span><span class="tag tag-todo">— mancante</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- PIVOT TRACKER -->
+<section id="pivot">
+  <div class="container">
+    <div class="section-label">03 — Pivot tracker</div>
+    <h2>Decisioni strategiche</h2>
+    <p class="lead">Quando cambia una direzione fondamentale, la documentiamo qui. Serve per allineare il team e non perdere il perché delle scelte.</p>
+
+    <!-- PIVOT 1 — 8 marzo 2026 -->
+    <div class="pivot-box">
+      <div class="pivot-date">Pivot #1 — 8 Marzo 2026</div>
+      <div class="pivot-title">Da "tier cliente" a "profili funzionali"</div>
+      <p class="pivot-desc">Il modello precedente classificava i progetti per dimensione/complessità del cliente (Tier 1 AGESCI = grande, Tier 4 Rara = piccolo). Questo creava confusione: un cliente piccolo può avere bisogno di un hub editoriale, uno grande solo di una vetrina. Il DS dev'essere organizzato per <strong>feature set</strong>, non per dimensione cliente.</p>
+      <div class="pivot-before-after">
+        <div class="pivot-col pivot-col-before">
+          <div class="pivot-col-label">Prima</div>
+          <div class="pivot-item">Tier 1–4 basati su dimensione cliente</div>
+          <div class="pivot-item">AGESCI = obiettivo finale del DS</div>
+          <div class="pivot-item">Complessità = valore percepito</div>
+          <div class="pivot-item">Roadmap bloccata su features lontane</div>
+        </div>
+        <div class="pivot-col pivot-col-after">
+          <div class="pivot-col-label">Adesso</div>
+          <div class="pivot-item">Profili A/B/C/D per feature set</div>
+          <div class="pivot-item">Profilo A già quasi consegnabile</div>
+          <div class="pivot-item">Profilo C è il focus (Susdef, EPOS)</div>
+          <div class="pivot-item">Ogni profilo ha deliverable chiari</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AGGIUNGI NUOVI PIVOT SOPRA QUESTA RIGA -->
+
+  </div>
+</section>
+
+<!-- LOG ATTIVITÀ -->
+<section id="log">
+  <div class="container">
+    <div class="section-label">04 — Log attività</div>
+    <h2>Cosa è stato fatto</h2>
+    <p class="lead">Cronologia inversa delle attività principali. Ogni deploy corrisponde a un commit su GitHub; il workflow GitHub Actions aggiorna Storybook automaticamente.</p>
+
+    <div class="log">
+
+      <!-- ENTRY: aggiungere nuove IN CIMA a questa lista -->
+
+      <div class="log-entry">
+        <div class="log-date">8 mar 2026</div>
+        <div class="log-dot pivot"></div>
+        <div class="log-body">
+          <div class="log-type type-pivot">PIVOT</div>
+          <div class="log-heading">Riorganizzazione modello: tier → profili A/B/C/D</div>
+          <div class="log-detail">Il tier model basato su dimensione cliente viene sostituito dai profili funzionali. Hederae si concentra su ecosistemi informativi (Profilo C) come focus principale, con Profilo A come base consegnabile immediatamente.</div>
+          <div class="log-tags"><span class="log-tag">strategia</span><span class="log-tag">pivot #1</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">8 mar 2026</div>
+        <div class="log-dot active"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Storybook: molecole complete — SectorCard, Breadcrumb, SearchBar</div>
+          <div class="log-detail">Aggiunte le ultime 3 storie molecole: SectorCard (griglia 4×2 + featured), Breadcrumb (default + chip settore + pill variant), SearchBar (hero + inline+filtri + compact). Deploy automatico completato in 33s.</div>
+          <div class="log-tags"><span class="log-tag">storybook</span><span class="log-tag">profilo C</span><span class="log-tag">molecole</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">8 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Storybook: token stories + atomi + DocCard</div>
+          <div class="log-detail">Aggiunte 5 storie token (Colors, Typography, Spacing, Radius, Elevation), 3 storie atomi (Button all variants, Badge all types, Input all states), DocCard molecule (grid/full/list-row).</div>
+          <div class="log-tags"><span class="log-tag">storybook</span><span class="log-tag">token</span><span class="log-tag">atomi</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">8 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-setup">SETUP</div>
+          <div class="log-heading">Brand switcher Storybook — 4 brand in toolbar</div>
+          <div class="log-detail">Configurato <code>globalTypes</code> + decorator in <code>.storybook/preview.js</code>: brand switcher in toolbar imposta <code>data-brand</code> su <code>document.documentElement</code>. Tutti i 4 CSS theme importati; cambio brand istantaneo senza reload.</div>
+          <div class="log-tags"><span class="log-tag">storybook</span><span class="log-tag">multi-brand</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">7 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Template Susdef: Home + Hub settore</div>
+          <div class="log-detail">Costruiti da zero <code>susdef-home.html</code> (hero dark, stats, griglia 8 settori con CSS vars colore, recent docs, newsletter) e <code>susdef-hub.html</code> (hub "Energia e Clima" con sidebar categorie, filtri, lista 5 documenti). Storie aggiunte per desktop/tablet/mobile.</div>
+          <div class="log-tags"><span class="log-tag">profilo C</span><span class="log-tag">susdef</span><span class="log-tag">page template</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">7 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-setup">SETUP</div>
+          <div class="log-heading">Storybook html-vite + deploy GitHub Pages</div>
+          <div class="log-detail">Configurato <code>@storybook/html-vite</code> v8, GitHub Actions workflow per deploy automatico su push a main. Aggiunte prime 12 storie (shop, documentale, comunicazione, AGESCI campagna/donazione). Index page template gallery con counter.</div>
+          <div class="log-tags"><span class="log-tag">setup</span><span class="log-tag">github pages</span><span class="log-tag">CI/CD</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">6 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-setup">SETUP</div>
+          <div class="log-heading">Token system — 4 brand, architettura base → semantic → brand</div>
+          <div class="log-detail">Definita architettura token su 3 livelli: <code>tokens/base/</code> (palette grezza), <code>tokens/semantic/</code> (ruoli: surface, content, interactive…), <code>tokens/brand/[brand]/</code> (override per brand). CSS custom properties compilate manualmente in <code>css/themes/</code> per i 4 brand. Tailwind configs per tutti i brand.</div>
+          <div class="log-tags"><span class="log-tag">token</span><span class="log-tag">CSS</span><span class="log-tag">multi-brand</span></div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="how-to">
+      <strong>Come aggiungere una voce al log:</strong> apri <code>docs/HEDERAE-STATUS.html</code> e copia un blocco <code>&lt;div class="log-entry"&gt;</code> esistente in cima alla lista, sopra il commento <em>"aggiungere nuove IN CIMA"</em>. Aggiorna data, tipo (<code>FEAT / SETUP / FIX / PIVOT</code>), titolo, descrizione e tag. Poi salva e fai commit — il deploy aggiorna Storybook automaticamente.
+    </div>
+
+  </div>
+</section>
+
+<!-- PROSSIMI STEP -->
+<section id="next">
+  <div class="container">
+    <div class="section-label">05 — Prossimi step</div>
+    <h2>Sprint corrente</h2>
+    <p class="lead">Ordinati per priorità. Il focus è completare il Profilo A (organismi base) e poi avanzare sul Profilo C (hub editoriale).</p>
+
+    <div class="sprint-box">
+      <div class="sprint-title">
+        Profilo A → completare organismi
+        <span class="sprint-badge">Focus immediato</span>
+      </div>
+      <div class="task-list">
+        <div class="task">
+          <span class="task-prio prio-crit">Critico</span>
+          <div>
+            <div class="task-name">Header / Navbar — organismo</div>
+            <div class="task-desc">Logo + nav principale + search + variante dark/light. Base condivisa per tutti i profili.</div>
+          </div>
+          <span class="task-profile">A B C D</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-crit">Critico</span>
+          <div>
+            <div class="task-name">Footer — organismo</div>
+            <div class="task-desc">Footer a colonne con link, social, brand info. Variante minimal (vetrina) e completo (hub).</div>
+          </div>
+          <span class="task-profile">A B C D</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-high">Alto</span>
+          <div>
+            <div class="task-name">Hero Section — organismo</div>
+            <div class="task-desc">Hero con titolo + sottotitolo + CTA. Varianti: dark, light, con stats, con immagine.</div>
+          </div>
+          <span class="task-profile">A C</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-high">Alto</span>
+          <div>
+            <div class="task-name">FilterBar — organismo</div>
+            <div class="task-desc">Barra filtri completa: search inline + selects + tag chips. Usata in hub e search results.</div>
+          </div>
+          <span class="task-profile">C</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sprint-box" style="margin-top:16px;">
+      <div class="sprint-title">
+        Profilo C → completare hub editoriale
+        <span class="sprint-badge">Sprint 2</span>
+      </div>
+      <div class="task-list">
+        <div class="task">
+          <span class="task-prio prio-high">Alto</span>
+          <div>
+            <div class="task-name">Template Documento — raffinare</div>
+            <div class="task-desc">Pagina dettaglio documento con sidebar metadati, correlati, download. Usata da tutti i brand hub.</div>
+          </div>
+          <span class="task-profile">C D</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-high">Alto</span>
+          <div>
+            <div class="task-name">Template EPOS (Home + Thematic area)</div>
+            <div class="task-desc">Attendiamo accesso Figma con Francesca. Base: riuso susdef-home + susdef-hub con brand EPOS e sezioni specifiche (community profiles, internal org).</div>
+          </div>
+          <span class="task-profile">C</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-med">Medio</span>
+          <div>
+            <div class="task-name">Token Corner Table da Figma</div>
+            <div class="task-desc">Nodi 378-3351/3393 in Figma desktop. Richiede accesso Figma desktop.</div>
+          </div>
+          <span class="task-profile">A</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-med">Medio</span>
+          <div>
+            <div class="task-name">Template vetrina Rara — Profilo A</div>
+            <div class="task-desc">Home + About + Contatti usando token Rara. Dopo organismi Header/Footer completati.</div>
+          </div>
+          <span class="task-profile">A</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sprint-box" style="margin-top:16px;opacity:0.7;">
+      <div class="sprint-title">
+        Profilo D — in attesa
+        <span class="sprint-badge" style="background:var(--purple-light);color:var(--purple);">Dopo conferma AGESCI</span>
+      </div>
+      <div class="task-list">
+        <div class="task">
+          <span class="task-prio prio-med">Dopo</span>
+          <div>
+            <div class="task-name">Navbar mega-menu AGESCI</div>
+            <div class="task-desc">L'Associazione + Hub + Documenti + Utilità dropdown. Solo quando brief AGESCI confermato.</div>
+          </div>
+          <span class="task-profile">D</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-med">Dopo</span>
+          <div>
+            <div class="task-name">Hero con mappa SVG Italia</div>
+            <div class="task-desc">Click regione → sito regionale. Feature specifica AGESCI.</div>
+          </div>
+          <span class="task-profile">D</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ISTRUZIONI TEAM -->
+<section id="istruzioni">
+  <div class="container">
+    <div class="section-label">06 — Istruzioni team</div>
+    <h2>Come lavorare su Hederae</h2>
+    <p class="lead">Regole essenziali per contribuire in modo coerente. Per approfondimenti vedi <code>docs/GUIDELINES.md</code> e <code>docs/AI-WORKFLOW.md</code>.</p>
+
+    <div class="instruction-grid">
+
+      <div class="instruction-card">
+        <h3>Visualizzare il Design System</h3>
+        <ol class="instruction-steps">
+          <li class="instruction-step"><span class="step-num">1</span>Vai su <a href="https://pianetadev.github.io/hederae-ds/" target="_blank">pianetadev.github.io/hederae-ds</a></li>
+          <li class="instruction-step"><span class="step-num">2</span>Usa il menu a sinistra per navigare tra Token, Atoms, Molecules, pagine brand</li>
+          <li class="instruction-step"><span class="step-num">3</span>In alto a destra: selettore brand (Susdef / AGESCI / Rara / Corner Table) per vedere gli stessi componenti con colori/font diversi</li>
+          <li class="instruction-step"><span class="step-num">4</span>Usa il viewport selector per vedere mobile/tablet/desktop</li>
+        </ol>
+        <div class="instruction-note">Il Storybook si aggiorna automaticamente ad ogni commit su <code>main</code>. Il deploy impiega ~30 secondi.</div>
+      </div>
+
+      <div class="instruction-card">
+        <h3>Aggiungere una story Storybook</h3>
+        <ol class="instruction-steps">
+          <li class="instruction-step"><span class="step-num">1</span>Copia <code>stories/_template.js</code> nella cartella giusta (atoms / molecules / organismi / profilo)</li>
+          <li class="instruction-step"><span class="step-num">2</span>Imposta <code>title</code> con la categoria, es. <code>'⬡ Organisms/Header'</code></li>
+          <li class="instruction-step"><span class="step-num">3</span>Ogni export è una story: la funzione <code>render()</code> ritorna una stringa HTML</li>
+          <li class="instruction-step"><span class="step-num">4</span>Usa <code>var(--color-*)</code>, <code>var(--font-*)</code> per i token — mai colori hardcoded</li>
+        </ol>
+        <div class="instruction-note">Le stories usano <code>@storybook/html-vite</code>: non è Vue, è HTML puro in template literals. Tutto ciò che funziona nel browser funziona qui.</div>
+      </div>
+
+      <div class="instruction-card">
+        <h3>Aggiungere un nuovo brand</h3>
+        <ol class="instruction-steps">
+          <li class="instruction-step"><span class="step-num">1</span>Crea <code>tokens/brand/[nome]/color.json</code> e <code>typography.json</code> con i valori brand</li>
+          <li class="instruction-step"><span class="step-num">2</span>Crea <code>css/themes/[nome].css</code> con le CSS custom properties su <code>[data-brand="nome"]</code></li>
+          <li class="instruction-step"><span class="step-num">3</span>Importa il CSS in <code>.storybook/preview.js</code> e aggiungi la voce in <code>globalTypes.brand.toolbar.items</code></li>
+          <li class="instruction-step"><span class="step-num">4</span>Aggiungi Google Fonts in <code>.storybook/preview-head.html</code> se servono font nuovi</li>
+        </ol>
+        <div class="instruction-note">Il <code>data-brand</code> attribute viene impostato automaticamente dal decorator — non serve nient'altro.</div>
+      </div>
+
+      <div class="instruction-card">
+        <h3>Documentare un pivot</h3>
+        <ol class="instruction-steps">
+          <li class="instruction-step"><span class="step-num">1</span>Apri <code>docs/HEDERAE-STATUS.html</code></li>
+          <li class="instruction-step"><span class="step-num">2</span>Copia il blocco <code>.pivot-box</code> esistente e aggiungilo sopra nella sezione #pivot</li>
+          <li class="instruction-step"><span class="step-num">3</span>Compila: data, titolo, descrizione del perché, before/after della direzione</li>
+          <li class="instruction-step"><span class="step-num">4</span>Aggiungi una voce nel log con <code>type-pivot</code></li>
+        </ol>
+        <div class="instruction-note">Un pivot è qualsiasi decisione che cambia la direzione del DS in modo che un membro del team non si aspetterebbe. Meglio documentarne troppi che troppo pochi.</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer class="page-footer">
+  <span><strong>Hederae DS</strong> — Pianeta Studio S.r.l. Società Benefit — Documento interno</span>
+  <span>v0.2.0 · 8 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
+</footer>
+
+</body>
+</html>
