@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Energia e Clima — Settore tematico · SUSDEF · Page Template</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-sector-ecoinnovazione-primary:    #FF8C01;
+      --color-sector-ecoinnovazione-muted:      #FFF1D9;
+      --color-sector-energia-clima-primary:     #2792B9;
+      --color-sector-energia-clima-muted:       #D9EEF7;
+      --color-sector-economia-circolare-primary:#7B7EC8;
+      --color-sector-economia-circolare-muted:  #EEEEFF;
+      --color-sector-mobilita-sostenibile-primary: #CE9B62;
+      --color-sector-mobilita-sostenibile-muted:   #F5EAD8;
+      --color-sector-green-city-primary:        #B9284F;
+      --color-sector-green-city-muted:          #F7D4DC;
+      --color-sector-agroecologia-primary:      #B08800;
+      --color-sector-agroecologia-muted:        #FFF7D9;
+      --color-sector-stati-generali-primary:    #2A8A6A;
+      --color-sector-stati-generali-muted:      #E5F7F2;
+      --color-sector-corsi-formazione-primary:  #C25490;
+      --color-sector-corsi-formazione-muted:    #FEE8F3;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+
+      /* ── This hub: Energia e Clima ── */
+      --hub-primary:  #2792B9;
+      --hub-muted:    #D9EEF7;
+      --hub-name:     "Energia e Clima";
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .site-logo {
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-content-inverse);
+      text-decoration: none; display: flex; align-items: center; gap: 10px;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-brand-primary);
+    }
+    .site-nav { display: flex; gap: 28px; align-items: center; }
+    .site-nav a {
+      font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--color-brand-accent); }
+    .btn-nav {
+      background: var(--color-brand-accent); color: var(--color-brand-primary) !important;
+      padding: 8px 16px; border-radius: 4px; font-weight: 600 !important;
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      padding: 12px 0;
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--color-surface-raised);
+    }
+    .breadcrumb ol { display: flex; gap: 6px; list-style: none; }
+    .breadcrumb li {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary);
+      display: flex; align-items: center; gap: 6px;
+    }
+    .breadcrumb li:not(:last-child)::after { content: '/'; opacity: 0.4; }
+    .breadcrumb a { color: var(--color-content-secondary); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--color-content-brand); }
+    .breadcrumb li:last-child { color: var(--color-content-primary); }
+
+    /* ─── HUB HEADER ─── */
+    .hub-header {
+      background: var(--color-surface-page);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 40px 0 0;
+    }
+    .hub-header-top {
+      display: flex; align-items: flex-start; gap: 20px;
+      margin-bottom: 24px;
+    }
+    .hub-color-block {
+      width: 52px; height: 52px; border-radius: 10px; flex-shrink: 0;
+      background: var(--hub-muted);
+      border: 2px solid var(--hub-primary);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hub-color-block-dot {
+      width: 18px; height: 18px; border-radius: 50%;
+      background: var(--hub-primary);
+    }
+    .hub-header-text { flex: 1; }
+    .hub-badge {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase;
+      background: var(--hub-muted);
+      color: var(--hub-primary);
+      padding: 4px 10px; border-radius: 3px;
+      margin-bottom: 10px;
+      font-weight: 600;
+    }
+    .hub-badge-dot {
+      width: 6px; height: 6px; border-radius: 50%; background: var(--hub-primary);
+    }
+    .hub-title {
+      font-family: var(--font-display); font-size: 34px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.2;
+      margin-bottom: 10px;
+    }
+    .hub-description {
+      font-size: 16px; color: var(--color-content-secondary); max-width: 640px;
+      line-height: 1.65;
+    }
+    .hub-meta-row {
+      display: flex; gap: 24px; flex-wrap: wrap; align-items: center;
+      padding: 16px 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+    .hub-meta-item {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.05em;
+      color: var(--color-content-secondary); display: flex; align-items: center; gap: 6px;
+    }
+    .hub-meta-item strong { color: var(--color-content-primary); }
+    .hub-accent-bar {
+      height: 3px; background: var(--hub-primary);
+      margin-top: -1px;
+    }
+
+    /* ─── FILTER BAR ─── */
+    .filter-bar {
+      padding: 16px 0;
+      border-bottom: 1px solid var(--color-border-default);
+      background: var(--color-surface-raised);
+    }
+    .filter-bar-inner { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+    .filter-search {
+      flex: 1; min-width: 200px; max-width: 360px;
+      height: 38px; padding: 0 12px;
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      font-family: var(--font-body); font-size: 14px;
+      color: var(--color-content-primary);
+      outline: none;
+    }
+    .filter-search:focus { border-color: var(--color-border-focus); }
+    .filter-search::placeholder { color: var(--color-content-disabled); }
+    .filter-select {
+      height: 38px; padding: 0 12px;
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      font-family: var(--font-body); font-size: 14px;
+      color: var(--color-content-primary);
+      cursor: pointer;
+    }
+    .filter-tag {
+      height: 32px; padding: 0 12px;
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 16px;
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary);
+      cursor: pointer;
+      display: flex; align-items: center;
+      transition: border-color 0.12s, background 0.12s;
+    }
+    .filter-tag:hover, .filter-tag.active {
+      border-color: var(--hub-primary);
+      background: var(--hub-muted);
+      color: var(--hub-primary);
+    }
+    .filter-count {
+      margin-left: 4px;
+      font-family: var(--font-ui); font-size: 11px;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── MAIN LAYOUT ─── */
+    .main-layout {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 0;
+      align-items: start;
+    }
+    @media (max-width: 860px) { .main-layout { grid-template-columns: 1fr; } }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      border-right: 1px solid var(--color-border-default);
+      padding: 32px 24px 32px 0;
+      position: sticky; top: 64px;
+    }
+    .sidebar-section { margin-bottom: 28px; }
+    .sidebar-section:last-child { margin-bottom: 0; }
+    .sidebar-label {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 10px;
+    }
+    .sidebar-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 7px 10px; border-radius: 4px;
+      font-size: 14px; color: var(--color-content-primary);
+      text-decoration: none; cursor: pointer;
+      transition: background 0.1s;
+    }
+    .sidebar-item:hover { background: var(--color-surface-card); }
+    .sidebar-item.active {
+      background: var(--hub-muted);
+      color: var(--hub-primary);
+      font-weight: 600;
+    }
+    .sidebar-item-count {
+      font-family: var(--font-ui); font-size: 11px;
+      color: var(--color-content-secondary);
+    }
+    .sidebar-related {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .sidebar-related-tag {
+      font-family: var(--font-ui); font-size: 11px;
+      padding: 4px 8px; border-radius: 3px;
+      border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary);
+      text-decoration: none;
+      transition: border-color 0.12s;
+    }
+    .sidebar-related-tag:hover { border-color: var(--color-border-strong); }
+
+    /* ─── CONTENT AREA ─── */
+    .content-area {
+      padding: 32px 0 32px 32px;
+    }
+    .content-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px; flex-wrap: wrap; gap: 12px;
+    }
+    .content-result-count {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.05em;
+      color: var(--color-content-secondary);
+    }
+    .content-sort {
+      height: 34px; padding: 0 10px;
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      font-family: var(--font-ui); font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── DOC LIST ─── */
+    .doc-list { display: flex; flex-direction: column; gap: 12px; }
+    .doc-row {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px; padding: 20px 22px;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto auto;
+      gap: 8px 16px;
+      text-decoration: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .doc-row:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: 0 1px 6px rgba(1,62,57,0.06);
+    }
+    .doc-row-main { grid-column: 1; }
+    .doc-row-meta { grid-column: 1; display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+    .doc-row-aside {
+      grid-column: 2; grid-row: 1 / 3;
+      display: flex; flex-direction: column; align-items: flex-end;
+      justify-content: space-between; min-width: 120px;
+    }
+    .doc-row-title {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.35; margin-bottom: 6px;
+    }
+    .doc-row-abstract {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.5;
+      display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    .doc-type-tag {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      background: var(--color-surface-card);
+      color: var(--color-content-secondary);
+      padding: 3px 7px; border-radius: 2px;
+    }
+    .doc-year { font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary); }
+    .doc-authors { font-size: 13px; color: var(--color-content-secondary); }
+    .doc-access {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 3px 7px; border-radius: 2px;
+    }
+    .doc-access.open {
+      background: var(--color-feedback-success-bg);
+      color: var(--color-feedback-success-text);
+    }
+    .doc-access.restricted {
+      background: var(--color-surface-card);
+      color: var(--color-content-secondary);
+    }
+    .doc-cta {
+      font-size: 13px; font-weight: 600; color: var(--color-content-brand);
+      text-decoration: none;
+      border: 1px solid var(--color-border-strong);
+      padding: 6px 12px; border-radius: 3px; white-space: nowrap;
+      transition: background 0.12s;
+    }
+    .doc-cta:hover { background: var(--color-surface-card); }
+
+    /* ─── PAGINATION ─── */
+    .pagination {
+      display: flex; align-items: center; gap: 6px;
+      margin-top: 32px; justify-content: center;
+    }
+    .page-btn {
+      min-width: 36px; height: 36px; padding: 0 10px;
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px; background: var(--color-surface-page);
+      font-family: var(--font-ui); font-size: 13px;
+      color: var(--color-content-secondary);
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      text-decoration: none;
+    }
+    .page-btn:hover { border-color: var(--color-border-strong); color: var(--color-content-primary); }
+    .page-btn.active {
+      background: var(--color-brand-primary);
+      color: var(--color-content-inverse);
+      border-color: var(--color-brand-primary);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: 24px 0;
+    }
+    .footer-inner { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+    .footer-logo { font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--color-content-brand); }
+    .footer-copy { font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary); }
+
+    /* ─── TEMPLATE NOTICE ─── */
+    .template-notice {
+      background: var(--color-surface-deep);
+      border-bottom: 2px solid var(--color-brand-accent);
+      padding: 8px 0; text-align: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── TEMPLATE NOTICE ─── -->
+  <div class="template-notice">⬡ HEDERAE DS · Template — Susdef Hub (Settore Tematico) · v0.2.0</div>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="susdef-home.html" class="site-logo">
+        <span class="site-logo-mark">F</span>
+        Fondazione Sviluppo Sostenibile
+      </a>
+      <nav class="site-nav" aria-label="Menu principale">
+        <a href="search.html">Biblioteca</a>
+        <a href="susdef-home.html" class="active">Settori</a>
+        <a href="#">Strumenti</a>
+        <a href="#">Formazione</a>
+        <a href="#">Chi siamo</a>
+        <a href="#" class="btn-nav">Accedi</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── BREADCRUMB ─── -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol>
+        <li><a href="susdef-home.html">Home</a></li>
+        <li><a href="susdef-home.html">Settori tematici</a></li>
+        <li>Energia e Clima</li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- ─── HUB HEADER ─── -->
+  <div class="hub-header">
+    <div class="container">
+      <div class="hub-header-top">
+        <div class="hub-color-block" aria-hidden="true">
+          <div class="hub-color-block-dot"></div>
+        </div>
+        <div class="hub-header-text">
+          <div class="hub-badge">
+            <span class="hub-badge-dot"></span>
+            Settore tematico
+          </div>
+          <h1 class="hub-title">Energia e Clima</h1>
+          <p class="hub-description">
+            Ricerche, policy brief e strumenti operativi sulla transizione energetica, fonti rinnovabili,
+            efficienza energetica e adattamento climatico. Dal PNRR ai mercati del carbonio,
+            tutta la conoscenza che serve per orientarsi.
+          </p>
+        </div>
+      </div>
+      <div class="hub-meta-row">
+        <span class="hub-meta-item"><strong>498</strong>&nbsp;documenti</span>
+        <span class="hub-meta-item"><strong>12</strong>&nbsp;sotto-categorie</span>
+        <span class="hub-meta-item"><strong>47</strong>&nbsp;organizzazioni</span>
+        <span class="hub-meta-item">Aggiornato&nbsp;<strong>3 giorni fa</strong></span>
+      </div>
+    </div>
+    <div class="hub-accent-bar"></div>
+  </div>
+
+  <!-- ─── FILTER BAR ─── -->
+  <div class="filter-bar" role="search" aria-label="Filtri documenti">
+    <div class="container">
+      <div class="filter-bar-inner">
+        <input
+          type="search"
+          class="filter-search"
+          placeholder="Cerca in Energia e Clima…"
+          aria-label="Cerca nei documenti del settore"
+        >
+        <select class="filter-select" aria-label="Tipo documento">
+          <option>Tipo</option>
+          <option>Rapporto</option>
+          <option>Policy brief</option>
+          <option>Working paper</option>
+          <option>Dataset</option>
+        </select>
+        <select class="filter-select" aria-label="Anno">
+          <option>Anno</option>
+          <option>2024</option>
+          <option>2023</option>
+          <option>2022</option>
+        </select>
+        <select class="filter-select" aria-label="Accesso">
+          <option>Accesso</option>
+          <option>Aperto</option>
+          <option>Riservato</option>
+        </select>
+        <span class="filter-tag active">Rinnovabili <span class="filter-count">132</span></span>
+        <span class="filter-tag">PNRR <span class="filter-count">88</span></span>
+        <span class="filter-tag">Efficienza <span class="filter-count">74</span></span>
+        <span class="filter-tag">Gas naturale <span class="filter-count">61</span></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── MAIN ─── -->
+  <main>
+    <div class="container">
+      <div class="main-layout">
+
+        <!-- ── SIDEBAR ── -->
+        <aside class="sidebar" aria-label="Categorie e filtri">
+
+          <div class="sidebar-section">
+            <p class="sidebar-label">Sotto-categorie</p>
+            <a href="#" class="sidebar-item active">Tutte <span class="sidebar-item-count">498</span></a>
+            <a href="#" class="sidebar-item">Fonti rinnovabili <span class="sidebar-item-count">132</span></a>
+            <a href="#" class="sidebar-item">Efficienza energetica <span class="sidebar-item-count">74</span></a>
+            <a href="#" class="sidebar-item">Policy e governance <span class="sidebar-item-count">68</span></a>
+            <a href="#" class="sidebar-item">Mercati del carbonio <span class="sidebar-item-count">55</span></a>
+            <a href="#" class="sidebar-item">Adattamento climatico <span class="sidebar-item-count">48</span></a>
+            <a href="#" class="sidebar-item">PNRR / Fondi UE <span class="sidebar-item-count">42</span></a>
+            <a href="#" class="sidebar-item">Comunità energetiche <span class="sidebar-item-count">39</span></a>
+            <a href="#" class="sidebar-item">Gas naturale / H₂ <span class="sidebar-item-count">40</span></a>
+          </div>
+
+          <div class="sidebar-section">
+            <p class="sidebar-label">Settori correlati</p>
+            <div class="sidebar-related">
+              <a href="#" class="sidebar-related-tag">Eco-innovazione</a>
+              <a href="#" class="sidebar-related-tag">Mobilità</a>
+              <a href="#" class="sidebar-related-tag">Green City</a>
+              <a href="#" class="sidebar-related-tag">Ec. Circolare</a>
+            </div>
+          </div>
+
+        </aside>
+
+        <!-- ── DOCUMENT LIST ── -->
+        <div class="content-area">
+          <div class="content-header">
+            <span class="content-result-count">498 documenti · pagina 1 di 50</span>
+            <select class="content-sort" aria-label="Ordinamento">
+              <option>Più recenti</option>
+              <option>Più rilevanti</option>
+              <option>Titolo A–Z</option>
+            </select>
+          </div>
+
+          <div class="doc-list" role="list">
+
+            <!-- Doc 1 -->
+            <a href="documento.html" class="doc-row" role="listitem">
+              <div class="doc-row-main">
+                <h3 class="doc-row-title">
+                  Stato delle energie rinnovabili in Italia: scenari di sviluppo al 2035
+                </h3>
+                <p class="doc-row-abstract">
+                  Analisi prospettica sulla capacità installata di solare, eolico e idroelettrico in Italia.
+                  Include simulazioni di scenario al 2030 e al 2035, con focus sull'impatto occupazionale
+                  e sul raggiungimento degli obiettivi del Piano Nazionale Integrato Energia e Clima.
+                </p>
+              </div>
+              <div class="doc-row-meta">
+                <span class="doc-type-tag">Rapporto</span>
+                <span class="doc-year">2024</span>
+                <span class="doc-authors">ENEA, RSE S.p.A.</span>
+                <span class="doc-access open">Aperto</span>
+              </div>
+              <div class="doc-row-aside">
+                <span class="doc-access open">Aperto</span>
+                <a href="documento.html" class="doc-cta">Leggi →</a>
+              </div>
+            </a>
+
+            <!-- Doc 2 -->
+            <a href="documento.html" class="doc-row" role="listitem">
+              <div class="doc-row-main">
+                <h3 class="doc-row-title">
+                  Comunità energetiche rinnovabili: quadro normativo e modelli operativi dopo il D.Lgs. 199/2021
+                </h3>
+                <p class="doc-row-abstract">
+                  Analisi del recepimento della Direttiva RED II in Italia e dei modelli di governance
+                  delle CER. Case study su 14 comunità energetiche attive, con indicatori economici
+                  e sociali di performance.
+                </p>
+              </div>
+              <div class="doc-row-meta">
+                <span class="doc-type-tag">Policy brief</span>
+                <span class="doc-year">2024</span>
+                <span class="doc-authors">Fondazione Sviluppo Sostenibile, LEGAMBIENTE</span>
+                <span class="doc-access restricted">Riservato</span>
+              </div>
+              <div class="doc-row-aside">
+                <span class="doc-access restricted">Riservato</span>
+                <a href="documento.html" class="doc-cta">Accedi →</a>
+              </div>
+            </a>
+
+            <!-- Doc 3 -->
+            <a href="documento.html" class="doc-row" role="listitem">
+              <div class="doc-row-main">
+                <h3 class="doc-row-title">
+                  Carbon pricing in Europa: impatti sui mercati industriali italiani 2021–2023
+                </h3>
+                <p class="doc-row-abstract">
+                  Studio sull'esposizione dei settori manifatturieri italiani al sistema ETS europeo.
+                  Analisi dei costi aggiuntivi per filiera, con proiezioni sulla fase 4 (2026–2030)
+                  e raccomandazioni di policy per il governo italiano.
+                </p>
+              </div>
+              <div class="doc-row-meta">
+                <span class="doc-type-tag">Working paper</span>
+                <span class="doc-year">2023</span>
+                <span class="doc-authors">ISPRA, Confindustria Centro Studi</span>
+                <span class="doc-access restricted">Riservato</span>
+              </div>
+              <div class="doc-row-aside">
+                <span class="doc-access restricted">Riservato</span>
+                <a href="documento.html" class="doc-cta">Accedi →</a>
+              </div>
+            </a>
+
+            <!-- Doc 4 -->
+            <a href="documento.html" class="doc-row" role="listitem">
+              <div class="doc-row-main">
+                <h3 class="doc-row-title">
+                  Efficienza energetica negli edifici pubblici: il Piano nazionale e i risultati PNRR
+                </h3>
+                <p class="doc-row-abstract">
+                  Monitoraggio degli interventi di riqualificazione energetica finanziati dal PNRR
+                  su scuole, ospedali e immobili PA. Dati al 31 dicembre 2023, risparmio energetico
+                  conseguito e proiezione al completamento del Piano.
+                </p>
+              </div>
+              <div class="doc-row-meta">
+                <span class="doc-type-tag">Rapporto</span>
+                <span class="doc-year">2023</span>
+                <span class="doc-authors">ENEA, Ministero dell'Ambiente</span>
+                <span class="doc-access open">Aperto</span>
+              </div>
+              <div class="doc-row-aside">
+                <span class="doc-access open">Aperto</span>
+                <a href="documento.html" class="doc-cta">Leggi →</a>
+              </div>
+            </a>
+
+            <!-- Doc 5 -->
+            <a href="documento.html" class="doc-row" role="listitem">
+              <div class="doc-row-main">
+                <h3 class="doc-row-title">
+                  Idrogeno verde in Italia: catena del valore, infrastrutture e scenari industriali
+                </h3>
+                <p class="doc-row-abstract">
+                  Mappatura delle iniziative italiane sull'idrogeno verde e analisi della competitività
+                  della filiera rispetto ai principali paesi europei. Include stima dei costi di produzione
+                  e traiettorie verso la grid parity con i combustibili fossili.
+                </p>
+              </div>
+              <div class="doc-row-meta">
+                <span class="doc-type-tag">Rapporto</span>
+                <span class="doc-year">2023</span>
+                <span class="doc-authors">RSE S.p.A., H2IT</span>
+                <span class="doc-access restricted">Riservato</span>
+              </div>
+              <div class="doc-row-aside">
+                <span class="doc-access restricted">Riservato</span>
+                <a href="documento.html" class="doc-cta">Accedi →</a>
+              </div>
+            </a>
+
+          </div>
+
+          <!-- ── PAGINATION ── -->
+          <nav class="pagination" aria-label="Paginazione risultati">
+            <a href="#" class="page-btn">‹</a>
+            <a href="#" class="page-btn active">1</a>
+            <a href="#" class="page-btn">2</a>
+            <a href="#" class="page-btn">3</a>
+            <span class="page-btn" style="border:none; color:var(--color-content-secondary)">…</span>
+            <a href="#" class="page-btn">50</a>
+            <a href="#" class="page-btn">›</a>
+          </nav>
+
+        </div><!-- /content-area -->
+      </div><!-- /main-layout -->
+    </div><!-- /container -->
+  </main>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+      <span class="footer-copy">© 2025 · Template Hederae DS v0.2.0 · Brand: Susdef</span>
+    </div>
+  </footer>
+
+</body>
+</html>

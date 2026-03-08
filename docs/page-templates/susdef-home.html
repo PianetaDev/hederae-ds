@@ -1,0 +1,740 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fondazione Sviluppo Sostenibile — Page Template: Home</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-sector-ecoinnovazione-primary:    #FF8C01;
+      --color-sector-ecoinnovazione-muted:      #FFF1D9;
+      --color-sector-energia-clima-primary:     #2792B9;
+      --color-sector-energia-clima-muted:       #D9EEF7;
+      --color-sector-economia-circolare-primary:#BEBFF8;
+      --color-sector-economia-circolare-muted:  #EEEEFF;
+      --color-sector-mobilita-sostenibile-primary: #CE9B62;
+      --color-sector-mobilita-sostenibile-muted:   #F5EAD8;
+      --color-sector-green-city-primary:        #B9284F;
+      --color-sector-green-city-muted:          #F7D4DC;
+      --color-sector-agroecologia-primary:      #FFC310;
+      --color-sector-agroecologia-muted:        #FFF7D9;
+      --color-sector-stati-generali-primary:    #9EDFC9;
+      --color-sector-stati-generali-muted:      #E5F7F2;
+      --color-sector-corsi-formazione-primary:  #F993C5;
+      --color-sector-corsi-formazione-muted:    #FEE8F3;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      padding: 0 0;
+      position: sticky; top: 0; z-index: 100;
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .site-logo {
+      font-family: var(--font-ui);
+      font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-content-inverse);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-brand-primary);
+    }
+    .site-nav { display: flex; gap: 28px; align-items: center; }
+    .site-nav a {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+    .site-nav a.active { color: var(--color-content-inverse); }
+    .btn-nav {
+      background: var(--color-brand-accent);
+      color: var(--color-brand-primary) !important;
+      padding: 8px 16px; border-radius: 4px;
+      font-weight: 600 !important;
+    }
+    .btn-nav:hover { opacity: 0.88; }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--color-surface-inverse);
+      padding: 80px 0 72px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--color-brand-accent);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 720px; }
+    .hero-eyebrow {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-brand-accent);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 52px); font-weight: 500;
+      color: var(--color-content-inverse);
+      line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-title em { color: var(--color-brand-accent); font-style: normal; }
+    .hero-sub {
+      font-size: 18px; line-height: 1.65;
+      color: rgba(255,255,255,0.72);
+      max-width: 580px; margin-bottom: 36px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-brand-accent);
+      color: var(--color-brand-primary);
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      padding: 13px 24px; border-radius: 4px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      font-family: var(--font-body); font-size: 15px; font-weight: 500;
+      padding: 13px 20px; border-radius: 4px;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.25);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+    .hero-stats {
+      margin-top: 52px;
+      display: flex; gap: 40px; flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .hero-stat-value {
+      font-family: var(--font-display); font-size: 32px; font-weight: 500;
+      color: var(--color-brand-accent); line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.55);
+      margin-top: 4px; font-family: var(--font-ui); letter-spacing: 0.05em;
+    }
+
+    /* ─── SECTION LAYOUT ─── */
+    .section { padding: 72px 0; }
+    .section + .section { border-top: 1px solid var(--color-border-default); }
+    .section-header { margin-bottom: 40px; }
+    .section-eyebrow {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: 28px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.25;
+    }
+    .section-link {
+      font-size: 14px; color: var(--color-content-brand);
+      text-decoration: none; font-weight: 500;
+      border-bottom: 1px solid var(--color-border-strong);
+      padding-bottom: 1px;
+    }
+    .section-header-row {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+
+    /* ─── SETTORI GRID ─── */
+    .settori-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .settori-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .settori-grid { grid-template-columns: 1fr; } }
+
+    .settore-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px;
+      padding: 20px;
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.1s;
+      cursor: pointer;
+    }
+    .settore-card:hover {
+      border-color: var(--s-primary);
+      box-shadow: 0 0 0 3px var(--s-muted);
+      transform: translateY(-1px);
+    }
+    .settore-dot {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: var(--s-muted);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .settore-dot::after {
+      content: ''; display: block;
+      width: 12px; height: 12px; border-radius: 50%;
+      background: var(--s-primary);
+    }
+    .settore-name {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.3;
+    }
+    .settore-count {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      color: var(--color-content-secondary); margin-top: auto;
+    }
+    .settore-bar {
+      height: 3px; border-radius: 2px;
+      background: var(--s-primary); opacity: 0.35;
+      margin-top: 4px;
+    }
+
+    /* ─── DOCUMENTI RECENTI ─── */
+    .docs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .docs-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .docs-grid { grid-template-columns: 1fr; } }
+
+    .doc-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px;
+      padding: 24px;
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: 12px;
+      transition: border-color 0.15s;
+    }
+    .doc-card:hover { border-color: var(--color-border-strong); }
+    .doc-card-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px; border-radius: 3px;
+      background: var(--tag-muted, var(--color-surface-card));
+      color: var(--color-content-secondary);
+      width: fit-content;
+    }
+    .doc-card-tag-dot {
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--tag-primary, var(--color-content-secondary));
+    }
+    .doc-card-title {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.35;
+      flex: 1;
+    }
+    .doc-card-meta {
+      font-size: 13px; color: var(--color-content-secondary);
+      display: flex; gap: 12px; flex-wrap: wrap;
+      border-top: 1px solid var(--color-border-default);
+      padding-top: 12px; margin-top: 4px;
+    }
+    .doc-card-meta-item { display: flex; align-items: center; gap: 4px; }
+    .doc-access-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      padding: 3px 6px; border-radius: 2px;
+      text-transform: uppercase;
+    }
+    .doc-access-badge.open {
+      background: var(--color-feedback-success-bg);
+      color: var(--color-feedback-success-text);
+    }
+    .doc-access-badge.restricted {
+      background: var(--color-surface-card);
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── CERCA BAR ─── */
+    .search-bar-section {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 32px 0;
+    }
+    .search-bar-inner { display: flex; gap: 12px; align-items: center; }
+    .search-input {
+      flex: 1;
+      height: 48px; padding: 0 16px;
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: 4px;
+      font-family: var(--font-body); font-size: 16px;
+      color: var(--color-content-primary);
+      outline: none;
+      transition: border-color 0.15s;
+    }
+    .search-input:focus { border-color: var(--color-border-focus); }
+    .search-input::placeholder { color: var(--color-content-disabled); }
+    .search-btn {
+      height: 48px; padding: 0 20px;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      border: none; border-radius: 4px; cursor: pointer;
+      white-space: nowrap;
+    }
+    .search-btn:hover { background: var(--color-interactive-primary-bg-hover); }
+    .search-hint {
+      font-size: 13px; color: var(--color-content-secondary);
+      margin-top: 10px; font-family: var(--font-ui);
+    }
+    .search-hint kbd {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 3px; padding: 1px 5px;
+      font-size: 11px;
+    }
+
+    /* ─── NEWSLETTER CTA ─── */
+    .newsletter-section {
+      background: var(--color-surface-inverse);
+      padding: 64px 0;
+    }
+    .newsletter-inner {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 48px; align-items: center;
+    }
+    @media (max-width: 768px) { .newsletter-inner { grid-template-columns: 1fr; } }
+    .newsletter-copy-eyebrow {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-brand-accent);
+      margin-bottom: 12px;
+    }
+    .newsletter-copy-title {
+      font-family: var(--font-display); font-size: 26px; font-weight: 500;
+      color: var(--color-content-inverse); line-height: 1.25; margin-bottom: 12px;
+    }
+    .newsletter-copy-sub {
+      font-size: 15px; color: rgba(255,255,255,0.65); line-height: 1.6;
+    }
+    .newsletter-form { display: flex; flex-direction: column; gap: 12px; }
+    .newsletter-fields { display: flex; gap: 8px; }
+    .newsletter-input {
+      flex: 1; height: 46px; padding: 0 14px;
+      background: rgba(255,255,255,0.1);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 4px;
+      font-family: var(--font-body); font-size: 15px;
+      color: var(--color-content-inverse);
+      outline: none;
+    }
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.4); }
+    .newsletter-input:focus { border-color: var(--color-brand-accent); }
+    .newsletter-submit {
+      height: 46px; padding: 0 20px; white-space: nowrap;
+      background: var(--color-brand-accent);
+      color: var(--color-brand-primary);
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      border: none; border-radius: 4px; cursor: pointer;
+    }
+    .newsletter-submit:hover { opacity: 0.88; }
+    .newsletter-note {
+      font-size: 12px; color: rgba(255,255,255,0.4);
+      font-family: var(--font-ui);
+    }
+    .sector-pill-row {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px;
+    }
+    .sector-pill {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      padding: 3px 8px; border-radius: 12px;
+      background: rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.6);
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: 24px 0;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 12px;
+    }
+    .footer-logo { font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--color-content-brand); }
+    .footer-copy { font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary); }
+
+    /* ─── TEMPLATE NOTICE ─── */
+    .template-notice {
+      background: var(--color-surface-deep);
+      border-bottom: 2px solid var(--color-brand-accent);
+      padding: 8px 0;
+      text-align: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── TEMPLATE NOTICE ─── -->
+  <div class="template-notice">⬡ HEDERAE DS · Template — Susdef Home · v0.2.0</div>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="#" class="site-logo">
+        <span class="site-logo-mark">F</span>
+        Fondazione Sviluppo Sostenibile
+      </a>
+      <nav class="site-nav" aria-label="Menu principale">
+        <a href="search.html">Biblioteca</a>
+        <a href="susdef-hub.html" class="active">Settori</a>
+        <a href="#">Strumenti</a>
+        <a href="#">Formazione</a>
+        <a href="#">Chi siamo</a>
+        <a href="#" class="btn-nav">Accedi</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── HERO ─── */
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Fondazione Sviluppo Sostenibile</p>
+        <h1 class="hero-title" id="hero-heading">
+          La conoscenza<br>
+          che serve alla <em>transizione</em>
+        </h1>
+        <p class="hero-sub">
+          Ricerche, rapporti e strumenti operativi per chi lavora ogni giorno sulla sostenibilità.
+          Oltre 2.400 documenti su 8 settori tematici, aggiornati ogni mese.
+        </p>
+        <div class="hero-ctas">
+          <a href="search.html" class="btn-primary">Esplora la biblioteca →</a>
+          <a href="susdef-hub.html" class="btn-ghost">Scopri i settori tematici</a>
+        </div>
+
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-value">2.400+</div>
+            <div class="hero-stat-label">documenti</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">8</div>
+            <div class="hero-stat-label">settori tematici</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">140+</div>
+            <div class="hero-stat-label">organizzazioni partner</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">34K</div>
+            <div class="hero-stat-label">ricercatori attivi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SEARCH BAR ─── -->
+  <div class="search-bar-section" role="search">
+    <div class="container">
+      <div class="search-bar-inner">
+        <input
+          type="search"
+          class="search-input"
+          placeholder="Cerca per titolo, autore, parola chiave…"
+          aria-label="Cerca nella biblioteca"
+        >
+        <button class="search-btn" type="button">Cerca</button>
+      </div>
+      <p class="search-hint">
+        Premi <kbd>⌘K</kbd> per aprire la ricerca avanzata — oppure
+        <a href="search.html" style="color:var(--color-content-brand);">vai alla pagina di ricerca completa</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- ─── SETTORI TEMATICI ─── -->
+  <section class="section" aria-labelledby="settori-heading">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <div>
+          <p class="section-eyebrow">Aree di lavoro</p>
+          <h2 class="section-title" id="settori-heading">Settori tematici</h2>
+        </div>
+        <a href="susdef-hub.html" class="section-link">Vedi tutti i settori</a>
+      </div>
+
+      <div class="settori-grid">
+
+        <!-- Eco-innovazione -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#FF8C01; --s-muted:#FFF1D9;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Eco-innovazione</div>
+          <div>
+            <div class="settore-count">312 documenti</div>
+            <div class="settore-bar" style="width:80%;"></div>
+          </div>
+        </a>
+
+        <!-- Energia e Clima -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#2792B9; --s-muted:#D9EEF7;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Energia e Clima</div>
+          <div>
+            <div class="settore-count">498 documenti</div>
+            <div class="settore-bar" style="width:100%;"></div>
+          </div>
+        </a>
+
+        <!-- Economia Circolare -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#7B7EC8; --s-muted:#EEEEFF;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Economia Circolare</div>
+          <div>
+            <div class="settore-count">274 documenti</div>
+            <div class="settore-bar" style="width:60%;"></div>
+          </div>
+        </a>
+
+        <!-- Mobilità Sostenibile -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#CE9B62; --s-muted:#F5EAD8;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Mobilità Sostenibile</div>
+          <div>
+            <div class="settore-count">188 documenti</div>
+            <div class="settore-bar" style="width:42%;"></div>
+          </div>
+        </a>
+
+        <!-- Green City -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#B9284F; --s-muted:#F7D4DC;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Green City</div>
+          <div>
+            <div class="settore-count">221 documenti</div>
+            <div class="settore-bar" style="width:52%;"></div>
+          </div>
+        </a>
+
+        <!-- Agroecologia -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#B08800; --s-muted:#FFF7D9;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Agroecologia</div>
+          <div>
+            <div class="settore-count">156 documenti</div>
+            <div class="settore-bar" style="width:36%;"></div>
+          </div>
+        </a>
+
+        <!-- Stati Generali -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#2A8A6A; --s-muted:#E5F7F2;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Stati Generali</div>
+          <div>
+            <div class="settore-count">410 documenti</div>
+            <div class="settore-bar" style="width:88%;"></div>
+          </div>
+        </a>
+
+        <!-- Corsi e Formazione -->
+        <a href="susdef-hub.html"
+           class="settore-card"
+           style="--s-primary:#C25490; --s-muted:#FEE8F3;">
+          <div class="settore-dot"></div>
+          <div class="settore-name">Corsi e Formazione</div>
+          <div>
+            <div class="settore-count">342 documenti</div>
+            <div class="settore-bar" style="width:74%;"></div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── ULTIMI DOCUMENTI ─── -->
+  <section class="section" aria-labelledby="docs-heading" style="background: var(--color-surface-raised);">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <div>
+          <p class="section-eyebrow">Aggiunti di recente</p>
+          <h2 class="section-title" id="docs-heading">Ultimi documenti</h2>
+        </div>
+        <a href="search.html" class="section-link">Vai alla biblioteca →</a>
+      </div>
+
+      <div class="docs-grid">
+
+        <!-- Doc 1 -->
+        <a href="documento.html" class="doc-card">
+          <div class="doc-card-tag"
+               style="--tag-primary:#2792B9; --tag-muted:#D9EEF7;">
+            <span class="doc-card-tag-dot"></span>
+            Energia e Clima
+          </div>
+          <p class="doc-card-title">
+            Stato delle energie rinnovabili in Italia: scenari al 2035
+          </p>
+          <div class="doc-card-meta">
+            <span class="doc-card-meta-item">Rapporto · 2024</span>
+            <span class="doc-access-badge open">Aperto</span>
+          </div>
+        </a>
+
+        <!-- Doc 2 -->
+        <a href="documento.html" class="doc-card">
+          <div class="doc-card-tag"
+               style="--tag-primary:#FF8C01; --tag-muted:#FFF1D9;">
+            <span class="doc-card-tag-dot"></span>
+            Eco-innovazione
+          </div>
+          <p class="doc-card-title">
+            Green procurement nelle PMI italiane: barriere e opportunità
+          </p>
+          <div class="doc-card-meta">
+            <span class="doc-card-meta-item">Policy brief · 2024</span>
+            <span class="doc-access-badge restricted">Riservato</span>
+          </div>
+        </a>
+
+        <!-- Doc 3 -->
+        <a href="documento.html" class="doc-card">
+          <div class="doc-card-tag"
+               style="--tag-primary:#7B7EC8; --tag-muted:#EEEEFF;">
+            <span class="doc-card-tag-dot"></span>
+            Economia Circolare
+          </div>
+          <p class="doc-card-title">
+            Rapporto sull'Economia Circolare in Italia 2023
+          </p>
+          <div class="doc-card-meta">
+            <span class="doc-card-meta-item">Rapporto · 2023</span>
+            <span class="doc-access-badge restricted">Riservato</span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── NEWSLETTER CTA ─── -->
+  <section class="newsletter-section" aria-labelledby="newsletter-heading">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div>
+          <p class="newsletter-copy-eyebrow">Newsletter</p>
+          <h2 class="newsletter-copy-title" id="newsletter-heading">
+            Resta aggiornato sui temi della sostenibilità
+          </h2>
+          <p class="newsletter-copy-sub">
+            Ogni settimana selezioniamo i documenti più rilevanti per il tuo settore.
+            Scegli i temi che ti interessano, niente di più.
+          </p>
+          <div class="sector-pill-row" aria-hidden="true">
+            <span class="sector-pill">Energia e Clima</span>
+            <span class="sector-pill">Eco-innovazione</span>
+            <span class="sector-pill">Green City</span>
+            <span class="sector-pill">+ 5 settori</span>
+          </div>
+        </div>
+        <div>
+          <form class="newsletter-form" onsubmit="return false;" aria-label="Iscrizione newsletter">
+            <div class="newsletter-fields">
+              <input
+                type="email"
+                class="newsletter-input"
+                placeholder="La tua email"
+                aria-label="Indirizzo email"
+              >
+              <button type="submit" class="newsletter-submit">Iscriviti</button>
+            </div>
+            <p class="newsletter-note">Nessun spam. Disiscrizione con un click. Informativa privacy →</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+      <span class="footer-copy">© 2025 · Template Hederae DS v0.2.0 · Brand: Susdef</span>
+    </div>
+  </footer>
+
+</body>
+</html>
