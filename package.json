@@ -1,0 +1,15 @@
+{
+  "name": "hederae-ds",
+  "version": "0.2.0",
+  "description": "Hederae Design System — multi-brand page templates for Pianeta Studio clients",
+  "private": true,
+  "scripts": {
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build -o storybook-static"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^8.6.14",
+    "@storybook/html-vite": "^8.6.18",
+    "storybook": "^8.6.18"
+  }
+}
