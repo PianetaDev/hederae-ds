@@ -1,5 +1,56 @@
+import '../css/themes/susdef.css';
+import '../css/themes/agesci.css';
+import '../css/themes/rara.css';
+import '../css/themes/corner-table.css';
+
 /** @type { import('@storybook/html').Preview } */
 const preview = {
+  globalTypes: {
+    brand: {
+      description: 'Brand attivo',
+      defaultValue: 'susdef',
+      toolbar: {
+        title: '🎨 Brand',
+        icon: 'paintbrush',
+        items: [
+          { value: 'susdef',       title: 'Susdef — Fondazione Sviluppo Sostenibile' },
+          { value: 'agesci',       title: 'AGESCI — Scouts' },
+          { value: 'rara',         title: 'Rara' },
+          { value: 'corner-table', title: 'Corner Table' },
+        ],
+        dynamicTitle: true,
+      },
+    },
+  },
+
+  decorators: [
+    (storyFn, context) => {
+      const brand = context.globals.brand || 'susdef';
+      // Set data-brand on <html> so all CSS tokens activate
+      document.documentElement.setAttribute('data-brand', brand);
+      document.body.setAttribute('data-brand', brand);
+
+      const wrapper = document.createElement('div');
+      wrapper.setAttribute('data-brand', brand);
+      wrapper.style.cssText = `
+        background: var(--color-surface-page, #fff);
+        color: var(--color-content-primary, #212121);
+        min-height: 100vh;
+        font-family: var(--font-body, system-ui, sans-serif);
+      `;
+      wrapper.innerHTML = '';
+      const story = storyFn();
+      if (typeof story === 'string') {
+        wrapper.innerHTML = story;
+      } else if (story instanceof HTMLElement) {
+        wrapper.appendChild(story);
+      } else {
+        wrapper.innerHTML = String(story);
+      }
+      return wrapper;
+    },
+  ],
+
   parameters: {
     layout: 'fullscreen',
     controls: { matchers: { color: /(background|color)$/i, date: /date/i } },
