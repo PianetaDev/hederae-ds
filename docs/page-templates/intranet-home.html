@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sisal Digital Workspace — Intranet Home</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SISAL BRAND TOKENS ─── */
+    [data-brand="sisal"] {
+      --space-0:  0px;
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-30: 120px;
+
+      --radius-none: 0px;
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   20px;
+      --radius-full: 9999px;
+
+      --font-display: "Inter", system-ui, sans-serif;
+      --font-heading: "Inter", system-ui, sans-serif;
+      --font-body:    "Inter", system-ui, sans-serif;
+      --font-ui:      "Inter", system-ui, sans-serif;
+
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F7F8FA;
+      --color-surface-card:    #FFFFFF;
+      --color-surface-deep:    #EEF0F4;
+      --color-surface-overlay: rgba(0, 0, 0, 0.55);
+      --color-surface-inverse: #1A1A2E;
+
+      --color-content-primary:   #212121;
+      --color-content-secondary: #757575;
+      --color-content-disabled:  #BDBDBD;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #0D47A1;
+      --color-content-accent:    #1976D2;
+
+      --color-border-default: #E0E0E0;
+      --color-border-subtle:  #F0F0F0;
+      --color-border-brand:   #1976D2;
+      --color-border-focus:   #1976D2;
+
+      --color-interactive-primary-bg:           #1976D2;
+      --color-interactive-primary-bg-hover:     #1565C0;
+      --color-interactive-primary-bg-active:    #0D47A1;
+      --color-interactive-primary-bg-disabled:  rgba(25, 118, 210, 0.30);
+      --color-interactive-primary-label:        #FFFFFF;
+
+      --color-interactive-secondary-bg:          transparent;
+      --color-interactive-secondary-bg-hover:    rgba(25, 118, 210, 0.06);
+      --color-interactive-secondary-border:      #1976D2;
+      --color-interactive-secondary-label:       #1976D2;
+
+      --color-interactive-ghost-bg-hover: rgba(25, 118, 210, 0.06);
+      --color-interactive-ghost-label:    #1976D2;
+
+      --color-interactive-accent-bg:       #43A047;
+      --color-interactive-accent-bg-hover: #388E3C;
+      --color-interactive-accent-label:    #FFFFFF;
+
+      --color-link-default: #1976D2;
+      --color-link-hover:   #0D47A1;
+      --color-link-visited: #6A1B9A;
+
+      --color-feedback-success-bg:   #E8F5E9;
+      --color-feedback-success-text: #2E7D32;
+      --color-feedback-warning-bg:   #FFF8E1;
+      --color-feedback-warning-text: #F57F17;
+      --color-feedback-error-bg:     #FFEBEE;
+      --color-feedback-error-text:   #C62828;
+      --color-feedback-info-bg:      #E3F2FD;
+      --color-feedback-info-text:    #1565C0;
+      --color-feedback-notification: #FF1744;
+
+      --color-brand-primary:   #1976D2;
+      --color-brand-secondary: #FFD600;
+      --color-brand-accent:    #0D47A1;
+      --color-brand-muted:     rgba(25, 118, 210, 0.06);
+
+      --header-height:    64px;
+      --sidebar-width:    320px;
+      --sidebar-collapsed: 64px;
+      --content-max-width: 1200px;
+
+      --shadow-sm:         0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.06);
+      --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg:         0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
+      --shadow-glow-brand: 0 0 24px 0 rgba(25, 118, 210, 0.15);
+
+      --duration-fast:     100ms;
+      --duration-normal:   200ms;
+      --duration-slow:     350ms;
+      --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+      --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+      --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    [data-brand="sisal"] .surface-inverse {
+      --color-content-primary:   #FFFFFF;
+      --color-content-secondary: rgba(255, 255, 255, 0.65);
+      --color-border-default:    rgba(255, 255, 255, 0.12);
+      --color-border-focus:      #FFD600;
+      --color-interactive-ghost-bg-hover: rgba(255, 255, 255, 0.08);
+      --color-interactive-ghost-label:    #FFFFFF;
+      --color-link-default:      #90CAF9;
+      --color-link-hover:        #FFFFFF;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 0; z-index: 100;
+      height: var(--header-height);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 100%;
+      gap: var(--space-4);
+    }
+    .header-left {
+      display: flex; align-items: center; gap: var(--space-6);
+      flex: 0 0 auto;
+    }
+    .hamburger-btn {
+      background: transparent; border: none;
+      color: var(--color-content-inverse);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 20px;
+      transition: opacity 0.15s;
+    }
+    .hamburger-btn:hover { opacity: 0.8; }
+    .site-logo {
+      font-family: var(--font-ui);
+      font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-content-inverse);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+      white-space: nowrap;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-content-primary);
+    }
+    .header-center {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      max-width: 400px;
+    }
+    .search-bar-header {
+      width: 100%;
+      display: flex; align-items: center; gap: var(--space-2);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: border-color 0.15s;
+    }
+    .search-bar-header:focus-within { border-color: var(--color-brand-secondary); }
+    .search-icon { font-size: 16px; color: rgba(255, 255, 255, 0.5); }
+    .search-input-header {
+      flex: 1; background: transparent;
+      border: none; outline: none;
+      color: var(--color-content-inverse);
+      font-family: var(--font-body); font-size: 14px;
+    }
+    .search-input-header::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .header-right {
+      display: flex; align-items: center; gap: var(--space-4);
+      flex: 0 0 auto;
+    }
+    .icon-btn {
+      background: transparent; border: none;
+      color: var(--color-content-inverse);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px;
+      position: relative;
+      transition: opacity 0.15s;
+    }
+    .icon-btn:hover { opacity: 0.8; }
+    .notification-badge {
+      position: absolute; top: 8px; right: 8px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-feedback-notification);
+    }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600;
+      color: var(--color-content-inverse);
+    }
+
+    /* ─── HERO CAROUSEL ─── */
+    .hero {
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.15) 0%, rgba(13, 71, 161, 0.08) 100%),
+                  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23f7f8fa" width="1200" height="400"/></svg>');
+      background-size: cover;
+      background-position: center;
+      min-height: 380px;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.25) 0%, rgba(13, 71, 161, 0.15) 100%);
+    }
+    .hero-inner {
+      position: relative; z-index: 1;
+      text-align: center;
+      max-width: 600px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 42px); font-weight: 600;
+      color: var(--color-content-brand);
+      line-height: 1.2; margin-bottom: var(--space-4);
+    }
+    .hero-nav-dots {
+      display: flex; gap: var(--space-2); justify-content: center;
+      margin-top: var(--space-6); align-items: center;
+    }
+    .hero-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: rgba(25, 118, 210, 0.3);
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .hero-dot.active { background: var(--color-content-brand); }
+    .hero-dot:hover { background: rgba(25, 118, 210, 0.6); }
+
+    /* ─── QUICK LINKS ─── */
+    .quick-links {
+      padding: var(--space-8) 0;
+      background: var(--color-surface-page);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .quick-links-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .quick-links-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .quick-links-grid { grid-template-columns: 1fr; } }
+
+    .quick-link-card {
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      display: flex; flex-direction: column; align-items: center; gap: var(--space-3);
+      text-align: center;
+      transition: box-shadow 0.15s, transform 0.1s;
+      cursor: pointer;
+    }
+    .quick-link-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .quick-link-icon {
+      font-size: 28px;
+    }
+    .quick-link-label {
+      font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+
+    /* ─── SECTION LAYOUT ─── */
+    .section { padding: var(--space-12) 0; }
+    .section + .section { border-top: 1px solid var(--color-border-default); }
+    .section-header { margin-bottom: var(--space-8); }
+    .section-header-row {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: var(--space-4); flex-wrap: wrap;
+    }
+    .section-eyebrow {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: var(--space-2);
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: 26px; font-weight: 600;
+      color: var(--color-content-primary); line-height: 1.25;
+    }
+    .section-link {
+      font-size: 14px; color: var(--color-content-brand);
+      text-decoration: none; font-weight: 500;
+      transition: color 0.15s;
+    }
+    .section-link:hover { color: var(--color-link-hover); }
+
+    /* ─── AVVISI SECTION ─── */
+    .avvisi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .avvisi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .avvisi-grid { grid-template-columns: 1fr; } }
+
+    .avviso-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      display: flex; gap: var(--space-4);
+      transition: box-shadow 0.15s, border-color 0.15s;
+    }
+    .avviso-card:hover {
+      border-color: var(--color-border-brand);
+      box-shadow: var(--shadow-sm);
+    }
+    .avviso-badge {
+      width: 4px; border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .avviso-content { flex: 1; }
+    .avviso-title {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-2);
+    }
+    .avviso-meta {
+      font-size: 12px; color: var(--color-content-secondary);
+      display: flex; gap: var(--space-3); flex-wrap: wrap;
+    }
+
+    /* ─── IN EVIDENZA SECTION ─── */
+    .evidenza-layout {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .evidenza-layout { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .evidenza-layout { grid-template-columns: 1fr; } }
+
+    .evidenza-featured {
+      grid-row: span 2;
+    }
+    @media (max-width: 900px) { .evidenza-featured { grid-row: auto; } }
+
+    .evidenza-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      text-decoration: none;
+      display: flex; flex-direction: column;
+      transition: box-shadow 0.15s, transform 0.1s;
+    }
+    .evidenza-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .evidenza-image {
+      width: 100%; aspect-ratio: 16 / 9;
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.1) 0%, rgba(25, 118, 210, 0.05) 100%);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; color: rgba(25, 118, 210, 0.2);
+    }
+    .evidenza-featured .evidenza-image { aspect-ratio: 16 / 10; }
+    .evidenza-body {
+      padding: var(--space-6);
+      display: flex; flex-direction: column; gap: var(--space-3);
+      flex: 1;
+    }
+    .evidenza-badge {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 4px 8px;
+      background: var(--badge-muted, var(--color-surface-raised));
+      color: var(--badge-color, var(--color-content-secondary));
+      border-radius: var(--radius-sm);
+      width: fit-content;
+    }
+    .evidenza-title {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 600;
+      color: var(--color-content-primary);
+      flex: 1;
+    }
+    .evidenza-featured .evidenza-title { font-size: 20px; }
+    .evidenza-date {
+      font-size: 12px; color: var(--color-content-secondary);
+      font-family: var(--font-ui);
+    }
+
+    /* ─── KPI SECTION ─── */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .kpi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .kpi-grid { grid-template-columns: 1fr; } }
+
+    .kpi-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      display: flex; flex-direction: column; gap: var(--space-4);
+    }
+    .kpi-label {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+    }
+    .kpi-value {
+      font-family: var(--font-display); font-size: 28px; font-weight: 700;
+      color: var(--color-content-brand);
+      line-height: 1;
+    }
+    .kpi-change {
+      font-size: 13px; color: var(--color-feedback-success-text);
+      display: flex; align-items: center; gap: var(--space-1);
+    }
+    .kpi-change.negative { color: var(--color-feedback-error-text); }
+    .kpi-sparkline {
+      height: 40px; background: var(--color-surface-raised);
+      border-radius: var(--radius-sm);
+      margin-top: var(--space-2);
+    }
+
+    /* ─── GALLERY SECTION ─── */
+    .gallery {
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      padding: var(--space-3) 0;
+    }
+    .gallery-scroll {
+      display: flex; gap: var(--space-6);
+      width: max-content;
+    }
+    .gallery-item {
+      flex-shrink: 0;
+      width: 200px; aspect-ratio: 4 / 3;
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.15) 0%, rgba(25, 118, 210, 0.05) 100%);
+      border: 1px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 32px; color: rgba(25, 118, 210, 0.2);
+      cursor: pointer;
+      transition: transform 0.2s, box-shadow 0.15s;
+    }
+    .gallery-item:hover {
+      transform: scale(1.02);
+      box-shadow: var(--shadow-sm);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--space-8) 0;
+      margin-top: var(--space-12);
+    }
+    .footer-inner {
+      text-align: center;
+    }
+    .footer-copy {
+      font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary);
+    }
+
+    /* ─── TEMPLATE NOTICE ─── */
+    .template-notice {
+      background: var(--color-surface-deep);
+      border-bottom: 2px solid var(--color-brand-secondary);
+      padding: 8px 0;
+      text-align: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── TEMPLATE NOTICE ─── -->
+  <div class="template-notice">⬡ HEDERAE DS · Template — Sisal Intranet Home · v0.1.0</div>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header surface-inverse" role="banner">
+    <div class="container">
+      <div class="header-left">
+        <button class="hamburger-btn" aria-label="Menu" aria-expanded="false">☰</button>
+        <a href="#" class="site-logo">
+          <span class="site-logo-mark">S</span>
+          Digital Workspace
+        </a>
+      </div>
+
+      <div class="header-center">
+        <div class="search-bar-header">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            class="search-input-header"
+            placeholder="Cerca documenti, persone…"
+            aria-label="Ricerca principale"
+          >
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="icon-btn" aria-label="Lingua">🌐</button>
+        <button class="icon-btn" aria-label="Notifiche">
+          🔔
+          <span class="notification-badge"></span>
+        </button>
+        <div class="user-avatar" title="Profilo">M</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── HERO CAROUSEL ─── -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="hero-overlay"></div>
+    <div class="hero-inner">
+      <h1 class="hero-title" id="hero-heading">Sisal Play Cup 2026</h1>
+      <div class="hero-nav-dots" aria-hidden="true">
+        <span class="hero-dot active"></span>
+        <span class="hero-dot"></span>
+        <span class="hero-dot"></span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── QUICK LINKS ─── -->
+  <section class="quick-links" aria-labelledby="quick-links-heading">
+    <div class="container">
+      <h2 id="quick-links-heading" style="display:none;">Azioni Rapide</h2>
+      <div class="quick-links-grid">
+        <a href="#" class="quick-link-card">
+          <span class="quick-link-icon">📄</span>
+          <span class="quick-link-label">I miei documenti</span>
+        </a>
+        <a href="#" class="quick-link-card">
+          <span class="quick-link-icon">🪑</span>
+          <span class="quick-link-label">Prenotazione desk</span>
+        </a>
+        <a href="#" class="quick-link-card">
+          <span class="quick-link-icon">💰</span>
+          <span class="quick-link-label">Busta paga</span>
+        </a>
+        <a href="#" class="quick-link-card">
+          <span class="quick-link-icon">🆘</span>
+          <span class="quick-link-label">Assistenza IT</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── AVVISI SECTION ─── -->
+  <section class="section" aria-labelledby="avvisi-heading">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <div>
+          <p class="section-eyebrow">Comunicazioni</p>
+          <h2 class="section-title" id="avvisi-heading">Avvisi</h2>
+        </div>
+        <a href="#" class="section-link">Vedi tutti →</a>
+      </div>
+
+      <div class="avvisi-grid">
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #1976D2;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Manutenzione infrastruttura IT</p>
+            <div class="avviso-meta">
+              <span>08 Mar 2026</span>
+              <span>IT Service</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #43A047;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Nuovo corso di formazione disponibile</p>
+            <div class="avviso-meta">
+              <span>06 Mar 2026</span>
+              <span>HR Training</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #F57F17;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Rinnovo accordo smart working</p>
+            <div class="avviso-meta">
+              <span>01 Mar 2026</span>
+              <span>HR Operations</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #E65100;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Evento aziendale: Team Building</p>
+            <div class="avviso-meta">
+              <span>15 Mar 2026</span>
+              <span>Corporate Events</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── IN EVIDENZA SECTION ─── -->
+  <section class="section" style="background: var(--color-surface-raised);" aria-labelledby="evidenza-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Contenuti principali</p>
+        <h2 class="section-title" id="evidenza-heading">In Evidenza</h2>
+      </div>
+
+      <div class="evidenza-layout">
+        <a href="#" class="evidenza-card evidenza-featured">
+          <div class="evidenza-image">📸</div>
+          <div class="evidenza-body">
+            <div class="evidenza-badge" style="--badge-color:#1976D2; --badge-muted:#E3F2FD;">
+              Azienda
+            </div>
+            <h3 class="evidenza-title">Sisal Digital Day 2026: Innovazione e Sostenibilità</h3>
+            <p style="font-size:14px; color:var(--color-content-secondary); line-height:1.5;">
+              Scopri le ultime iniziative digitali e i progetti innovativi del nostro team.
+            </p>
+            <div class="evidenza-date">09 Mar 2026</div>
+          </div>
+        </a>
+
+        <a href="#" class="evidenza-card">
+          <div class="evidenza-image">📸</div>
+          <div class="evidenza-body">
+            <div class="evidenza-badge" style="--badge-color:#7B1FA2; --badge-muted:#F3E5F5;">
+              Sviluppo
+            </div>
+            <h3 class="evidenza-title">Aggiornamento API</h3>
+            <div class="evidenza-date">07 Mar 2026</div>
+          </div>
+        </a>
+
+        <a href="#" class="evidenza-card">
+          <div class="evidenza-image">📸</div>
+          <div class="evidenza-body">
+            <div class="evidenza-badge" style="--badge-color:#00897B; --badge-muted:#E0F2F1;">
+              Formazione
+            </div>
+            <h3 class="evidenza-title">Webinar: Data Security</h3>
+            <div class="evidenza-date">05 Mar 2026</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── KPI SECTION ─── -->
+  <section class="section" aria-labelledby="kpi-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Indicatori</p>
+        <h2 class="section-title" id="kpi-heading">Market Analysis</h2>
+      </div>
+
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Revenue</div>
+          <div class="kpi-value">€ 847.5M</div>
+          <div class="kpi-change">↑ 12.3%</div>
+          <div class="kpi-sparkline"></div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Active Users</div>
+          <div class="kpi-value">2,340</div>
+          <div class="kpi-change">↑ 8.7%</div>
+          <div class="kpi-sparkline"></div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Engagement</div>
+          <div class="kpi-value">64.2%</div>
+          <div class="kpi-change negative">↓ 2.1%</div>
+          <div class="kpi-sparkline"></div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-label">Avg. Order Value</div>
+          <div class="kpi-value">€ 362</div>
+          <div class="kpi-change">↑ 5.6%</div>
+          <div class="kpi-sparkline"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── MEDIA & GALLERY ─── -->
+  <section class="section" aria-labelledby="gallery-heading">
+    <div class="container">
+      <div class="section-header">
+        <p class="section-eyebrow">Galleria</p>
+        <h2 class="section-title" id="gallery-heading">Media & Photo Gallery</h2>
+      </div>
+
+      <div class="gallery">
+        <div class="gallery-scroll">
+          <div class="gallery-item">📷</div>
+          <div class="gallery-item">📷</div>
+          <div class="gallery-item">📷</div>
+          <div class="gallery-item">📷</div>
+          <div class="gallery-item">📷</div>
+          <div class="gallery-item">📷</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p class="footer-copy">© 2026 Sisal — Digital Workspace</p>
+    </div>
+  </footer>
+
+</body>
+</html>

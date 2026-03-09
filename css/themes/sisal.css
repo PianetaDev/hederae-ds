@@ -1,0 +1,192 @@
+/**
+ * Hederae DS — Sisal Intranet Theme
+ * Brand: Sisal Digital Workspace (Intranet dipendenti)
+ * Theme: Light / White + Sisal Blue + Dark accents
+ * Tier: 3 — Area interna (post-login dipendenti)
+ * Source: InVision prototype "Sisal Digital Workspace" (projectID 16831811)
+ *
+ * ⚠️  Accessibility notes:
+ *   - #1976D2 (Sisal blue) on white: ~4.6:1 — AA for text ≥16px, AAA for large.
+ *   - #0D47A1 (deep blue) on white: ~8.4:1 — AAA all sizes.
+ *   - #212121 on white: ~16:1 — safe for all text.
+ *   - Focus ring: 2px solid #1976D2 with 2px offset.
+ *
+ * Usage: <html data-brand="sisal">
+ *
+ * Extra brand-specific tokens:
+ *   --color-area-* for 8 sezioni intranet (SGI, Sviluppo, Info Pratiche…)
+ *   --sidebar-width, --header-height for layout intranet
+ */
+
+[data-brand="sisal"],
+.brand-sisal {
+
+  /* ─── Primitive Scale (shared — DO NOT CHANGE) ─────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   20px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ────────────────────────────────────────── */
+
+  --font-display: "Inter", system-ui, sans-serif;
+  --font-heading: "Inter", system-ui, sans-serif;
+  --font-body:    "Inter", system-ui, sans-serif;
+  --font-ui:      "Inter", system-ui, sans-serif;
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+
+  --color-surface-page:    #FFFFFF;
+  --color-surface-raised:  #F7F8FA;           /* light gray workspace bg */
+  --color-surface-card:    #FFFFFF;
+  --color-surface-deep:    #EEF0F4;
+  --color-surface-overlay: rgba(0, 0, 0, 0.55);
+  --color-surface-inverse: #1A1A2E;           /* dark blue-black — header/sidebar */
+
+  /* ─── Content (Text & Icons) ───────────────────────────────── */
+
+  --color-content-primary:   #212121;
+  --color-content-secondary: #757575;
+  --color-content-disabled:  #BDBDBD;
+  --color-content-inverse:   #FFFFFF;
+  --color-content-brand:     #0D47A1;         /* deep Sisal blue for headings */
+  --color-content-accent:    #1976D2;
+
+  /* ─── Border ───────────────────────────────────────────────── */
+
+  --color-border-default: #E0E0E0;
+  --color-border-subtle:  #F0F0F0;
+  --color-border-brand:   #1976D2;
+  --color-border-focus:   #1976D2;
+
+  /* ─── Interactive — Primary (Sisal Blue CTA) ─────────────── */
+
+  --color-interactive-primary-bg:           #1976D2;
+  --color-interactive-primary-bg-hover:     #1565C0;
+  --color-interactive-primary-bg-active:    #0D47A1;
+  --color-interactive-primary-bg-disabled:  rgba(25, 118, 210, 0.30);
+  --color-interactive-primary-label:        #FFFFFF;
+
+  /* ─── Interactive — Secondary (Outlined blue) ──────────────── */
+
+  --color-interactive-secondary-bg:          transparent;
+  --color-interactive-secondary-bg-hover:    rgba(25, 118, 210, 0.06);
+  --color-interactive-secondary-border:      #1976D2;
+  --color-interactive-secondary-label:       #1976D2;
+
+  /* ─── Interactive — Ghost ───────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(25, 118, 210, 0.06);
+  --color-interactive-ghost-label:    #1976D2;
+
+  /* ─── Interactive — Accent (Sisal Green — success / positive) ── */
+
+  --color-interactive-accent-bg:       #43A047;
+  --color-interactive-accent-bg-hover: #388E3C;
+  --color-interactive-accent-label:    #FFFFFF;
+
+  /* ─── Link ─────────────────────────────────────────────────── */
+
+  --color-link-default: #1976D2;
+  --color-link-hover:   #0D47A1;
+  --color-link-visited: #6A1B9A;
+
+  /* ─── Feedback ─────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   #E8F5E9;
+  --color-feedback-success-text: #2E7D32;
+  --color-feedback-warning-bg:   #FFF8E1;
+  --color-feedback-warning-text: #F57F17;
+  --color-feedback-error-bg:     #FFEBEE;
+  --color-feedback-error-text:   #C62828;
+  --color-feedback-info-bg:      #E3F2FD;
+  --color-feedback-info-text:    #1565C0;
+  --color-feedback-notification: #FF1744;
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+
+  --color-brand-primary:   #1976D2;          /* Sisal blue */
+  --color-brand-secondary: #FFD600;          /* Sisal yellow accent (da logo Sisal) */
+  --color-brand-accent:    #0D47A1;
+  --color-brand-muted:     rgba(25, 118, 210, 0.06);
+
+  /* ─── Area Colors (Sisal-specific — 8 sezioni intranet) ───── */
+  /* Derived from InVision prototype color-coded sections.       */
+
+  --color-area-sgi-primary:         #1976D2;
+  --color-area-sgi-muted:           #E3F2FD;
+
+  --color-area-sviluppo-primary:    #7B1FA2;
+  --color-area-sviluppo-muted:      #F3E5F5;
+
+  --color-area-info-pratiche-primary: #00897B;
+  --color-area-info-pratiche-muted:   #E0F2F1;
+
+  --color-area-azienda-primary:     #E65100;
+  --color-area-azienda-muted:       #FFF3E0;
+
+  --color-area-formazione-primary:  #AD1457;
+  --color-area-formazione-muted:    #FCE4EC;
+
+  --color-area-punti-vendita-primary: #2E7D32;
+  --color-area-punti-vendita-muted:   #E8F5E9;
+
+  --color-area-eventi-primary:      #F9A825;
+  --color-area-eventi-muted:        #FFFDE7;
+
+  --color-area-documentale-primary: #37474F;
+  --color-area-documentale-muted:   #ECEFF1;
+
+  /* ─── Intranet Layout Tokens ───────────────────────────────── */
+
+  --header-height:    64px;
+  --sidebar-width:    320px;
+  --sidebar-collapsed: 64px;
+  --content-max-width: 1200px;
+
+  /* ─── Elevation / Shadows ───────────────────────────────────── */
+
+  --shadow-sm:         0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.06);
+  --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+  --shadow-lg:         0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
+  --shadow-glow-brand: 0 0 24px 0 rgba(25, 118, 210, 0.15);
+
+  /* ─── Motion ────────────────────────────────────────────────── */
+
+  --duration-fast:     100ms;
+  --duration-normal:   200ms;
+  --duration-slow:     350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/**
+ * Sisal — Inverse Surface Override
+ * Per header scuro, sidebar dark, mega menu
+ */
+[data-brand="sisal"] .surface-inverse {
+  --color-content-primary:   #FFFFFF;
+  --color-content-secondary: rgba(255, 255, 255, 0.65);
+  --color-border-default:    rgba(255, 255, 255, 0.12);
+  --color-border-focus:      #FFD600;
+  --color-interactive-ghost-bg-hover: rgba(255, 255, 255, 0.08);
+  --color-interactive-ghost-label:    #FFFFFF;
+  --color-link-default:      #90CAF9;
+  --color-link-hover:        #FFFFFF;
+}
