@@ -169,6 +169,20 @@
   .how-to strong { color: var(--green); }
   .how-to code { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); }
 
+  /* PROFILI COMMERCIALI */
+  .profili-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 28px; }
+  .profilo-card { background: var(--white); padding: 24px 20px; position: relative; }
+  .profilo-card.active { border-top: 3px solid var(--orange); }
+  .profilo-letter { font-size: 48px; font-weight: 900; color: var(--cream-dark); line-height: 1; margin-bottom: 4px; }
+  .profilo-card.active .profilo-letter { color: var(--orange); opacity: 0.25; }
+  .profilo-name { font-size: 17px; font-weight: 700; margin-bottom: 2px; }
+  .profilo-tagline { font-size: 11px; color: var(--ink-muted); margin-bottom: 14px; line-height: 1.4; }
+  .profilo-includes { font-size: 11px; color: var(--ink-mid); display: flex; flex-direction: column; gap: 4px; margin-bottom: 14px; }
+  .profilo-includes div { display: flex; gap: 6px; align-items: start; }
+  .profilo-includes div::before { content: '·'; color: var(--ink-muted); flex-shrink: 0; font-weight: 700; }
+  .profilo-brands { font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-top: auto; padding-top: 10px; border-top: 1px solid var(--border); }
+  .profilo-superset { font-size: 10px; color: var(--ink-muted); margin-top: 6px; font-style: italic; }
+
   /* DISTRIBUTION MODEL */
   .flow-diagram { display: flex; align-items: center; gap: 0; margin-top: 28px; justify-content: center; flex-wrap: wrap; }
   .flow-node { background: var(--white); border-radius: 8px; padding: 20px 24px; text-align: center; min-width: 180px; position: relative; }
@@ -208,7 +222,8 @@
   <span class="nav-brand">Hederae DS</span>
   <span class="nav-subtitle">Status & Log</span>
   <div class="nav-links">
-    <a href="#profili">Architettura</a>
+    <a href="#profili">Profili</a>
+    <a href="#architettura">Architettura</a>
     <a href="#distribuzione">Distribuzione</a>
     <a href="#brand">Brand</a>
     <a href="#log">Log</a>
@@ -255,10 +270,95 @@
   </div>
 </div>
 
-<!-- ARCHITETTURA CORE + LAYER -->
+<!-- PROFILI FUNZIONALI -->
 <section id="profili">
   <div class="container">
-    <div class="section-label">01 — Architettura</div>
+    <div class="section-label">01 — Offerta</div>
+    <h2>Profili funzionali A → D</h2>
+    <p class="lead">Ogni progetto rientra in un profilo funzionale che definisce il feature set. Un profilo superiore include tutto ciò che c'è nei profili precedenti. Il cliente compra un profilo, non componenti singoli.</p>
+
+    <div class="profili-grid">
+
+      <!-- PROFILO A -->
+      <div class="profilo-card">
+        <div class="profilo-letter">A</div>
+        <div class="profilo-name">Vetrina</div>
+        <div class="profilo-tagline">Sito informativo essenziale. Home, about, contatti, form. Ideale per chi deve "esserci" online con qualità.</div>
+        <div class="profilo-includes">
+          <div>Home page con hero e sezioni</div>
+          <div>Pagine statiche (about, contatti, servizi)</div>
+          <div>Form contatto</div>
+          <div>Footer a colonne</div>
+          <div>Responsive mobile-first</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:30%"></div></div>
+        <div class="progress-pct" style="font-size:14px; margin-top:4px;">30%</div>
+        <div class="profilo-brands">Brand: Rara · Corner Table</div>
+        <div class="profilo-superset">Base — incluso in tutti i profili</div>
+      </div>
+
+      <!-- PROFILO B -->
+      <div class="profilo-card">
+        <div class="profilo-letter">B</div>
+        <div class="profilo-name">Commerce</div>
+        <div class="profilo-tagline">E-commerce o catalogo prodotti. Schede prodotto, carrello, checkout, filtri. Per chi vende online.</div>
+        <div class="profilo-includes">
+          <div>Tutto il Profilo A +</div>
+          <div>Catalogo prodotti con filtri</div>
+          <div>Scheda prodotto dettaglio</div>
+          <div>Carrello e checkout flow</div>
+          <div>Account utente base</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:55%"></div></div>
+        <div class="progress-pct" style="font-size:14px; margin-top:4px;">55%</div>
+        <div class="profilo-brands">Brand: —</div>
+        <div class="profilo-superset">Include Profilo A</div>
+      </div>
+
+      <!-- PROFILO C -->
+      <div class="profilo-card active">
+        <div class="profilo-letter">C</div>
+        <div class="profilo-name">Hub editoriale</div>
+        <div class="profilo-tagline">Ecosistema informativo complesso. Aree tematiche, documenti, ricerca avanzata, newsletter. Per organizzazioni content-driven.</div>
+        <div class="profilo-includes">
+          <div>Tutto il Profilo B +</div>
+          <div>Hub settoriali con sidebar filtri</div>
+          <div>Scheda documento con metadati</div>
+          <div>Ricerca avanzata (DocumentAI)</div>
+          <div>Newsletter e campagne</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%; background: var(--orange);"></div></div>
+        <div class="progress-pct" style="font-size:14px; margin-top:4px;">60%</div>
+        <div class="profilo-brands">Brand: Susdef · EPOS (atteso)</div>
+        <div class="profilo-superset">Include Profilo A + B — Focus attuale</div>
+      </div>
+
+      <!-- PROFILO D -->
+      <div class="profilo-card">
+        <div class="profilo-letter">D</div>
+        <div class="profilo-name">Community</div>
+        <div class="profilo-tagline">Piattaforma community con area riservata, donazioni, eventi, campagne. Per organizzazioni con base attiva.</div>
+        <div class="profilo-includes">
+          <div>Tutto il Profilo C +</div>
+          <div>Area riservata con login</div>
+          <div>Campagne e donazioni</div>
+          <div>Eventi con iscrizione</div>
+          <div>Mega menu multi-livello</div>
+        </div>
+        <div class="progress-bar"><div class="progress-fill" style="width:40%; background: var(--purple);"></div></div>
+        <div class="progress-pct" style="font-size:14px; margin-top:4px;">40%</div>
+        <div class="profilo-brands">Brand: AGESCI</div>
+        <div class="profilo-superset">Include Profilo A + B + C</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ARCHITETTURA CORE + LAYER -->
+<section id="architettura">
+  <div class="container">
+    <div class="section-label">02 — Architettura</div>
     <h2>Core + Layer</h2>
     <p class="lead">Un nucleo condiviso (token, atomi, molecole) usato da layer specializzati per contesto. Ogni layer aggiunge organismi e template specifici senza toccare il core. Un progetto attiva solo i layer che servono.</p>
 
@@ -348,7 +448,7 @@
 <!-- MODELLO DI DISTRIBUZIONE -->
 <section id="distribuzione">
   <div class="container">
-    <div class="section-label">02 — Distribuzione</div>
+    <div class="section-label">03 — Distribuzione</div>
     <h2>Upstream → Downstream</h2>
     <p class="lead">Hederae è la libreria vivente (upstream). Ogni progetto contribuisce pattern reali al core. I clienti ricevono istanze separate (downstream) che non vengono toccate dopo la consegna.</p>
 
@@ -395,7 +495,7 @@
 <!-- BRAND STATUS -->
 <section id="brand">
   <div class="container">
-    <div class="section-label">03 — Brand coverage</div>
+    <div class="section-label">04 — Brand coverage</div>
     <h2>5 brand · 1 DS</h2>
     <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook, ognuno può usare uno o più layer. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
 
@@ -473,7 +573,7 @@
 <!-- PIVOT TRACKER -->
 <section id="pivot">
   <div class="container">
-    <div class="section-label">04 — Pivot tracker</div>
+    <div class="section-label">05 — Pivot tracker</div>
     <h2>Decisioni strategiche</h2>
     <p class="lead">Quando cambia una direzione fondamentale, la documentiamo qui. Serve per allineare il team e non perdere il perché delle scelte.</p>
 
@@ -552,13 +652,24 @@
 <!-- LOG ATTIVITÀ -->
 <section id="log">
   <div class="container">
-    <div class="section-label">05 — Log attività</div>
+    <div class="section-label">06 — Log attività</div>
     <h2>Cosa è stato fatto</h2>
     <p class="lead">Cronologia inversa delle attività principali. Ogni deploy corrisponde a un commit su GitHub; il workflow GitHub Actions aggiorna Storybook automaticamente.</p>
 
     <div class="log">
 
       <!-- ENTRY: aggiungere nuove IN CIMA a questa lista -->
+
+      <div class="log-entry">
+        <div class="log-date">9 mar 2026</div>
+        <div class="log-dot active"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Sezione Profili A→D con stato avanzamento</div>
+          <div class="log-detail">Aggiunta sezione "01 — Offerta" con i 4 profili funzionali (Vetrina, Commerce, Hub editoriale, Community), ciascuno con feature set, percentuale completamento, brand associati e logica di inclusione. Vista commerciale prima dell'architettura tecnica.</div>
+          <div class="log-tags"><span class="log-tag">profili</span><span class="log-tag">commerciale</span><span class="log-tag">status</span></div>
+        </div>
+      </div>
 
       <div class="log-entry">
         <div class="log-date">9 mar 2026</div>
@@ -682,7 +793,7 @@
 <!-- PROSSIMI STEP -->
 <section id="next">
   <div class="container">
-    <div class="section-label">06 — Sprint corrente</div>
+    <div class="section-label">07 — Sprint corrente</div>
     <h2>Prossimi step</h2>
     <p class="lead">Ordinati per priorità. Il focus è completare il Core (organismi base) e poi avanzare sui Layer Sito e Intranet.</p>
 
@@ -807,7 +918,7 @@
 <!-- ISTRUZIONI TEAM -->
 <section id="istruzioni">
   <div class="container">
-    <div class="section-label">07 — Istruzioni team</div>
+    <div class="section-label">08 — Istruzioni team</div>
     <h2>Come lavorare su Hederae</h2>
     <p class="lead">Regole essenziali per contribuire in modo coerente. Per approfondimenti vedi <code>docs/GUIDELINES.md</code> e <code>docs/AI-WORKFLOW.md</code>.</p>
 
