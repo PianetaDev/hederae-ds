@@ -1,269 +1,1334 @@
 <!DOCTYPE html>
-<html lang="it" data-brand="pianeta-green">
+<html lang="it">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Home — Pianeta.Green</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/themes/pianeta-green.css">
+  <title>Pianeta.Green - Web Sostenibile e Veloce</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital@0;1&display=swap" rel="stylesheet">
+
   <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    /* CSS Custom Properties - Brand Tokens */
+    :root {
+      --color-white: #FFFFFF;
+      --color-cream: #f3ecda;
+      --color-dark-green: #233c36;
+      --color-green-accent: #059669;
+      --color-green-light: #d1fae5;
+      --color-green-dark-text: #065f46;
+      --color-text-primary: #2e2e2e;
+      --color-text-secondary: #565656;
+      --color-border: rgba(46, 46, 46, 0.1);
+
+      --font-serif: "IBM Plex Serif", Georgia, serif;
+      --font-sans: "IBM Plex Sans", system-ui, sans-serif;
+
+      --size-hero-title: 72px;
+      --size-section-title: 36px;
+      --size-card-title: 24px;
+      --size-body: 20px;
+      --size-description: 16px;
+      --size-details: 14px;
+      --size-stats-number: 56px;
+
+      --spacing-page-h: 112px;
+      --spacing-section-v: 80px;
+      --spacing-component: 24px;
+      --spacing-large: 48px;
+
+      --radius-button: 8px;
+      --radius-image: 24px;
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
 
     body {
-      font-family: var(--font-body);
-      background: var(--color-surface-page);
-      color: var(--color-content-primary);
+      font-family: var(--font-sans);
+      color: var(--color-text-primary);
+      background-color: var(--color-white);
       line-height: 1.6;
     }
 
-    /* ─── WIP Status Bar ─── */
-    .wip-status-bar {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 16px;
-      padding: 10px 24px;
-      background: #E5910E; color: #fff;
-      font-family: var(--font-ui); font-size: 12px;
-      letter-spacing: 0.05em;
-    }
-    .wip-status-label {
-      font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
-    }
-    .wip-flow-tag {
-      padding: 2px 10px; border-radius: 99px;
-      background: rgba(255,255,255,0.2);
-      font-size: 11px;
-    }
-    .wip-approval-actions {
-      margin-left: auto; display: flex; gap: 8px;
-    }
-    .wip-btn {
-      padding: 4px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.4);
-      background: transparent; color: #fff; cursor: pointer;
-      font-family: var(--font-ui); font-size: 11px; font-weight: 500;
-    }
-    .wip-btn:hover { background: rgba(255,255,255,0.15); }
-    .wip-btn-approve { background: rgba(255,255,255,0.25); border-color: #fff; }
-
-    /* ─── Page Header ─── */
-    .pg-header {
-      background: var(--color-surface-inverse); color: var(--color-content-inverse);
-      padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .pg-logo { font-family: var(--font-heading); font-size: 18px; font-weight: 600; }
-    .pg-logo span { color: var(--color-brand-accent); }
-    .pg-nav { display: flex; gap: 24px; }
-    .pg-nav a {
-      color: rgba(255,255,255,0.7); text-decoration: none;
-      font-family: var(--font-ui); font-size: 13px;
-    }
-    .pg-nav a:hover { color: #fff; }
-
-    /* ─── WIP Content ─── */
-    .wip-container { max-width: 1200px; margin: 0 auto; padding: 40px 32px; }
-
-    .wip-page-title {
-      font-family: var(--font-display); font-size: 36px; font-weight: 600;
-      margin-bottom: 8px; color: var(--color-content-brand);
-    }
-    .wip-page-meta {
-      font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);
-      margin-bottom: 32px; display: flex; gap: 16px;
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
-    /* ─── Section Nav ─── */
-    .wip-section-nav {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
-      padding: 16px 0; border-bottom: 1px solid var(--color-border-default);
-    }
-    .wip-nav-link {
-      padding: 4px 12px; border-radius: 99px;
-      background: var(--color-brand-muted); color: var(--color-content-brand);
-      text-decoration: none; font-size: 13px; font-family: var(--font-ui);
-    }
-    .wip-nav-link:hover { background: var(--color-interactive-primary-bg); color: #fff; }
-
-    /* ─── Sections ─── */
-    .wip-section {
-      margin-bottom: 48px; padding: 28px;
-      background: var(--color-surface-card);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-md);
-      border-left: 4px solid #E5910E;
-    }
-    .wip-section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
-    .wip-section-num {
-      font-family: var(--font-ui); font-size: 12px; font-weight: 500;
-      color: #E5910E; opacity: 0.7;
-    }
-    .wip-section-title {
-      font-family: var(--font-heading); font-size: 20px; font-weight: 600;
-    }
-    .wip-section-desc {
-      font-size: 15px; line-height: 1.7; color: var(--color-content-secondary);
-      margin-bottom: 20px;
-    }
-    .wip-placeholder-box {
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 10px,
-        rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px
-      );
-      border: 2px dashed var(--color-border-default);
-      border-radius: var(--radius-sm);
-      padding: 48px; text-align: center;
-    }
-    .wip-placeholder-label {
-      font-family: var(--font-ui); font-size: 12px;
-      color: var(--color-content-disabled);
-      text-transform: uppercase; letter-spacing: 0.1em;
+    button {
+      font-family: var(--font-sans);
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
     }
 
-    /* ─── Footer ─── */
-    .pg-footer {
-      background: var(--color-surface-inverse); color: var(--color-content-inverse);
-      padding: 24px 32px; text-align: center;
-      font-family: var(--font-ui); font-size: 12px;
-      opacity: 0.7;
+    /* WIP Status Bar */
+    .wip-status {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background-color: #fef3c7;
+      border-bottom: 1px solid #fcd34d;
+      padding: 12px 24px;
+      text-align: center;
+      font-size: 14px;
+      color: #92400e;
+      z-index: 1000;
+      font-weight: 500;
+    }
+
+    body {
+      padding-top: 48px;
+    }
+
+    /* Layout Utilities */
+    .container {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 var(--spacing-page-h);
+    }
+
+    .section {
+      padding: var(--spacing-section-v) 0;
+    }
+
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-large);
+      align-items: start;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-component);
+    }
+
+    .flex {
+      display: flex;
+      gap: var(--spacing-component);
+    }
+
+    .flex-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    /* Typography */
+    h1 {
+      font-family: var(--font-serif);
+      font-size: var(--size-hero-title);
+      line-height: 72px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+    }
+
+    h2 {
+      font-family: var(--font-serif);
+      font-size: var(--size-section-title);
+      line-height: 40px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-component);
+    }
+
+    h3 {
+      font-family: var(--font-serif);
+      font-size: var(--size-card-title);
+      line-height: 32px;
+      font-weight: 400;
+      color: var(--color-text-primary);
+      margin-bottom: var(--spacing-component);
+    }
+
+    p {
+      font-size: var(--size-body);
+      line-height: 32px;
+      color: var(--color-text-secondary);
+    }
+
+    .text-description {
+      font-size: var(--size-description);
+      line-height: 26px;
+      color: var(--color-text-secondary);
+    }
+
+    .text-details {
+      font-size: var(--size-details);
+      line-height: 20px;
+      color: var(--color-text-secondary);
+    }
+
+    .text-accent {
+      color: var(--color-green-accent);
+      font-style: italic;
+      font-family: var(--font-serif);
+    }
+
+    /* Buttons */
+    .btn {
+      padding: 16px 32px;
+      border-radius: var(--radius-button);
+      font-size: var(--size-details);
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+
+    .btn-primary {
+      background-color: var(--color-green-accent);
+      color: var(--color-white);
+    }
+
+    .btn-primary:hover {
+      background-color: #047857;
+      transform: translateY(-2px);
+    }
+
+    .btn-secondary {
+      background-color: var(--color-dark-green);
+      color: var(--color-white);
+    }
+
+    .btn-secondary:hover {
+      background-color: #1a2c2a;
+      transform: translateY(-2px);
+    }
+
+    .btn-outline {
+      border: 2px solid var(--color-text-primary);
+      background-color: transparent;
+      color: var(--color-text-primary);
+    }
+
+    .btn-outline:hover {
+      background-color: var(--color-text-primary);
+      color: var(--color-white);
+    }
+
+    /* Header Navigation */
+    header {
+      background-color: var(--color-white);
+      border-bottom: 1px solid var(--color-border);
+      padding: 24px var(--spacing-page-h);
+      margin-top: -48px;
+      padding-top: 72px;
+      position: sticky;
+      top: 48px;
+      z-index: 100;
+    }
+
+    .header-content {
+      max-width: 1440px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-serif);
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+    }
+
+    nav {
+      display: flex;
+      gap: 48px;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: var(--size-details);
+      color: var(--color-text-primary);
+      transition: color 0.3s ease;
+    }
+
+    nav a:hover {
+      color: var(--color-green-accent);
+    }
+
+    .nav-cta {
+      margin-left: auto;
+    }
+
+    /* Hero Section */
+    .hero {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .hero .grid-2 {
+      align-items: center;
+    }
+
+    .hero-title {
+      margin-bottom: var(--spacing-large);
+    }
+
+    .hero-subtitle {
+      margin-bottom: var(--spacing-large);
+      max-width: 90%;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-large);
+      margin-top: var(--spacing-large);
+    }
+
+    .stat-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .stat-number {
+      font-family: var(--font-serif);
+      font-size: var(--size-stats-number);
+      font-weight: 600;
+      color: var(--color-green-accent);
+      line-height: 1;
+    }
+
+    .stat-label {
+      font-size: var(--size-description);
+      color: var(--color-text-secondary);
+    }
+
+    .hero-image {
+      background-color: var(--color-green-accent);
+      border-radius: var(--radius-image);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-white);
+      font-size: var(--size-details);
+      text-align: center;
+      padding: var(--spacing-component);
+    }
+
+    /* Ecosistema Section */
+    .ecosistema {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .ecosistema-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-large);
+      margin-bottom: var(--spacing-section-v);
+      align-items: start;
+    }
+
+    .ecosistema-header h2 {
+      margin-bottom: 0;
+    }
+
+    .ecosistema-header p {
+      margin-bottom: 0;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-large);
+    }
+
+    .card {
+      background-color: var(--color-white);
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--spacing-large);
+    }
+
+    .card-header {
+      display: flex;
+      gap: var(--spacing-component);
+      align-items: flex-start;
+      margin-bottom: var(--spacing-component);
+    }
+
+    .card-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background-color: var(--color-green-accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .card-content h3 {
+      margin-bottom: var(--spacing-component);
+    }
+
+    /* Performance Stats Bar */
+    .stats-bar {
+      background-color: var(--color-dark-green);
+      color: var(--color-white);
+      padding: var(--spacing-section-v) var(--spacing-page-h);
+    }
+
+    .stats-bar .container {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--spacing-large);
+      text-align: center;
+    }
+
+    .stats-bar-item h3 {
+      color: var(--color-white);
+      margin-bottom: 8px;
+      font-size: var(--size-stats-number);
+    }
+
+    .stats-bar-item p {
+      color: var(--color-white);
+      margin: 0;
+      font-size: var(--size-description);
+    }
+
+    /* Meter Section */
+    .meter {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .input-group {
+      display: flex;
+      gap: var(--spacing-component);
+      margin-top: var(--spacing-large);
+    }
+
+    .input-group input {
+      flex: 1;
+      padding: 16px 20px;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-button);
+      font-family: var(--font-sans);
+      font-size: var(--size-description);
+    }
+
+    .input-group input:focus {
+      outline: none;
+      border-color: var(--color-green-accent);
+      box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+    }
+
+    /* Infrastruttura Section */
+    .infrastruttura {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .infrastruttura-header {
+      margin-bottom: var(--spacing-large);
+    }
+
+    .infrastruttura-header p {
+      max-width: 90%;
+      margin-bottom: var(--spacing-large);
+    }
+
+    .features-list {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--spacing-component);
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--spacing-component);
+    }
+
+    .feature-icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background-color: var(--color-green-accent);
+      flex-shrink: 0;
+      margin-top: 6px;
+    }
+
+    .feature-text {
+      font-size: var(--size-description);
+      color: var(--color-text-secondary);
+    }
+
+    /* Pricing Section */
+    .pricing {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .pricing .container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+    }
+
+    .pricing-card {
+      padding: var(--spacing-large);
+      border-right: 1px solid var(--color-border);
+    }
+
+    .pricing-card:last-child {
+      border-right: none;
+    }
+
+    .pricing-card.featured {
+      background-color: var(--color-cream);
+    }
+
+    .pricing-card h3 {
+      font-size: var(--size-card-title);
+      margin-bottom: 8px;
+    }
+
+    .pricing-tag {
+      font-size: var(--size-details);
+      color: var(--color-green-accent);
+      font-weight: 500;
+      margin-bottom: var(--spacing-component);
+    }
+
+    .pricing-price {
+      font-family: var(--font-serif);
+      font-size: 48px;
+      font-weight: 600;
+      color: var(--color-text-primary);
+      margin-bottom: 8px;
+    }
+
+    .pricing-period {
+      font-size: var(--size-description);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-large);
+    }
+
+    .pricing-features {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+      margin-bottom: var(--spacing-large);
+    }
+
+    .pricing-feature {
+      font-size: var(--size-description);
+      color: var(--color-text-secondary);
+      padding-left: 24px;
+      position: relative;
+    }
+
+    .pricing-feature::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--color-green-accent);
+      font-weight: bold;
+    }
+
+    .pricing-feature.disabled {
+      color: #999;
+      opacity: 0.6;
+    }
+
+    .pricing-feature.disabled::before {
+      content: "−";
+      color: #ccc;
+    }
+
+    .pricing-cta {
+      margin-bottom: var(--spacing-component);
+    }
+
+    .pricing-note {
+      font-size: 12px;
+      color: var(--color-text-secondary);
+      line-height: 18px;
+    }
+
+    /* Sostenibilità Section */
+    .sostenibilita {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .sostenibilita h2 {
+      max-width: 90%;
+      margin-bottom: var(--spacing-large);
+    }
+
+    .sostenibilita-text {
+      max-width: 90%;
+      font-size: var(--size-description);
+      line-height: 26px;
+      color: var(--color-text-secondary);
+    }
+
+    /* Values Section */
+    .values {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .values-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: var(--spacing-large);
+      margin-top: var(--spacing-large);
+    }
+
+    .value-card {
+      text-align: center;
+    }
+
+    .value-title {
+      font-family: var(--font-serif);
+      font-size: var(--size-card-title);
+      font-style: italic;
+      color: var(--color-green-accent);
+      margin-bottom: var(--spacing-component);
+    }
+
+    .value-description {
+      font-size: var(--size-description);
+      color: var(--color-text-secondary);
+      line-height: 26px;
+    }
+
+    /* Team Section */
+    .team {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .team-intro {
+      margin-bottom: var(--spacing-section-v);
+    }
+
+    .team-intro p {
+      max-width: 90%;
+      margin-bottom: 0;
+    }
+
+    .team-members {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-large);
+      margin-top: var(--spacing-large);
+    }
+
+    .member-card {
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+
+    .member-image {
+      background-color: var(--color-cream);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font-size: var(--size-details);
+    }
+
+    .member-info {
+      padding: var(--spacing-component);
+    }
+
+    .member-name {
+      font-family: var(--font-serif);
+      font-size: var(--size-card-title);
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .member-role {
+      font-size: var(--size-details);
+      color: var(--color-text-secondary);
+    }
+
+    /* Sub-brands Section */
+    .sub-brands {
+      background-color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .sub-brands h2 {
+      margin-bottom: var(--spacing-large);
+    }
+
+    .brands-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-large);
+    }
+
+    .brand-card {
+      border: 1px solid var(--color-border);
+      border-radius: 12px;
+      padding: var(--spacing-large);
+      text-align: center;
+    }
+
+    .brand-image {
+      background-color: var(--color-cream);
+      aspect-ratio: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-text-secondary);
+      font-size: var(--size-details);
+      border-radius: 12px;
+      margin-bottom: var(--spacing-component);
+    }
+
+    .brand-name {
+      font-family: var(--font-serif);
+      font-size: var(--size-card-title);
+      margin-bottom: 8px;
+    }
+
+    .brand-description {
+      font-size: var(--size-description);
+      color: var(--color-text-secondary);
+      margin-bottom: var(--spacing-component);
+    }
+
+    .status-badge {
+      display: inline-block;
+      background-color: var(--color-green-light);
+      color: var(--color-green-dark-text);
+      padding: 6px 12px;
+      border-radius: var(--radius-button);
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    /* Contact Section */
+    .contact {
+      background-color: var(--color-dark-green);
+      color: var(--color-white);
+      padding-top: var(--spacing-section-v);
+      padding-bottom: var(--spacing-section-v);
+    }
+
+    .contact h2 {
+      color: var(--color-white);
+      font-style: italic;
+      margin-bottom: var(--spacing-large);
+    }
+
+    .contact-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-section-v);
+    }
+
+    .contact-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-component);
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    .form-group label {
+      font-size: var(--size-details);
+      font-weight: 500;
+      color: var(--color-white);
+    }
+
+    .form-group input,
+    .form-group textarea {
+      padding: 12px 16px;
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      border-radius: var(--radius-button);
+      font-family: var(--font-sans);
+      font-size: var(--size-description);
+      background-color: rgba(255, 255, 255, 0.1);
+      color: var(--color-white);
+    }
+
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--color-green-accent);
+      background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+
+    .form-checkbox {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: var(--size-details);
+      margin-top: var(--spacing-component);
+    }
+
+    .form-checkbox input {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .contact-info {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-large);
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .contact-label {
+      font-size: var(--size-details);
+      opacity: 0.8;
+      color: var(--color-white);
+    }
+
+    .contact-value {
+      font-size: var(--size-body);
+      color: var(--color-white);
+    }
+
+    /* Footer */
+    footer {
+      background-color: #1a1a1a;
+      color: var(--color-white);
+      padding: var(--spacing-component) var(--spacing-page-h);
+      text-align: center;
+      font-size: var(--size-details);
+    }
+
+    footer a {
+      color: var(--color-green-accent);
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      :root {
+        --spacing-page-h: 24px;
+        --size-hero-title: 48px;
+        --size-section-title: 28px;
+        --size-body: 16px;
+      }
+
+      .grid-2,
+      .grid-3,
+      .hero-stats,
+      .pricing .container,
+      .values-grid,
+      .team-members,
+      .brands-grid,
+      .stats-bar .container {
+        grid-template-columns: 1fr;
+      }
+
+      header {
+        padding: 16px var(--spacing-page-h);
+        padding-top: 40px;
+      }
+
+      .header-content {
+        flex-direction: column;
+        gap: var(--spacing-component);
+      }
+
+      nav {
+        flex-direction: column;
+        gap: var(--spacing-component);
+        width: 100%;
+      }
+
+      .nav-cta {
+        margin-left: 0;
+      }
+
+      .pricing-card {
+        border-right: none;
+        border-bottom: 1px solid var(--color-border);
+      }
+
+      .pricing-card:last-child {
+        border-bottom: none;
+      }
+
+      .contact-content {
+        grid-template-columns: 1fr;
+      }
+
+      .input-group {
+        flex-direction: column;
+      }
+
+      .hero-image {
+        aspect-ratio: auto;
+        min-height: 300px;
+      }
     }
   </style>
 </head>
 <body>
-
-<div class="wip-status-bar">
-  <span class="wip-status-label">REVIEW — In attesa di approvazione</span>
-  <span class="wip-flow-tag">Flusso: Marketing</span>
-  <span style="opacity:0.5;">·</span>
-  <span>pg-home.html</span>
-  <div class="wip-approval-actions">
-    <button class="wip-btn" onclick="alert('Commento aggiunto — funzione in sviluppo')">💬 Commenta</button>
-    <button class="wip-btn" onclick="alert('Richiesta modifiche inviata — funzione in sviluppo')">↩ Richiedi modifiche</button>
-    <button class="wip-btn wip-btn-approve" onclick="this.closest('.wip-status-bar').style.background='#38781D';this.closest('.wip-status-bar').querySelector('.wip-status-label').textContent='APPROVED — Approvato'">✓ Approva</button>
-  </div>
-</div>
-
-<header class="pg-header">
-  <div class="pg-logo">Pianeta<span>.</span>Green</div>
-  <nav class="pg-nav">
-    <a href="#">Home</a>
-    <a href="#">Il Meter</a>
-    <a href="#">Piani</a>
-    <a href="#">Blog</a>
-    <a href="#">Chi siamo</a>
-    <a href="#">Contatti</a>
-  </nav>
-</header>
-
-<div class="wip-container">
-  <h1 class="wip-page-title">Home</h1>
-  <div class="wip-page-meta">
-    <span>Flusso: Marketing</span>
-    <span>Sezioni: 8</span>
-    <span>Stato: REVIEW</span>
+  <div class="wip-status">
+    🚧 Work in Progress - Status: Review
   </div>
 
-  <nav class="wip-section-nav"><a href="#hero" class="wip-nav-link">Hero</a><a href="#ecosistema" class="wip-nav-link">Ecosistema</a><a href="#metriche" class="wip-nav-link">Metriche di impatto</a><a href="#prodotti" class="wip-nav-link">Prodotti</a><a href="#meter-preview" class="wip-nav-link">Prova il Meter</a><a href="#sostenibilita" class="wip-nav-link">Sostenibilità digitale come valore etico</a><a href="#studio" class="wip-nav-link">Lo Studio</a><a href="#contatti" class="wip-nav-link">Contatti rapidi</a></nav>
+  <!-- Header Navigation -->
+  <header>
+    <div class="header-content">
+      <div class="logo">Pianeta Green</div>
+      <nav>
+        <a href="#ecosistema">Ecosistema</a>
+        <a href="#meter">Meter</a>
+        <a href="#prodotti">Prodotti</a>
+        <a href="#approccio">Approccio</a>
+        <a href="#studio">Studio</a>
+        <button class="btn btn-secondary nav-cta">Contatta</button>
+      </nav>
+    </div>
+  </header>
 
-    <div class="wip-section" id="hero">
-      <div class="wip-section-header">
-        <span class="wip-section-num">01</span>
-        <h2 class="wip-section-title">Hero — Il web sostenibile è anche il web più veloce</h2>
-      </div>
-      <div class="wip-section-desc">Headline con animazione dati sostenibilità. CTA primaria 'Attiva il tuo spazio Green'. CTA secondaria 'Analizza il tuo sito'. Background: gradiente verde scuro con forme organiche coral.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="container">
+      <div class="grid-2">
+        <div>
+          <h1 class="hero-title">
+            Il web <span class="text-accent">sostenibile</span> è anche il web più veloce.
+          </h1>
+          <p class="hero-subtitle">
+            Un ecosistema digitale integrato — infrastruttura, CMS e design system pensati come sistema unico. Performance misurabile, energia rinnovabile. Standard aperti. Codice consegnato. Handoff documentato.
+          </p>
+          <div class="hero-stats">
+            <div class="stat-item">
+              <div class="stat-number">&lt;2.5s</div>
+              <div class="stat-label">LCP target</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">100%</div>
+              <div class="stat-label">Rinnovabile</div>
+            </div>
+            <div class="stat-item">
+              <div class="stat-number">99.7%</div>
+              <div class="stat-label">Uptime SLA</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="hero-image">
+            🐄 Illustrazione sostenibilità
+          </div>
         </div>
       </div>
     </div>
-    <div class="wip-section" id="ecosistema">
-      <div class="wip-section-header">
-        <span class="wip-section-num">02</span>
-        <h2 class="wip-section-title">Ecosistema — 3 pilastri</h2>
-      </div>
-      <div class="wip-section-desc">Grid 3 colonne: Pianeta.green (Infrastruttura green hosting), Terra (Dati & servizi, meter, monitoring), Hederae (Design system, template pronti). Ogni card con icona, titolo, descrizione, link.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="metriche">
-      <div class="wip-section-header">
-        <span class="wip-section-num">03</span>
-        <h2 class="wip-section-title">Metriche di impatto</h2>
-      </div>
-      <div class="wip-section-desc">4 KPI grandi: <2.5s caricamento, ~50% meno CO2, 2-4% conversione media, 5+ anni hosting certificato. Background cream con accento verde.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="prodotti">
-      <div class="wip-section-header">
-        <span class="wip-section-num">04</span>
-        <h2 class="wip-section-title">Prodotti — I nostri piani</h2>
-      </div>
-      <div class="wip-section-desc">2 card prodotto: Green Hosting (€12/mese — hosting singolo, CDN, SSL, monitoring CO2, badge green), CMS + Sito (€1.000 — sito chiavi in mano con T4 CMS, template Hederae Profilo A, hosting incluso 1 anno). CTA per ciascuno.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="meter-preview">
-      <div class="wip-section-header">
-        <span class="wip-section-num">05</span>
-        <h2 class="wip-section-title">Prova il Meter</h2>
-      </div>
-      <div class="wip-section-desc">Input URL con pulsante 'Analizza gratis'. Mini-preview di un risultato esempio. Link a pagina Meter completa.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="sostenibilita">
-      <div class="wip-section-header">
-        <span class="wip-section-num">06</span>
-        <h2 class="wip-section-title">Sostenibilità digitale come valore etico</h2>
-      </div>
-      <div class="wip-section-desc">Testo valoriale su impatto ambientale del web. Dati: il web produce il 3.7% delle emissioni globali. Come Pianeta.Green contribuisce.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="studio">
-      <div class="wip-section-header">
-        <span class="wip-section-num">07</span>
-        <h2 class="wip-section-title">Lo Studio — Pianeta.Studio</h2>
-      </div>
-      <div class="wip-section-desc">Mini-presentazione team: 3 card persona con foto, nome, ruolo. Link a pagina Chi siamo.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="contatti">
-      <div class="wip-section-header">
-        <span class="wip-section-num">08</span>
-        <h2 class="wip-section-title">Contatti rapidi</h2>
-      </div>
-      <div class="wip-section-desc">Form contatto minimal: nome, email, messaggio. Info: sede Milano/Sicilia, email, telefono.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-</div>
+  </section>
 
-<footer class="pg-footer">
-  © 2026 Pianeta.Green Hosting · pianeta.studio · Società Benefit · Milano / Sicilia
-</footer>
+  <!-- Ecosistema Section -->
+  <section class="ecosistema" id="ecosistema">
+    <div class="container">
+      <div class="ecosistema-header">
+        <h2>
+          Non tre prodotti, <span class="text-accent">un sistema unico.</span>
+        </h2>
+        <p>
+          Basta la distinzione «agenzia separata, sviluppatore separato, sito che nessuno sa dove sia e a chi chiamare». L'integrazione è la vera differenza: ogni scelta tecnica è connessa con le altre.
+        </p>
+      </div>
 
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-dot"></div>
+            <div class="card-content" style="flex: 1;">
+              <h3>Pianeta.green Infrastruttura</h3>
+              <p class="text-description">
+                Hosting del futuro, 100% a energia rinnovabile. Con performance tracking di Pianeta Studio. CDN Cloudflare con edge node italiano. SSL/TLS automatico e HTTP/3. Brotli. Carbon budget monitorato con report trimestrali.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-dot"></div>
+            <div class="card-content" style="flex: 1;">
+              <h3>Terra Dati & Servizi</h3>
+              <p class="text-description">
+                Payload CMS — open source, TypeScript first. Il tuo codice, il tuo database, le tue API e non stai renting. Integrazione con DKIM server. Monitoring performance con dashboard dedicata. Accessibilità avanzata e performance first.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-header">
+            <div class="card-dot"></div>
+            <div class="card-content" style="flex: 1;">
+              <h3>Hederae Esperienza</h3>
+              <p class="text-description">
+                Design system framework Hederae Vue / Tailwind. Componenti disegnati bene, codice perfetto, performance native. Progettato per durare e per essere personalizzato, crescere. Multi-brand con token, aree HR, NPP, office. Design system zero-dependency, i tag sono proprietari. Documentazione essenziale per trasferimento.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Performance Stats Bar -->
+  <section class="stats-bar">
+    <div class="container">
+      <div class="stats-bar-item">
+        <h3>&lt;2.5s</h3>
+        <p>LCP su ogni progetto</p>
+      </div>
+      <div class="stats-bar-item">
+        <h3>-50%</h3>
+        <p>Peso pagina media</p>
+      </div>
+      <div class="stats-bar-item">
+        <h3>2-4%</h3>
+        <p>CO₂ vs. website avg.</p>
+      </div>
+      <div class="stats-bar-item">
+        <h3>5+ anni</h3>
+        <p>Architettura senza blocchi</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Meter Section -->
+  <section class="meter" id="meter">
+    <div class="container">
+      <div class="grid-2">
+        <h2>Misura l'impatto del tuo sito.</h2>
+        <div>
+          <p>
+            Pianeta.Meter analizza qualsiasi URL e restituisce un'impronta digitale completa: grammi di CO₂ per visita, percentuale di energia rinnovabile, peso della banda e delle risorse, e rating del green hosting. Il calcolo segue la metodologia della Green Web Foundation (TGWF), lo standard ISO 14064-2.
+          </p>
+          <div class="input-group">
+            <input type="url" placeholder="https://tuosito.it" aria-label="URL del sito da analizzare">
+            <button class="btn btn-primary">Analizza</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Infrastruttura Section -->
+  <section class="infrastruttura" id="prodotti">
+    <div class="container">
+      <div class="infrastruttura-header">
+        <h2>
+          Infrastruttura. <span class="text-accent">A modo tuo.</span>
+        </h2>
+        <p>
+          Puoi acquistare i servizi dell'ecosistema singolarmente o come bundle. Ogni piano include hosting 100% rinnovabile, CDN Cloudflare, monitoring CO₂ e SLA diretti — senza intermediari.
+        </p>
+      </div>
+
+      <div class="features-list">
+        <div class="feature-item">
+          <div class="feature-icon"></div>
+          <p class="feature-text">100% energia rinnovabile certificata</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"></div>
+          <p class="feature-text">Standard aperti</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"></div>
+          <p class="feature-text">Server e CDN con edge node italiano</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"></div>
+          <p class="feature-text">SLA diretti con Pianeta.Studio</p>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon"></div>
+          <p class="feature-text">Disdetta in qualsiasi momento</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing Section -->
+  <section class="pricing">
+    <div class="container">
+      <div class="pricing-card">
+        <h3>Hosting Seed</h3>
+        <p class="text-description" style="margin-bottom: var(--spacing-component);">Un sito. Un punto di partenza.</p>
+        <div class="pricing-price">€12</div>
+        <div class="pricing-period">/mese</div>
+
+        <div class="pricing-features">
+          <div class="pricing-feature">1 dominio</div>
+          <div class="pricing-feature">10 GB SSD</div>
+          <div class="pricing-feature">CDN Cloudflare</div>
+          <div class="pricing-feature">SSL/TLS</div>
+          <div class="pricing-feature">Certificazione energia</div>
+          <div class="pricing-feature">Carbon report trimestrale</div>
+          <div class="pricing-feature disabled">Monitoring CO₂ non incluso</div>
+          <div class="pricing-feature disabled">SLA enterprise non incluso</div>
+        </div>
+
+        <button class="btn btn-outline" style="width: 100%; margin-bottom: var(--spacing-component);">Inizia con Seed</button>
+        <p class="pricing-note">Attivazione in 24 ore</p>
+      </div>
+
+      <div class="pricing-card featured">
+        <div class="pricing-tag">— più scelto</div>
+        <h3>Hosting Radici</h3>
+        <p class="text-description" style="margin-bottom: var(--spacing-component);">Più siti. Un ecosistema controllato.</p>
+        <div class="pricing-price">€29</div>
+        <div class="pricing-period">/mese</div>
+
+        <div class="pricing-features">
+          <div class="pricing-feature">Fino a 5 domini</div>
+          <div class="pricing-feature">50 GB SSD</div>
+          <div class="pricing-feature">CDN Cloudflare</div>
+          <div class="pricing-feature">SSL/TLS</div>
+          <div class="pricing-feature">Certificazione energia</div>
+          <div class="pricing-feature">Monitoring CO₂ real-time</div>
+          <div class="pricing-feature">Carbon report mensile</div>
+          <div class="pricing-feature">SLA 99.7%</div>
+        </div>
+
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: var(--spacing-component);">Inizia con Radici</button>
+        <p class="pricing-note">Attivazione in 24 ore · 30 giorni di prova</p>
+      </div>
+
+      <div class="pricing-card">
+        <h3>Ecosistema Completo</h3>
+        <p class="text-description" style="margin-bottom: var(--spacing-component);">Infrastruttura, CMS e design system.</p>
+        <div class="pricing-price">Su misura</div>
+        <div class="pricing-period">Preventivo in 48 ore</div>
+
+        <div class="pricing-features">
+          <div class="pricing-feature">Hosting Radici incluso</div>
+          <div class="pricing-feature">Layer Terra</div>
+          <div class="pricing-feature">Layer Hederae</div>
+          <div class="pricing-feature">Monitoring CO₂ + performance budget</div>
+          <div class="pricing-feature">Carbon report</div>
+          <div class="pricing-feature">SLA enterprise</div>
+          <div class="pricing-feature">Onboarding + migrazione</div>
+          <div class="pricing-feature">Il codice è sempre vostro</div>
+          <div class="pricing-feature">HANDOFF.md incluso</div>
+        </div>
+
+        <button class="btn btn-outline" style="width: 100%; margin-bottom: var(--spacing-component);">Richiedi un preventivo</button>
+        <p class="pricing-note">Risposta entro 48 ore</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sostenibilità Section -->
+  <section class="sostenibilita" id="approccio">
+    <div class="container">
+      <h2>Sostenibilità digitale come vincolo tecnico — non come comunicazione.</h2>
+      <p class="sostenibilita-text">
+        La sostenibilità non è un'aggiunta cosmetica ai nostri servizi: è il fondamento della nostra architettura. Ogni decisione tecnica — dalla scelta dell'hosting alle ottimizzazioni delle performance — è guidata dal principio di ridurre l'impronta carbonica digitale. Non vogliamo solo raccontare la sostenibilità; vogliamo dimostrarla con metriche misurabili, standard aperti e un impegno concreto verso l'energia rinnovabile.
+      </p>
+    </div>
+  </section>
+
+  <!-- Values Section -->
+  <section class="values">
+    <div class="container">
+      <h2>I nostri valori</h2>
+      <div class="values-grid">
+        <div class="value-card">
+          <div class="value-title">Sistemico</div>
+          <p class="value-description">Pensiamo in integrazione, non in componenti isolati. Ogni elemento del sistema comunica con gli altri.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-title">Misurabile</div>
+          <p class="value-description">Quello che non si misura non si migliora. Trasparenza nei dati e responsabilità nei risultati.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-title">Longevo</div>
+          <p class="value-description">Progettiamo per durare. Architetture che non diventano obsolete, codice che evolve nel tempo.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-title">Inclusivo</div>
+          <p class="value-description">Accessibilità e performance per tutti. Nessuno deve essere escluso dalla velocità e dalla qualità.</p>
+        </div>
+        <div class="value-card">
+          <div class="value-title">Trasparente</div>
+          <p class="value-description">Il codice è vostro, i dati sono vostri. Niente closed source, niente dipendenze nascoste.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Team Section -->
+  <section class="team" id="studio">
+    <div class="container">
+      <div class="team-intro">
+        <h2>Pianeta.Studio</h2>
+        <p>
+          Pianeta.Studio è un'agenzia digitale fondata nel 2020 con una missione precisa: costruire ecosistemi digitali sostenibili, performanti e trasparenti. Lavoriamo con aziende che credono che la qualità tecnica e la responsabilità ambientale non siano compromessi, ma standard.
+        </p>
+      </div>
+
+      <div class="team-members">
+        <div class="member-card">
+          <div class="member-image">Foto profilo</div>
+          <div class="member-info">
+            <div class="member-name">Massimiliano Mauro</div>
+            <div class="member-role">Max<br>Founder & Managing Partner</div>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-image">Foto profilo</div>
+          <div class="member-info">
+            <div class="member-name">Francesca Fossati</div>
+            <div class="member-role">Vertice & Project Manager</div>
+          </div>
+        </div>
+        <div class="member-card">
+          <div class="member-image">Foto profilo</div>
+          <div class="member-info">
+            <div class="member-name">Fabrizio Ciampini</div>
+            <div class="member-role">Partner — Senior Backend Developer</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Sub-brands Section -->
+  <section class="sub-brands">
+    <div class="container">
+      <h2>Progetti gemelli</h2>
+      <div class="brands-grid">
+        <div class="brand-card">
+          <div class="brand-image">Logo</div>
+          <div class="brand-name">RaraFactory</div>
+          <p class="brand-description">Web Design</p>
+          <span class="status-badge">TBD</span>
+        </div>
+        <div class="brand-card">
+          <div class="brand-image">Logo</div>
+          <div class="brand-name">CornerTable</div>
+          <p class="brand-description">Food & Digital</p>
+          <span class="status-badge">TBD</span>
+        </div>
+        <div class="brand-card">
+          <div class="brand-image">Logo</div>
+          <div class="brand-name">SpaziErre</div>
+          <p class="brand-description">API, Consulenza per il Terzo Settore</p>
+          <span class="status-badge">TBD</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="contact">
+    <div class="container">
+      <h2>Hai un progetto digitale da costruire o migliorare?</h2>
+      <div class="contact-content">
+        <form class="contact-form">
+          <div class="form-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" name="nome" required>
+          </div>
+          <div class="form-group">
+            <label for="cognome">Cognome</label>
+            <input type="text" id="cognome" name="cognome" required>
+          </div>
+          <div class="form-group">
+            <label for="telefono">Telefono</label>
+            <input type="tel" id="telefono" name="telefono">
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+          </div>
+          <div class="form-group full">
+            <label for="url-sito">URL sito</label>
+            <input type="url" id="url-sito" name="url-sito" placeholder="https://tuosito.it">
+          </div>
+          <div class="form-group full">
+            <label for="messaggio">Messaggio</label>
+            <textarea id="messaggio" name="messaggio" required></textarea>
+          </div>
+          <div class="form-checkbox">
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <label for="privacy">Ho letto l'<a href="#" style="text-decoration: underline;">informativa sulla privacy</a></label>
+          </div>
+          <button type="submit" class="btn btn-primary" style="grid-column: 1 / -1;">Invia</button>
+        </form>
+
+        <div class="contact-info">
+          <div class="contact-item">
+            <div class="contact-label">Email</div>
+            <div class="contact-value"><a href="mailto:info@pianeta.studio">info@pianeta.studio</a></div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-label">Telefono</div>
+            <div class="contact-value"><a href="tel:+390541628850">+39 0541 628 850</a></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 <strong>Pianeta Green Hosting</strong> — Sustainability by design</p>
+  </footer>
 </body>
 </html>

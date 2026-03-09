@@ -1,257 +1,1293 @@
 <!DOCTYPE html>
-<html lang="it" data-brand="pianeta-green">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Il Meter — Pianeta.Green</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/themes/pianeta-green.css">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pianeta.Meter - Misura la sostenibilità del tuo sito</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400;1,600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--color-surface-page);
-      color: var(--color-content-primary);
-      line-height: 1.6;
-    }
+        html, body {
+            font-family: "IBM Plex Sans", system-ui, sans-serif;
+            color: #2e2e2e;
+            background-color: #ffffff;
+        }
 
-    /* ─── WIP Status Bar ─── */
-    .wip-status-bar {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 16px;
-      padding: 10px 24px;
-      background: #E5910E; color: #fff;
-      font-family: var(--font-ui); font-size: 12px;
-      letter-spacing: 0.05em;
-    }
-    .wip-status-label {
-      font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
-    }
-    .wip-flow-tag {
-      padding: 2px 10px; border-radius: 99px;
-      background: rgba(255,255,255,0.2);
-      font-size: 11px;
-    }
-    .wip-approval-actions {
-      margin-left: auto; display: flex; gap: 8px;
-    }
-    .wip-btn {
-      padding: 4px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.4);
-      background: transparent; color: #fff; cursor: pointer;
-      font-family: var(--font-ui); font-size: 11px; font-weight: 500;
-    }
-    .wip-btn:hover { background: rgba(255,255,255,0.15); }
-    .wip-btn-approve { background: rgba(255,255,255,0.25); border-color: #fff; }
+        /* WIP Status Bar */
+        .wip-status {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #fca5a5;
+            color: #7f1d1d;
+            padding: 12px;
+            text-align: center;
+            font-size: 12px;
+            font-weight: 600;
+            z-index: 9999;
+            box-shadow: 0 2px 8px rgba(46, 46, 46, 0.1);
+        }
 
-    /* ─── Page Header ─── */
-    .pg-header {
-      background: var(--color-surface-inverse); color: var(--color-content-inverse);
-      padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .pg-logo { font-family: var(--font-heading); font-size: 18px; font-weight: 600; }
-    .pg-logo span { color: var(--color-brand-accent); }
-    .pg-nav { display: flex; gap: 24px; }
-    .pg-nav a {
-      color: rgba(255,255,255,0.7); text-decoration: none;
-      font-family: var(--font-ui); font-size: 13px;
-    }
-    .pg-nav a:hover { color: #fff; }
+        body {
+            padding-top: 48px;
+        }
 
-    /* ─── WIP Content ─── */
-    .wip-container { max-width: 1200px; margin: 0 auto; padding: 40px 32px; }
+        /* Utility Classes */
+        .container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 0 112px;
+        }
 
-    .wip-page-title {
-      font-family: var(--font-display); font-size: 36px; font-weight: 600;
-      margin-bottom: 8px; color: var(--color-content-brand);
-    }
-    .wip-page-meta {
-      font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);
-      margin-bottom: 32px; display: flex; gap: 16px;
-    }
+        .centered-content {
+            text-align: center;
+        }
 
-    /* ─── Section Nav ─── */
-    .wip-section-nav {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
-      padding: 16px 0; border-bottom: 1px solid var(--color-border-default);
-    }
-    .wip-nav-link {
-      padding: 4px 12px; border-radius: 99px;
-      background: var(--color-brand-muted); color: var(--color-content-brand);
-      text-decoration: none; font-size: 13px; font-family: var(--font-ui);
-    }
-    .wip-nav-link:hover { background: var(--color-interactive-primary-bg); color: #fff; }
+        .icon-circle {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background-color: #059669;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: 600;
+            margin: 0 auto 16px;
+        }
 
-    /* ─── Sections ─── */
-    .wip-section {
-      margin-bottom: 48px; padding: 28px;
-      background: var(--color-surface-card);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-md);
-      border-left: 4px solid #E5910E;
-    }
-    .wip-section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
-    .wip-section-num {
-      font-family: var(--font-ui); font-size: 12px; font-weight: 500;
-      color: #E5910E; opacity: 0.7;
-    }
-    .wip-section-title {
-      font-family: var(--font-heading); font-size: 20px; font-weight: 600;
-    }
-    .wip-section-desc {
-      font-size: 15px; line-height: 1.7; color: var(--color-content-secondary);
-      margin-bottom: 20px;
-    }
-    .wip-placeholder-box {
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 10px,
-        rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px
-      );
-      border: 2px dashed var(--color-border-default);
-      border-radius: var(--radius-sm);
-      padding: 48px; text-align: center;
-    }
-    .wip-placeholder-label {
-      font-family: var(--font-ui); font-size: 12px;
-      color: var(--color-content-disabled);
-      text-transform: uppercase; letter-spacing: 0.1em;
-    }
+        .green-badge {
+            display: inline-block;
+            background-color: #d1fae5;
+            color: #065f46;
+            padding: 8px 16px;
+            border-radius: 24px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-bottom: 24px;
+        }
 
-    /* ─── Footer ─── */
-    .pg-footer {
-      background: var(--color-surface-inverse); color: var(--color-content-inverse);
-      padding: 24px 32px; text-align: center;
-      font-family: var(--font-ui); font-size: 12px;
-      opacity: 0.7;
-    }
-  </style>
+        .green-text {
+            color: #059669;
+        }
+
+        .green-italic {
+            color: #059669;
+            font-style: italic;
+        }
+
+        .white-text {
+            color: #ffffff;
+        }
+
+        .secondary-text {
+            color: #565656;
+        }
+
+        /* Header */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 20px 112px;
+            position: sticky;
+            top: 48px;
+            z-index: 1000;
+        }
+
+        .header-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #2e2e2e;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2e2e2e;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #059669;
+        }
+
+        .cta-button {
+            background-color: #233c36;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .cta-button:hover {
+            background-color: #1a2e2a;
+        }
+
+        /* Hero Section */
+        .hero {
+            background-color: #f3ecda;
+            padding: 80px 112px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .hero-title {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 72px;
+            font-weight: 600;
+            margin-bottom: 24px;
+            color: #2e2e2e;
+        }
+
+        .hero-title .dot {
+            color: #2e2e2e;
+        }
+
+        .hero-title .meter-text {
+            color: #059669;
+            font-style: italic;
+        }
+
+        .hero-subtitle {
+            font-size: 30px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin-bottom: 16px;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: #565656;
+            margin-bottom: 48px;
+            line-height: 1.6;
+        }
+
+        .url-input-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 16px;
+            justify-content: center;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .url-input {
+            flex: 1;
+            padding: 16px;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            background-color: white;
+            font-family: inherit;
+            font-size: 16px;
+            color: #2e2e2e;
+        }
+
+        .url-input::placeholder {
+            color: #565656;
+        }
+
+        .analyze-button {
+            background-color: #059669;
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .analyze-button:hover {
+            background-color: #047857;
+        }
+
+        .helper-text {
+            font-size: 14px;
+            color: #565656;
+            margin-bottom: 48px;
+        }
+
+        .cow-placeholder {
+            width: 493px;
+            height: 400px;
+            background-color: rgba(5, 150, 105, 0.1);
+            border-radius: 16px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            margin-top: 40px;
+        }
+
+        /* Come Funziona Section */
+        .come-funziona {
+            background-color: #ffffff;
+            padding: 80px 112px;
+        }
+
+        .section-title {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 60px;
+            color: #2e2e2e;
+        }
+
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .step-card {
+            text-align: center;
+        }
+
+        .step-card h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #2e2e2e;
+        }
+
+        .step-card p {
+            font-size: 16px;
+            color: #565656;
+            line-height: 1.6;
+        }
+
+        /* Che Cosa Misuriamo */
+        .che-cosa-misuriamo {
+            background-color: #ffffff;
+            padding: 80px 112px;
+        }
+
+        .icon-cards-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .icon-card {
+            text-align: center;
+        }
+
+        .icon-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-top: 16px;
+            color: #2e2e2e;
+        }
+
+        /* Perché Misurare Section */
+        .perche-misurare {
+            background-color: #233c36;
+            color: white;
+            padding: 80px 112px;
+        }
+
+        .perche-misurare-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            max-width: 1440px;
+            margin: 0 auto;
+            align-items: center;
+        }
+
+        .perche-misurare-left .green-badge {
+            background-color: #d1fae5;
+            color: #065f46;
+            display: inline-block;
+            margin-bottom: 24px;
+        }
+
+        .perche-misurare-left h2 {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: white;
+            line-height: 1.4;
+        }
+
+        .perche-misurare-left p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            margin-top: 16px;
+        }
+
+        .perche-misurare-right {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .benefit-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .benefit-icon {
+            width: 64px;
+            height: 64px;
+            background-color: rgba(5, 150, 105, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            color: #059669;
+            font-size: 32px;
+        }
+
+        .benefit-content h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: white;
+        }
+
+        .benefit-content p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* Cosa Puoi Fare Section */
+        .cosa-puoi-fare {
+            background-color: #ffffff;
+            padding: 80px 112px;
+        }
+
+        .cosa-puoi-fare-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .cosa-puoi-fare-intro h2 {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #2e2e2e;
+        }
+
+        .cosa-puoi-fare-intro p {
+            font-size: 18px;
+            color: #565656;
+            margin-bottom: 32px;
+        }
+
+        .actions-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 40px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .action-card {
+            padding: 32px 24px;
+            border-bottom: 4px solid #059669;
+            background-color: white;
+            transition: transform 0.3s;
+        }
+
+        .action-card:hover {
+            transform: translateY(-4px);
+        }
+
+        .action-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2e2e2e;
+        }
+
+        .action-card p {
+            font-size: 14px;
+            color: #565656;
+            line-height: 1.6;
+        }
+
+        /* Bellissimi e Sostenibili Section */
+        .bellissimi-sostenibili {
+            background-color: #233c36;
+            color: white;
+            padding: 80px 112px;
+        }
+
+        .bellissimi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 60px;
+            padding-bottom: 40px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bellissimi-header h2 {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 36px;
+            font-weight: 600;
+            flex: 1;
+        }
+
+        .bellissimi-header-text {
+            flex: 1;
+            padding-left: 40px;
+        }
+
+        .bellissimi-header p {
+            font-size: 20px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .bellissimi-cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .bellissimi-card {
+            padding: 40px;
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bellissimi-card:last-child {
+            border-right: none;
+        }
+
+        .bellissimi-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: white;
+            margin-top: 16px;
+        }
+
+        .bellissimi-card p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        /* Siti Realizzati Section */
+        .siti-realizzati {
+            background-color: #ffffff;
+            padding: 80px 112px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 40px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .project-card {
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.3s;
+        }
+
+        .project-card:hover {
+            box-shadow: 0 8px 24px rgba(46, 46, 46, 0.1);
+        }
+
+        .project-image {
+            width: 100%;
+            height: 200px;
+            background-color: rgba(5, 150, 105, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            color: rgba(5, 150, 105, 0.3);
+        }
+
+        .project-content {
+            padding: 24px;
+        }
+
+        .project-category {
+            font-size: 10px;
+            color: #565656;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .project-name {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin-bottom: 16px;
+        }
+
+        .co2-stat {
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+
+        .co2-number {
+            font-size: 36px;
+            font-weight: 700;
+            color: #059669;
+        }
+
+        .co2-label {
+            font-size: 14px;
+            color: #565656;
+        }
+
+        .project-tags {
+            font-size: 12px;
+            color: #565656;
+            line-height: 1.8;
+        }
+
+        /* La Scienza Dietro Section */
+        .la-scienza-dietro {
+            background-color: #ffffff;
+            padding: 80px 112px;
+        }
+
+        .methodology-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .methodology-card {
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+        }
+
+        .methodology-card h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #2e2e2e;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .methodology-card p {
+            font-size: 14px;
+            color: #565656;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .methodology-features {
+            font-size: 13px;
+            color: #565656;
+            line-height: 1.8;
+        }
+
+        .methodology-features li {
+            list-style: none;
+            margin-bottom: 8px;
+            padding-left: 20px;
+            position: relative;
+        }
+
+        .methodology-features li:before {
+            content: "•";
+            color: #059669;
+            font-weight: 600;
+            position: absolute;
+            left: 0;
+        }
+
+        /* Formula Section */
+        .formula-section {
+            background-color: #233c36;
+            color: white;
+            padding: 80px 112px;
+        }
+
+        .formula-section h2 {
+            font-family: "IBM Plex Serif", Georgia, serif;
+            font-size: 36px;
+            font-weight: 600;
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .formula-container {
+            max-width: 1440px;
+            margin: 0 auto;
+        }
+
+        .formula-box {
+            background-color: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 40px;
+            font-family: "IBM Plex Mono", monospace;
+            font-size: 18px;
+            line-height: 1.8;
+            overflow-x: auto;
+        }
+
+        .formula-breakdown {
+            margin-bottom: 40px;
+        }
+
+        .formula-breakdown h3 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .formula-item {
+            font-size: 14px;
+            margin-bottom: 12px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .formula-item strong {
+            color: #059669;
+        }
+
+        .example-calculation {
+            background-color: rgba(0, 0, 0, 0.2);
+            border-left: 4px solid #059669;
+            padding: 20px;
+            margin-bottom: 40px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .rating-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+        }
+
+        .rating-table th,
+        .rating-table td {
+            padding: 12px;
+            text-align: left;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 14px;
+        }
+
+        .rating-table th {
+            background-color: rgba(0, 0, 0, 0.2);
+            font-weight: 600;
+        }
+
+        .rating-a-plus {
+            color: #059669;
+            font-weight: 600;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #1a1a1a;
+            color: white;
+            padding: 40px 112px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 32px;
+        }
+
+        .footer-links a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #059669;
+        }
+
+        .footer-right {
+            text-align: right;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container,
+            header,
+            .hero,
+            .come-funziona,
+            .che-cosa-misuriamo,
+            .perche-misurare,
+            .cosa-puoi-fare,
+            .bellissimi-sostenibili,
+            .siti-realizzati,
+            .la-scienza-dietro,
+            .formula-section,
+            footer {
+                padding-left: 24px;
+                padding-right: 24px;
+            }
+
+            .hero {
+                padding: 40px 24px;
+            }
+
+            .hero-title {
+                font-size: 48px;
+            }
+
+            .hero-subtitle {
+                font-size: 20px;
+            }
+
+            .hero-description {
+                font-size: 16px;
+            }
+
+            .section-title {
+                font-size: 28px;
+                margin-bottom: 40px;
+            }
+
+            .steps-grid {
+                grid-template-columns: 1fr;
+                gap: 24px;
+            }
+
+            .icon-cards-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .perche-misurare-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .actions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .bellissimi-cards {
+                grid-template-columns: 1fr;
+                border-right: none;
+            }
+
+            .bellissimi-card {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .bellissimi-card:last-child {
+                border-bottom: none;
+            }
+
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .methodology-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .url-input-container {
+                flex-direction: column;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: 24px;
+                text-align: center;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .footer-right {
+                text-align: center;
+            }
+
+            nav {
+                gap: 24px;
+            }
+
+            nav a {
+                font-size: 12px;
+            }
+
+            .bellissimi-header {
+                flex-direction: column;
+            }
+
+            .bellissimi-header-text {
+                padding-left: 0;
+                margin-top: 20px;
+            }
+        }
+    </style>
 </head>
 <body>
-
-<div class="wip-status-bar">
-  <span class="wip-status-label">REVIEW — In attesa di approvazione</span>
-  <span class="wip-flow-tag">Flusso: Marketing</span>
-  <span style="opacity:0.5;">·</span>
-  <span>pg-meter.html</span>
-  <div class="wip-approval-actions">
-    <button class="wip-btn" onclick="alert('Commento aggiunto — funzione in sviluppo')">💬 Commenta</button>
-    <button class="wip-btn" onclick="alert('Richiesta modifiche inviata — funzione in sviluppo')">↩ Richiedi modifiche</button>
-    <button class="wip-btn wip-btn-approve" onclick="this.closest('.wip-status-bar').style.background='#38781D';this.closest('.wip-status-bar').querySelector('.wip-status-label').textContent='APPROVED — Approvato'">✓ Approva</button>
-  </div>
-</div>
-
-<header class="pg-header">
-  <div class="pg-logo">Pianeta<span>.</span>Green</div>
-  <nav class="pg-nav">
-    <a href="#">Home</a>
-    <a href="#">Il Meter</a>
-    <a href="#">Piani</a>
-    <a href="#">Blog</a>
-    <a href="#">Chi siamo</a>
-    <a href="#">Contatti</a>
-  </nav>
-</header>
-
-<div class="wip-container">
-  <h1 class="wip-page-title">Il Meter</h1>
-  <div class="wip-page-meta">
-    <span>Flusso: Marketing</span>
-    <span>Sezioni: 7</span>
-    <span>Stato: REVIEW</span>
-  </div>
-
-  <nav class="wip-section-nav"><a href="#hero" class="wip-nav-link">Impact Meter</a><a href="#come-funziona" class="wip-nav-link">Come funziona?</a><a href="#cosa-misuriamo" class="wip-nav-link">Che cosa misuriamo?</a><a href="#perche" class="wip-nav-link">Perché misurare?</a><a href="#metodologia" class="wip-nav-link">La scienza dietro</a><a href="#formula" class="wip-nav-link">Formula di calcolo</a><a href="#esempi" class="wip-nav-link">Siti analizzati</a></nav>
-
-    <div class="wip-section" id="hero">
-      <div class="wip-section-header">
-        <span class="wip-section-num">01</span>
-        <h2 class="wip-section-title">Impact Meter — Misura l'impatto del tuo sito</h2>
-      </div>
-      <div class="wip-section-desc">Input URL centrato con pulsante 'Analizza'. Sottotitolo: 'Scopri quanto CO2 produce il tuo sito web e come migliorare.'</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
+    <!-- WIP Status Bar -->
+    <div class="wip-status">
+        🚀 Work in Progress - Status: review
     </div>
-    <div class="wip-section" id="come-funziona">
-      <div class="wip-section-header">
-        <span class="wip-section-num">02</span>
-        <h2 class="wip-section-title">Come funziona?</h2>
-      </div>
-      <div class="wip-section-desc">3 step: 1. Inserisci URL → 2. Analizziamo → 3. Ricevi report. Con illustrazioni.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="cosa-misuriamo">
-      <div class="wip-section-header">
-        <span class="wip-section-num">03</span>
-        <h2 class="wip-section-title">Che cosa misuriamo?</h2>
-      </div>
-      <div class="wip-section-desc">4 card: Carbon Footprint (g CO2 per visita), Energy Usage (kWh stimati), Data Transfer (MB per pagina), Green Hosting (sì/no verifica). Ogni card con icona e spiegazione.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="perche">
-      <div class="wip-section-header">
-        <span class="wip-section-num">04</span>
-        <h2 class="wip-section-title">Perché misurare?</h2>
-      </div>
-      <div class="wip-section-desc">Dati impatto: 4.8 miliardi pagine web, media 1.76g CO2/pagina. Infografica. CTA 'Misura ora'.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="metodologia">
-      <div class="wip-section-header">
-        <span class="wip-section-num">05</span>
-        <h2 class="wip-section-title">La scienza dietro</h2>
-      </div>
-      <div class="wip-section-desc">Metodologia: Green Web Foundation, ISO 14064-2, GHG Protocol. Trasparenza sul calcolo.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="formula">
-      <div class="wip-section-header">
-        <span class="wip-section-num">06</span>
-        <h2 class="wip-section-title">Formula di calcolo</h2>
-      </div>
-      <div class="wip-section-desc">Dettaglio tecnico della formula CO2 = data × energy × carbon intensity × visits. Per utenti avanzati.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="esempi">
-      <div class="wip-section-header">
-        <span class="wip-section-num">07</span>
-        <h2 class="wip-section-title">Siti analizzati</h2>
-      </div>
-      <div class="wip-section-desc">3-4 card con siti esempio, score, prima/dopo. Link a case studies.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-</div>
 
-<footer class="pg-footer">
-  © 2026 Pianeta.Green Hosting · pianeta.studio · Società Benefit · Milano / Sicilia
-</footer>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <div class="logo">Pianeta Green</div>
+            <nav>
+                <a href="#ecosistema">Ecosistema</a>
+                <a href="#meter">Meter</a>
+                <a href="#prodotti">Prodotti</a>
+                <a href="#approccio">Approccio</a>
+                <a href="#studio">Studio</a>
+                <a href="#contatta" class="cta-button">Contatta</a>
+            </nav>
+        </div>
+    </header>
 
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="green-badge">Powered by Pianeta.Green</div>
+            <h1 class="hero-title">
+                Pianeta<span class="dot">.</span><span class="meter-text">Meter</span>
+            </h1>
+            <h2 class="hero-subtitle">Quanto è sostenibile il tuo sito?</h2>
+            <p class="hero-description">Scopri l'impatto ambientale del tuo website e ricevi consigli concreti per migliorare.</p>
+
+            <div class="url-input-container">
+                <input type="text" class="url-input" placeholder="https://www.tuosito.com">
+                <button class="analyze-button">Analizza</button>
+            </div>
+
+            <p class="helper-text">Inserisci l'URL completo del tuo sito web. L'analisi impiega circa 30 secondi.</p>
+
+            <div class="cow-placeholder">🐄</div>
+        </div>
+    </section>
+
+    <!-- Come Funziona Section -->
+    <section class="come-funziona">
+        <div class="container">
+            <h2 class="section-title">Come funziona?</h2>
+
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="icon-circle">1</div>
+                    <h3>Inserisci l'URL</h3>
+                    <p>Dai il link al tuo website e noi analizziamo ogni pagina, calcoliamo il volume di dati trasferiti.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="icon-circle">2</div>
+                    <h3>Calcoliamo le emissioni</h3>
+                    <p>Convertiamo i dati trasferiti in kg di CO2 usando i database verificati di Green Web Foundation.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="icon-circle">3</div>
+                    <h3>Forniamo insights</h3>
+                    <p>Ricevi un report completo con raccomandazioni concrete per ridurre l'impronta del tuo sito.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Che Cosa Misuriamo Section -->
+    <section class="che-cosa-misuriamo">
+        <div class="container">
+            <h2 class="section-title">Che cosa misuriamo?</h2>
+
+            <div class="icon-cards-grid">
+                <div class="icon-card">
+                    <div class="icon-circle">💨</div>
+                    <h3>Carbon Footprint</h3>
+                </div>
+
+                <div class="icon-card">
+                    <div class="icon-circle">⚡</div>
+                    <h3>Energy Usage</h3>
+                </div>
+
+                <div class="icon-card">
+                    <div class="icon-circle">📊</div>
+                    <h3>Data Transfer</h3>
+                </div>
+
+                <div class="icon-card">
+                    <div class="icon-circle">🌱</div>
+                    <h3>Hosting Green</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Perché Misurare Section -->
+    <section class="perche-misurare">
+        <div class="perche-misurare-content">
+            <div class="perche-misurare-left">
+                <div class="green-badge">Perché misurare</div>
+                <h2>Un sito web medio produce 4.61 g di CO2 <span class="green-italic">per ogni visita</span>.</h2>
+                <p>Moltiplicato per milioni di utenti, l'impatto è significativo.</p>
+            </div>
+
+            <div class="perche-misurare-right">
+                <div class="benefit-item">
+                    <div class="benefit-icon">📋</div>
+                    <div class="benefit-content">
+                        <h3>Normativa CSRD</h3>
+                        <p>Dovrai presto dichiarare l'impatto dei tuoi servizi digitali.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">📈</div>
+                    <div class="benefit-content">
+                        <h3>ESG</h3>
+                        <p>I tuoi stakeholder vogliono sapere il tuo commitment verso la sostenibilità.</p>
+                    </div>
+                </div>
+
+                <div class="benefit-item">
+                    <div class="benefit-icon">⚙️</div>
+                    <div class="benefit-content">
+                        <h3>Performance</h3>
+                        <p>Siti più veloci = meno CO2 e migliore UX</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cosa Puoi Fare Section -->
+    <section class="cosa-puoi-fare">
+        <div class="container">
+            <div class="cosa-puoi-fare-intro">
+                <h2>La <span class="green-italic">sostenibilità digitale</span> non è complessa.</h2>
+                <p>Piccoli accorgimenti fanno la differenza.</p>
+            </div>
+
+            <div class="actions-grid">
+                <div class="action-card">
+                    <h3>Hosting green</h3>
+                    <p>Scegli server alimentati da rinnovabili</p>
+                </div>
+
+                <div class="action-card">
+                    <h3>Ottimizzazione immagini</h3>
+                    <p>Riduci il peso delle foto (20% del traffico)</p>
+                </div>
+
+                <div class="action-card">
+                    <h3>Caching + CDN</h3>
+                    <p>Servi contenuti più velocemente e con meno energia/distanza/latenza</p>
+                </div>
+
+                <div class="action-card">
+                    <h3>Offset certificates</h3>
+                    <p>Compensa le emissioni con certificati di riduzioni verificati</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bellissimi e Sostenibili Section -->
+    <section class="bellissimi-sostenibili">
+        <div class="container">
+            <div class="bellissimi-header">
+                <div style="flex: 1;">
+                    <h2>Bellissimi e <span class="green-italic">sostenibili</span>.</h2>
+                </div>
+                <div class="bellissimi-header-text">
+                    <p>Non esiste conflitto tra estetica e sostenibilità. I nostri siti lo dimostrano.</p>
+                </div>
+            </div>
+
+            <div class="bellissimi-cards">
+                <div class="bellissimi-card">
+                    <div class="icon-circle">✨</div>
+                    <h3>Design Excellence</h3>
+                    <p>Tipografia elegante, spazi generosi, palette di colori curata. Il minimalismo non è mancanza, è consapevolezza.</p>
+                </div>
+
+                <div class="bellissimi-card">
+                    <div class="icon-circle">⚡</div>
+                    <h3>Performance First</h3>
+                    <p>Zero framework bloati. Solo HTML + CSS + JavaScript essenziale. Le pagine caricano in &lt;200ms.</p>
+                </div>
+
+                <div class="bellissimi-card">
+                    <div class="icon-circle">🌍</div>
+                    <h3>Carbon Neutral</h3>
+                    <p>Hosting green, siti leggeri, emissioni calcolate e compensate. Ogni sito con certificato.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Siti Realizzati Section -->
+    <section class="siti-realizzati">
+        <div class="container">
+            <h2 class="section-title">Siti realizzati con sostenibilità.</h2>
+
+            <div class="projects-grid">
+                <div class="project-card">
+                    <div class="project-image">🏢</div>
+                    <div class="project-content">
+                        <div class="project-category">Platform</div>
+                        <div class="project-name">ARIES Platform</div>
+                        <div class="co2-stat">
+                            <span class="co2-number">0.19g</span>
+                            <span class="co2-label">CO2 per visita</span>
+                        </div>
+                        <div class="project-tags">
+                            Hosting: Standard<br>
+                            Rating: C
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">🔬</div>
+                    <div class="project-content">
+                        <div class="project-category">Research</div>
+                        <div class="project-name">K.LAB Research Portal</div>
+                        <div class="co2-stat">
+                            <span class="co2-number">0.24g</span>
+                            <span class="co2-label">CO2 per visita</span>
+                        </div>
+                        <div class="project-tags">
+                            Hosting: Standard<br>
+                            Rating: D
+                        </div>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div class="project-image">🎤</div>
+                    <div class="project-content">
+                        <div class="project-category">Community</div>
+                        <div class="project-name">Voices for a Brighter Future</div>
+                        <div class="co2-stat">
+                            <span class="co2-number">0.54g</span>
+                            <span class="co2-label">CO2 per visita</span>
+                        </div>
+                        <div class="project-tags">
+                            Hosting: Standard<br>
+                            Rating: F
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- La Scienza Dietro Section -->
+    <section class="la-scienza-dietro">
+        <div class="container">
+            <h2 class="section-title">La scienza dietro.</h2>
+
+            <div class="methodology-grid">
+                <div class="methodology-card">
+                    <h3><span class="icon-circle" style="width: 40px; height: 40px; font-size: 20px; margin: 0;">🌍</span> Green Web Foundation</h3>
+                    <p>CO2.js di Misure. Calcola kg di CO2 basandosi sui dati trasferiti.</p>
+                    <ul class="methodology-features">
+                        <li>CO2 = Data × 0.81 kWh/GB × 442 g/kWh</li>
+                        <li>Fattori certificati (Scarlett, Green Host page)</li>
+                        <li>Carbon certificate basato su Joan de Kloster</li>
+                        <li>Standard Web Designware (SWD5)</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card">
+                    <h3><span class="icon-circle" style="width: 40px; height: 40px; font-size: 20px; margin: 0;">📋</span> ISO 14064-2</h3>
+                    <p>Greenhouse Gas Protocol. Standard Internazionale per quantificazioni.</p>
+                    <ul class="methodology-features">
+                        <li>Scope 1: Direct emissions</li>
+                        <li>Digital Service Cloud accounting</li>
+                        <li>Company-specific framework</li>
+                        <li>Uncertainty: ±15% acceptable</li>
+                        <li>Third-Party Scope Quantification</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card">
+                    <h3><span class="icon-circle" style="width: 40px; height: 40px; font-size: 20px; margin: 0;">⚡</span> Grid Intensity Adjustment</h3>
+                    <p>Electricity Maps API. Fattore di compensazione basato su ubicazione.</p>
+                    <ul class="methodology-features">
+                        <li>Connessione con terze parti in Europa</li>
+                        <li>Mix energetico locale</li>
+                        <li>Dati da ENTSO-E</li>
+                        <li>Riduzione da 560g CO2 in base a grid mix</li>
+                    </ul>
+                </div>
+
+                <div class="methodology-card">
+                    <h3><span class="icon-circle" style="width: 40px; height: 40px; font-size: 20px; margin: 0;">🔐</span> Blockchain Certification</h3>
+                    <p>Ogni report firmato digitalmente per immutabilità.</p>
+                    <ul class="methodology-features">
+                        <li>Hash SHA-256 immutabile</li>
+                        <li>Timestamp UTC con certificato</li>
+                        <li>Audit trail su blockchain pubblica</li>
+                        <li>Verificabile da terze parti</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Formula Section -->
+    <section class="formula-section">
+        <div class="formula-container">
+            <h2>Formula di calcolo completa</h2>
+
+            <div class="formula-box">
+                CO2 (g) = Data_GB × 0.075 × 0.81 × 442 × Green_Factor
+            </div>
+
+            <div class="formula-breakdown">
+                <h3>Dove:</h3>
+                <div class="formula-item"><strong>Data_GB</strong> = peso della pagina (in GB)</div>
+                <div class="formula-item"><strong>0.075</strong> = Cache Factor (75% nuovi visitatori, 25% ritorno)</div>
+                <div class="formula-item"><strong>0.81</strong> = Energy Intensity (kWh/GB)</div>
+                <div class="formula-item"><strong>442</strong> = Carbon Intensity (gCO2/kWh)</div>
+                <div class="formula-item"><strong>Green_Factor</strong> = 0.91 su Green Hosting, altrimenti 1.0</div>
+            </div>
+
+            <div class="example-calculation">
+                <strong>Esempio di calcolo:</strong><br>
+                Pagina da 2.5 MB (0.0025 GB) su hosting green<br>
+                CO2 = 0.0025 × 0.075 × 0.81 × 442 × 0.91 = <strong>0.061g CO2 per visita</strong>
+            </div>
+
+            <div>
+                <h3 style="margin-top: 40px; margin-bottom: 20px;">Scala di Rating:</h3>
+                <table class="rating-table">
+                    <thead>
+                        <tr>
+                            <th>Rating</th>
+                            <th>Range</th>
+                            <th>Descrizione</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="rating-a-plus">A+</span></td>
+                            <td>&lt; 1.0g</td>
+                            <td>Eccezionale - Sito ultra-efficiente</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rating-a-plus">A</span></td>
+                            <td>&lt; 2.5g</td>
+                            <td>Molto buono - Sito efficiente</td>
+                        </tr>
+                        <tr>
+                            <td><span class="rating-a-plus">B</span></td>
+                            <td>&lt; 5.0g</td>
+                            <td>Buono - Nella media</td>
+                        </tr>
+                        <tr>
+                            <td>C</td>
+                            <td>&lt; 10.0g</td>
+                            <td>Accettabile - Miglioramenti consigliati</td>
+                        </tr>
+                        <tr>
+                            <td>D</td>
+                            <td>&lt; 25.0g</td>
+                            <td>Scarso - Azioni necessarie</td>
+                        </tr>
+                        <tr>
+                            <td>F</td>
+                            <td>&gt; 25.0g</td>
+                            <td>Molto scarso - Ottimizzazione urgente</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div>© 2026 Pianeta Green Hosting</div>
+            <div class="footer-links">
+                <a href="https://pianeta.studio">pianeta.studio</a>
+                <a href="mailto:info@pianeta.studio">info@pianeta.studio</a>
+            </div>
+            <div class="footer-right">
+                Quantifica la tua sostenibilità — Meter v1.0
+            </div>
+        </div>
+    </footer>
 </body>
 </html>
