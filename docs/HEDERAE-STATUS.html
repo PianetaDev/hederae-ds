@@ -169,6 +169,24 @@
   .how-to strong { color: var(--green); }
   .how-to code { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.85); }
 
+  /* DISTRIBUTION MODEL */
+  .flow-diagram { display: flex; align-items: center; gap: 0; margin-top: 28px; justify-content: center; flex-wrap: wrap; }
+  .flow-node { background: var(--white); border-radius: 8px; padding: 20px 24px; text-align: center; min-width: 180px; position: relative; }
+  .flow-node.upstream { background: var(--ink); color: var(--white); border: 2px solid var(--green); }
+  .flow-node.upstream .flow-node-label { color: var(--green); }
+  .flow-node.downstream { border: 2px solid var(--orange); }
+  .flow-node.downstream .flow-node-label { color: var(--orange); }
+  .flow-node-label { font-size: 9px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 6px; }
+  .flow-node-title { font-size: 16px; font-weight: 700; }
+  .flow-node-desc { font-size: 11px; color: var(--ink-muted); margin-top: 4px; line-height: 1.4; }
+  .flow-node.upstream .flow-node-desc { color: rgba(255,255,255,0.5); }
+  .flow-arrow { font-size: 24px; color: var(--ink-muted); padding: 0 12px; flex-shrink: 0; }
+  .flow-rules { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; margin-top: 24px; }
+  .flow-rule { background: var(--white); border-radius: 6px; padding: 16px 20px; }
+  .flow-rule-icon { font-size: 20px; margin-bottom: 6px; }
+  .flow-rule-title { font-size: 13px; font-weight: 700; margin-bottom: 4px; }
+  .flow-rule-desc { font-size: 12px; color: var(--ink-muted); line-height: 1.5; }
+
   /* FOOTER */
   .page-footer { background: var(--ink); color: rgba(255,255,255,0.35); padding: 24px 40px; font-size: 11px; display: flex; justify-content: space-between; align-items: center; }
   .page-footer strong { color: var(--green); }
@@ -190,7 +208,8 @@
   <span class="nav-brand">Hederae DS</span>
   <span class="nav-subtitle">Status & Log</span>
   <div class="nav-links">
-    <a href="#profili">Profili</a>
+    <a href="#profili">Architettura</a>
+    <a href="#distribuzione">Distribuzione</a>
     <a href="#brand">Brand</a>
     <a href="#log">Log</a>
     <a href="#next">Prossimi step</a>
@@ -205,7 +224,7 @@
     <div>
       <div class="hero-label">Pianeta Studio — Design System</div>
       <h1>Hederae DS<br><span>Status & Log</span></h1>
-      <p class="hero-desc">Libreria di pattern HTML/CSS + page template multi-brand, documentata in Storybook. Architettura Core + Layer: un nucleo condiviso (token, atomi, molecole) e layer specializzati per contesto (Sito, Intranet, DocumentAI).</p>
+      <p class="hero-desc">Libreria vivente di pattern HTML/CSS + page template multi-brand. Ogni progetto arricchisce il core; i clienti ricevono istanze separate (snapshot) che non vengono toccate dopo la consegna. Architettura Core + Layer con distribuzione upstream → downstream.</p>
     </div>
     <div class="hero-meta">
       <div class="meta-row">
@@ -225,8 +244,12 @@
         <span class="meta-value">Susdef · AGESCI · Rara · Corner Table · Sisal</span>
       </div>
       <div class="meta-row">
-        <span class="meta-label">Profilo attuale</span>
+        <span class="meta-label">Focus attuale</span>
         <span class="meta-value warn">▶ Layer Intranet (Sisal) + Core</span>
+      </div>
+      <div class="meta-row">
+        <span class="meta-label">Modello</span>
+        <span class="meta-value">Upstream → Downstream (istanze)</span>
       </div>
     </div>
   </div>
@@ -322,10 +345,57 @@
   </div>
 </section>
 
+<!-- MODELLO DI DISTRIBUZIONE -->
+<section id="distribuzione">
+  <div class="container">
+    <div class="section-label">02 — Distribuzione</div>
+    <h2>Upstream → Downstream</h2>
+    <p class="lead">Hederae è la libreria vivente (upstream). Ogni progetto contribuisce pattern reali al core. I clienti ricevono istanze separate (downstream) che non vengono toccate dopo la consegna.</p>
+
+    <div class="flow-diagram">
+      <div class="flow-node upstream">
+        <div class="flow-node-label">Upstream</div>
+        <div class="flow-node-title">Hederae DS</div>
+        <div class="flow-node-desc">Libreria vivente · Core + Layer<br>Cresce con ogni progetto</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node downstream">
+        <div class="flow-node-label">Downstream</div>
+        <div class="flow-node-title">Istanza Cliente</div>
+        <div class="flow-node-desc">Snapshot frozen alla consegna<br>Non aggiornata automaticamente</div>
+      </div>
+      <div class="flow-arrow">→</div>
+      <div class="flow-node" style="border: 2px dashed var(--border-strong);">
+        <div class="flow-node-label" style="color: var(--ink-muted);">Opzionale</div>
+        <div class="flow-node-title">Upgrade</div>
+        <div class="flow-node-desc">Il vecchio cliente può<br>richiedere miglioramenti</div>
+      </div>
+    </div>
+
+    <div class="flow-rules">
+      <div class="flow-rule">
+        <div class="flow-rule-icon">↑</div>
+        <div class="flow-rule-title">Ogni progetto arricchisce il core</div>
+        <div class="flow-rule-desc">I pattern creati per un cliente (es. KPI Widget per Sisal) vengono estratti e tornano nel core Hederae come best practice.</div>
+      </div>
+      <div class="flow-rule">
+        <div class="flow-rule-icon">📸</div>
+        <div class="flow-rule-title">Istanze separate per cliente</div>
+        <div class="flow-rule-desc">Il deliverable è uno snapshot: il DS continua la sua missione indipendentemente. Nessun rischio di breaking change sul progetto consegnato.</div>
+      </div>
+      <div class="flow-rule">
+        <div class="flow-rule-icon">✨</div>
+        <div class="flow-rule-title">Nuovi clienti partono freschi</div>
+        <div class="flow-rule-desc">Chi arriva dopo beneficia di tutto il patrimonio accumulato dai progetti precedenti. Più progetti facciamo, più ricco diventa Hederae.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- BRAND STATUS -->
 <section id="brand">
   <div class="container">
-    <div class="section-label">02 — Brand coverage</div>
+    <div class="section-label">03 — Brand coverage</div>
     <h2>5 brand · 1 DS</h2>
     <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook, ognuno può usare uno o più layer. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
 
@@ -403,9 +473,32 @@
 <!-- PIVOT TRACKER -->
 <section id="pivot">
   <div class="container">
-    <div class="section-label">03 — Pivot tracker</div>
+    <div class="section-label">04 — Pivot tracker</div>
     <h2>Decisioni strategiche</h2>
     <p class="lead">Quando cambia una direzione fondamentale, la documentiamo qui. Serve per allineare il team e non perdere il perché delle scelte.</p>
+
+    <!-- PIVOT 3 — 9 marzo 2026 -->
+    <div class="pivot-box">
+      <div class="pivot-date">Pivot #3 — 9 Marzo 2026</div>
+      <div class="pivot-title">Da "design system statico" a "libreria vivente upstream"</div>
+      <p class="pivot-desc">Hederae non è un pacchetto che si consegna e si dimentica. È una <strong>libreria vivente</strong> che cresce con ogni progetto. Ogni cliente arricchisce il core con pattern reali testati in produzione. I deliverable cliente sono <strong>istanze separate</strong> (snapshot) che non vengono aggiornate dopo la consegna. I nuovi clienti partono sempre con tutto il patrimonio accumulato. I vecchi clienti possono scegliere di ricevere miglioramenti.</p>
+      <div class="pivot-before-after">
+        <div class="pivot-col pivot-col-before">
+          <div class="pivot-col-label">Prima</div>
+          <div class="pivot-item">DS come prodotto finito da consegnare</div>
+          <div class="pivot-item">Ogni progetto ripartiva da zero o quasi</div>
+          <div class="pivot-item">Nessun meccanismo di feedback al core</div>
+          <div class="pivot-item">Rischio di drift tra progetti diversi</div>
+        </div>
+        <div class="pivot-col pivot-col-after">
+          <div class="pivot-col-label">Adesso</div>
+          <div class="pivot-item">Hederae = upstream, best practice vive</div>
+          <div class="pivot-item">Ogni progetto contribuisce pattern al core</div>
+          <div class="pivot-item">Clienti ricevono istanze frozen (snapshot)</div>
+          <div class="pivot-item">Nuovi clienti partono sempre freschi; vecchi possono upgrade</div>
+        </div>
+      </div>
+    </div>
 
     <!-- PIVOT 2 — 9 marzo 2026 -->
     <div class="pivot-box">
@@ -459,13 +552,24 @@
 <!-- LOG ATTIVITÀ -->
 <section id="log">
   <div class="container">
-    <div class="section-label">04 — Log attività</div>
+    <div class="section-label">05 — Log attività</div>
     <h2>Cosa è stato fatto</h2>
     <p class="lead">Cronologia inversa delle attività principali. Ogni deploy corrisponde a un commit su GitHub; il workflow GitHub Actions aggiorna Storybook automaticamente.</p>
 
     <div class="log">
 
       <!-- ENTRY: aggiungere nuove IN CIMA a questa lista -->
+
+      <div class="log-entry">
+        <div class="log-date">9 mar 2026</div>
+        <div class="log-dot pivot"></div>
+        <div class="log-body">
+          <div class="log-type type-pivot">PIVOT</div>
+          <div class="log-heading">Modello distribuzione: libreria vivente upstream → istanze downstream</div>
+          <div class="log-detail">Hederae diventa una libreria vivente che cresce con ogni progetto. I deliverable cliente sono istanze separate (snapshot frozen alla consegna). Nuovi clienti partono sempre con il patrimonio accumulato. Aggiunta sezione "Distribuzione" allo Status Dashboard.</div>
+          <div class="log-tags"><span class="log-tag">strategia</span><span class="log-tag">pivot #3</span><span class="log-tag">distribuzione</span></div>
+        </div>
+      </div>
 
       <div class="log-entry">
         <div class="log-date">9 mar 2026</div>
@@ -578,7 +682,7 @@
 <!-- PROSSIMI STEP -->
 <section id="next">
   <div class="container">
-    <div class="section-label">05 — Sprint corrente</div>
+    <div class="section-label">06 — Sprint corrente</div>
     <h2>Prossimi step</h2>
     <p class="lead">Ordinati per priorità. Il focus è completare il Core (organismi base) e poi avanzare sui Layer Sito e Intranet.</p>
 
@@ -703,7 +807,7 @@
 <!-- ISTRUZIONI TEAM -->
 <section id="istruzioni">
   <div class="container">
-    <div class="section-label">06 — Istruzioni team</div>
+    <div class="section-label">07 — Istruzioni team</div>
     <h2>Come lavorare su Hederae</h2>
     <p class="lead">Regole essenziali per contribuire in modo coerente. Per approfondimenti vedi <code>docs/GUIDELINES.md</code> e <code>docs/AI-WORKFLOW.md</code>.</p>
 
