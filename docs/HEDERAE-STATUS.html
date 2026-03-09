@@ -205,16 +205,16 @@
     <div>
       <div class="hero-label">Pianeta Studio — Design System</div>
       <h1>Hederae DS<br><span>Status & Log</span></h1>
-      <p class="hero-desc">Libreria di pattern HTML/CSS + page template multi-brand, documentata in Storybook. Base per ecosistemi informativi (Hub, Documentale, Ricerca). La parte codice/Vue arriva con Fabrizio.</p>
+      <p class="hero-desc">Libreria di pattern HTML/CSS + page template multi-brand, documentata in Storybook. Architettura Core + Layer: un nucleo condiviso (token, atomi, molecole) e layer specializzati per contesto (Sito, Intranet, DocumentAI).</p>
     </div>
     <div class="hero-meta">
       <div class="meta-row">
         <span class="meta-label">Versione</span>
-        <span class="meta-value">v0.2.0</span>
+        <span class="meta-value">v0.3.0</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Ultimo aggiornamento</span>
-        <span class="meta-value">8 marzo 2026</span>
+        <span class="meta-value">9 marzo 2026</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Deploy Storybook</span>
@@ -222,82 +222,99 @@
       </div>
       <div class="meta-row">
         <span class="meta-label">Brand attivi</span>
-        <span class="meta-value">Susdef · AGESCI · Rara · Corner Table</span>
+        <span class="meta-value">Susdef · AGESCI · Rara · Corner Table · Sisal</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Profilo attuale</span>
-        <span class="meta-value warn">▶ Profilo C (Hub editoriale)</span>
+        <span class="meta-value warn">▶ Layer Intranet (Sisal) + Core</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- PROFILI FUNZIONALI -->
+<!-- ARCHITETTURA CORE + LAYER -->
 <section id="profili">
   <div class="container">
-    <div class="section-label">01 — Profili funzionali</div>
-    <h2>A · B · C · D</h2>
-    <p class="lead">Quattro profili funzionali, ciascuno superset del precedente. Un progetto usa solo il profilo che gli serve — niente overengineering, costo di sviluppo proporzionale.</p>
+    <div class="section-label">01 — Architettura</div>
+    <h2>Core + Layer</h2>
+    <p class="lead">Un nucleo condiviso (token, atomi, molecole) usato da layer specializzati per contesto. Ogni layer aggiunge organismi e template specifici senza toccare il core. Un progetto attiva solo i layer che servono.</p>
 
-    <div class="metrics-grid">
+    <div class="metrics-grid" style="grid-template-columns: repeat(5, 1fr);">
 
-      <!-- PROFILO A -->
+      <!-- CORE -->
       <div class="metric-card p-a">
-        <div class="metric-profile">Profilo A</div>
-        <div class="metric-name">Vetrina</div>
-        <div class="metric-desc">1 sito, brand forte, pagine statiche. Zero contenuto dinamico, zero login.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
+        <div class="metric-profile">CORE</div>
+        <div class="metric-name">Fondamenta</div>
+        <div class="metric-desc">Token semantici, atomi (Button, Badge, Input), molecole (DocCard, SectorCard, Breadcrumb, SearchBar). Condiviso da tutti i layer.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:60%"></div></div>
+        <div class="progress-pct">60%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Token stories (5/5)</span><span class="dot-done">✓ 5/5</span></div>
+          <div class="metric-row"><span>Atomi (Button, Badge, Input)</span><span class="dot-done">✓ 3/3</span></div>
+          <div class="metric-row"><span>Molecole (4 tipi)</span><span class="dot-done">✓ 4/4</span></div>
+          <div class="metric-row"><span>Organismi condivisi (Header, Footer)</span><span class="dot-todo">— 0/2</span></div>
+        </div>
+      </div>
+
+      <!-- LAYER SITO -->
+      <div class="metric-card p-c">
+        <div class="metric-profile">LAYER — SITO PUBBLICO</div>
+        <div class="metric-name">Vetrina → Hub</div>
+        <div class="metric-desc">Profili A→D: sito vetrina, commerce, hub editoriale, community. Susdef, AGESCI, Rara, Corner Table.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
+        <div class="progress-pct">45%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Template Susdef (Home + Hub)</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Template Shop (4 pagine)</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Template AGESCI (Campagna + Donazione)</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Template EPOS</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>Template Vetrina (Rara)</span><span class="dot-todo">— mancante</span></div>
+        </div>
+      </div>
+
+      <!-- LAYER INTRANET -->
+      <div class="metric-card p-b">
+        <div class="metric-profile">LAYER — INTRANET</div>
+        <div class="metric-name">Digital Workspace</div>
+        <div class="metric-desc">Intranet post-login dipendenti. Dashboard KPI, profilo HR, documentale, eventi, SERP, chatbot. Brand: Sisal.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:75%"></div></div>
+        <div class="progress-pct">75%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>CSS theme Sisal</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Page templates (13/13)</span><span class="dot-done">✓ 13/13</span></div>
+          <div class="metric-row"><span>Storybook stories (13/13)</span><span class="dot-done">✓ 13/13</span></div>
+          <div class="metric-row"><span>Componenti standalone</span><span class="dot-todo">— da estrarre</span></div>
+        </div>
+      </div>
+
+      <!-- LAYER DOCUMENTAI -->
+      <div class="metric-card p-d">
+        <div class="metric-profile">LAYER — DOCUMENTAI</div>
+        <div class="metric-name">Ricerca & Documenti</div>
+        <div class="metric-desc">Ricerca documenti con 5 stati, scheda documento, errori, feedback. Condiviso tra Sito e Intranet.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+        <div class="progress-pct">80%</div>
+        <div class="metric-detail">
+          <div class="metric-row"><span>Search (5 stati)</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Scheda documento</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Errori + redirect</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Feedback</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Integrazione filtri Intranet</span><span class="dot-partial">~ parziale</span></div>
+        </div>
+      </div>
+
+      <!-- LAYER COMUNICAZIONE -->
+      <div class="metric-card p-a">
+        <div class="metric-profile" style="color: var(--ink-muted);">LAYER — COMUNICAZIONE</div>
+        <div class="metric-name">Newsletter & Outreach</div>
+        <div class="metric-desc">Template email, newsletter, landing campagne. Fundraising AGESCI.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:40%; background: var(--ink-muted);"></div></div>
         <div class="progress-pct">40%</div>
         <div class="metric-detail">
-          <div class="metric-row"><span>Atomi (Button, Badge, Input…)</span><span class="dot-done">✓ 3/8</span></div>
-          <div class="metric-row"><span>Organismi (Header, Footer, Hero)</span><span class="dot-todo">— 0/4</span></div>
-          <div class="metric-row"><span>Template (Home, About, Contatti)</span><span class="dot-todo">— 0/3</span></div>
-          <div class="metric-row"><span>Token stories</span><span class="dot-done">✓ 5/5</span></div>
-        </div>
-      </div>
-
-      <!-- PROFILO B -->
-      <div class="metric-card p-b">
-        <div class="metric-profile">Profilo B</div>
-        <div class="metric-name">Vetrina + Commerce</div>
-        <div class="metric-desc">Profilo A + e-commerce. Catalogo, scheda prodotto, carrello, checkout.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
-        <div class="progress-pct">65%</div>
-        <div class="metric-detail">
-          <div class="metric-row"><span>Template shop (4 pagine)</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Storybook stories shop</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Organismi condivisi con A</span><span class="dot-todo">— mancanti</span></div>
-          <div class="metric-row"><span>ProductCard molecule</span><span class="dot-todo">— mancante</span></div>
-        </div>
-      </div>
-
-      <!-- PROFILO C -->
-      <div class="metric-card p-c">
-        <div class="metric-profile">Profilo C — Focus attuale</div>
-        <div class="metric-name">Hub editoriale</div>
-        <div class="metric-desc">Profilo A + contenuto organizzato + ricerca + filtri. Susdef, EPOS, reti tematiche.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
-        <div class="progress-pct">50%</div>
-        <div class="metric-detail">
-          <div class="metric-row"><span>Molecole (DocCard, SectorCard…)</span><span class="dot-done">✓ 4/6</span></div>
-          <div class="metric-row"><span>Template Susdef (Home + Hub)</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Template EPOS</span><span class="dot-todo">— mancante</span></div>
-          <div class="metric-row"><span>Organismi (HubHeader, FilterBar)</span><span class="dot-todo">— mancanti</span></div>
-        </div>
-      </div>
-
-      <!-- PROFILO D -->
-      <div class="metric-card p-d">
-        <div class="metric-profile">Profilo D</div>
-        <div class="metric-name">Community / Ecosystem</div>
-        <div class="metric-desc">Profilo C + auth + navigazione gerarchica + multi-sito. AGESCI, associazioni.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:10%"></div></div>
-        <div class="progress-pct">10%</div>
-        <div class="metric-detail">
-          <div class="metric-row"><span>Token AGESCI + CSS theme</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Template campagna/donazione</span><span class="dot-partial">~ AGESCI only</span></div>
-          <div class="metric-row"><span>Navbar mega-menu</span><span class="dot-todo">— mancante</span></div>
-          <div class="metric-row"><span>Auth components</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>Newsletter template</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Campagna AGESCI</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Donazione AGESCI</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Email template</span><span class="dot-todo">— mancante</span></div>
         </div>
       </div>
 
@@ -309,14 +326,14 @@
 <section id="brand">
   <div class="container">
     <div class="section-label">02 — Brand coverage</div>
-    <h2>4 brand · 1 DS</h2>
-    <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
+    <h2>5 brand · 1 DS</h2>
+    <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook, ognuno può usare uno o più layer. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
 
-    <div class="brand-grid">
+    <div class="brand-grid" style="grid-template-columns: repeat(5,1fr);">
 
       <div class="brand-card">
         <div class="brand-name">Susdef</div>
-        <div class="brand-type">Hub editoriale — Profilo C</div>
+        <div class="brand-type">Hub editoriale — Layer Sito C</div>
         <div class="brand-check">
           <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
           <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
@@ -329,7 +346,7 @@
 
       <div class="brand-card">
         <div class="brand-name">AGESCI</div>
-        <div class="brand-type">Community / Ecosystem — Profilo D</div>
+        <div class="brand-type">Community — Layer Sito D</div>
         <div class="brand-check">
           <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
           <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
@@ -342,7 +359,7 @@
 
       <div class="brand-card">
         <div class="brand-name">Rara</div>
-        <div class="brand-type">Vetrina — Profilo A</div>
+        <div class="brand-type">Vetrina — Layer Sito A</div>
         <div class="brand-check">
           <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
           <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
@@ -355,7 +372,7 @@
 
       <div class="brand-card">
         <div class="brand-name">Corner Table</div>
-        <div class="brand-type">Prodotto editoriale — Profilo A/C</div>
+        <div class="brand-type">Prodotto editoriale — Layer Sito A/C</div>
         <div class="brand-check">
           <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-partial">~ base</span></div>
           <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
@@ -363,6 +380,19 @@
           <div class="brand-check-row"><span>Token da Figma</span><span class="tag tag-blocked">⏸ nodi 378-3351</span></div>
           <div class="brand-check-row"><span>Template dedicati</span><span class="tag tag-todo">— mancante</span></div>
           <div class="brand-check-row"><span>Stories specifiche</span><span class="tag tag-todo">— mancante</span></div>
+        </div>
+      </div>
+
+      <div class="brand-card">
+        <div class="brand-name">Sisal</div>
+        <div class="brand-type">Intranet — Layer Intranet</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>Token JSON</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Page templates (13)</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Storybook stories (13)</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Brand in _template.js</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Area colors (8 sezioni)</span><span class="tag tag-done">✓ fatto</span></div>
         </div>
       </div>
 
@@ -376,6 +406,29 @@
     <div class="section-label">03 — Pivot tracker</div>
     <h2>Decisioni strategiche</h2>
     <p class="lead">Quando cambia una direzione fondamentale, la documentiamo qui. Serve per allineare il team e non perdere il perché delle scelte.</p>
+
+    <!-- PIVOT 2 — 9 marzo 2026 -->
+    <div class="pivot-box">
+      <div class="pivot-date">Pivot #2 — 9 Marzo 2026</div>
+      <div class="pivot-title">Da "profili lineari" a "Core + Layer"</div>
+      <p class="pivot-desc">Con l'aggiunta dell'intranet Sisal (13 page template, brand dedicato), il modello A/B/C/D lineare non regge più. Un intranet non è un superset di un hub editoriale — è un <strong>contesto diverso</strong>. Il DS si riorganizza in Core condiviso + Layer specializzati per contesto.</p>
+      <div class="pivot-before-after">
+        <div class="pivot-col pivot-col-before">
+          <div class="pivot-col-label">Prima</div>
+          <div class="pivot-item">Profili A→D lineari, ogni profilo superset del precedente</div>
+          <div class="pivot-item">Intranet non classificabile (non è A, B, C né D)</div>
+          <div class="pivot-item">DocumentAI incluso in profilo C senza motivo chiaro</div>
+          <div class="pivot-item">Un solo asse di crescita</div>
+        </div>
+        <div class="pivot-col pivot-col-after">
+          <div class="pivot-col-label">Adesso</div>
+          <div class="pivot-item">Core (token + atomi + molecole) condiviso da tutto</div>
+          <div class="pivot-item">Layer Sito (A→D), Layer Intranet, Layer DocumentAI, Layer Comunicazione</div>
+          <div class="pivot-item">Ogni brand sceglie i layer che servono</div>
+          <div class="pivot-item">Si possono aggiungere layer senza toccare il core</div>
+        </div>
+      </div>
+    </div>
 
     <!-- PIVOT 1 — 8 marzo 2026 -->
     <div class="pivot-box">
@@ -400,8 +453,6 @@
       </div>
     </div>
 
-    <!-- AGGIUNGI NUOVI PIVOT SOPRA QUESTA RIGA -->
-
   </div>
 </section>
 
@@ -415,6 +466,28 @@
     <div class="log">
 
       <!-- ENTRY: aggiungere nuove IN CIMA a questa lista -->
+
+      <div class="log-entry">
+        <div class="log-date">9 mar 2026</div>
+        <div class="log-dot active"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Layer Intranet completo: 13 page template + 13 stories Sisal</div>
+          <div class="log-detail">Aggiunti tutti i page template del Digital Workspace Sisal: Homepage, Mega Menu, Pagina Snodo, Atterraggio, News Dettaglio, Dettaglio Evento, Archivio/Lista, My Page, Sezione Aziendale, Dashboard KPI, SERP, Documentale, Pagina Generica. Ogni template ha CSS theme sisal inlined, area colors per 8 sezioni, token Hederae completi. 11.441 righe di codice. Deploy automatico #5 e #6.</div>
+          <div class="log-tags"><span class="log-tag">layer intranet</span><span class="log-tag">sisal</span><span class="log-tag">13 template</span><span class="log-tag">11k LOC</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">9 mar 2026</div>
+        <div class="log-dot pivot"></div>
+        <div class="log-body">
+          <div class="log-type type-pivot">PIVOT</div>
+          <div class="log-heading">Architettura: da profili lineari A/B/C/D a Core + Layer</div>
+          <div class="log-detail">L'intranet Sisal non rientra nel modello A→D (non è superset di nessun profilo). Riorganizzato il DS in Core condiviso + Layer specializzati: Sito (A→D), Intranet, DocumentAI, Comunicazione. Ogni brand sceglie i layer che gli servono.</div>
+          <div class="log-tags"><span class="log-tag">strategia</span><span class="log-tag">pivot #2</span><span class="log-tag">architettura</span></div>
+        </div>
+      </div>
 
       <div class="log-entry">
         <div class="log-date">8 mar 2026</div>
@@ -505,113 +578,121 @@
 <!-- PROSSIMI STEP -->
 <section id="next">
   <div class="container">
-    <div class="section-label">05 — Prossimi step</div>
-    <h2>Sprint corrente</h2>
-    <p class="lead">Ordinati per priorità. Il focus è completare il Profilo A (organismi base) e poi avanzare sul Profilo C (hub editoriale).</p>
+    <div class="section-label">05 — Sprint corrente</div>
+    <h2>Prossimi step</h2>
+    <p class="lead">Ordinati per priorità. Il focus è completare il Core (organismi base) e poi avanzare sui Layer Sito e Intranet.</p>
 
     <div class="sprint-box">
       <div class="sprint-title">
-        Profilo A → completare organismi
+        Core → estrarre organismi condivisi
         <span class="sprint-badge">Focus immediato</span>
       </div>
       <div class="task-list">
         <div class="task">
           <span class="task-prio prio-crit">Critico</span>
           <div>
-            <div class="task-name">Header / Navbar — organismo</div>
-            <div class="task-desc">Logo + nav principale + search + variante dark/light. Base condivisa per tutti i profili.</div>
+            <div class="task-name">Header/Navbar — organismo standalone</div>
+            <div class="task-desc">Estrarre l'header dai template intranet come componente riusabile. Logo + nav + search + dark/light. Base per Core.</div>
           </div>
-          <span class="task-profile">A B C D</span>
+          <span class="task-profile">Core</span>
         </div>
         <div class="task">
           <span class="task-prio prio-crit">Critico</span>
           <div>
-            <div class="task-name">Footer — organismo</div>
-            <div class="task-desc">Footer a colonne con link, social, brand info. Variante minimal (vetrina) e completo (hub).</div>
+            <div class="task-name">Footer — organismo standalone</div>
+            <div class="task-desc">Footer a colonne riusabile. Variante minimal (vetrina) e completo (hub/intranet).</div>
           </div>
-          <span class="task-profile">A B C D</span>
+          <span class="task-profile">Core</span>
         </div>
         <div class="task">
           <span class="task-prio prio-high">Alto</span>
           <div>
-            <div class="task-name">Hero Section — organismo</div>
-            <div class="task-desc">Hero con titolo + sottotitolo + CTA. Varianti: dark, light, con stats, con immagine.</div>
+            <div class="task-name">FilterBar — organismo standalone</div>
+            <div class="task-desc">Estrarre da intranet-archivio: search inline + selects + tag chips. Usata in layer Sito e Intranet.</div>
           </div>
-          <span class="task-profile">A C</span>
+          <span class="task-profile">Core</span>
         </div>
         <div class="task">
           <span class="task-prio prio-high">Alto</span>
           <div>
-            <div class="task-name">FilterBar — organismo</div>
-            <div class="task-desc">Barra filtri completa: search inline + selects + tag chips. Usata in hub e search results.</div>
+            <div class="task-name">KPI Widget — molecola</div>
+            <div class="task-desc">Estrarre da intranet-dashboard: card metrica con valore, variazione, sparkline. Riusabile in qualsiasi dashboard.</div>
           </div>
-          <span class="task-profile">C</span>
+          <span class="task-profile">Core</span>
         </div>
       </div>
     </div>
 
     <div class="sprint-box" style="margin-top:16px;">
       <div class="sprint-title">
-        Profilo C → completare hub editoriale
+        Layer Sito → completare hub editoriale
         <span class="sprint-badge">Sprint 2</span>
       </div>
       <div class="task-list">
         <div class="task">
           <span class="task-prio prio-high">Alto</span>
           <div>
-            <div class="task-name">Template Documento — raffinare</div>
-            <div class="task-desc">Pagina dettaglio documento con sidebar metadati, correlati, download. Usata da tutti i brand hub.</div>
+            <div class="task-name">Template EPOS (Home + Thematic area)</div>
+            <div class="task-desc">Attendiamo accesso Figma con Francesca. Base: riuso susdef patterns con brand EPOS.</div>
           </div>
-          <span class="task-profile">C D</span>
+          <span class="task-profile">Sito C</span>
         </div>
         <div class="task">
           <span class="task-prio prio-high">Alto</span>
           <div>
-            <div class="task-name">Template EPOS (Home + Thematic area)</div>
-            <div class="task-desc">Attendiamo accesso Figma con Francesca. Base: riuso susdef-home + susdef-hub con brand EPOS e sezioni specifiche (community profiles, internal org).</div>
+            <div class="task-name">Template Documento — raffinare</div>
+            <div class="task-desc">Pagina dettaglio documento con sidebar metadati, correlati, download.</div>
           </div>
-          <span class="task-profile">C</span>
+          <span class="task-profile">Sito C</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-med">Medio</span>
+          <div>
+            <div class="task-name">Template vetrina Rara — Layer Sito A</div>
+            <div class="task-desc">Home + About + Contatti usando token Rara. Dopo organismi Core completati.</div>
+          </div>
+          <span class="task-profile">Sito A</span>
         </div>
         <div class="task">
           <span class="task-prio prio-med">Medio</span>
           <div>
             <div class="task-name">Token Corner Table da Figma</div>
-            <div class="task-desc">Nodi 378-3351/3393 in Figma desktop. Richiede accesso Figma desktop.</div>
+            <div class="task-desc">Nodi 378-3351/3393 in Figma desktop.</div>
           </div>
-          <span class="task-profile">A</span>
-        </div>
-        <div class="task">
-          <span class="task-prio prio-med">Medio</span>
-          <div>
-            <div class="task-name">Template vetrina Rara — Profilo A</div>
-            <div class="task-desc">Home + About + Contatti usando token Rara. Dopo organismi Header/Footer completati.</div>
-          </div>
-          <span class="task-profile">A</span>
+          <span class="task-profile">Sito A</span>
         </div>
       </div>
     </div>
 
     <div class="sprint-box" style="margin-top:16px;opacity:0.7;">
       <div class="sprint-title">
-        Profilo D — in attesa
-        <span class="sprint-badge" style="background:var(--purple-light);color:var(--purple);">Dopo conferma AGESCI</span>
+        Layer Intranet → estrarre componenti
+        <span class="sprint-badge" style="background:var(--blue-light);color:var(--blue);">Sprint 3</span>
       </div>
       <div class="task-list">
         <div class="task">
-          <span class="task-prio prio-med">Dopo</span>
+          <span class="task-prio prio-med">Medio</span>
           <div>
-            <div class="task-name">Navbar mega-menu AGESCI</div>
-            <div class="task-desc">L'Associazione + Hub + Documenti + Utilità dropdown. Solo quando brief AGESCI confermato.</div>
+            <div class="task-name">Estrarre News Card, Evento Card, Avviso Card</div>
+            <div class="task-desc">Da page template inline → molecole standalone con stories dedicate.</div>
           </div>
-          <span class="task-profile">D</span>
+          <span class="task-profile">Intranet</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-med">Medio</span>
+          <div>
+            <div class="task-name">Mega Menu — organismo standalone</div>
+            <div class="task-desc">Estrarre da intranet-mega-menu come componente riusabile per Layer Sito D.</div>
+          </div>
+          <span class="task-profile">Core</span>
         </div>
         <div class="task">
           <span class="task-prio prio-med">Dopo</span>
           <div>
-            <div class="task-name">Hero con mappa SVG Italia</div>
-            <div class="task-desc">Click regione → sito regionale. Feature specifica AGESCI.</div>
+            <div class="task-name">Sidebar Pannello + Notification Center</div>
+            <div class="task-desc">Componenti overlay per intranet. Pattern riusabile per qualsiasi layer con area utente.</div>
           </div>
-          <span class="task-profile">D</span>
+          <span class="task-profile">Intranet</span>
         </div>
       </div>
     </div>
@@ -633,7 +714,7 @@
         <ol class="instruction-steps">
           <li class="instruction-step"><span class="step-num">1</span>Vai su <a href="https://pianetadev.github.io/hederae-ds/" target="_blank">pianetadev.github.io/hederae-ds</a></li>
           <li class="instruction-step"><span class="step-num">2</span>Usa il menu a sinistra per navigare tra Token, Atoms, Molecules, pagine brand</li>
-          <li class="instruction-step"><span class="step-num">3</span>In alto a destra: selettore brand (Susdef / AGESCI / Rara / Corner Table) per vedere gli stessi componenti con colori/font diversi</li>
+          <li class="instruction-step"><span class="step-num">3</span>In alto a destra: selettore brand (Susdef / AGESCI / Rara / Corner Table / Sisal) per vedere gli stessi componenti con colori/font diversi</li>
           <li class="instruction-step"><span class="step-num">4</span>Usa il viewport selector per vedere mobile/tablet/desktop</li>
         </ol>
         <div class="instruction-note">Il Storybook si aggiorna automaticamente ad ogni commit su <code>main</code>. Il deploy impiega ~30 secondi.</div>
@@ -678,7 +759,7 @@
 
 <footer class="page-footer">
   <span><strong>Hederae DS</strong> — Pianeta Studio S.r.l. Società Benefit — Documento interno</span>
-  <span>v0.2.0 · 8 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
+  <span>v0.3.0 · 9 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
 </footer>
 
 </body>
