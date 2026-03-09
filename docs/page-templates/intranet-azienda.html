@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chi Siamo - Azienda - Sisal Digital Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables - Hederae DS Tokens */
+        :root {
+            --color-surface-page: #FFFFFF;
+            --color-surface-raised: #F7F8FA;
+            --color-surface-card: #FFFFFF;
+            --color-surface-inverse: #1A1A2E;
+            --color-content-primary: #212121;
+            --color-content-secondary: #757575;
+            --color-content-brand: #0D47A1;
+            --color-border-default: #E0E0E0;
+            --color-interactive-primary-bg: #1976D2;
+            --color-interactive-primary-label: #FFFFFF;
+            --color-brand-primary: #1976D2;
+            --color-brand-secondary: #FFD600;
+            --color-area-azienda-primary: #E65100;
+            --color-area-azienda-muted: #FFF3E0;
+
+            /* Spacing */
+            --space-xs: 4px;
+            --space-sm: 8px;
+            --space-md: 16px;
+            --space-lg: 24px;
+            --space-xl: 32px;
+            --space-2xl: 48px;
+            --space-3xl: 64px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+            /* Typography */
+            --font-family-base: 'Inter', sans-serif;
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-base: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+            --font-size-3xl: 32px;
+            --font-size-4xl: 40px;
+
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.75;
+        }
+
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-family-base);
+            background-color: var(--color-surface-page);
+            color: var(--color-content-primary);
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-normal);
+        }
+
+        /* Layout Structure */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .app-content {
+            flex: 1;
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--color-surface-inverse);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            padding: 0 var(--space-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-lg);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+
+        .hamburger {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+            padding: 0;
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-interactive-primary-label);
+            border-radius: var(--radius-sm);
+        }
+
+        .workspace-title {
+            color: var(--color-interactive-primary-label);
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin-left: auto;
+        }
+
+        .search-box {
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-sm) var(--space-md);
+            color: var(--color-interactive-primary-label);
+            width: 200px;
+            font-size: var(--font-size-sm);
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .header-icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--color-interactive-primary-label);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: var(--font-size-xl);
+            position: relative;
+        }
+
+        .header-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .badge {
+            position: absolute;
+            top: -4px;
+            right: -4px;
+            background-color: #FF5252;
+            color: white;
+            border-radius: var(--radius-full);
+            width: 20px;
+            height: 20px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background-color: var(--color-area-azienda-primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: var(--space-md) var(--space-lg);
+            background-color: var(--color-surface-raised);
+            border-bottom: 1px solid var(--color-border-default);
+            max-width: 100%;
+        }
+
+        .breadcrumb-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+        }
+
+        .breadcrumb-list {
+            display: flex;
+            gap: var(--space-sm);
+            list-style: none;
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+        }
+
+        .breadcrumb-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .breadcrumb-item:not(:last-child)::after {
+            content: '/';
+            margin-left: var(--space-sm);
+            margin-right: var(--space-sm);
+        }
+
+        .breadcrumb-link {
+            color: var(--color-content-brand);
+            text-decoration: none;
+        }
+
+        .breadcrumb-link:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb-current {
+            color: var(--color-content-primary);
+            font-weight: 500;
+        }
+
+        /* Hero Section */
+        .hero {
+            position: relative;
+            height: 340px;
+            background: linear-gradient(135deg, var(--color-area-azienda-primary) 0%, #FF7043 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(255, 255, 255, 0.1), transparent);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+            max-width: 600px;
+            padding: 0 var(--space-lg);
+        }
+
+        .hero-title {
+            font-size: var(--font-size-4xl);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            line-height: var(--line-height-tight);
+            letter-spacing: -1px;
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-lg);
+            line-height: var(--line-height-relaxed);
+            font-weight: 400;
+            opacity: 0.95;
+        }
+
+        /* Tab Navigation */
+        .tab-navigation {
+            background-color: var(--color-surface-page);
+            border-bottom: 1px solid var(--color-border-default);
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .tab-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-lg);
+            display: flex;
+            gap: var(--space-lg);
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            padding: var(--space-md) 0;
+            font-size: var(--font-size-base);
+            font-weight: 500;
+            color: var(--color-content-secondary);
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+            font-family: var(--font-family-base);
+        }
+
+        .tab-btn:hover {
+            color: var(--color-content-primary);
+        }
+
+        .tab-btn.active {
+            color: var(--color-area-azienda-primary);
+            border-bottom-color: var(--color-area-azienda-primary);
+        }
+
+        /* Main Content */
+        .main-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: var(--space-3xl) var(--space-lg);
+        }
+
+        .content-section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        /* Vision/Mission Card */
+        .mission-card {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            display: grid;
+            grid-template-columns: auto 1fr;
+            gap: var(--space-2xl);
+            align-items: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .mission-icon {
+            width: 80px;
+            height: 80px;
+            background-color: var(--color-area-azienda-muted);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            flex-shrink: 0;
+        }
+
+        .mission-content h2 {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+            color: var(--color-content-primary);
+        }
+
+        .mission-content p {
+            font-size: var(--font-size-base);
+            line-height: var(--line-height-relaxed);
+            color: var(--color-content-secondary);
+        }
+
+        /* Key Numbers Row */
+        .key-numbers {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .number-card {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl) var(--space-lg);
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .number-card-value {
+            font-size: var(--font-size-3xl);
+            font-weight: 700;
+            color: var(--color-area-azienda-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .number-card-label {
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Section Title */
+        .section-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--space-xl);
+            color: var(--color-content-primary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+
+        .section-title::before {
+            content: '';
+            width: 4px;
+            height: 32px;
+            background-color: var(--color-area-azienda-primary);
+            border-radius: var(--radius-sm);
+        }
+
+        /* Direzioni Grid */
+        .direzioni-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+            margin-bottom: var(--space-3xl);
+        }
+
+        .direction-card {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-xl);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .direction-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background-color: var(--color-area-azienda-primary);
+        }
+
+        .direction-card:hover {
+            box-shadow: var(--shadow-lg);
+            transform: translateY(-4px);
+        }
+
+        .direction-icon {
+            width: 56px;
+            height: 56px;
+            background-color: var(--color-area-azienda-muted);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: var(--space-md);
+        }
+
+        .direction-name {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .direction-director {
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-xs);
+        }
+
+        .direction-team {
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-md);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--color-border-default);
+        }
+
+        .direction-link {
+            color: var(--color-area-azienda-primary);
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            transition: gap 0.3s ease;
+        }
+
+        .direction-link:hover {
+            gap: var(--space-md);
+        }
+
+        .direction-link::after {
+            content: '→';
+        }
+
+        /* Timeline Section */
+        .timeline-section {
+            margin-bottom: var(--space-3xl);
+        }
+
+        .timeline {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+            position: relative;
+            padding-top: var(--space-2xl);
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(to right, var(--color-area-azienda-primary) 0%, var(--color-area-azienda-primary) 100%);
+            z-index: 0;
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-top: var(--space-md);
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: var(--color-area-azienda-primary);
+            border: 4px solid var(--color-surface-page);
+            border-radius: var(--radius-full);
+            top: -13px;
+            left: 0;
+            z-index: 1;
+        }
+
+        .timeline-year {
+            font-size: var(--font-size-lg);
+            font-weight: 700;
+            color: var(--color-area-azienda-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .timeline-title {
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-sm);
+        }
+
+        .timeline-description {
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            line-height: var(--line-height-relaxed);
+        }
+
+        /* CTA Card */
+        .cta-card {
+            background: linear-gradient(135deg, var(--color-area-azienda-primary) 0%, #FF7043 100%);
+            border-radius: var(--radius-lg);
+            padding: var(--space-2xl);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: var(--space-2xl);
+        }
+
+        .cta-content h3 {
+            font-size: var(--font-size-xl);
+            font-weight: 700;
+            margin-bottom: var(--space-md);
+        }
+
+        .cta-content p {
+            font-size: var(--font-size-base);
+            opacity: 0.95;
+            margin-bottom: var(--space-md);
+        }
+
+        .cta-button {
+            background-color: white;
+            color: var(--color-area-azienda-primary);
+            border: none;
+            padding: var(--space-md) var(--space-xl);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: var(--font-size-base);
+            cursor: pointer;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+            flex-shrink: 0;
+            font-family: var(--font-family-base);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-surface-inverse);
+            color: var(--color-interactive-primary-label);
+            padding: var(--space-xl) var(--space-lg);
+            text-align: center;
+            font-size: var(--font-size-sm);
+            margin-top: var(--space-3xl);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .direzioni-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .timeline {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .key-numbers {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .mission-card {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-card {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .direzioni-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline::before {
+                display: none;
+            }
+
+            .timeline-dot {
+                top: -12px;
+            }
+
+            .key-numbers {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-title {
+                font-size: var(--font-size-2xl);
+            }
+
+            .hero-subtitle {
+                font-size: var(--font-size-base);
+            }
+
+            .header-container {
+                flex-wrap: wrap;
+            }
+
+            .search-box {
+                width: 100%;
+                order: 3;
+            }
+
+            .hero {
+                height: 280px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="header">
+            <div class="header-container">
+                <div class="header-left">
+                    <button class="hamburger" aria-label="Menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                    <span class="workspace-title">S DIGITAL WORKSPACE</span>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-box" placeholder="Cerca...">
+                    <button class="header-icon-btn" aria-label="Notifiche">
+                        🔔
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="avatar" aria-label="Profilo">MP</button>
+                </div>
+            </div>
+        </header>
+
+        <div class="app-content">
+            <!-- Breadcrumb -->
+            <nav class="breadcrumb">
+                <div class="breadcrumb-container">
+                    <ul class="breadcrumb-list">
+                        <li class="breadcrumb-item">
+                            <a href="#" class="breadcrumb-link">Home</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <a href="#" class="breadcrumb-link">Azienda</a>
+                        </li>
+                        <li class="breadcrumb-item">
+                            <span class="breadcrumb-current">Chi Siamo</span>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 class="hero-title">Chi Siamo</h1>
+                    <p class="hero-subtitle">Scopri la nostra storia, i nostri valori e la nostra organizzazione</p>
+                </div>
+            </section>
+
+            <!-- Tab Navigation -->
+            <nav class="tab-navigation">
+                <div class="tab-nav-container">
+                    <button class="tab-btn active" data-tab="chi-siamo">Chi Siamo</button>
+                    <button class="tab-btn" data-tab="valori">Valori</button>
+                    <button class="tab-btn" data-tab="organizzazione">Organizzazione</button>
+                    <button class="tab-btn" data-tab="direzioni">Direzioni</button>
+                    <button class="tab-btn" data-tab="codice-etico">Codice Etico</button>
+                </div>
+            </nav>
+
+            <!-- Main Content -->
+            <main class="main-content">
+                <!-- Vision/Mission Card -->
+                <section class="content-section">
+                    <div class="mission-card">
+                        <div class="mission-icon">🎯</div>
+                        <div class="mission-content">
+                            <h2>La Nostra Missione</h2>
+                            <p>Sisal è leader nella fornitura di soluzioni di intrattenimento responsabile in Italia. La nostra missione è innovare costantemente per offrire ai nostri clienti esperienze di gioco sicure, eque e soddisfacenti, mantenendo al contempo gli standard più alti di conformità normativa e responsabilità sociale. Crediamo che il successo sia misurato non solo dal risultato economico, ma dalla fiducia che i nostri clienti, dipendenti e stakeholder ripongono in noi.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Key Numbers Row -->
+                <section class="content-section">
+                    <div class="key-numbers">
+                        <div class="number-card">
+                            <div class="number-card-value">2.500+</div>
+                            <div class="number-card-label">Dipendenti</div>
+                        </div>
+                        <div class="number-card">
+                            <div class="number-card-value">€1.8 Mld</div>
+                            <div class="number-card-label">Ricavi</div>
+                        </div>
+                        <div class="number-card">
+                            <div class="number-card-value">45</div>
+                            <div class="number-card-label">Anni di Storia</div>
+                        </div>
+                        <div class="number-card">
+                            <div class="number-card-value">12</div>
+                            <div class="number-card-label">Sedi in Italia</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Direzioni Grid -->
+                <section class="content-section">
+                    <h2 class="section-title">Le Nostre Direzioni</h2>
+                    <div class="direzioni-grid">
+                        <div class="direction-card">
+                            <div class="direction-icon">💻</div>
+                            <h3 class="direction-name">Direzione IT</h3>
+                            <div class="direction-director">Dir. Marco Rossi</div>
+                            <div class="direction-team">120 collaboratori</div>
+                            <a href="#" class="direction-link">Scopri di più</a>
+                        </div>
+
+                        <div class="direction-card">
+                            <div class="direction-icon">👥</div>
+                            <h3 class="direction-name">Direzione HR</h3>
+                            <div class="direction-director">Dir. Laura Bianchi</div>
+                            <div class="direction-team">45 collaboratori</div>
+                            <a href="#" class="direction-link">Scopri di più</a>
+                        </div>
+
+                        <div class="direction-card">
+                            <div class="direction-icon">📢</div>
+                            <h3 class="direction-name">Direzione Marketing</h3>
+                            <div class="direction-director">Dir. Andrea Verdi</div>
+                            <div class="direction-team">67 collaboratori</div>
+                            <a href="#" class="direction-link">Scopri di più</a>
+                        </div>
+
+                        <div class="direction-card">
+                            <div class="direction-icon">💰</div>
+                            <h3 class="direction-name">Direzione Finance</h3>
+                            <div class="direction-director">Dir. Paolo Neri</div>
+                            <div class="direction-team">89 collaboratori</div>
+                            <a href="#" class="direction-link">Scopri di più</a>
+                        </div>
+
+                        <div class="direction-card">
+                            <div class="direction-icon">⚙️</div>
+                            <h3 class="direction-name">Direzione Operations</h3>
+                            <div class="direction-director">Dir. Giulia Rossi</div>
+                            <div class="direction-team">234 collaboratori</div>
+                            <a href="#" class="direction-link">Scopri di più</a>
+                        </div>
+
+                        <div class="direction-card">
+                            <div class="direction-icon">⚖️</div>
+                            <h3 class="direction-name">Direzione Legale</h3>
+                            <div class="direction-director">Dir. Francesca Russo</div>
+                            <div class="direction-team">28 collaboratori</div>
+                            <a href="#" class="direction-link">Scopri di più</a>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Timeline Section -->
+                <section class="timeline-section">
+                    <h2 class="section-title">La Nostra Storia</h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">1980</div>
+                            <div class="timeline-title">Fondazione</div>
+                            <div class="timeline-description">Sisal nasce come realtà innovativa nel settore dell'intrattenimento in Italia, ponendo le basi per decenni di eccellenza.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">1999</div>
+                            <div class="timeline-title">Quotazione</div>
+                            <div class="timeline-description">La quotazione in borsa rappresenta un momento cruciale della crescita, aprendo nuove opportunità di sviluppo e investimento.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2019</div>
+                            <div class="timeline-title">Acquisizione Flutter</div>
+                            <div class="timeline-description">L'acquisizione da parte di Flutter Entertainment espande la nostra portata globale e rafforza la nostra posizione nel mercato internazionale.</div>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="timeline-dot"></div>
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-title">Trasformazione Digitale</div>
+                            <div class="timeline-description">Lanciamo il Sisal Digital Workspace, una piattaforma innovativa che trasforma il modo in cui i nostri team collaborano e si comunicano.</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA Card -->
+                <section class="content-section">
+                    <div class="cta-card">
+                        <div class="cta-content">
+                            <h3>Vuoi conoscere meglio la tua direzione?</h3>
+                            <p>Esplora l'organigramma completo per scoprire i tuoi colleghi e i progetti in corso</p>
+                        </div>
+                        <button class="cta-button">Esplora l'organigramma</button>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="footer-content">
+                <p>&copy; 2024 Sisal Digital Workspace. Tutti i diritti riservati.</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Tab Navigation Logic
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                // Remove active class from all tabs
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                // Add active class to clicked tab
+                this.classList.add('active');
+
+                // Get tab data attribute
+                const tabName = this.getAttribute('data-tab');
+                console.log('Selected tab:', tabName);
+
+                // Here you would typically load content for the selected tab
+                // This is a placeholder for the actual implementation
+            });
+        });
+
+        // Header interactions
+        document.querySelector('.hamburger').addEventListener('click', function() {
+            console.log('Menu opened');
+            // Implement menu toggle logic here
+        });
+
+        document.querySelector('.header-icon-btn').addEventListener('click', function() {
+            console.log('Notifications clicked');
+            // Implement notifications panel logic here
+        });
+
+        document.querySelector('.avatar').addEventListener('click', function() {
+            console.log('Profile menu clicked');
+            // Implement profile menu logic here
+        });
+
+        // Direction card click handlers
+        document.querySelectorAll('.direction-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const directionName = this.querySelector('.direction-name').textContent;
+                console.log('Direction card clicked:', directionName);
+                // Implement navigation or detail view here
+            });
+        });
+
+        // CTA Button
+        document.querySelector('.cta-button').addEventListener('click', function() {
+            console.log('CTA button clicked - Organigramma');
+            // Implement navigation to organigramma page
+        });
+    </script>
+</body>
+</html>

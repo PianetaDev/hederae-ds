@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hederae DS - Intranet Mega Menu</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ============================== */
+    /* CSS Reset & Base Styles        */
+    /* ============================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background-color: #f5f5f5;
+    }
+
+    /* ============================== */
+    /* Design System Tokens           */
+    /* ============================== */
+    [data-brand="sisal"] {
+      /* Surface */
+      --color-surface-page: #FFFFFF;
+      --color-surface-raised: #F7F8FA;
+      --color-surface-card: #FFFFFF;
+      --color-surface-overlay: rgba(0, 0, 0, 0.55);
+      --color-surface-inverse: #1A1A2E;
+
+      /* Content */
+      --color-content-primary: #212121;
+      --color-content-secondary: #757575;
+      --color-content-inverse: #FFFFFF;
+      --color-content-brand: #0D47A1;
+
+      /* Border */
+      --color-border-default: #E0E0E0;
+      --color-border-subtle: #F0F0F0;
+      --color-border-brand: #1976D2;
+
+      /* Interactive */
+      --color-interactive-primary-bg: #1976D2;
+      --color-interactive-primary-label: #FFFFFF;
+      --color-interactive-ghost-bg-hover: rgba(25, 118, 210, 0.06);
+
+      /* Spacing */
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+
+      /* Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      /* Shadow */
+      --shadow-lg: 0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
+
+      /* Motion */
+      --duration-normal: 200ms;
+      --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-brand="sisal"] .surface-inverse {
+      --color-content-primary: #FFFFFF;
+      --color-content-secondary: rgba(255, 255, 255, 0.65);
+      --color-border-default: rgba(255, 255, 255, 0.12);
+    }
+
+    /* ============================== */
+    /* Backdrop & Container           */
+    /* ============================== */
+    .mega-menu-backdrop {
+      position: fixed;
+      inset: 0;
+      background-color: var(--color-surface-overlay);
+      backdrop-filter: blur(2px);
+      z-index: 1000;
+      animation: fadeIn var(--duration-normal) var(--easing-default);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    .mega-menu-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 1001;
+      display: flex;
+      animation: slideIn var(--duration-normal) var(--easing-default);
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .mega-menu-content {
+      display: flex;
+      width: 100%;
+      height: 100%;
+      background: var(--color-surface-page);
+    }
+
+    /* ============================== */
+    /* Close Button                   */
+    /* ============================== */
+    .mega-menu-close {
+      position: fixed;
+      top: var(--space-6);
+      right: var(--space-6);
+      z-index: 1002;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      color: var(--color-content-primary);
+      font-size: 24px;
+      font-weight: 300;
+      transition: all var(--duration-normal) var(--easing-default);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .mega-menu-close:hover {
+      background-color: var(--color-surface-raised);
+      border-color: var(--color-border-brand);
+    }
+
+    /* ============================== */
+    /* Left Sidebar Navigation        */
+    /* ============================== */
+    .mega-menu-sidebar {
+      width: 280px;
+      background: var(--color-surface-page);
+      border-right: 1px solid var(--color-border-default);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+      flex-shrink: 0;
+    }
+
+    .sidebar-header {
+      padding: var(--space-6);
+      border-bottom: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+
+    .search-box {
+      width: 100%;
+      padding: var(--space-3) var(--space-4);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: var(--color-content-primary);
+      background: var(--color-surface-raised);
+      transition: all var(--duration-normal) var(--easing-default);
+    }
+
+    .search-box:focus {
+      outline: none;
+      border-color: var(--color-border-brand);
+      background: var(--color-surface-page);
+      box-shadow: 0 0 0 3px var(--color-interactive-ghost-bg-hover);
+    }
+
+    .sidebar-sections {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-4) 0;
+    }
+
+    .sidebar-section {
+      padding: var(--space-3) var(--space-4);
+      cursor: pointer;
+      border-left: 4px solid transparent;
+      transition: all var(--duration-normal) var(--easing-default);
+      position: relative;
+    }
+
+    .sidebar-section:hover {
+      background-color: var(--color-surface-raised);
+    }
+
+    .sidebar-section.active {
+      background-color: var(--color-surface-raised);
+      border-left-color: currentColor;
+    }
+
+    .sidebar-section-inner {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .sidebar-section-icon {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: currentColor;
+      border-radius: var(--radius-sm);
+      color: white;
+      font-size: 18px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .sidebar-section-label {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .sidebar-section-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-content-primary);
+    }
+
+    .sidebar-section-count {
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+
+    .sidebar-section-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 24px;
+      height: 24px;
+      padding: 0 var(--space-2);
+      background-color: var(--color-content-brand);
+      color: white;
+      border-radius: 12px;
+      font-size: 12px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    /* Color assignments for sections */
+    .sidebar-section[data-section="sgi"] {
+      color: #1976D2;
+    }
+
+    .sidebar-section[data-section="sviluppo"] {
+      color: #7B1FA2;
+    }
+
+    .sidebar-section[data-section="info-pratiche"] {
+      color: #00897B;
+    }
+
+    .sidebar-section[data-section="azienda"] {
+      color: #E65100;
+    }
+
+    .sidebar-section[data-section="formazione"] {
+      color: #AD1457;
+    }
+
+    .sidebar-section[data-section="punti-vendita"] {
+      color: #2E7D32;
+    }
+
+    .sidebar-section[data-section="eventi"] {
+      color: #F9A825;
+    }
+
+    .sidebar-section[data-section="documentale"] {
+      color: #37474F;
+    }
+
+    .sidebar-footer {
+      padding: var(--space-4) var(--space-4);
+      border-top: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+
+    .sidebar-footer-link {
+      display: block;
+      padding: var(--space-3) var(--space-2);
+      color: var(--color-content-brand);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      border-radius: var(--radius-sm);
+      transition: background-color var(--duration-normal) var(--easing-default);
+    }
+
+    .sidebar-footer-link:hover {
+      background-color: var(--color-surface-raised);
+    }
+
+    /* ============================== */
+    /* Right Panel - Sub Items        */
+    /* ============================== */
+    .mega-menu-panel {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: linear-gradient(135deg, var(--color-surface-page) 0%, var(--color-surface-raised) 100%);
+      overflow: hidden;
+    }
+
+    .panel-header {
+      padding: var(--space-8) var(--space-6);
+      border-bottom: 1px solid var(--color-border-default);
+      flex-shrink: 0;
+    }
+
+    .panel-header-content {
+      display: flex;
+      align-items: flex-start;
+      gap: var(--space-4);
+    }
+
+    .panel-header-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: currentColor;
+      border-radius: var(--radius-lg);
+      color: white;
+      font-size: 28px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .panel-header-text h2 {
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .panel-header-text p {
+      font-size: 14px;
+      color: var(--color-content-secondary);
+      max-width: 500px;
+      line-height: 1.5;
+    }
+
+    .panel-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: var(--space-8) var(--space-6);
+    }
+
+    .panel-categories {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-6);
+    }
+
+    .category-group {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-4);
+    }
+
+    .category-title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      padding-bottom: var(--space-3);
+      border-bottom: 2px solid currentColor;
+      opacity: 0.8;
+    }
+
+    .category-items {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-2);
+    }
+
+    .category-item {
+      padding: var(--space-3) var(--space-4);
+      color: var(--color-content-primary);
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.5;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all var(--duration-normal) var(--easing-default);
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+    }
+
+    .category-item::before {
+      content: '→';
+      color: var(--color-content-secondary);
+      font-weight: 600;
+      opacity: 0;
+      transition: opacity var(--duration-normal) var(--easing-default);
+    }
+
+    .category-item:hover {
+      background-color: var(--color-interactive-ghost-bg-hover);
+      padding-left: var(--space-6);
+    }
+
+    .category-item:hover::before {
+      opacity: 1;
+    }
+
+    /* ============================== */
+    /* Empty State                    */
+    /* ============================== */
+    .panel-empty {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 100%;
+      color: var(--color-content-secondary);
+      font-size: 14px;
+      text-align: center;
+      padding: var(--space-6);
+    }
+
+    /* ============================== */
+    /* Scrollbar Styling              */
+    /* ============================== */
+    ::-webkit-scrollbar {
+      width: 8px;
+      height: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      background: var(--color-border-default);
+      border-radius: 4px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--color-content-secondary);
+    }
+
+    /* ============================== */
+    /* Responsive Design              */
+    /* ============================== */
+    @media (max-width: 1024px) {
+      .mega-menu-sidebar {
+        width: 240px;
+      }
+
+      .panel-categories {
+        grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mega-menu-content {
+        flex-direction: column;
+      }
+
+      .mega-menu-sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border-default);
+        max-height: 40vh;
+        flex-direction: row;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .sidebar-sections {
+        display: flex;
+        flex-direction: row;
+        padding: var(--space-2) 0;
+        overflow-x: auto;
+        overflow-y: hidden;
+      }
+
+      .sidebar-section {
+        white-space: nowrap;
+        padding: var(--space-2) var(--space-3);
+        border-left: none;
+        border-bottom: 4px solid transparent;
+      }
+
+      .sidebar-section.active {
+        border-left: none;
+        border-bottom-color: currentColor;
+      }
+
+      .panel-categories {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="mega-menu-backdrop" id="backdrop"></div>
+
+  <div class="mega-menu-overlay" id="megaMenu">
+    <button class="mega-menu-close" id="closeBtn" aria-label="Chiudi menu">×</button>
+
+    <div class="mega-menu-content">
+      <!-- Left Sidebar -->
+      <aside class="mega-menu-sidebar">
+        <div class="sidebar-header">
+          <input
+            type="text"
+            class="search-box"
+            placeholder="Cerca sezione..."
+            aria-label="Ricerca sezioni"
+          >
+        </div>
+
+        <nav class="sidebar-sections" role="navigation">
+          <button class="sidebar-section active" data-section="info-pratiche" aria-selected="true">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">ℹ</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Info Pratiche</span>
+                <span class="sidebar-section-count">15 elementi</span>
+              </div>
+              <span class="sidebar-section-badge">15</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="sgi">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">⚙</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">SGI</span>
+                <span class="sidebar-section-count">Sistema Gestione</span>
+              </div>
+              <span class="sidebar-section-badge">12</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="sviluppo">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">📈</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Sviluppo</span>
+                <span class="sidebar-section-count">Progetti & Roadmap</span>
+              </div>
+              <span class="sidebar-section-badge">8</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="azienda">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">🏢</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Azienda</span>
+                <span class="sidebar-section-count">Org e Persone</span>
+              </div>
+              <span class="sidebar-section-badge">20</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="formazione">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">🎓</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Formazione</span>
+                <span class="sidebar-section-count">Corsi e Learning</span>
+              </div>
+              <span class="sidebar-section-badge">24</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="punti-vendita">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">🏪</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Punti Vendita</span>
+                <span class="sidebar-section-count">Rete e Gestione</span>
+              </div>
+              <span class="sidebar-section-badge">18</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="eventi">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">🎉</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Eventi</span>
+                <span class="sidebar-section-count">Calendario</span>
+              </div>
+              <span class="sidebar-section-badge">9</span>
+            </div>
+          </button>
+
+          <button class="sidebar-section" data-section="documentale">
+            <div class="sidebar-section-inner">
+              <div class="sidebar-section-icon">📄</div>
+              <div class="sidebar-section-label">
+                <span class="sidebar-section-name">Documentale</span>
+                <span class="sidebar-section-count">Archivio</span>
+              </div>
+              <span class="sidebar-section-badge">156</span>
+            </div>
+          </button>
+        </nav>
+
+        <div class="sidebar-footer">
+          <a href="#" class="sidebar-footer-link">Indice A-Z</a>
+        </div>
+      </aside>
+
+      <!-- Right Panel -->
+      <section class="mega-menu-panel" role="region" aria-live="polite" aria-label="Contenuti sezione">
+        <div class="panel-header" style="color: #00897B;">
+          <div class="panel-header-content">
+            <div class="panel-header-icon">ℹ</div>
+            <div class="panel-header-text">
+              <h2>Info Pratiche</h2>
+              <p>Accedi a procedure, normativa, modulistica e convenzioni. Tutto quello che ti serve per operare in azienda.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="panel-content" id="panelContent">
+          <div class="panel-categories">
+            <div class="category-group">
+              <h3 class="category-title" style="border-bottom-color: #00897B;">Come fare per</h3>
+              <nav class="category-items">
+                <a href="#" class="category-item">Richiesta ferie e permessi</a>
+                <a href="#" class="category-item">Comunicare una malattia</a>
+                <a href="#" class="category-item">Dichiarazione dei redditi</a>
+                <a href="#" class="category-item">Rimborso spese trasferta</a>
+                <a href="#" class="category-item">Cambio assetto organizzativo</a>
+              </nav>
+            </div>
+
+            <div class="category-group">
+              <h3 class="category-title" style="border-bottom-color: #00897B;">Convenzioni</h3>
+              <nav class="category-items">
+                <a href="#" class="category-item">Convenzioni sanitarie</a>
+                <a href="#" class="category-item">Palestre e fitness</a>
+                <a href="#" class="category-item">Assicurazioni integrative</a>
+                <a href="#" class="category-item">Servizi di travel</a>
+                <a href="#" class="category-item">Agevolazioni commerciali</a>
+              </nav>
+            </div>
+
+            <div class="category-group">
+              <h3 class="category-title" style="border-bottom-color: #00897B;">Modulistica</h3>
+              <nav class="category-items">
+                <a href="#" class="category-item">Modello dichiarazione assenze</a>
+                <a href="#" class="category-item">Richiesta telelavoro</a>
+                <a href="#" class="category-item">Delega per successore</a>
+                <a href="#" class="category-item">Certificato di servizio</a>
+                <a href="#" class="category-item">Autorizzazione straordinari</a>
+              </nav>
+            </div>
+
+            <div class="category-group">
+              <h3 class="category-title" style="border-bottom-color: #00897B;">Normativa</h3>
+              <nav class="category-items">
+                <a href="#" class="category-item">Contratto nazionale di lavoro</a>
+                <a href="#" class="category-item">Codice etico aziendale</a>
+                <a href="#" class="category-item">Politiche sulla privacy</a>
+                <a href="#" class="category-item">Regolamento telelavoro</a>
+                <a href="#" class="category-item">Disposizioni sulla sicurezza</a>
+              </nav>
+            </div>
+
+            <div class="category-group">
+              <h3 class="category-title" style="border-bottom-color: #00897B;">Procedure</h3>
+              <nav class="category-items">
+                <a href="#" class="category-item">Procedura di onboarding</a>
+                <a href="#" class="category-item">Gestione delle spese</a>
+                <a href="#" class="category-item">Fatturazione e pagamenti</a>
+                <a href="#" class="category-item">Procurement aziendale</a>
+                <a href="#" class="category-item">Ciclo documentale</a>
+              </nav>
+            </div>
+
+            <div class="category-group">
+              <h3 class="category-title" style="border-bottom-color: #00897B;">Contatti Utili</h3>
+              <nav class="category-items">
+                <a href="#" class="category-item">Ufficio Risorse Umane</a>
+                <a href="#" class="category-item">Help Desk IT</a>
+                <a href="#" class="category-item">Amministrazione & Finanza</a>
+                <a href="#" class="category-item">Responsabile della Privacy</a>
+                <a href="#" class="category-item">Centro Servizi Condivisi</a>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    // ==============================
+    // Menu Data Structure
+    // ==============================
+    const sectionData = {
+      'sgi': {
+        name: 'SGI',
+        icon: '⚙',
+        description: 'Sistema Gestione Integrata - Processi, qualità e compliance aziendale.',
+        color: '#1976D2',
+        categories: {
+          'Processi': [
+            'Mappatura processi aziendali',
+            'Flussi di approvazione',
+            'Check list di controllo',
+            'Audit interno',
+            'Miglioramento continuo'
+          ],
+          'Qualità': [
+            'Standard ISO certificati',
+            'Certificazioni vigenti',
+            'Audit fornitori',
+            'Non conformità',
+            'Azioni correttive'
+          ],
+          'Compliance': [
+            'Conformità normativa',
+            'Registro reclami',
+            'Gestione fornitori',
+            'Tracciabilità documenti',
+            'Responsabilità sociale'
+          ]
+        }
+      },
+      'sviluppo': {
+        name: 'Sviluppo',
+        icon: '📈',
+        description: 'Progetti di innovazione, roadmap tecnologica e trasformazione digitale.',
+        color: '#7B1FA2',
+        categories: {
+          'Progetti': [
+            'Roadmap prodotto 2026',
+            'Progetti in corso',
+            'Backlog feature',
+            'Sprint planning',
+            'Retrospettive'
+          ],
+          'Innovazione': [
+            'Lab innovazione digitale',
+            'PoC e prototipi',
+            'Ricerca di mercato',
+            'Partnership tecnologiche',
+            'AI e automazione'
+          ],
+          'Infrastruttura': [
+            'Upgrade sistemi',
+            'Cloud migration',
+            'Cybersecurity',
+            'Disaster recovery',
+            'Monitoring & Log'
+          ]
+        }
+      },
+      'info-pratiche': {
+        name: 'Info Pratiche',
+        icon: 'ℹ',
+        description: 'Accedi a procedure, normativa, modulistica e convenzioni. Tutto quello che ti serve per operare in azienda.',
+        color: '#00897B',
+        categories: {
+          'Come fare per': [
+            'Richiesta ferie e permessi',
+            'Comunicare una malattia',
+            'Dichiarazione dei redditi',
+            'Rimborso spese trasferta',
+            'Cambio assetto organizzativo'
+          ],
+          'Convenzioni': [
+            'Convenzioni sanitarie',
+            'Palestre e fitness',
+            'Assicurazioni integrative',
+            'Servizi di travel',
+            'Agevolazioni commerciali'
+          ],
+          'Modulistica': [
+            'Modello dichiarazione assenze',
+            'Richiesta telelavoro',
+            'Delega per successore',
+            'Certificato di servizio',
+            'Autorizzazione straordinari'
+          ],
+          'Normativa': [
+            'Contratto nazionale di lavoro',
+            'Codice etico aziendale',
+            'Politiche sulla privacy',
+            'Regolamento telelavoro',
+            'Disposizioni sulla sicurezza'
+          ],
+          'Procedure': [
+            'Procedura di onboarding',
+            'Gestione delle spese',
+            'Fatturazione e pagamenti',
+            'Procurement aziendale',
+            'Ciclo documentale'
+          ],
+          'Contatti Utili': [
+            'Ufficio Risorse Umane',
+            'Help Desk IT',
+            'Amministrazione & Finanza',
+            'Responsabile della Privacy',
+            'Centro Servizi Condivisi'
+          ]
+        }
+      },
+      'azienda': {
+        name: 'Azienda',
+        icon: '🏢',
+        description: 'Organigramma, persone, storia aziendale e valori di Sisal.',
+        color: '#E65100',
+        categories: {
+          'Organizzazione': [
+            'Organigramma aziendale',
+            'Business unit',
+            'Aree funzionali',
+            'Strutture regionali',
+            'Leadership team'
+          ],
+          'Persone': [
+            'Rubrica aziendale',
+            'Team di progetto',
+            'Competenze e skills',
+            'Valutazione performance',
+            'Piani di carriera'
+          ],
+          'Storia e Valori': [
+            'Storia di Sisal',
+            'Missione e visione',
+            'Valori aziendali',
+            'Sostenibilità',
+            'Comunità e CSR'
+          ]
+        }
+      },
+      'formazione': {
+        name: 'Formazione',
+        icon: '🎓',
+        description: 'Programmi di formazione, corsi online e sviluppo professionale continuo.',
+        color: '#AD1457',
+        categories: {
+          'Corsi Online': [
+            'Catalogo corsi LMS',
+            'Corsi obbligatori',
+            'Corsi specialistici',
+            'Lingue straniere',
+            'Soft skills'
+          ],
+          'Sviluppo': [
+            'Piani di sviluppo',
+            'Mentorship program',
+            'Executive coaching',
+            'Conferenze e seminari',
+            'Certificazioni professionali'
+          ],
+          'Learning Path': [
+            'Onboarding program',
+            'Percorsi per ruolo',
+            'Talent development',
+            'Leadership academy',
+            'Digital learning hub'
+          ]
+        }
+      },
+      'punti-vendita': {
+        name: 'Punti Vendita',
+        icon: '🏪',
+        description: 'Rete commerciale, gestione punti vendita e supporto canale retail.',
+        color: '#2E7D32',
+        categories: {
+          'Rete': [
+            'Mappa punti vendita',
+            'Contatti gestori',
+            'Performance store',
+            'Territory manager',
+            'Ranking vendita'
+          ],
+          'Gestione': [
+            'Manuale operativo',
+            'Planimetrie e visual',
+            'Catalogo prodotti',
+            'Prezzi e promozioni',
+            'Sistema POS'
+          ],
+          'Supporto': [
+            'Help desk canale',
+            'FAQ operatori',
+            'Formazione vendita',
+            'Marketing locale',
+            'Compliance punto vendita'
+          ]
+        }
+      },
+      'eventi': {
+        name: 'Eventi',
+        icon: '🎉',
+        description: 'Calendario eventi aziendali, conferenze e riunioni importanti.',
+        color: '#F9A825',
+        categories: {
+          'Calendario': [
+            'Prossimi eventi',
+            'Eventi passati',
+            'Festività aziendali',
+            'Riunioni periodiche',
+            'Convegni e workshop'
+          ],
+          'Aziendali': [
+            'Meeting nazionale',
+            'Kick-off annuale',
+            'Cerimonia premiazioni',
+            'Festeggiamenti team',
+            'Ritiri strategici'
+          ],
+          'Partecipazione': [
+            'Iscrizione evento',
+            'Materiali pre-evento',
+            'Galleria fotografica',
+            'Documenti condivisi',
+            'Feedback post-evento'
+          ]
+        }
+      },
+      'documentale': {
+        name: 'Documentale',
+        icon: '📄',
+        description: 'Repository documentale centralizzato, archivio e gestione file aziendali.',
+        color: '#37474F',
+        categories: {
+          'Archivi': [
+            'Documentazione strategica',
+            'Rendiconti annuali',
+            'Relazioni assembleari',
+            'Documenti storici',
+            'Legale e contratti'
+          ],
+          'Gestione': [
+            'Criteri classificazione',
+            'Conservazione documentale',
+            'Retention policy',
+            'Versioning e audit trail',
+            'Backup e disaster recovery'
+          ],
+          'Accesso': [
+            'Ricerca avanzata',
+            'Download documenti',
+            'Richieste accesso',
+            'Esportazione dati',
+            'Integrazione sistemi'
+          ]
+        }
+      }
+    };
+
+    // ==============================
+    // DOM Elements & State
+    // ==============================
+    const backdrop = document.getElementById('backdrop');
+    const megaMenu = document.getElementById('megaMenu');
+    const closeBtn = document.getElementById('closeBtn');
+    const sectionButtons = document.querySelectorAll('.sidebar-section');
+    const panelContent = document.getElementById('panelContent');
+    let activeSection = 'info-pratiche';
+
+    // ==============================
+    // Render Panel Content
+    // ==============================
+    function renderPanelContent(sectionKey) {
+      const section = sectionData[sectionKey];
+      if (!section) return;
+
+      let html = '';
+      for (const [categoryName, items] of Object.entries(section.categories)) {
+        html += `
+          <div class="category-group">
+            <h3 class="category-title" style="border-bottom-color: ${section.color};">
+              ${categoryName}
+            </h3>
+            <nav class="category-items">
+        `;
+
+        items.forEach(item => {
+          html += `<a href="#" class="category-item">${item}</a>`;
+        });
+
+        html += `
+            </nav>
+          </div>
+        `;
+      }
+
+      panelContent.innerHTML = html;
+
+      // Add hover listeners to newly created items
+      document.querySelectorAll('.category-item').forEach(item => {
+        item.addEventListener('click', (e) => {
+          e.preventDefault();
+        });
+      });
+    }
+
+    // ==============================
+    // Update Panel Header
+    // ==============================
+    function updatePanelHeader(sectionKey) {
+      const section = sectionData[sectionKey];
+      if (!section) return;
+
+      const panelHeader = document.querySelector('.panel-header');
+      panelHeader.style.color = section.color;
+      panelHeader.innerHTML = `
+        <div class="panel-header-content">
+          <div class="panel-header-icon">${section.icon}</div>
+          <div class="panel-header-text">
+            <h2>${section.name}</h2>
+            <p>${section.description}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    // ==============================
+    // Handle Section Click
+    // ==============================
+    function handleSectionClick(sectionKey) {
+      activeSection = sectionKey;
+
+      // Update active button styling
+      sectionButtons.forEach(btn => {
+        btn.classList.remove('active');
+        btn.setAttribute('aria-selected', 'false');
+      });
+
+      const activeBtn = document.querySelector(`[data-section="${sectionKey}"]`);
+      if (activeBtn) {
+        activeBtn.classList.add('active');
+        activeBtn.setAttribute('aria-selected', 'true');
+      }
+
+      // Update panel content
+      updatePanelHeader(sectionKey);
+      renderPanelContent(sectionKey);
+    }
+
+    // ==============================
+    // Event Listeners
+    // ==============================
+    sectionButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        const sectionKey = button.getAttribute('data-section');
+        handleSectionClick(sectionKey);
+      });
+    });
+
+    // Close menu handlers
+    closeBtn.addEventListener('click', () => {
+      megaMenu.style.animation = 'slideIn 200ms cubic-bezier(0.4, 0, 0.2, 1) reverse';
+      backdrop.style.animation = 'fadeIn 200ms cubic-bezier(0.4, 0, 0.2, 1) reverse';
+      setTimeout(() => {
+        document.body.removeChild(megaMenu);
+        document.body.removeChild(backdrop);
+      }, 200);
+    });
+
+    backdrop.addEventListener('click', () => {
+      closeBtn.click();
+    });
+
+    // Keyboard shortcut: Escape to close
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeBtn.click();
+      }
+    });
+
+    // Search functionality (optional placeholder)
+    const searchBox = document.querySelector('.search-box');
+    searchBox.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase();
+      // Placeholder for search filtering logic
+      if (query.length > 0) {
+        console.log('Searching for:', query);
+      }
+    });
+
+    // ==============================
+    // Initialize
+    // ==============================
+    handleSectionClick('info-pratiche');
+  </script>
+</body>
+</html>

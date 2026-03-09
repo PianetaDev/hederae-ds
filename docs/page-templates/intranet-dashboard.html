@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market Analysis Dashboard | S Digital Workspace</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ========================================
+       DESIGN TOKENS (Hederae DS v1.0)
+       ======================================== */
+    :root {
+      /* Colors */
+      --color-surface-page: #FFFFFF;
+      --color-surface-raised: #F7F8FA;
+      --color-surface-card: #FFFFFF;
+      --color-surface-inverse: #1A1A2E;
+      --color-content-primary: #212121;
+      --color-content-secondary: #757575;
+      --color-content-brand: #0D47A1;
+      --color-border-default: #E0E0E0;
+      --color-border-subtle: #F0F0F0;
+      --color-interactive-primary-bg: #1976D2;
+      --color-feedback-success-text: #2E7D32;
+      --color-feedback-error-text: #C62828;
+      --color-feedback-warning-text: #F57F17;
+      --color-feedback-info-text: #1565C0;
+      --color-feedback-success-bg: #E8F5E9;
+      --color-feedback-error-bg: #FFEBEE;
+      --color-feedback-warning-bg: #FFF8E1;
+      --color-feedback-info-bg: #E3F2FD;
+      --color-brand-primary: #1976D2;
+      --color-brand-secondary: #FFD600;
+
+      /* Spacing */
+      --spacing-xs: 4px;
+      --spacing-sm: 8px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --spacing-2xl: 48px;
+
+      /* Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      /* Shadows */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+
+      /* Typography */
+      --font-family-base: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      --font-size-xs: 12px;
+      --font-size-sm: 13px;
+      --font-size-base: 14px;
+      --font-size-md: 16px;
+      --font-size-lg: 18px;
+      --font-size-xl: 20px;
+      --font-size-2xl: 28px;
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+      --line-height-tight: 1.2;
+      --line-height-normal: 1.5;
+      --line-height-relaxed: 1.75;
+    }
+
+    /* ========================================
+       RESET & BASE STYLES
+       ======================================== */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-family-base);
+      font-size: var(--font-size-base);
+      line-height: var(--line-height-normal);
+      color: var(--color-content-primary);
+      background-color: var(--color-surface-page);
+    }
+
+    /* ========================================
+       LAYOUT: HEADER (64px)
+       ======================================== */
+    .header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      height: 64px;
+      background-color: var(--color-surface-inverse);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .header-title {
+      color: #FFFFFF;
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      letter-spacing: 0.5px;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+    }
+
+    .hamburger-btn,
+    .search-btn,
+    .avatar-btn {
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      cursor: pointer;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-md);
+      transition: background-color 0.2s ease;
+      font-size: 20px;
+    }
+
+    .hamburger-btn:hover,
+    .search-btn:hover,
+    .avatar-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .bell-badge {
+      position: relative;
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      color: #FFFFFF;
+      cursor: pointer;
+      border-radius: var(--radius-md);
+      transition: background-color 0.2s ease;
+      font-size: 20px;
+    }
+
+    .bell-badge:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .badge-count {
+      position: absolute;
+      top: 4px;
+      right: 4px;
+      background-color: #FF5252;
+      color: #FFFFFF;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* ========================================
+       LAYOUT: MAIN CONTAINER
+       ======================================== */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: var(--spacing-lg);
+    }
+
+    /* ========================================
+       BREADCRUMB
+       ======================================== */
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      margin-bottom: var(--spacing-lg);
+      font-size: var(--font-size-sm);
+    }
+
+    .breadcrumb-item {
+      color: var(--color-content-secondary);
+      cursor: pointer;
+      transition: color 0.2s ease;
+    }
+
+    .breadcrumb-item:hover {
+      color: var(--color-brand-primary);
+    }
+
+    .breadcrumb-item.active {
+      color: var(--color-content-primary);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .breadcrumb-separator {
+      color: var(--color-border-default);
+      margin: 0 var(--spacing-xs);
+    }
+
+    /* ========================================
+       DASHBOARD HEADER
+       ======================================== */
+    .dashboard-header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      margin-bottom: var(--spacing-2xl);
+      padding-bottom: var(--spacing-lg);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .dashboard-title {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-content-primary);
+    }
+
+    .dashboard-meta {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-lg);
+    }
+
+    .period-selector {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      padding: var(--spacing-sm) var(--spacing-md);
+      background-color: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+      transition: all 0.2s ease;
+    }
+
+    .period-selector:hover {
+      background-color: var(--color-surface-card);
+      border-color: var(--color-brand-primary);
+    }
+
+    .period-selector-arrow {
+      font-size: 12px;
+    }
+
+    .update-timestamp {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+    }
+
+    /* ========================================
+       KPI WIDGET COMPONENT
+       ======================================== */
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .kpi-card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      transition: all 0.2s ease;
+    }
+
+    .kpi-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-border-subtle);
+    }
+
+    .kpi-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+      font-weight: var(--font-weight-medium);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .kpi-value {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .kpi-trend {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .kpi-trend.positive {
+      color: var(--color-feedback-success-text);
+    }
+
+    .kpi-trend.negative {
+      color: var(--color-feedback-error-text);
+    }
+
+    .trend-arrow {
+      font-size: 14px;
+    }
+
+    /* ========================================
+       CHARTS SECTION
+       ======================================== */
+    .charts-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .chart-card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .chart-title {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    /* ========================================
+       LINE CHART (CSS-based)
+       ======================================== */
+    .chart-container {
+      position: relative;
+      width: 100%;
+      height: 280px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .chart-legend {
+      display: flex;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-md);
+      font-size: var(--font-size-sm);
+    }
+
+    .legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .legend-color {
+      width: 12px;
+      height: 12px;
+      border-radius: 2px;
+    }
+
+    .legend-color.gray-dashed {
+      background: repeating-linear-gradient(
+        90deg,
+        #999999,
+        #999999 2px,
+        transparent 2px,
+        transparent 4px
+      );
+    }
+
+    .legend-color.blue-solid {
+      background-color: var(--color-brand-primary);
+    }
+
+    .line-chart {
+      flex: 1;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-around;
+      padding: var(--spacing-md) 0;
+      border-left: 2px solid var(--color-border-default);
+      border-bottom: 2px solid var(--color-border-default);
+    }
+
+    .chart-bar-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--spacing-sm);
+      flex: 1;
+      height: 100%;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .chart-bar {
+      width: 20px;
+      background-color: var(--color-brand-primary);
+      border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+      position: relative;
+    }
+
+    .chart-bar.secondary {
+      background-color: #CCCCCC;
+      opacity: 0.5;
+      margin-right: 8px;
+    }
+
+    .chart-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-content-secondary);
+      text-align: center;
+      margin-top: var(--spacing-sm);
+      width: 40px;
+    }
+
+    /* ========================================
+       DONUT CHART (CSS-based)
+       ======================================== */
+    .donut-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      gap: var(--spacing-lg);
+    }
+
+    .donut-chart {
+      width: 160px;
+      height: 160px;
+      border-radius: 50%;
+      background: conic-gradient(
+        var(--color-brand-primary) 0deg 162deg,
+        #FFA726 162deg 270deg,
+        #AB47BC 270deg 324deg,
+        #42A5F5 324deg 360deg
+      );
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-inner {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background-color: var(--color-surface-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .donut-center-label {
+      font-size: var(--font-size-xs);
+      color: var(--color-content-secondary);
+      text-align: center;
+    }
+
+    .donut-legend {
+      display: flex;
+      flex-direction: column;
+      gap: var(--spacing-md);
+    }
+
+    .donut-legend-item {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      font-size: var(--font-size-sm);
+    }
+
+    .donut-legend-color {
+      width: 16px;
+      height: 16px;
+      border-radius: var(--radius-sm);
+      flex-shrink: 0;
+    }
+
+    .donut-legend-color.betting {
+      background-color: var(--color-brand-primary);
+    }
+
+    .donut-legend-color.gaming {
+      background-color: #FFA726;
+    }
+
+    .donut-legend-color.casino {
+      background-color: #AB47BC;
+    }
+
+    .donut-legend-color.lottery {
+      background-color: #42A5F5;
+    }
+
+    .donut-legend-label {
+      flex: 1;
+    }
+
+    .donut-legend-value {
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+    }
+
+    /* ========================================
+       DATA TABLE COMPONENT (SORTABLE)
+       ======================================== */
+    .table-card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      margin-bottom: var(--spacing-2xl);
+      overflow-x: auto;
+    }
+
+    .table-title {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--font-size-sm);
+    }
+
+    thead {
+      background-color: var(--color-surface-raised);
+      border-bottom: 2px solid var(--color-border-default);
+    }
+
+    th {
+      padding: var(--spacing-md);
+      text-align: left;
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      cursor: pointer;
+      user-select: none;
+      position: relative;
+      white-space: nowrap;
+    }
+
+    th:hover {
+      background-color: var(--color-border-subtle);
+    }
+
+    th.sortable::after {
+      content: ' ⇅';
+      font-size: 10px;
+      opacity: 0.3;
+      margin-left: 4px;
+    }
+
+    th.sorted-asc::after {
+      content: ' ↑';
+      opacity: 1;
+      color: var(--color-brand-primary);
+    }
+
+    th.sorted-desc::after {
+      content: ' ↓';
+      opacity: 1;
+      color: var(--color-brand-primary);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--color-border-subtle);
+      transition: background-color 0.2s ease;
+    }
+
+    tbody tr:hover {
+      background-color: var(--color-surface-raised);
+    }
+
+    td {
+      padding: var(--spacing-md);
+      color: var(--color-content-primary);
+    }
+
+    .variation-positive {
+      color: var(--color-feedback-success-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .variation-negative {
+      color: var(--color-feedback-error-text);
+      font-weight: var(--font-weight-medium);
+    }
+
+    .trend-sparkline {
+      display: inline-flex;
+      align-items: flex-end;
+      gap: 2px;
+      height: 30px;
+      gap: 1px;
+    }
+
+    .sparkline-bar {
+      width: 4px;
+      background-color: var(--color-brand-primary);
+      border-radius: 1px;
+    }
+
+    /* ========================================
+       BOTTOM ROW: TOP PERFORMERS & ALERTS
+       ======================================== */
+    .bottom-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .performers-card,
+    .alerts-card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card-title {
+      font-size: var(--font-size-md);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .performer-row {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+      padding: var(--spacing-md);
+      border-bottom: 1px solid var(--color-border-subtle);
+      font-size: var(--font-size-sm);
+    }
+
+    .performer-row:last-child {
+      border-bottom: none;
+    }
+
+    .performer-rank {
+      min-width: 24px;
+      font-weight: var(--font-weight-bold);
+      color: var(--color-content-secondary);
+      text-align: center;
+    }
+
+    .performer-info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .performer-name {
+      font-weight: var(--font-weight-medium);
+      color: var(--color-content-primary);
+    }
+
+    .performer-revenue {
+      font-size: var(--font-size-xs);
+      color: var(--color-content-secondary);
+    }
+
+    .performer-badge {
+      padding: 2px 8px;
+      background-color: var(--color-feedback-success-bg);
+      color: var(--color-feedback-success-text);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .alert-item {
+      padding: var(--spacing-md);
+      border-left: 4px solid;
+      border-radius: var(--radius-sm);
+      margin-bottom: var(--spacing-md);
+      font-size: var(--font-size-sm);
+    }
+
+    .alert-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .alert-item.info {
+      background-color: var(--color-feedback-info-bg);
+      border-left-color: var(--color-feedback-info-text);
+      color: var(--color-feedback-info-text);
+    }
+
+    .alert-item.warning {
+      background-color: var(--color-feedback-warning-bg);
+      border-left-color: var(--color-feedback-warning-text);
+      color: var(--color-feedback-warning-text);
+    }
+
+    .alert-item.error {
+      background-color: var(--color-feedback-error-bg);
+      border-left-color: var(--color-feedback-error-text);
+      color: var(--color-feedback-error-text);
+    }
+
+    .alert-title {
+      font-weight: var(--font-weight-semibold);
+      margin-bottom: 2px;
+    }
+
+    .alert-message {
+      font-size: var(--font-size-xs);
+      opacity: 0.9;
+    }
+
+    /* ========================================
+       FOOTER
+       ======================================== */
+    .footer {
+      padding: var(--spacing-lg);
+      border-top: 1px solid var(--color-border-subtle);
+      text-align: center;
+      color: var(--color-content-secondary);
+      font-size: var(--font-size-xs);
+      margin-top: var(--spacing-2xl);
+    }
+
+    /* ========================================
+       RESPONSIVE DESIGN
+       ======================================== */
+    @media (max-width: 768px) {
+      .header {
+        padding: 0 var(--spacing-md);
+      }
+
+      .header-title {
+        font-size: var(--font-size-base);
+      }
+
+      .container {
+        padding: var(--spacing-md);
+      }
+
+      .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-md);
+      }
+
+      .dashboard-meta {
+        width: 100%;
+        flex-wrap: wrap;
+      }
+
+      .charts-grid,
+      .bottom-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      table {
+        font-size: var(--font-size-xs);
+      }
+
+      th, td {
+        padding: var(--spacing-sm);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .header-right {
+        gap: var(--spacing-md);
+      }
+
+      .period-selector {
+        padding: var(--spacing-sm);
+        font-size: var(--font-size-xs);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header-left">
+      <button class="hamburger-btn" aria-label="Menu">☰</button>
+      <div class="header-title">S DIGITAL WORKSPACE</div>
+    </div>
+    <div class="header-right">
+      <button class="search-btn" aria-label="Cerca">🔍</button>
+      <button class="bell-badge" aria-label="Notifiche">
+        🔔
+        <span class="badge-count">3</span>
+      </button>
+      <button class="avatar-btn" aria-label="Profilo">👤</button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <!-- BREADCRUMB -->
+    <nav class="breadcrumb" aria-label="Navigazione breadcrumb">
+      <span class="breadcrumb-item">Home</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item">Dashboard</span>
+      <span class="breadcrumb-separator">/</span>
+      <span class="breadcrumb-item active">Market Analysis</span>
+    </nav>
+
+    <!-- DASHBOARD HEADER -->
+    <div class="dashboard-header">
+      <h1 class="dashboard-title">Market Analysis Dashboard</h1>
+      <div class="dashboard-meta">
+        <button class="period-selector">
+          YTD 2026
+          <span class="period-selector-arrow">▼</span>
+        </button>
+        <div class="update-timestamp">Aggiornato al 8 Mar 2026</div>
+      </div>
+    </div>
+
+    <!-- KPI CARDS ROW -->
+    <section class="kpi-grid">
+      <div class="kpi-card">
+        <div class="kpi-label">Ricavi YTD</div>
+        <div class="kpi-value">€847M</div>
+        <div class="kpi-trend positive">
+          <span class="trend-arrow">▲</span>
+          <span>+12.3% vs PYTD</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Utenti Attivi</div>
+        <div class="kpi-value">2.4M</div>
+        <div class="kpi-trend positive">
+          <span class="trend-arrow">▲</span>
+          <span>+8.1%</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Tasso Conversione</div>
+        <div class="kpi-value">3.7%</div>
+        <div class="kpi-trend negative">
+          <span class="trend-arrow">▼</span>
+          <span>-0.2%</span>
+        </div>
+      </div>
+
+      <div class="kpi-card">
+        <div class="kpi-label">Net Promoter Score</div>
+        <div class="kpi-value">72</div>
+        <div class="kpi-trend positive">
+          <span class="trend-arrow">▲</span>
+          <span>+5 pts</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- CHARTS SECTION -->
+    <section class="charts-grid">
+      <!-- Line Chart -->
+      <div class="chart-card">
+        <h2 class="chart-title">Andamento Ricavi Mensili</h2>
+        <div class="chart-container">
+          <div class="chart-legend">
+            <div class="legend-item">
+              <div class="legend-color gray-dashed"></div>
+              <span>2025</span>
+            </div>
+            <div class="legend-item">
+              <div class="legend-color blue-solid"></div>
+              <span>2026</span>
+            </div>
+          </div>
+          <div class="line-chart">
+            <!-- October -->
+            <div class="chart-bar-group">
+              <div style="display: flex; gap: 4px; height: 200px; align-items: flex-end;">
+                <div class="chart-bar secondary" style="height: 140px;"></div>
+                <div class="chart-bar" style="height: 160px;"></div>
+              </div>
+              <div class="chart-label">Ott</div>
+            </div>
+            <!-- November -->
+            <div class="chart-bar-group">
+              <div style="display: flex; gap: 4px; height: 200px; align-items: flex-end;">
+                <div class="chart-bar secondary" style="height: 150px;"></div>
+                <div class="chart-bar" style="height: 170px;"></div>
+              </div>
+              <div class="chart-label">Nov</div>
+            </div>
+            <!-- December -->
+            <div class="chart-bar-group">
+              <div style="display: flex; gap: 4px; height: 200px; align-items: flex-end;">
+                <div class="chart-bar secondary" style="height: 180px;"></div>
+                <div class="chart-bar" style="height: 200px;"></div>
+              </div>
+              <div class="chart-label">Dic</div>
+            </div>
+            <!-- January -->
+            <div class="chart-bar-group">
+              <div style="display: flex; gap: 4px; height: 200px; align-items: flex-end;">
+                <div class="chart-bar secondary" style="height: 145px;"></div>
+                <div class="chart-bar" style="height: 165px;"></div>
+              </div>
+              <div class="chart-label">Gen</div>
+            </div>
+            <!-- February -->
+            <div class="chart-bar-group">
+              <div style="display: flex; gap: 4px; height: 200px; align-items: flex-end;">
+                <div class="chart-bar secondary" style="height: 155px;"></div>
+                <div class="chart-bar" style="height: 175px;"></div>
+              </div>
+              <div class="chart-label">Feb</div>
+            </div>
+            <!-- March -->
+            <div class="chart-bar-group">
+              <div style="display: flex; gap: 4px; height: 200px; align-items: flex-end;">
+                <div class="chart-bar secondary" style="height: 165px;"></div>
+                <div class="chart-bar" style="height: 190px;"></div>
+              </div>
+              <div class="chart-label">Mar</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Donut Chart -->
+      <div class="chart-card">
+        <h2 class="chart-title">Mix Prodotti</h2>
+        <div class="donut-container">
+          <div class="donut-chart">
+            <div class="donut-inner">
+              <div class="donut-center-label">
+                <div style="font-weight: 700; color: var(--color-content-primary);">100%</div>
+                <div style="font-size: 11px;">Totale</div>
+              </div>
+            </div>
+          </div>
+          <div class="donut-legend">
+            <div class="donut-legend-item">
+              <div class="donut-legend-color betting"></div>
+              <div class="donut-legend-label">Betting</div>
+              <div class="donut-legend-value">45%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-color gaming"></div>
+              <div class="donut-legend-label">Gaming</div>
+              <div class="donut-legend-value">30%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-color casino"></div>
+              <div class="donut-legend-label">Casino</div>
+              <div class="donut-legend-value">15%</div>
+            </div>
+            <div class="donut-legend-item">
+              <div class="donut-legend-color lottery"></div>
+              <div class="donut-legend-label">Lottery</div>
+              <div class="donut-legend-value">10%</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- DATA TABLE -->
+    <section class="table-card">
+      <h2 class="table-title">Analisi Dettagliata per Prodotto</h2>
+      <table id="dataTable">
+        <thead>
+          <tr>
+            <th class="sortable" data-column="product">Prodotto</th>
+            <th class="sortable" data-column="revenue">Ricavi</th>
+            <th class="sortable" data-column="variation">Variazione</th>
+            <th class="sortable" data-column="share">Quota</th>
+            <th data-column="trend">Trend</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Scommesse Sportive</td>
+            <td>€381M</td>
+            <td class="variation-positive">+14.2%</td>
+            <td>45.0%</td>
+            <td>
+              <div class="trend-sparkline">
+                <div class="sparkline-bar" style="height: 8px;"></div>
+                <div class="sparkline-bar" style="height: 12px;"></div>
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 14px;"></div>
+                <div class="sparkline-bar" style="height: 16px;"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Gaming Online</td>
+            <td>€254M</td>
+            <td class="variation-positive">+9.5%</td>
+            <td>30.0%</td>
+            <td>
+              <div class="trend-sparkline">
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 12px;"></div>
+                <div class="sparkline-bar" style="height: 11px;"></div>
+                <div class="sparkline-bar" style="height: 13px;"></div>
+                <div class="sparkline-bar" style="height: 14px;"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Casino Online</td>
+            <td>€127M</td>
+            <td class="variation-negative">-2.3%</td>
+            <td>15.0%</td>
+            <td>
+              <div class="trend-sparkline">
+                <div class="sparkline-bar" style="height: 12px;"></div>
+                <div class="sparkline-bar" style="height: 11px;"></div>
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 9px;"></div>
+                <div class="sparkline-bar" style="height: 8px;"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Lotterie Online</td>
+            <td>€85M</td>
+            <td class="variation-positive">+3.1%</td>
+            <td>10.0%</td>
+            <td>
+              <div class="trend-sparkline">
+                <div class="sparkline-bar" style="height: 9px;"></div>
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 11px;"></div>
+                <div class="sparkline-bar" style="height: 12px;"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Poker Rooms</td>
+            <td>€42M</td>
+            <td class="variation-negative">-5.8%</td>
+            <td>5.0%</td>
+            <td>
+              <div class="trend-sparkline">
+                <div class="sparkline-bar" style="height: 11px;"></div>
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 9px;"></div>
+                <div class="sparkline-bar" style="height: 8px;"></div>
+                <div class="sparkline-bar" style="height: 7px;"></div>
+              </div>
+            </td>
+          </tr>
+          <tr>
+            <td>Scommesse Horse Racing</td>
+            <td>€38M</td>
+            <td class="variation-positive">+6.4%</td>
+            <td>4.5%</td>
+            <td>
+              <div class="trend-sparkline">
+                <div class="sparkline-bar" style="height: 8px;"></div>
+                <div class="sparkline-bar" style="height: 9px;"></div>
+                <div class="sparkline-bar" style="height: 10px;"></div>
+                <div class="sparkline-bar" style="height: 11px;"></div>
+                <div class="sparkline-bar" style="height: 12px;"></div>
+              </div>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <!-- BOTTOM ROW: TOP PERFORMERS & ALERTS -->
+    <section class="bottom-grid">
+      <!-- Top Performers -->
+      <div class="performers-card">
+        <h2 class="card-title">Top Performers</h2>
+        <div class="performer-row">
+          <div class="performer-rank">1</div>
+          <div class="performer-info">
+            <div class="performer-name">Campionato Calcio Italia</div>
+            <div class="performer-revenue">€156M YTD</div>
+          </div>
+          <div class="performer-badge">HOT</div>
+        </div>
+        <div class="performer-row">
+          <div class="performer-rank">2</div>
+          <div class="performer-info">
+            <div class="performer-name">Slot Machine Premium</div>
+            <div class="performer-revenue">€142M YTD</div>
+          </div>
+          <div class="performer-badge">HOT</div>
+        </div>
+        <div class="performer-row">
+          <div class="performer-rank">3</div>
+          <div class="performer-info">
+            <div class="performer-name">Live Casino Tables</div>
+            <div class="performer-revenue">€98M YTD</div>
+          </div>
+        </div>
+        <div class="performer-row">
+          <div class="performer-rank">4</div>
+          <div class="performer-info">
+            <div class="performer-name">Tennis Grand Slams</div>
+            <div class="performer-revenue">€87M YTD</div>
+          </div>
+        </div>
+        <div class="performer-row">
+          <div class="performer-rank">5</div>
+          <div class="performer-info">
+            <div class="performer-name">Superenalotto</div>
+            <div class="performer-revenue">€65M YTD</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Alerts & Anomalies -->
+      <div class="alerts-card">
+        <h2 class="card-title">Alert & Anomalie</h2>
+        <div class="alert-item info">
+          <div class="alert-title">Nuova Promozione Attiva</div>
+          <div class="alert-message">Campagna Scommesse Calcio: +15% richieste in 24h</div>
+        </div>
+        <div class="alert-item warning">
+          <div class="alert-title">Variazione Anomala</div>
+          <div class="alert-message">Casino Online: -12% vs giorni precedenti (verificare)</div>
+        </div>
+        <div class="alert-item error">
+          <div class="alert-title">Criticità Tecnica</div>
+          <div class="alert-message">Poker Rooms: latenza API +340ms (team infra avvisato)</div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>© 2026 Sisal Digital. Dashboard aggiornato ogni ora. <a href="#" style="color: inherit; text-decoration: none;">Documentazione →</a></p>
+  </footer>
+
+  <!-- TABLE SORTING SCRIPT -->
+  <script>
+    const table = document.getElementById('dataTable');
+    const headers = table.querySelectorAll('th.sortable');
+    let sortState = {};
+
+    headers.forEach(header => {
+      header.addEventListener('click', () => {
+        const column = header.getAttribute('data-column');
+        const direction = sortState[column] === 'asc' ? 'desc' : 'asc';
+        sortState[column] = direction;
+
+        // Update header classes
+        headers.forEach(h => h.classList.remove('sorted-asc', 'sorted-desc'));
+        header.classList.add(direction === 'asc' ? 'sorted-asc' : 'sorted-desc');
+
+        // Sort table
+        const tbody = table.querySelector('tbody');
+        const rows = Array.from(tbody.querySelectorAll('tr'));
+
+        rows.sort((a, b) => {
+          let aVal = a.children[Array.from(headers).indexOf(header)].textContent.trim();
+          let bVal = b.children[Array.from(headers).indexOf(header)].textContent.trim();
+
+          // Remove currency symbols for numeric comparison
+          aVal = aVal.replace(/[€,%]/g, '').trim();
+          bVal = bVal.replace(/[€,%]/g, '').trim();
+
+          // Parse as numbers if both look like numbers
+          const aNum = parseFloat(aVal);
+          const bNum = parseFloat(bVal);
+
+          if (!isNaN(aNum) && !isNaN(bNum)) {
+            return direction === 'asc' ? aNum - bNum : bNum - aNum;
+          }
+
+          // String comparison
+          return direction === 'asc'
+            ? aVal.localeCompare(bVal, 'it')
+            : bVal.localeCompare(aVal, 'it');
+        });
+
+        // Re-append sorted rows
+        rows.forEach(row => tbody.appendChild(row));
+      });
+    });
+  </script>
+</body>
+</html>

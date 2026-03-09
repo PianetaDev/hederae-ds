@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Risultati di Ricerca - Sisal Digital Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* CSS Tokens */
+        :root {
+            --color-surface-page: #FFFFFF;
+            --color-surface-raised: #F7F8FA;
+            --color-surface-card: #FFFFFF;
+            --color-surface-inverse: #1A1A2E;
+            --color-content-primary: #212121;
+            --color-content-secondary: #757575;
+            --color-content-brand: #0D47A1;
+            --color-border-default: #E0E0E0;
+            --color-interactive-primary-bg: #1976D2;
+            --color-interactive-primary-label: #FFFFFF;
+            --color-interactive-ghost-bg-hover: rgba(25, 118, 210, 0.06);
+            --color-link-default: #1976D2;
+            --color-link-hover: #0D47A1;
+            --color-brand-primary: #1976D2;
+
+            --color-badge-persone: #1976D2;
+            --color-badge-news: #E65100;
+            --color-badge-documenti: #37474F;
+            --color-badge-procedure: #00897B;
+            --color-badge-eventi: #F9A825;
+
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 2px 4px rgba(0, 0, 0, 0.08);
+            --shadow-lg: 0 4px 12px rgba(0, 0, 0, 0.12);
+
+            --font-family: 'Inter', sans-serif;
+            --font-size-sm: 12px;
+            --font-size-base: 14px;
+            --font-size-md: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 20px;
+            --font-size-2xl: 24px;
+
+            --line-height-tight: 1.2;
+            --line-height-normal: 1.5;
+            --line-height-relaxed: 1.75;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-surface-page);
+            color: var(--color-content-primary);
+            line-height: var(--line-height-normal);
+        }
+
+        /* Header */
+        .header {
+            background-color: var(--color-surface-inverse);
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--spacing-md);
+            box-shadow: var(--shadow-md);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-lg);
+        }
+
+        .header-hamburger {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-interactive-primary-label);
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            transition: background-color 0.2s ease;
+        }
+
+        .header-hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .header-title {
+            color: var(--color-interactive-primary-label);
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .header-center {
+            flex: 1;
+            max-width: 400px;
+            margin: 0 var(--spacing-lg);
+        }
+
+        .search-box {
+            background-color: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            color: var(--color-interactive-primary-label);
+            font-family: var(--font-family);
+            font-size: var(--font-size-base);
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        .search-box::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .search-box:focus {
+            outline: none;
+            background-color: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .header-icon-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-interactive-primary-label);
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            transition: background-color 0.2s ease;
+            position: relative;
+        }
+
+        .header-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .badge-notification {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #FF5252;
+            color: white;
+            border-radius: 50%;
+            width: 18px;
+            height: 18px;
+            font-size: 10px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E65100 0%, #F9A825 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        /* Search Results Header */
+        .serp-header {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .serp-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .serp-meta {
+            font-size: var(--font-size-base);
+            color: var(--color-content-secondary);
+        }
+
+        /* Type Tabs */
+        .tabs-container {
+            border-bottom: 1px solid var(--color-border-default);
+            margin-bottom: var(--spacing-lg);
+            overflow-x: auto;
+            scroll-behavior: smooth;
+        }
+
+        .tabs {
+            display: flex;
+            gap: var(--spacing-md);
+            padding-bottom: var(--spacing-md);
+            min-width: min-content;
+        }
+
+        .tab {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            color: var(--color-content-secondary);
+            padding: var(--spacing-sm) 0;
+            border-bottom: 2px solid transparent;
+            transition: all 0.2s ease;
+            white-space: nowrap;
+            font-weight: 500;
+        }
+
+        .tab:hover {
+            color: var(--color-content-primary);
+        }
+
+        .tab.active {
+            color: var(--color-content-brand);
+            border-bottom-color: var(--color-content-brand);
+        }
+
+        .tab-count {
+            color: var(--color-content-secondary);
+            font-size: var(--font-size-sm);
+            margin-left: var(--spacing-xs);
+        }
+
+        /* Layout: Sidebar + Results */
+        .serp-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--spacing-lg);
+        }
+
+        /* Sidebar */
+        .sidebar {
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            height: fit-content;
+            position: sticky;
+            top: 80px;
+        }
+
+        .sidebar-section {
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .sidebar-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .sidebar-title {
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-group {
+            margin-bottom: var(--spacing-md);
+        }
+
+        .filter-label {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-sm);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            color: var(--color-content-primary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .filter-label input {
+            cursor: pointer;
+            width: 16px;
+            height: 16px;
+            accent-color: var(--color-interactive-primary-bg);
+        }
+
+        .btn-apply-filters {
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            font-size: var(--font-size-base);
+            font-weight: 600;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-apply-filters:hover {
+            background-color: var(--color-content-brand);
+        }
+
+        /* Results */
+        .results {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-lg);
+        }
+
+        .result-item {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-lg);
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .result-item:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-border-default);
+        }
+
+        /* Result Badge */
+        .result-badge {
+            display: inline-block;
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            padding: var(--spacing-xs) var(--spacing-sm);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--spacing-sm);
+            color: white;
+        }
+
+        .badge-persone {
+            background-color: var(--color-badge-persone);
+        }
+
+        .badge-news {
+            background-color: var(--color-badge-news);
+        }
+
+        .badge-documenti {
+            background-color: var(--color-badge-documenti);
+        }
+
+        .badge-procedure {
+            background-color: var(--color-badge-procedure);
+        }
+
+        .badge-eventi {
+            background-color: var(--color-badge-eventi);
+        }
+
+        /* Person Result Card */
+        .person-result {
+            display: grid;
+            grid-template-columns: 56px 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .person-avatar {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #E65100 0%, #F9A825 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: var(--font-size-lg);
+            flex-shrink: 0;
+        }
+
+        .person-info {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .person-name {
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: var(--color-content-primary);
+        }
+
+        .person-role {
+            font-size: var(--font-size-base);
+            color: var(--color-content-secondary);
+        }
+
+        .person-contact {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-top: var(--spacing-sm);
+            font-size: var(--font-size-base);
+        }
+
+        .person-contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            color: var(--color-link-default);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .person-contact-item:hover {
+            color: var(--color-link-hover);
+        }
+
+        /* News Result */
+        .news-result {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-sm);
+        }
+
+        .result-title {
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: var(--color-link-default);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+
+        .result-title:hover {
+            color: var(--color-link-hover);
+        }
+
+        .result-excerpt {
+            font-size: var(--font-size-base);
+            color: var(--color-content-secondary);
+            line-height: var(--line-height-relaxed);
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .result-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            margin-top: var(--spacing-sm);
+        }
+
+        .result-meta-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+        }
+
+        /* Document Result */
+        .document-result {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .document-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .document-info {
+            flex: 1;
+        }
+
+        .document-title {
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: var(--color-link-default);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .document-title:hover {
+            color: var(--color-link-hover);
+        }
+
+        .document-desc {
+            font-size: var(--font-size-base);
+            color: var(--color-content-secondary);
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .document-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+        }
+
+        .btn-download {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-link-default);
+            font-size: 18px;
+            padding: 4px;
+            transition: color 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn-download:hover {
+            color: var(--color-link-hover);
+        }
+
+        /* Procedure Result */
+        .procedure-result {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .procedure-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .procedure-info {
+            flex: 1;
+        }
+
+        .procedure-title {
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: var(--color-link-default);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .procedure-title:hover {
+            color: var(--color-link-hover);
+        }
+
+        .procedure-steps {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-xs);
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Event Result */
+        .event-result {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: var(--spacing-md);
+        }
+
+        .event-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .event-info {
+            flex: 1;
+        }
+
+        .event-title {
+            font-size: var(--font-size-md);
+            font-weight: 600;
+            color: var(--color-link-default);
+            text-decoration: none;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            margin-bottom: var(--spacing-xs);
+        }
+
+        .event-title:hover {
+            color: var(--color-link-hover);
+        }
+
+        .event-details {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+            margin-top: var(--spacing-sm);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-sm);
+            margin-top: var(--spacing-2xl);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .pagination-btn {
+            background-color: var(--color-surface-raised);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--spacing-sm) var(--spacing-md);
+            cursor: pointer;
+            font-size: var(--font-size-base);
+            font-family: var(--font-family);
+            color: var(--color-content-primary);
+            transition: all 0.2s ease;
+            min-width: 40px;
+            text-align: center;
+        }
+
+        .pagination-btn:hover {
+            background-color: var(--color-interactive-ghost-bg-hover);
+            border-color: var(--color-content-brand);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-ellipsis {
+            color: var(--color-content-secondary);
+            padding: var(--spacing-sm) var(--spacing-xs);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-surface-raised);
+            padding: var(--spacing-lg);
+            text-align: center;
+            font-size: var(--font-size-base);
+            color: var(--color-content-secondary);
+            border-top: 1px solid var(--color-border-default);
+            margin-top: var(--spacing-2xl);
+        }
+
+        /* Hidden Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .serp-layout {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                position: static;
+                margin-bottom: var(--spacing-lg);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 var(--spacing-sm);
+            }
+
+            .header-title {
+                font-size: var(--font-size-base);
+            }
+
+            .header-center {
+                display: none;
+            }
+
+            .container {
+                padding: var(--spacing-md);
+            }
+
+            .serp-title {
+                font-size: var(--font-size-xl);
+            }
+
+            .person-result,
+            .document-result,
+            .procedure-result,
+            .event-result {
+                grid-template-columns: 1fr;
+            }
+
+            .person-avatar {
+                width: 44px;
+                height: 44px;
+            }
+
+            .tabs {
+                gap: var(--spacing-sm);
+            }
+
+            .tab {
+                font-size: var(--font-size-sm);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="header-left">
+            <button class="header-hamburger" aria-label="Menu">☰</button>
+            <h1 class="header-title">S DIGITAL WORKSPACE</h1>
+        </div>
+        <div class="header-center">
+            <input type="text" class="search-box" placeholder="smart working" aria-label="Search">
+        </div>
+        <div class="header-right">
+            <button class="header-icon-btn" aria-label="Notifications">
+                🔔
+                <span class="badge-notification">3</span>
+            </button>
+            <div class="avatar" title="Profilo">LB</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Search Results Header -->
+        <div class="serp-header">
+            <h2 class="serp-title">Risultati per «smart working»</h2>
+            <p class="serp-meta">42 risultati trovati in 0.3s</p>
+        </div>
+
+        <!-- Type Tabs -->
+        <div class="tabs-container">
+            <div class="tabs" role="tablist">
+                <button class="tab active" role="tab" aria-selected="true" data-tab="tutti">
+                    Tutti <span class="tab-count">(42)</span>
+                </button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="persone">
+                    Persone <span class="tab-count">(8)</span>
+                </button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="news">
+                    News <span class="tab-count">(12)</span>
+                </button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="documenti">
+                    Documenti <span class="tab-count">(15)</span>
+                </button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="procedure">
+                    Procedure <span class="tab-count">(4)</span>
+                </button>
+                <button class="tab" role="tab" aria-selected="false" data-tab="eventi">
+                    Eventi <span class="tab-count">(3)</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Layout: Sidebar + Results -->
+        <div class="serp-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-section">
+                    <h3 class="sidebar-title">Affina ricerca</h3>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Periodo</h4>
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <input type="radio" name="periodo" value="tutto" checked>
+                            <span>Tutto</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="radio" name="periodo" value="ultimo-mese">
+                            <span>Ultimo mese</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="radio" name="periodo" value="ultimo-anno">
+                            <span>Ultimo anno</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Direzione</h4>
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <input type="checkbox" name="direzione" value="hr">
+                            <span>HR</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="direzione" value="it">
+                            <span>IT</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="direzione" value="marketing">
+                            <span>Marketing</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="direzione" value="legal">
+                            <span>Legal</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4 class="sidebar-title">Tipo contenuto</h4>
+                    <div class="filter-group">
+                        <label class="filter-label">
+                            <input type="checkbox" name="tipo-contenuto" value="persone">
+                            <span>Persone</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="tipo-contenuto" value="news">
+                            <span>News</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="tipo-contenuto" value="documenti">
+                            <span>Documenti</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="tipo-contenuto" value="procedure">
+                            <span>Procedure</span>
+                        </label>
+                        <label class="filter-label">
+                            <input type="checkbox" name="tipo-contenuto" value="eventi">
+                            <span>Eventi</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <button class="btn-apply-filters">Applica filtri</button>
+                </div>
+            </aside>
+
+            <!-- Results -->
+            <main class="results">
+                <!-- Tab: Tutti -->
+                <div class="tab-content active" data-tab="tutti">
+                    <!-- Person Result -->
+                    <div class="result-item person-result">
+                        <div class="person-avatar">LB</div>
+                        <div class="person-info">
+                            <span class="result-badge badge-persone">Persone</span>
+                            <div class="person-name">Laura Bianchi</div>
+                            <div class="person-role">HR Manager • Direzione Risorse Umane</div>
+                            <div class="person-contact">
+                                <a href="mailto:laura.bianchi@sisal.it" class="person-contact-item">
+                                    ✉️ laura.bianchi@sisal.it
+                                </a>
+                                <a href="tel:+39061234567" class="person-contact-item">
+                                    ☎️ +39 06 1234567
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- News Result -->
+                    <div class="result-item news-result">
+                        <span class="result-badge badge-news">News</span>
+                        <a href="#" class="result-title">Nuova policy smart working 2026</a>
+                        <p class="result-excerpt">La nuova policy smart working 2026 introduce importanti cambiamenti nella modalità di lavoro da remoto. Le principali novità riguardano la gestione del tempo e le modalità di collaborazione...</p>
+                        <div class="result-meta">
+                            <span class="result-meta-item">📅 5 Mar 2026</span>
+                            <span class="result-meta-item">👤 Redazione Corporate</span>
+                        </div>
+                    </div>
+
+                    <!-- Document Result -->
+                    <div class="result-item document-result">
+                        <div class="document-icon">📄</div>
+                        <div class="document-info">
+                            <span class="result-badge badge-documenti">Documento</span>
+                            <a href="#" class="document-title">Regolamento Smart Working v3.2</a>
+                            <p class="document-desc">Versione aggiornata del regolamento con le linee guida operative per la richiesta dei giorni di smart working...</p>
+                            <div class="document-meta">
+                                <span class="result-meta-item">📦 2.4 MB</span>
+                                <span class="result-meta-item">📅 28 Feb 2026</span>
+                                <button class="btn-download" aria-label="Download document">⬇️</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Procedure Result -->
+                    <div class="result-item procedure-result">
+                        <div class="procedure-icon">📋</div>
+                        <div class="procedure-info">
+                            <span class="result-badge badge-procedure">Procedura</span>
+                            <a href="#" class="procedure-title">Richiesta giorni smart working</a>
+                            <p class="result-excerpt">Procedura guidata per richiedere i giorni di smart working secondo le nuove modalità previste dal regolamento 2026...</p>
+                            <div class="procedure-steps">
+                                <span>3 passaggi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Event Result -->
+                    <div class="result-item event-result">
+                        <div class="event-icon">📅</div>
+                        <div class="event-info">
+                            <span class="result-badge badge-eventi">Evento</span>
+                            <a href="#" class="event-title">Workshop Smart Working Efficace</a>
+                            <div class="event-details">
+                                <span class="result-meta-item">📅 20 Mar 2026, 10:00</span>
+                                <span class="result-meta-item">📍 Sala Riunioni 3 - Piano 2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Results -->
+                    <div class="result-item news-result">
+                        <span class="result-badge badge-news">News</span>
+                        <a href="#" class="result-title">Guida pratica: organizzare il tuo primo giorno di smart working</a>
+                        <p class="result-excerpt">Consigli pratici per rendere il tuo primo giorno di lavoro da remoto il più produttivo possibile. Dalla gestione dello spazio di lavoro alla comunicazione con il team...</p>
+                        <div class="result-meta">
+                            <span class="result-meta-item">📅 2 Mar 2026</span>
+                            <span class="result-meta-item">👤 Talent Development</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item document-result">
+                        <div class="document-icon">📊</div>
+                        <div class="document-info">
+                            <span class="result-badge badge-documenti">Documento</span>
+                            <a href="#" class="document-title">Analisi Impatto Smart Working - 2025</a>
+                            <p class="document-desc">Report annuale sull'impatto della politica di smart working sulla produttività e il benessere dei dipendenti...</p>
+                            <div class="document-meta">
+                                <span class="result-meta-item">📦 5.8 MB</span>
+                                <span class="result-meta-item">📅 15 Feb 2026</span>
+                                <button class="btn-download" aria-label="Download document">⬇️</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item procedure-result">
+                        <div class="procedure-icon">📋</div>
+                        <div class="procedure-info">
+                            <span class="result-badge badge-procedure">Procedura</span>
+                            <a href="#" class="procedure-title">Gestione della responsabilità in smart working</a>
+                            <p class="result-excerpt">Procedura per la comunicazione delle responsabilità e dei risultati attesi durante i giorni di lavoro da remoto...</p>
+                            <div class="procedure-steps">
+                                <span>5 passaggi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Persone -->
+                <div class="tab-content" data-tab="persone">
+                    <div class="result-item person-result">
+                        <div class="person-avatar">LB</div>
+                        <div class="person-info">
+                            <span class="result-badge badge-persone">Persone</span>
+                            <div class="person-name">Laura Bianchi</div>
+                            <div class="person-role">HR Manager • Direzione Risorse Umane</div>
+                            <div class="person-contact">
+                                <a href="mailto:laura.bianchi@sisal.it" class="person-contact-item">✉️ laura.bianchi@sisal.it</a>
+                                <a href="tel:+39061234567" class="person-contact-item">☎️ +39 06 1234567</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item person-result">
+                        <div class="person-avatar">MR</div>
+                        <div class="person-info">
+                            <span class="result-badge badge-persone">Persone</span>
+                            <div class="person-name">Marco Rossi</div>
+                            <div class="person-role">IT Manager • Direzione IT</div>
+                            <div class="person-contact">
+                                <a href="mailto:marco.rossi@sisal.it" class="person-contact-item">✉️ marco.rossi@sisal.it</a>
+                                <a href="tel:+39061234568" class="person-contact-item">☎️ +39 06 1234568</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item person-result">
+                        <div class="person-avatar">AC</div>
+                        <div class="person-info">
+                            <span class="result-badge badge-persone">Persone</span>
+                            <div class="person-name">Andrea Conti</div>
+                            <div class="person-role">Product Manager • Direzione Marketing</div>
+                            <div class="person-contact">
+                                <a href="mailto:andrea.conti@sisal.it" class="person-contact-item">✉️ andrea.conti@sisal.it</a>
+                                <a href="tel:+39061234569" class="person-contact-item">☎️ +39 06 1234569</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: News -->
+                <div class="tab-content" data-tab="news">
+                    <div class="result-item news-result">
+                        <span class="result-badge badge-news">News</span>
+                        <a href="#" class="result-title">Nuova policy smart working 2026</a>
+                        <p class="result-excerpt">La nuova policy smart working 2026 introduce importanti cambiamenti nella modalità di lavoro da remoto...</p>
+                        <div class="result-meta">
+                            <span class="result-meta-item">📅 5 Mar 2026</span>
+                            <span class="result-meta-item">👤 Redazione Corporate</span>
+                        </div>
+                    </div>
+
+                    <div class="result-item news-result">
+                        <span class="result-badge badge-news">News</span>
+                        <a href="#" class="result-title">Guida pratica: organizzare il tuo primo giorno di smart working</a>
+                        <p class="result-excerpt">Consigli pratici per rendere il tuo primo giorno di lavoro da remoto il più produttivo possibile...</p>
+                        <div class="result-meta">
+                            <span class="result-meta-item">📅 2 Mar 2026</span>
+                            <span class="result-meta-item">👤 Talent Development</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Documenti -->
+                <div class="tab-content" data-tab="documenti">
+                    <div class="result-item document-result">
+                        <div class="document-icon">📄</div>
+                        <div class="document-info">
+                            <span class="result-badge badge-documenti">Documento</span>
+                            <a href="#" class="document-title">Regolamento Smart Working v3.2</a>
+                            <p class="document-desc">Versione aggiornata del regolamento con le linee guida operative...</p>
+                            <div class="document-meta">
+                                <span class="result-meta-item">📦 2.4 MB</span>
+                                <span class="result-meta-item">📅 28 Feb 2026</span>
+                                <button class="btn-download" aria-label="Download document">⬇️</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item document-result">
+                        <div class="document-icon">📊</div>
+                        <div class="document-info">
+                            <span class="result-badge badge-documenti">Documento</span>
+                            <a href="#" class="document-title">Analisi Impatto Smart Working - 2025</a>
+                            <p class="document-desc">Report annuale sull'impatto della politica di smart working sulla produttività...</p>
+                            <div class="document-meta">
+                                <span class="result-meta-item">📦 5.8 MB</span>
+                                <span class="result-meta-item">📅 15 Feb 2026</span>
+                                <button class="btn-download" aria-label="Download document">⬇️</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Procedure -->
+                <div class="tab-content" data-tab="procedure">
+                    <div class="result-item procedure-result">
+                        <div class="procedure-icon">📋</div>
+                        <div class="procedure-info">
+                            <span class="result-badge badge-procedure">Procedura</span>
+                            <a href="#" class="procedure-title">Richiesta giorni smart working</a>
+                            <p class="result-excerpt">Procedura guidata per richiedere i giorni di smart working secondo le nuove modalità...</p>
+                            <div class="procedure-steps">
+                                <span>3 passaggi</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item procedure-result">
+                        <div class="procedure-icon">📋</div>
+                        <div class="procedure-info">
+                            <span class="result-badge badge-procedure">Procedura</span>
+                            <a href="#" class="procedure-title">Gestione della responsabilità in smart working</a>
+                            <p class="result-excerpt">Procedura per la comunicazione delle responsabilità e dei risultati attesi...</p>
+                            <div class="procedure-steps">
+                                <span>5 passaggi</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tab: Eventi -->
+                <div class="tab-content" data-tab="eventi">
+                    <div class="result-item event-result">
+                        <div class="event-icon">📅</div>
+                        <div class="event-info">
+                            <span class="result-badge badge-eventi">Evento</span>
+                            <a href="#" class="event-title">Workshop Smart Working Efficace</a>
+                            <div class="event-details">
+                                <span class="result-meta-item">📅 20 Mar 2026, 10:00</span>
+                                <span class="result-meta-item">📍 Sala Riunioni 3 - Piano 2</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="result-item event-result">
+                        <div class="event-icon">📅</div>
+                        <div class="event-info">
+                            <span class="result-badge badge-eventi">Evento</span>
+                            <a href="#" class="event-title">Webinar: Best Practices in Smart Working</a>
+                            <div class="event-details">
+                                <span class="result-meta-item">📅 15 Mar 2026, 14:00</span>
+                                <span class="result-meta-item">📍 Online</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="pagination">
+                    <button class="pagination-btn" aria-label="Previous page">‹</button>
+                    <button class="pagination-btn active" aria-current="page">1</button>
+                    <button class="pagination-btn">2</button>
+                    <button class="pagination-btn">3</button>
+                    <span class="pagination-ellipsis">...</span>
+                    <button class="pagination-btn">8</button>
+                    <button class="pagination-btn" aria-label="Next page">›</button>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 Sisal Digital Workspace. Tutti i diritti riservati.</p>
+    </footer>
+
+    <script>
+        // Tab switching functionality
+        document.querySelectorAll('.tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                const targetTab = this.getAttribute('data-tab');
+
+                // Update active tab
+                document.querySelectorAll('.tab').forEach(t => {
+                    t.classList.remove('active');
+                    t.setAttribute('aria-selected', 'false');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-selected', 'true');
+
+                // Update visible content
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+                document.querySelector(`.tab-content[data-tab="${targetTab}"]`).classList.add('active');
+            });
+        });
+
+        // Pagination click handling
+        document.querySelectorAll('.pagination-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                if (this.hasAttribute('aria-current')) {
+                    return; // Already on current page
+                }
+                document.querySelectorAll('.pagination-btn').forEach(b => {
+                    b.removeAttribute('aria-current');
+                    b.classList.remove('active');
+                });
+                this.classList.add('active');
+                this.setAttribute('aria-current', 'page');
+            });
+        });
+
+        // Apply filters button
+        document.querySelector('.btn-apply-filters').addEventListener('click', function() {
+            console.log('Filters applied');
+            // Implementation would apply selected filters
+        });
+
+        // Header search interaction
+        document.querySelector('.search-box').addEventListener('focus', function() {
+            this.select();
+        });
+    </script>
+</body>
+</html>

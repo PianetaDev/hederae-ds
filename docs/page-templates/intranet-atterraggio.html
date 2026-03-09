@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pagina Atterraggio - Formazione e Academy | Sisal Digital Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ================================================================
+       HEDERAE DESIGN SYSTEM - SISAL BRAND TOKENS (Inlined)
+       ================================================================ */
+
+    :root {
+      /* Color Tokens */
+      --color-surface-page: #FFFFFF;
+      --color-surface-raised: #F7F8FA;
+      --color-surface-card: #FFFFFF;
+      --color-surface-inverse: #1A1A2E;
+
+      --color-content-primary: #212121;
+      --color-content-secondary: #757575;
+      --color-content-inverse: #FFFFFF;
+      --color-content-brand: #0D47A1;
+
+      --color-border-default: #E0E0E0;
+      --color-border-subtle: #F0F0F0;
+
+      --color-interactive-primary-bg: #1976D2;
+      --color-interactive-primary-label: #FFFFFF;
+
+      --color-brand-primary: #1976D2;
+      --color-brand-secondary: #FFD600;
+
+      --color-area-formazione-primary: #AD1457;
+      --color-area-formazione-muted: #FCE4EC;
+
+      /* Spacing Tokens */
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+
+      /* Radius Tokens */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      /* Shadow Tokens */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+      /* Typography */
+      --font-family-display: "Inter", system-ui, sans-serif;
+      --font-family-heading: "Inter", system-ui, sans-serif;
+      --font-family-body: "Inter", system-ui, sans-serif;
+      --font-family-ui: "Inter", system-ui, sans-serif;
+
+      /* Layout */
+      --header-height: 64px;
+      --content-max-width: 1200px;
+    }
+
+    /* ================================================================
+       RESET & BASE STYLES
+       ================================================================ */
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      font-family: var(--font-family-body);
+      font-size: 16px;
+      line-height: 1.5;
+      color: var(--color-content-primary);
+      background-color: var(--color-surface-page);
+    }
+
+    a {
+      color: var(--color-interactive-primary-bg);
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: var(--color-content-brand);
+    }
+
+    /* ================================================================
+       HEADER (Dark, .surface-inverse)
+       ================================================================ */
+
+    .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--header-height);
+      background-color: var(--color-surface-inverse);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 var(--space-6);
+      z-index: 100;
+      box-shadow: var(--shadow-md);
+    }
+
+    .header__left {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    .header__menu-btn {
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--color-content-inverse);
+      padding: var(--space-2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: var(--radius-sm);
+      transition: background-color 0.2s ease;
+    }
+
+    .header__menu-btn:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .header__logo {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-content-inverse);
+      letter-spacing: 1px;
+    }
+
+    .header__center {
+      flex: 1;
+      margin: 0 var(--space-8);
+    }
+
+    .header__search {
+      display: flex;
+      align-items: center;
+      background-color: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: 0 var(--space-4);
+      height: 40px;
+    }
+
+    .header__search input {
+      flex: 1;
+      background: none;
+      border: none;
+      color: var(--color-content-inverse);
+      font-family: inherit;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .header__search input::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .header__search-icon {
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 18px;
+      margin-right: var(--space-2);
+    }
+
+    .header__right {
+      display: flex;
+      align-items: center;
+      gap: var(--space-6);
+    }
+
+    .header__notification {
+      position: relative;
+      cursor: pointer;
+      font-size: 24px;
+      color: var(--color-content-inverse);
+      padding: var(--space-2);
+    }
+
+    .header__notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #FF5252;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .header__avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--color-brand-secondary), var(--color-interactive-primary-bg));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--color-content-inverse);
+      font-weight: 600;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    /* ================================================================
+       MAIN CONTENT LAYOUT
+       ================================================================ */
+
+    main {
+      margin-top: var(--header-height);
+      background-color: var(--color-surface-page);
+    }
+
+    .container {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+      padding: var(--space-6);
+    }
+
+    /* ================================================================
+       BREADCRUMB
+       ================================================================ */
+
+    .breadcrumb {
+      display: flex;
+      align-items: center;
+      gap: var(--space-3);
+      font-size: 14px;
+      color: var(--color-content-secondary);
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .breadcrumb__item {
+      display: flex;
+      align-items: center;
+    }
+
+    .breadcrumb__separator {
+      margin: 0 var(--space-3);
+      color: var(--color-border-default);
+    }
+
+    .breadcrumb__link {
+      color: var(--color-interactive-primary-bg);
+      font-weight: 500;
+    }
+
+    .breadcrumb__link:hover {
+      text-decoration: underline;
+    }
+
+    /* ================================================================
+       SECTION HERO
+       ================================================================ */
+
+    .hero {
+      background: linear-gradient(135deg, var(--color-area-formazione-primary) 0%, #8B0A40 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8) var(--space-6);
+      margin-bottom: var(--space-12);
+      display: flex;
+      align-items: center;
+      gap: var(--space-8);
+      color: var(--color-content-inverse);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 500px;
+      height: 500px;
+      background-color: rgba(255, 255, 255, 0.05);
+      border-radius: 50%;
+    }
+
+    .hero__icon {
+      font-size: 64px;
+      min-width: 80px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero__content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .hero__title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: var(--space-3);
+      line-height: 1.2;
+    }
+
+    .hero__description {
+      font-size: 16px;
+      opacity: 0.95;
+      line-height: 1.6;
+    }
+
+    /* ================================================================
+       DASHBOARD WIDGETS ROW (3 Columns)
+       ================================================================ */
+
+    .widgets-row {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+      margin-bottom: var(--space-12);
+    }
+
+    .widget {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+    }
+
+    .widget:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+
+    .widget__header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-4);
+    }
+
+    .widget__label {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-content-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .widget__trend {
+      font-size: 20px;
+      font-weight: 700;
+      color: #4CAF50;
+    }
+
+    .widget__number {
+      font-size: 48px;
+      font-weight: 700;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-4);
+      line-height: 1;
+    }
+
+    .widget__chart {
+      width: 100%;
+      height: 80px;
+      background: linear-gradient(180deg, var(--color-area-formazione-muted) 0%, transparent 100%);
+      border-radius: var(--radius-md);
+      margin-top: var(--space-4);
+      position: relative;
+    }
+
+    .widget__chart-line {
+      position: absolute;
+      bottom: 20px;
+      left: 0;
+      width: 100%;
+      height: 40px;
+      background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 50"><polyline points="0,40 30,35 60,25 90,30 120,20 150,15 180,22 210,10 240,18 270,8 300,12" fill="none" stroke="%23AD1457" stroke-width="2"/></svg>') no-repeat center;
+      background-size: contain;
+    }
+
+    .widget__ring {
+      width: 100%;
+      height: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: var(--space-4);
+      position: relative;
+    }
+
+    .widget__ring-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: conic-gradient(var(--color-area-formazione-primary) 0deg 262.8deg, var(--color-border-subtle) 262.8deg 360deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--color-content-brand);
+    }
+
+    .widget__progress {
+      width: 100%;
+      height: 8px;
+      background-color: var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+      overflow: hidden;
+      margin-top: var(--space-4);
+    }
+
+    .widget__progress-bar {
+      height: 100%;
+      width: 62.5%;
+      background: linear-gradient(90deg, var(--color-brand-primary), var(--color-interactive-primary-bg));
+      border-radius: var(--radius-sm);
+      transition: width 0.3s ease;
+    }
+
+    .widget__progress-text {
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      margin-top: var(--space-2);
+      text-align: right;
+    }
+
+    /* ================================================================
+       QUICK ACCESS GRID (2×3 Cards)
+       ================================================================ */
+
+    .quick-access {
+      margin-bottom: var(--space-12);
+    }
+
+    .quick-access__title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-6);
+    }
+
+    .quick-access__grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-4);
+    }
+
+    .quick-access__card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-4);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+    }
+
+    .quick-access__card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-interactive-primary-bg);
+      transform: translateY(-4px);
+    }
+
+    .quick-access__card-icon {
+      font-size: 36px;
+      margin-bottom: var(--space-3);
+      opacity: 0.8;
+    }
+
+    .quick-access__card-label {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-3);
+      line-height: 1.3;
+    }
+
+    .quick-access__card-arrow {
+      font-size: 18px;
+      color: var(--color-interactive-primary-bg);
+      opacity: 0;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+      position: absolute;
+      bottom: var(--space-3);
+      right: var(--space-3);
+    }
+
+    .quick-access__card:hover .quick-access__card-arrow {
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    /* ================================================================
+       CONTENT SECTIONS (2 Columns)
+       ================================================================ */
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+      margin-bottom: var(--space-12);
+    }
+
+    @media (max-width: 900px) {
+      .content-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .content-section {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .content-section__title {
+      font-size: 18px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-6);
+      padding-bottom: var(--space-4);
+      border-bottom: 2px solid var(--color-area-formazione-primary);
+    }
+
+    .content-section__list {
+      list-style: none;
+    }
+
+    .content-section__item {
+      padding: var(--space-4) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      transition: background-color 0.2s ease;
+    }
+
+    .content-section__item:last-child {
+      border-bottom: none;
+    }
+
+    .content-section__item:hover {
+      background-color: var(--color-surface-raised);
+      padding: var(--space-4);
+      margin: 0 calc(-1 * var(--space-4));
+      padding-left: var(--space-4);
+      padding-right: var(--space-4);
+      border-radius: var(--radius-md);
+    }
+
+    .content-section__item-info {
+      flex: 1;
+    }
+
+    .content-section__item-title {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .content-section__item-meta {
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+
+    .content-section__badge {
+      background-color: var(--color-area-formazione-muted);
+      color: var(--color-area-formazione-primary);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-left: var(--space-3);
+      white-space: nowrap;
+    }
+
+    .event-card {
+      background-color: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-4);
+      margin-bottom: var(--space-4);
+      transition: all 0.2s ease;
+    }
+
+    .event-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-interactive-primary-bg);
+    }
+
+    .event-card__date-badge {
+      display: inline-block;
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-content-inverse);
+      padding: var(--space-2) var(--space-3);
+      border-radius: var(--radius-sm);
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: var(--space-3);
+    }
+
+    .event-card__title {
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-2);
+    }
+
+    .event-card__location {
+      font-size: 12px;
+      color: var(--color-content-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    /* ================================================================
+       CTA BANNER
+       ================================================================ */
+
+    .cta-banner {
+      background: linear-gradient(135deg, var(--color-interactive-primary-bg) 0%, #1565C0 100%);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8) var(--space-6);
+      margin-bottom: var(--space-12);
+      color: var(--color-content-inverse);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: var(--space-8);
+      box-shadow: var(--shadow-md);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .cta-banner::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      right: -10%;
+      width: 400px;
+      height: 400px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+    }
+
+    .cta-banner__content {
+      position: relative;
+      z-index: 1;
+      flex: 1;
+    }
+
+    .cta-banner__title {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: var(--space-2);
+    }
+
+    .cta-banner__button {
+      background-color: var(--color-brand-secondary);
+      color: var(--color-surface-inverse);
+      border: none;
+      padding: var(--space-3) var(--space-6);
+      border-radius: var(--radius-md);
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      position: relative;
+      z-index: 1;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .cta-banner__button:hover {
+      background-color: #FFC300;
+      transform: scale(1.05);
+      box-shadow: var(--shadow-md);
+    }
+
+    /* ================================================================
+       FOOTER
+       ================================================================ */
+
+    .footer {
+      background-color: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--space-6);
+      text-align: center;
+      color: var(--color-content-secondary);
+      font-size: 14px;
+    }
+
+    .footer__content {
+      max-width: var(--content-max-width);
+      margin: 0 auto;
+    }
+
+    /* ================================================================
+       RESPONSIVE ADJUSTMENTS
+       ================================================================ */
+
+    @media (max-width: 768px) {
+      .header {
+        padding: 0 var(--space-4);
+      }
+
+      .header__center {
+        margin: 0 var(--space-4);
+      }
+
+      .header__search {
+        display: none;
+      }
+
+      .header__logo {
+        font-size: 16px;
+      }
+
+      .hero {
+        flex-direction: column;
+        text-align: center;
+        padding: var(--space-6);
+      }
+
+      .hero__icon {
+        font-size: 48px;
+      }
+
+      .hero__title {
+        font-size: 24px;
+      }
+
+      .container {
+        padding: var(--space-4);
+      }
+
+      .widgets-row {
+        grid-template-columns: 1fr;
+      }
+
+      .quick-access__grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .cta-banner {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- HEADER -->
+  <header class="header">
+    <div class="header__left">
+      <button class="header__menu-btn" aria-label="Apri menu">☰</button>
+      <div class="header__logo">S DIGITAL WORKSPACE</div>
+    </div>
+
+    <div class="header__center">
+      <div class="header__search">
+        <span class="header__search-icon">🔍</span>
+        <input type="text" placeholder="Cerca...">
+      </div>
+    </div>
+
+    <div class="header__right">
+      <button class="header__notification" aria-label="Notifiche">
+        🔔
+        <span class="header__notification-badge">3</span>
+      </button>
+      <div class="header__avatar" title="Profilo utente">MS</div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      <!-- BREADCRUMB -->
+      <nav class="breadcrumb" aria-label="Navigazione breadcrumb">
+        <div class="breadcrumb__item">
+          <a href="#" class="breadcrumb__link">Home</a>
+        </div>
+        <span class="breadcrumb__separator">/</span>
+        <div class="breadcrumb__item">
+          <a href="#" class="breadcrumb__link">Sviluppo</a>
+        </div>
+        <span class="breadcrumb__separator">/</span>
+        <div class="breadcrumb__item">
+          Dashboard
+        </div>
+      </nav>
+
+      <!-- SECTION HERO -->
+      <section class="hero">
+        <div class="hero__icon">📚</div>
+        <div class="hero__content">
+          <h1 class="hero__title">Formazione e Academy</h1>
+          <p class="hero__description">Scopri i percorsi di formazione, i corsi obbligatori e le opportunità di crescita professionale disponibili per te.</p>
+        </div>
+      </section>
+
+      <!-- DASHBOARD WIDGETS ROW -->
+      <section class="widgets-row">
+        <!-- Widget 1: Corsi Attivi -->
+        <div class="widget">
+          <div class="widget__header">
+            <span class="widget__label">Corsi Attivi</span>
+            <span class="widget__trend">↑</span>
+          </div>
+          <div class="widget__number">12</div>
+          <div class="widget__chart">
+            <div class="widget__chart-line"></div>
+          </div>
+        </div>
+
+        <!-- Widget 2: Ore Formazione -->
+        <div class="widget">
+          <div class="widget__header">
+            <span class="widget__label">Ore Formazione</span>
+          </div>
+          <div class="widget__number">847</div>
+          <div class="widget__ring">
+            <div class="widget__ring-circle">73%</div>
+          </div>
+        </div>
+
+        <!-- Widget 3: Certificazioni -->
+        <div class="widget">
+          <div class="widget__header">
+            <span class="widget__label">Certificazioni</span>
+          </div>
+          <div class="widget__number">5/8</div>
+          <div class="widget__progress">
+            <div class="widget__progress-bar"></div>
+          </div>
+          <div class="widget__progress-text">62.5% completato</div>
+        </div>
+      </section>
+
+      <!-- QUICK ACCESS GRID -->
+      <section class="quick-access">
+        <h2 class="quick-access__title">Accesso Rapido</h2>
+        <div class="quick-access__grid">
+          <div class="quick-access__card">
+            <div class="quick-access__card-icon">🎓</div>
+            <div class="quick-access__card-label">Academy Online</div>
+            <span class="quick-access__card-arrow">→</span>
+          </div>
+          <div class="quick-access__card">
+            <div class="quick-access__card-icon">✓</div>
+            <div class="quick-access__card-label">Corsi Obbligatori</div>
+            <span class="quick-access__card-arrow">→</span>
+          </div>
+          <div class="quick-access__card">
+            <div class="quick-access__card-icon">📖</div>
+            <div class="quick-access__card-label">Catalogo Formazione</div>
+            <span class="quick-access__card-arrow">→</span>
+          </div>
+          <div class="quick-access__card">
+            <div class="quick-access__card-icon">📈</div>
+            <div class="quick-access__card-label">Percorsi di Crescita</div>
+            <span class="quick-access__card-arrow">→</span>
+          </div>
+          <div class="quick-access__card">
+            <div class="quick-access__card-icon">📝</div>
+            <div class="quick-access__card-label">Richieste Formazione</div>
+            <span class="quick-access__card-arrow">→</span>
+          </div>
+          <div class="quick-access__card">
+            <div class="quick-access__card-icon">📅</div>
+            <div class="quick-access__card-label">Calendario Aule</div>
+            <span class="quick-access__card-arrow">→</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- CONTENT SECTIONS (2 Columns) -->
+      <section class="content-grid">
+        <!-- Left: Ultimi Corsi Completati -->
+        <div class="content-section">
+          <h2 class="content-section__title">Ultimi Corsi Completati</h2>
+          <ul class="content-section__list">
+            <li class="content-section__item">
+              <div class="content-section__item-info">
+                <div class="content-section__item-title">Sicurezza sul Lavoro: Livello Base</div>
+                <div class="content-section__item-meta">23 feb 2026</div>
+              </div>
+              <span class="content-section__badge">Completato</span>
+            </li>
+            <li class="content-section__item">
+              <div class="content-section__item-info">
+                <div class="content-section__item-title">Gestione Progetti Agile</div>
+                <div class="content-section__item-meta">15 feb 2026</div>
+              </div>
+              <span class="content-section__badge">Completato</span>
+            </li>
+            <li class="content-section__item">
+              <div class="content-section__item-info">
+                <div class="content-section__item-title">Comunicazione Efficace in Team</div>
+                <div class="content-section__item-meta">08 feb 2026</div>
+              </div>
+              <span class="content-section__badge">Completato</span>
+            </li>
+            <li class="content-section__item">
+              <div class="content-section__item-info">
+                <div class="content-section__item-title">Excel Avanzato per l'Analisi Dati</div>
+                <div class="content-section__item-meta">01 feb 2026</div>
+              </div>
+              <span class="content-section__badge">Completato</span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right: Prossimi Eventi Formativi -->
+        <div class="content-section">
+          <h2 class="content-section__title">Prossimi Eventi Formativi</h2>
+          <div class="event-card">
+            <span class="event-card__date-badge">12 Mar 2026</span>
+            <div class="event-card__title">Workshop: Intelligenza Artificiale nei Processi</div>
+            <div class="event-card__location">📍 Sala Riunioni A1 - Sede Centrale</div>
+          </div>
+          <div class="event-card">
+            <span class="event-card__date-badge">18 Mar 2026</span>
+            <div class="event-card__title">Webinar: Trasformazione Digitale</div>
+            <div class="event-card__location">🌐 Online - Piattaforma Teams</div>
+          </div>
+          <div class="event-card">
+            <span class="event-card__date-badge">25 Mar 2026</span>
+            <div class="event-card__title">Corso: Compliance e Normative 2026</div>
+            <div class="event-card__location">📍 Centro Formazione - Via Roma 42</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA BANNER -->
+      <section class="cta-banner">
+        <div class="cta-banner__content">
+          <h2 class="cta-banner__title">Hai bisogno di un percorso formativo personalizzato?</h2>
+        </div>
+        <button class="cta-banner__button">Richiedi Consulenza</button>
+      </section>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer__content">
+      <p>&copy; 2026 Sisal Digital Workspace. Tutti i diritti riservati.</p>
+    </div>
+  </footer>
+</body>
+</html>
