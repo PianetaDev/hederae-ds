@@ -329,7 +329,7 @@
         </div>
         <div class="progress-bar"><div class="progress-fill" style="width:60%; background: var(--orange);"></div></div>
         <div class="progress-pct" style="font-size:14px; margin-top:4px;">60%</div>
-        <div class="profilo-brands">Brand: Susdef · EPOS (atteso)</div>
+        <div class="profilo-brands">Brand: Susdef · <strong>EPOS</strong> ✓</div>
         <div class="profilo-superset">Include Profilo A + B — Focus attuale</div>
       </div>
 
@@ -383,14 +383,15 @@
       <div class="metric-card p-c">
         <div class="metric-profile">LAYER — SITO PUBBLICO</div>
         <div class="metric-name">Vetrina → Hub</div>
-        <div class="metric-desc">Profili A→D: sito vetrina, commerce, hub editoriale, community. Susdef, AGESCI, Rara, Corner Table.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:45%"></div></div>
-        <div class="progress-pct">45%</div>
+        <div class="metric-desc">Profili A→D: sito vetrina, commerce, hub editoriale, community. Susdef, AGESCI, Rara, Corner Table, EPOS.</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
+        <div class="progress-pct">50%</div>
         <div class="metric-detail">
           <div class="metric-row"><span>Template Susdef (Home + Hub)</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>Template Shop (4 pagine)</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>Template AGESCI (Campagna + Donazione)</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Template EPOS</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>EPOS CSS theme + TCS tokens</span><span class="dot-done">✓ fatto</span></div>
+          <div class="metric-row"><span>Template EPOS (Home + TCS)</span><span class="dot-todo">— prossimo</span></div>
           <div class="metric-row"><span>Template Vetrina (Rara)</span><span class="dot-todo">— mancante</span></div>
         </div>
       </div>
@@ -496,10 +497,10 @@
 <section id="brand">
   <div class="container">
     <div class="section-label">04 — Brand coverage</div>
-    <h2>5 brand · 1 DS</h2>
+    <h2>6 brand · 1 DS</h2>
     <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook, ognuno può usare uno o più layer. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
 
-    <div class="brand-grid" style="grid-template-columns: repeat(5,1fr);">
+    <div class="brand-grid" style="grid-template-columns: repeat(3,1fr);">
 
       <div class="brand-card">
         <div class="brand-name">Susdef</div>
@@ -563,6 +564,19 @@
           <div class="brand-check-row"><span>Storybook stories (13)</span><span class="tag tag-done">✓ fatto</span></div>
           <div class="brand-check-row"><span>Brand in _template.js</span><span class="tag tag-done">✓ fatto</span></div>
           <div class="brand-check-row"><span>Area colors (8 sezioni)</span><span class="tag tag-done">✓ fatto</span></div>
+        </div>
+      </div>
+
+      <div class="brand-card" style="border-top: 3px solid #D2E900;">
+        <div class="brand-name">EPOS</div>
+        <div class="brand-type">Hub editoriale — Layer Sito C</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>Figma DS analizzato</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Brand in _template.js</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>TCS colors (10 aree)</span><span class="tag tag-done">✓ fatto</span></div>
+          <div class="brand-check-row"><span>Page templates</span><span class="tag tag-todo">— prossimo</span></div>
+          <div class="brand-check-row"><span>Storybook stories</span><span class="tag tag-todo">— prossimo</span></div>
         </div>
       </div>
 
@@ -659,6 +673,17 @@
     <div class="log">
 
       <!-- ENTRY: aggiungere nuove IN CIMA a questa lista -->
+
+      <div class="log-entry">
+        <div class="log-date">9 mar 2026</div>
+        <div class="log-dot active"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">EPOS — Analisi Figma DS + tema downstream + valutazione upstream</div>
+          <div class="log-detail">Analizzato il file Figma "Design-System-Library---EPOS": 30+ componenti, 10 TCS con palette dedicata, font Rethink Sans, palette forest green + lime accent su sfondo cream. Creato css/themes/epos.css con mappatura completa token Hederae. Aggiunto brand in _template.js. Identificati 8 pattern candidati per upstream (pill nav, article blocks, breadcrumb, card varianti).</div>
+          <div class="log-tags"><span class="log-tag">epos</span><span class="log-tag">downstream</span><span class="log-tag">figma</span><span class="log-tag">tema</span></div>
+        </div>
+      </div>
 
       <div class="log-entry">
         <div class="log-date">9 mar 2026</div>
