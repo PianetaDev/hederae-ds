@@ -933,31 +933,10 @@
                     <p>L'acconto versato al momento della sottoscrizione del contratto non è rimborsabile in caso di recesso del Cliente, salvo quanto previsto dalla legge in caso di inadempimento del Fornitore.</p>
                 </div>
 
-                <h3 style="margin-top: 40px; margin-bottom: 24px;">Accettazione Clausole Specifiche (Art. 1341/1342 CC)</h3>
-                <div class="checkbox-group">
+                <div class="checkbox-group" style="margin-top: 40px;">
                     <div class="checkbox-item">
-                        <input type="checkbox" id="art3-check" onchange="toggleButton(2)">
-                        <label for="art3-check" class="checkbox-label">Art. 3 — Limitazioni CMS (solo contenuti testuali e immagini)</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="art5-check" onchange="toggleButton(2)">
-                        <label for="art5-check" class="checkbox-label">Art. 5.3 — Un ciclo di revisione incluso</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="art7-check" onchange="toggleButton(2)">
-                        <label for="art7-check" class="checkbox-label">Art. 7 — Licenza d'uso non esclusiva e non trasferibile</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="art8-check" onchange="toggleButton(2)">
-                        <label for="art8-check" class="checkbox-label">Art. 8 — Proprietà intellettuale del Fornitore</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="art9-check" onchange="toggleButton(2)">
-                        <label for="art9-check" class="checkbox-label">Art. 9 — Varianti progettuali soggette a preventivo separato</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="art11-check" onchange="toggleButton(2)">
-                        <label for="art11-check" class="checkbox-label">Art. 11.1 — Non rimborsabilità dell'acconto</label>
+                        <input type="checkbox" id="contract-accept-check" onchange="toggleButton(2)">
+                        <label for="contract-accept-check" class="checkbox-label">Dichiaro di aver letto e accettato integralmente il Contratto di Licenza d'Uso, incluse le clausole ex Art. 1341 e 1342 del Codice Civile (Art. 3, 5.3, 7, 8, 9, 11.1)</label>
                     </div>
                 </div>
 
@@ -1129,16 +1108,8 @@
                 isValid = check;
                 document.getElementById('btn-step-1').disabled = !isValid;
             } else if (step === 2) {
-                // Step 2: All contract checkboxes
-                const checks = [
-                    'art3-check',
-                    'art5-check',
-                    'art7-check',
-                    'art8-check',
-                    'art9-check',
-                    'art11-check'
-                ];
-                isValid = checks.every(id => document.getElementById(id).checked);
+                // Step 2: Single contract acceptance checkbox
+                isValid = document.getElementById('contract-accept-check').checked;
                 document.getElementById('btn-step-2').disabled = !isValid;
             } else if (step === 3) {
                 // Step 3: Final checkbox + all form fields filled
