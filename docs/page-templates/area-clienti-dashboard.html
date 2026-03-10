@@ -1,0 +1,1139 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="pianeta-green">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Area Clienti — Dashboard · Pianeta.green</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    /* ─── Pianeta.green Brand Tokens ──────────────────────────── */
+    [data-brand="pianeta-green"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F2FAF7;
+      --color-surface-card:    #E6F5ED;
+      --color-surface-deep:    #CEEADB;
+      --color-surface-inverse: #0D3D26;
+      --color-content-primary:   #0F2218;
+      --color-content-secondary: #4D7060;
+      --color-content-disabled:  #9BB9A9;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #1F8A5C;
+      --color-border-default:    rgba(31,138,92,0.15);
+      --color-border-subtle:     rgba(31,138,92,0.08);
+      --color-interactive-primary-bg:       #1F8A5C;
+      --color-interactive-primary-bg-hover: #197A50;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-brand-primary:   #1F8A5C;
+      --color-brand-accent:    #5BD48A;
+      --color-brand-dark:      #0D3D26;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    16px;
+      --radius-full:  9999px;
+      --shadow-sm:    0 1px 2px rgba(0,0,0,0.04), 0 1px 3px rgba(0,0,0,0.06);
+      --shadow-md:    0 4px 6px -1px rgba(15,34,24,0.07), 0 2px 4px -2px rgba(15,34,24,0.05);
+      --shadow-lg:    0 10px 24px rgba(15,34,24,0.10);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: #F5F7F5;
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── DS meta nav ─────────────────────────────────────────── */
+    .ds-nav {
+      background: var(--color-surface-inverse);
+      padding: 8px 20px;
+      display: flex; align-items: center; gap: 12px;
+      flex-shrink: 0;
+    }
+    .ds-nav-brand { font-family: var(--font-ui); font-size: 10px; color: rgba(255,255,255,0.7); letter-spacing: 0.1em; text-transform: uppercase; }
+    .ds-nav-tag { background: rgba(91,212,138,0.2); color: #5BD48A; font-family: var(--font-ui); font-size: 9px; padding: 2px 7px; border-radius: 10px; letter-spacing: 0.06em; }
+    .ds-nav-label { font-family: var(--font-ui); font-size: 10px; color: rgba(255,255,255,0.45); margin-left: auto; }
+
+    /* ─── App Shell ───────────────────────────────────────────── */
+    .app-shell {
+      display: flex;
+      flex: 1;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    /* ─── Sidebar ─────────────────────────────────────────────── */
+    .sidebar {
+      width: 232px;
+      flex-shrink: 0;
+      background: var(--color-brand-dark);
+      display: flex;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+    .sidebar-logo {
+      padding: 20px 20px 16px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sidebar-logo-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-brand-accent); flex-shrink: 0;
+    }
+    .sidebar-logo-name {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      color: #FFFFFF;
+    }
+    .sidebar-logo-area {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4);
+      margin-left: auto;
+    }
+    .sidebar-section {
+      padding: 20px 12px 8px;
+    }
+    .sidebar-section-label {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      padding: 0 8px; margin-bottom: 4px;
+    }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      font-size: 13px; font-weight: 500; color: rgba(255,255,255,0.65);
+      text-decoration: none; cursor: pointer;
+      transition: background .12s, color .12s;
+      margin-bottom: 1px;
+    }
+    .sidebar-link:hover { background: rgba(255,255,255,0.07); color: #FFFFFF; }
+    .sidebar-link.active {
+      background: rgba(91,212,138,0.14);
+      color: #5BD48A;
+    }
+    .sidebar-link-icon { width: 16px; text-align: center; font-size: 14px; flex-shrink: 0; }
+    .sidebar-badge {
+      margin-left: auto; background: rgba(91,212,138,0.2); color: #5BD48A;
+      font-family: var(--font-ui); font-size: 9px; padding: 2px 6px;
+      border-radius: var(--radius-full); font-weight: 500;
+    }
+    .sidebar-footer {
+      margin-top: auto;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      padding: 16px 12px;
+    }
+    .sidebar-user {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px; border-radius: var(--radius-sm);
+      cursor: pointer;
+    }
+    .sidebar-user:hover { background: rgba(255,255,255,0.06); }
+    .sidebar-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(91,212,138,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .sidebar-user-name { font-size: 13px; font-weight: 600; color: #FFFFFF; line-height: 1.2; }
+    .sidebar-user-plan {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.05em;
+      color: rgba(255,255,255,0.4);
+    }
+    .sidebar-user-chevron { margin-left: auto; color: rgba(255,255,255,0.3); font-size: 11px; }
+
+    /* ─── Main ────────────────────────────────────────────────── */
+    .main {
+      flex: 1;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ─── Top Bar ─────────────────────────────────────────────── */
+    .topbar {
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 0 28px;
+      height: 56px;
+      display: flex; align-items: center; gap: 16px;
+      flex-shrink: 0;
+      position: sticky; top: 0; z-index: 10;
+    }
+    .topbar-title {
+      font-family: var(--font-display); font-size: 16px; font-weight: 700;
+      color: var(--color-content-primary);
+    }
+    .topbar-date {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-disabled);
+    }
+    .topbar-actions { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+    .topbar-btn {
+      padding: 7px 14px; border-radius: var(--radius-full);
+      font-size: 13px; font-weight: 500; cursor: pointer;
+      text-decoration: none; border: none;
+    }
+    .topbar-btn-ghost {
+      background: transparent; border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary);
+    }
+    .topbar-btn-primary {
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+    }
+    .topbar-notif {
+      width: 34px; height: 34px; border-radius: 50%;
+      border: 1px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; color: var(--color-content-secondary); font-size: 15px;
+      position: relative;
+    }
+    .topbar-notif-dot {
+      position: absolute; top: 6px; right: 6px;
+      width: 7px; height: 7px; border-radius: 50%;
+      background: #EF4444; border: 1.5px solid #FFFFFF;
+    }
+
+    /* ─── Content Area ────────────────────────────────────────── */
+    .content { padding: 24px 28px; flex: 1; }
+
+    /* ─── Welcome bar ─────────────────────────────────────────── */
+    .welcome-bar {
+      background: linear-gradient(135deg, #0D3D26 0%, #1A6040 100%);
+      border-radius: var(--radius-lg); padding: 20px 24px;
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 20px;
+    }
+    .welcome-emoji { font-size: 28px; }
+    .welcome-text h2 {
+      font-family: var(--font-display); font-size: 17px; font-weight: 700;
+      color: #FFFFFF; margin-bottom: 2px;
+    }
+    .welcome-text p { font-size: 13px; color: rgba(255,255,255,0.65); }
+    .welcome-plan {
+      margin-left: auto;
+      background: rgba(91,212,138,0.18); border: 1px solid rgba(91,212,138,0.3);
+      border-radius: var(--radius-full); padding: 6px 14px;
+      font-family: var(--font-ui); font-size: 11px; color: #5BD48A; letter-spacing: 0.06em;
+    }
+
+    /* ─── Stats Row ───────────────────────────────────────────── */
+    .stats-row {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat-card {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 16px 18px;
+    }
+    .stat-label {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-bottom: 8px;
+    }
+    .stat-value {
+      font-family: var(--font-display); font-size: 26px; font-weight: 700;
+      color: var(--color-content-primary); line-height: 1;
+    }
+    .stat-value.green { color: var(--color-brand-primary); }
+    .stat-sub {
+      font-size: 11px; color: var(--color-content-secondary); margin-top: 4px;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .stat-delta-up { color: #1F8A5C; font-weight: 600; }
+    .stat-delta-down { color: #991B1B; font-weight: 600; }
+    .stat-icon {
+      width: 32px; height: 32px; border-radius: var(--radius-sm);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 15px; margin-bottom: 10px;
+    }
+    .stat-icon-green { background: rgba(31,138,92,0.1); }
+    .stat-icon-yellow { background: rgba(245,158,11,0.1); }
+    .stat-icon-blue { background: rgba(59,130,246,0.1); }
+    .stat-icon-purple { background: rgba(139,92,246,0.1); }
+
+    /* ─── Section header ──────────────────────────────────────── */
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 14px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      color: var(--color-content-primary);
+    }
+    .section-action {
+      font-size: 12px; font-weight: 500; color: var(--color-brand-primary);
+      text-decoration: none; cursor: pointer;
+    }
+
+    /* ─── Sites Grid ──────────────────────────────────────────── */
+    .sites-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 14px;
+      margin-bottom: 24px;
+    }
+    .site-card {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg); overflow: hidden;
+      transition: box-shadow .15s;
+    }
+    .site-card:hover { box-shadow: var(--shadow-md); }
+    .site-card-head {
+      padding: 16px 18px 12px;
+      display: flex; align-items: flex-start; gap: 12px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .site-favicon {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; flex-shrink: 0;
+    }
+    .site-info { flex: 1; min-width: 0; }
+    .site-domain {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      color: var(--color-content-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .site-url {
+      font-family: var(--font-ui); font-size: 10px; color: var(--color-content-secondary);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .site-status {
+      display: flex; align-items: center; gap: 5px;
+      font-family: var(--font-ui); font-size: 10px; font-weight: 500;
+      padding: 3px 8px; border-radius: var(--radius-full); flex-shrink: 0;
+    }
+    .site-status-dot { width: 6px; height: 6px; border-radius: 50%; }
+    .status-online { background: #D1FAE5; color: #065F46; }
+    .status-online .site-status-dot { background: #10B981; }
+    .status-maintenance { background: #FEF3C7; color: #92400E; }
+    .status-maintenance .site-status-dot { background: #F59E0B; }
+    .status-offline { background: #FEE2E2; color: #991B1B; }
+    .status-offline .site-status-dot { background: #EF4444; }
+
+    /* GreenMeter badge in card */
+    .site-grade-badge {
+      display: flex; align-items: center; justify-content: center;
+      width: 38px; height: 38px; border-radius: 50%;
+      font-family: var(--font-display); font-size: 14px; font-weight: 800;
+      flex-shrink: 0; border: 2.5px solid;
+    }
+    .grade-aplus { border-color: #10B981; color: #065F46; background: #D1FAE5; }
+    .grade-a     { border-color: #34D399; color: #065F46; background: #ECFDF5; }
+    .grade-b     { border-color: #FCD34D; color: #92400E; background: #FEF3C7; }
+    .grade-c     { border-color: #F87171; color: #991B1B; background: #FEE2E2; }
+
+    /* Metrics row inside site card */
+    .site-metrics {
+      padding: 12px 18px;
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .site-metric-item { text-align: center; }
+    .site-metric-value {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      color: var(--color-content-primary); line-height: 1;
+    }
+    .site-metric-value.highlight { color: var(--color-brand-primary); }
+    .site-metric-label {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-top: 2px;
+    }
+
+    /* Star ratings */
+    .site-ratings {
+      padding: 10px 18px;
+      display: flex; gap: 16px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .rating-item { display: flex; align-items: center; gap: 6px; }
+    .rating-label { font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.05em; text-transform: uppercase; color: var(--color-content-secondary); }
+    .rating-stars { display: flex; gap: 1px; }
+    .star { font-size: 10px; color: #F59E0B; }
+    .star.empty { color: #D1D5DB; }
+
+    /* Analytics mini in card */
+    .site-analytics {
+      padding: 10px 18px;
+      display: flex; gap: 12px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .analytics-item { display: flex; align-items: center; gap: 6px; }
+    .analytics-icon { font-size: 12px; }
+    .analytics-text { font-size: 12px; color: var(--color-content-secondary); }
+    .analytics-text strong { color: var(--color-content-primary); font-weight: 600; }
+    .analytics-source {
+      margin-left: auto; font-family: var(--font-ui); font-size: 9px;
+      color: var(--color-content-disabled); letter-spacing: 0.04em;
+    }
+
+    /* Card actions */
+    .site-actions {
+      padding: 12px 18px;
+      display: flex; gap: 8px; align-items: center;
+    }
+    .btn-cms {
+      flex: 1; text-align: center;
+      padding: 8px 12px; border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 600; cursor: pointer;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none; text-decoration: none;
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+    }
+    .btn-cms:hover { background: var(--color-interactive-primary-bg-hover); }
+    .btn-outline-sm {
+      padding: 8px 10px; border-radius: var(--radius-sm);
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      background: transparent;
+      border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary); text-decoration: none;
+      display: flex; align-items: center; gap: 4px;
+      white-space: nowrap;
+    }
+    .btn-outline-sm:hover { border-color: var(--color-brand-primary); color: var(--color-brand-primary); }
+
+    /* ─── Bottom Grid ─────────────────────────────────────────── */
+    .bottom-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    /* ─── Analytics Widget ────────────────────────────────────── */
+    .widget-card {
+      background: #FFFFFF;
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg); overflow: hidden;
+    }
+    .widget-head {
+      padding: 14px 18px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .widget-head-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 700;
+      color: var(--color-content-primary);
+    }
+    .widget-head-sub { font-size: 12px; color: var(--color-content-secondary); }
+    .widget-badge {
+      margin-left: auto; font-family: var(--font-ui); font-size: 9px;
+      padding: 3px 8px; border-radius: var(--radius-full);
+      letter-spacing: 0.06em;
+    }
+    .badge-matomo { background: #EFF6FF; color: #1D4ED8; border: 1px solid rgba(29,78,216,0.15); }
+    .badge-coming { background: #FEF3C7; color: #92400E; border: 1px solid rgba(146,64,14,0.15); }
+
+    /* Sparkline-style chart */
+    .chart-area {
+      padding: 16px 18px;
+    }
+    .chart-bars {
+      display: flex; align-items: flex-end; gap: 4px; height: 60px;
+    }
+    .chart-bar {
+      flex: 1; border-radius: 3px 3px 0 0;
+      background: var(--color-surface-deep);
+      transition: background .15s;
+    }
+    .chart-bar:hover { background: var(--color-brand-primary); }
+    .chart-bar.active { background: var(--color-brand-primary); }
+    .chart-labels {
+      display: flex; justify-content: space-between;
+      margin-top: 4px;
+      font-family: var(--font-ui); font-size: 9px; color: var(--color-content-disabled);
+    }
+    .chart-stats {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 0;
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .chart-stat {
+      padding: 12px 16px; text-align: center;
+      border-right: 1px solid var(--color-border-subtle);
+    }
+    .chart-stat:last-child { border-right: none; }
+    .chart-stat-val {
+      font-family: var(--font-display); font-size: 18px; font-weight: 700;
+      color: var(--color-content-primary);
+    }
+    .chart-stat-lbl {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-top: 2px;
+    }
+    .chart-integration-placeholder {
+      padding: 24px 20px;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 10px; text-align: center;
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-subtle);
+    }
+    .chart-int-icon { font-size: 28px; }
+    .chart-int-label {
+      font-size: 13px; font-weight: 600; color: var(--color-content-primary);
+    }
+    .chart-int-sub { font-size: 12px; color: var(--color-content-secondary); max-width: 200px; line-height: 1.5; }
+    .btn-connect {
+      padding: 7px 16px; border-radius: var(--radius-full); font-size: 12px; font-weight: 600;
+      background: var(--color-interactive-primary-bg); color: var(--color-interactive-primary-label);
+      border: none; cursor: pointer; margin-top: 4px;
+    }
+
+    /* ─── Activity Log ────────────────────────────────────────── */
+    .activity-list { padding: 0; }
+    .activity-item {
+      display: flex; align-items: flex-start; gap: 10px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .activity-item:last-child { border-bottom: none; }
+    .activity-dot {
+      width: 8px; height: 8px; border-radius: 50%; margin-top: 3px; flex-shrink: 0;
+    }
+    .dot-green  { background: #10B981; }
+    .dot-blue   { background: #3B82F6; }
+    .dot-orange { background: #F59E0B; }
+    .dot-purple { background: #8B5CF6; }
+    .activity-body { flex: 1; min-width: 0; }
+    .activity-title { font-size: 13px; font-weight: 500; color: var(--color-content-primary); }
+    .activity-title span { color: var(--color-brand-primary); font-weight: 600; }
+    .activity-meta {
+      font-family: var(--font-ui); font-size: 10px; color: var(--color-content-disabled);
+      margin-top: 2px;
+    }
+    .activity-time { font-family: var(--font-ui); font-size: 10px; color: var(--color-content-disabled); flex-shrink: 0; margin-top: 2px; }
+
+    /* ─── GreenMeter Summary Widget ───────────────────────────── */
+    .greenmeter-widget-body { padding: 16px 18px; }
+    .gm-aggregate {
+      display: flex; align-items: center; gap: 16px; margin-bottom: 16px;
+    }
+    .gm-score-circle {
+      width: 56px; height: 56px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 18px; font-weight: 800;
+      border: 3px solid #10B981; color: #065F46; background: #D1FAE5;
+      flex-shrink: 0;
+    }
+    .gm-summary-stats { display: flex; gap: 20px; }
+    .gm-stat-item { text-align: center; }
+    .gm-stat-val {
+      font-family: var(--font-display); font-size: 20px; font-weight: 700;
+      color: var(--color-content-primary);
+    }
+    .gm-stat-val.accent { color: var(--color-brand-primary); }
+    .gm-stat-lbl {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary); margin-top: 2px;
+    }
+    .gm-site-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 8px 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .gm-site-row:last-child { border-bottom: none; }
+    .gm-site-name { font-size: 12px; font-weight: 600; color: var(--color-content-primary); flex: 1; }
+    .gm-site-co2 { font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary); }
+    .gm-site-grade {
+      width: 26px; height: 26px; border-radius: 50%;
+      font-family: var(--font-display); font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+      border: 2px solid; flex-shrink: 0;
+    }
+    .gm-bar-wrap { width: 80px; }
+    .gm-bar { height: 4px; border-radius: 2px; background: var(--color-surface-deep); overflow: hidden; }
+    .gm-bar-fill { height: 100%; border-radius: 2px; background: var(--color-brand-primary); }
+
+    /* ─── Quick Actions ───────────────────────────────────────── */
+    .quick-actions-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+      margin-bottom: 24px;
+    }
+    .qa-item {
+      background: #FFFFFF; border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 14px 14px;
+      display: flex; flex-direction: column; align-items: center; gap: 8px;
+      cursor: pointer; text-decoration: none;
+      transition: border-color .12s, box-shadow .12s;
+    }
+    .qa-item:hover { border-color: var(--color-brand-primary); box-shadow: var(--shadow-sm); }
+    .qa-icon { font-size: 22px; }
+    .qa-label { font-size: 12px; font-weight: 600; color: var(--color-content-primary); text-align: center; }
+    .qa-sub { font-size: 11px; color: var(--color-content-secondary); text-align: center; }
+
+  </style>
+</head>
+<body>
+
+  <!-- DS Meta nav -->
+  <div class="ds-nav">
+    <span class="ds-nav-brand">Hederae DS</span>
+    <span class="ds-nav-tag">pianeta-green</span>
+    <span class="ds-nav-label">Area Clienti — 05 · Dashboard</span>
+  </div>
+
+  <div class="app-shell">
+
+    <!-- ── Sidebar ──────────────────────────────────────────── -->
+    <aside class="sidebar">
+      <div class="sidebar-logo">
+        <span class="sidebar-logo-dot"></span>
+        <span class="sidebar-logo-name">Pianeta.green</span>
+        <span class="sidebar-logo-area">Cliente</span>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Panoramica</div>
+        <a class="sidebar-link active" href="#">
+          <span class="sidebar-link-icon">⊞</span> Dashboard
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">🌐</span> I miei siti
+          <span class="sidebar-badge">3</span>
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Strumenti</div>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">📊</span> GreenMeter
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">📈</span> Analytics
+          <span style="margin-left:auto;font-family:var(--font-ui);font-size:9px;color:rgba(255,255,255,0.25);">Matomo</span>
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">💾</span> Backup
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">🔒</span> SSL & Sicurezza
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">📧</span> Email
+        </a>
+      </div>
+
+      <div class="sidebar-section">
+        <div class="sidebar-section-label">Account</div>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">📄</span> Fatture
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">🎟</span> Supporto
+          <span class="sidebar-badge" style="background:rgba(239,68,68,0.2);color:#F87171;">1</span>
+        </a>
+        <a class="sidebar-link" href="#">
+          <span class="sidebar-link-icon">⚙️</span> Impostazioni
+        </a>
+      </div>
+
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">🧑</div>
+          <div>
+            <div class="sidebar-user-name">Marco Ferretti</div>
+            <div class="sidebar-user-plan">Piano Foresta</div>
+          </div>
+          <span class="sidebar-user-chevron">⌃</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ── Main ─────────────────────────────────────────────── -->
+    <main class="main">
+
+      <!-- Top bar -->
+      <div class="topbar">
+        <div>
+          <div class="topbar-title">Ciao, Marco 👋</div>
+        </div>
+        <div class="topbar-date">Martedì 10 marzo 2026</div>
+        <div class="topbar-actions">
+          <a href="#" class="topbar-btn topbar-btn-ghost">+ Nuovo sito</a>
+          <div class="topbar-notif">
+            🔔
+            <span class="topbar-notif-dot"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+
+        <!-- Welcome bar -->
+        <div class="welcome-bar">
+          <span class="welcome-emoji">🌱</span>
+          <div class="welcome-text">
+            <h2>I tuoi siti producono il 95% di CO₂ in meno della media.</h2>
+            <p>Stai usando hosting verde certificato. Continua così — l'impatto conta.</p>
+          </div>
+          <div class="welcome-plan">🌲 Piano Foresta</div>
+        </div>
+
+        <!-- Stats row -->
+        <div class="stats-row">
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-green">🌐</div>
+            <div class="stat-label">Siti attivi</div>
+            <div class="stat-value">3</div>
+            <div class="stat-sub">su 10 disponibili nel piano</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-green">🌿</div>
+            <div class="stat-label">Score GreenMeter medio</div>
+            <div class="stat-value green">A+</div>
+            <div class="stat-sub"><span class="stat-delta-up">↑ Top 5%</span> di tutti i siti</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-yellow">♻️</div>
+            <div class="stat-label">CO₂ evitata (stima ann.)</div>
+            <div class="stat-value">127 kg</div>
+            <div class="stat-sub">≈ 580 km in auto non percorsi</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-icon stat-icon-blue">💾</div>
+            <div class="stat-label">Storage usato</div>
+            <div class="stat-value">18,4 GB</div>
+            <div class="stat-sub">di 100 GB · <span style="color:var(--color-brand-primary);font-weight:600;">18%</span> usato</div>
+          </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="section-header">
+          <div class="section-title">Azioni rapide</div>
+        </div>
+        <div class="quick-actions-grid">
+          <a href="#" class="qa-item">
+            <span class="qa-icon">🖥</span>
+            <span class="qa-label">Vai al CMS</span>
+            <span class="qa-sub">Ultimo accesso: oggi</span>
+          </a>
+          <a href="#" class="qa-item">
+            <span class="qa-icon">📊</span>
+            <span class="qa-label">Report GreenMeter</span>
+            <span class="qa-sub">Aggiornato oggi</span>
+          </a>
+          <a href="#" class="qa-item">
+            <span class="qa-icon">💾</span>
+            <span class="qa-label">Backup manuale</span>
+            <span class="qa-sub">Ultimo: ieri 03:00</span>
+          </a>
+          <a href="#" class="qa-item">
+            <span class="qa-icon">🎟</span>
+            <span class="qa-label">Apri ticket</span>
+            <span class="qa-sub">Risposta media: 2h</span>
+          </a>
+        </div>
+
+        <!-- Sites Grid -->
+        <div class="section-header">
+          <div class="section-title">I miei siti</div>
+          <a class="section-action" href="#">Vedi tutti →</a>
+        </div>
+
+        <div class="sites-grid">
+
+          <!-- Site 1: rarafactory.com -->
+          <div class="site-card">
+            <div class="site-card-head">
+              <div class="site-favicon">🏭</div>
+              <div class="site-info">
+                <div class="site-domain">rarafactory.com</div>
+                <div class="site-url">https://rarafactory.com · WordPress 6.7</div>
+              </div>
+              <span class="site-status status-online">
+                <span class="site-status-dot"></span>Online
+              </span>
+              <div class="site-grade-badge grade-aplus">A+</div>
+            </div>
+
+            <div class="site-metrics">
+              <div class="site-metric-item">
+                <div class="site-metric-value highlight">0.018g</div>
+                <div class="site-metric-label">CO₂ / pagina</div>
+              </div>
+              <div class="site-metric-item">
+                <div class="site-metric-value highlight">95%</div>
+                <div class="site-metric-label">meglio media</div>
+              </div>
+              <div class="site-metric-item">
+                <div class="site-metric-value">41 kg</div>
+                <div class="site-metric-label">CO₂ evitata/anno</div>
+              </div>
+            </div>
+
+            <div class="site-ratings">
+              <div class="rating-item">
+                <span class="rating-label">Carbon</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+              </div>
+              <div class="rating-item">
+                <span class="rating-label">Perf.</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span>
+                </div>
+              </div>
+              <div class="rating-item">
+                <span class="rating-label">Hosting</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="site-analytics">
+              <div class="analytics-item">
+                <span class="analytics-icon">👁</span>
+                <span class="analytics-text"><strong>4.820</strong> visite/mese</span>
+              </div>
+              <div class="analytics-item">
+                <span class="analytics-icon">🕐</span>
+                <span class="analytics-text"><strong>2:14</strong> tempo medio</span>
+              </div>
+              <div class="analytics-item">
+                <span class="analytics-icon">📉</span>
+                <span class="analytics-text"><strong>38%</span> bounce</span>
+              </div>
+              <div class="analytics-source">Matomo</div>
+            </div>
+
+            <div class="site-actions">
+              <a href="#" class="btn-cms">⚙️ Vai al CMS</a>
+              <a href="https://pianeta.green/rarafactory.com" target="_blank" class="btn-outline-sm">📊 GreenMeter</a>
+              <a href="#" class="btn-outline-sm">📈 Analytics</a>
+            </div>
+          </div>
+
+          <!-- Site 2: susdef.it -->
+          <div class="site-card">
+            <div class="site-card-head">
+              <div class="site-favicon">🌿</div>
+              <div class="site-info">
+                <div class="site-domain">susdef.it</div>
+                <div class="site-url">https://susdef.it · Payload CMS + Terra</div>
+              </div>
+              <span class="site-status status-online">
+                <span class="site-status-dot"></span>Online
+              </span>
+              <div class="site-grade-badge grade-aplus">A+</div>
+            </div>
+
+            <div class="site-metrics">
+              <div class="site-metric-item">
+                <div class="site-metric-value highlight">0.021g</div>
+                <div class="site-metric-label">CO₂ / pagina</div>
+              </div>
+              <div class="site-metric-item">
+                <div class="site-metric-value highlight">93%</div>
+                <div class="site-metric-label">meglio media</div>
+              </div>
+              <div class="site-metric-item">
+                <div class="site-metric-value">58 kg</div>
+                <div class="site-metric-label">CO₂ evitata/anno</div>
+              </div>
+            </div>
+
+            <div class="site-ratings">
+              <div class="rating-item">
+                <span class="rating-label">Carbon</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+              </div>
+              <div class="rating-item">
+                <span class="rating-label">Perf.</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+              </div>
+              <div class="rating-item">
+                <span class="rating-label">Hosting</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="site-analytics">
+              <div class="analytics-item">
+                <span class="analytics-icon">👁</span>
+                <span class="analytics-text"><strong>12.340</strong> visite/mese</span>
+              </div>
+              <div class="analytics-item">
+                <span class="analytics-icon">🕐</span>
+                <span class="analytics-text"><strong>3:42</strong> tempo medio</span>
+              </div>
+              <div class="analytics-item">
+                <span class="analytics-icon">📉</span>
+                <span class="analytics-text"><strong>29%</strong> bounce</span>
+              </div>
+              <div class="analytics-source">Matomo</div>
+            </div>
+
+            <div class="site-actions">
+              <a href="#" class="btn-cms">⚙️ Vai al CMS</a>
+              <a href="#" class="btn-outline-sm">📊 GreenMeter</a>
+              <a href="#" class="btn-outline-sm">📈 Analytics</a>
+            </div>
+          </div>
+
+          <!-- Site 3: corner-table.com (with warning) -->
+          <div class="site-card">
+            <div class="site-card-head">
+              <div class="site-favicon">🍽</div>
+              <div class="site-info">
+                <div class="site-domain">corner-table.com</div>
+                <div class="site-url">https://corner-table.com · WordPress 6.5</div>
+              </div>
+              <span class="site-status status-maintenance">
+                <span class="site-status-dot"></span>Aggiornamento
+              </span>
+              <div class="site-grade-badge grade-b">B</div>
+            </div>
+
+            <div class="site-metrics">
+              <div class="site-metric-item">
+                <div class="site-metric-value" style="color:#92400E;">0.14g</div>
+                <div class="site-metric-label">CO₂ / pagina</div>
+              </div>
+              <div class="site-metric-item">
+                <div class="site-metric-value" style="color:#92400E;">62%</div>
+                <div class="site-metric-label">meglio media</div>
+              </div>
+              <div class="site-metric-item">
+                <div class="site-metric-value">28 kg</div>
+                <div class="site-metric-label">CO₂ evitata/anno</div>
+              </div>
+            </div>
+
+            <div class="site-ratings">
+              <div class="rating-item">
+                <span class="rating-label">Carbon</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                </div>
+              </div>
+              <div class="rating-item">
+                <span class="rating-label">Perf.</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star empty">★</span><span class="star empty">★</span>
+                </div>
+              </div>
+              <div class="rating-item">
+                <span class="rating-label">Hosting</span>
+                <div class="rating-stars">
+                  <span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="site-analytics" style="background:#FEF9EF;border-top:1px solid rgba(245,158,11,0.2);">
+              <div class="analytics-item">
+                <span class="analytics-icon">⚠️</span>
+                <span class="analytics-text" style="color:#92400E;">Aggiornamento WordPress in corso — sito temporaneamente offline.</span>
+              </div>
+            </div>
+
+            <div class="site-actions">
+              <a href="#" class="btn-cms" style="background:#6B7280;">⏸ CMS non disponibile</a>
+              <a href="#" class="btn-outline-sm">📊 GreenMeter</a>
+              <a href="#" class="btn-outline-sm">📈 Analytics</a>
+            </div>
+          </div>
+
+          <!-- Add site CTA -->
+          <div class="site-card" style="display:flex;align-items:center;justify-content:center;border-style:dashed;min-height:280px;cursor:pointer;background:var(--color-surface-raised);">
+            <div style="text-align:center;">
+              <div style="font-size:32px;margin-bottom:12px;">+</div>
+              <div style="font-family:var(--font-display);font-size:15px;font-weight:700;color:var(--color-content-primary);margin-bottom:6px;">Aggiungi un sito</div>
+              <div style="font-size:12px;color:var(--color-content-secondary);margin-bottom:16px;">Hai 7 siti disponibili nel piano Foresta</div>
+              <div style="display:inline-block;padding:8px 18px;border-radius:var(--radius-full);background:var(--color-interactive-primary-bg);color:#FFFFFF;font-size:13px;font-weight:600;">Aggiungi sito →</div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Bottom grid: Analytics + GreenMeter + Activity -->
+        <div class="bottom-grid">
+
+          <!-- Analytics Widget -->
+          <div class="widget-card">
+            <div class="widget-head">
+              <div>
+                <div class="widget-head-title">📈 Analytics</div>
+                <div class="widget-head-sub">Tutti i siti · ultimi 30 giorni</div>
+              </div>
+              <span class="widget-badge badge-matomo">Matomo</span>
+            </div>
+            <div class="chart-area">
+              <div class="chart-bars">
+                <!-- Bars represent week-by-week traffic - heights vary -->
+                <div class="chart-bar" style="height:35%;"></div>
+                <div class="chart-bar" style="height:45%;"></div>
+                <div class="chart-bar" style="height:60%;"></div>
+                <div class="chart-bar" style="height:40%;"></div>
+                <div class="chart-bar" style="height:55%;"></div>
+                <div class="chart-bar" style="height:70%;"></div>
+                <div class="chart-bar" style="height:50%;"></div>
+                <div class="chart-bar" style="height:65%;"></div>
+                <div class="chart-bar" style="height:80%;"></div>
+                <div class="chart-bar" style="height:72%;"></div>
+                <div class="chart-bar" style="height:85%;"></div>
+                <div class="chart-bar" style="height:90%;"></div>
+                <div class="chart-bar" style="height:75%;"></div>
+                <div class="chart-bar" style="height:68%;"></div>
+                <div class="chart-bar" style="height:82%;"></div>
+                <div class="chart-bar" style="height:95%;"></div>
+                <div class="chart-bar" style="height:88%;"></div>
+                <div class="chart-bar" style="height:100%;" class="active"></div>
+                <div class="chart-bar" style="height:92%;"></div>
+                <div class="chart-bar" style="height:78%;"></div>
+                <div class="chart-bar" style="height:85%;"></div>
+                <div class="chart-bar" style="height:70%;"></div>
+                <div class="chart-bar" style="height:60%;"></div>
+                <div class="chart-bar" style="height:75%;"></div>
+                <div class="chart-bar" style="height:68%;"></div>
+                <div class="chart-bar" style="height:80%;"></div>
+                <div class="chart-bar" style="height:72%;"></div>
+                <div class="chart-bar" style="height:85%;"></div>
+                <div class="chart-bar" style="height:78%;"></div>
+                <div class="chart-bar" style="height:65%;background:var(--color-brand-primary);"></div>
+              </div>
+              <div class="chart-labels">
+                <span>10 feb</span><span>17 feb</span><span>24 feb</span><span>03 mar</span><span>10 mar</span>
+              </div>
+            </div>
+            <div class="chart-stats">
+              <div class="chart-stat">
+                <div class="chart-stat-val">17.160</div>
+                <div class="chart-stat-lbl">Visite totali</div>
+              </div>
+              <div class="chart-stat">
+                <div class="chart-stat-val">9.840</div>
+                <div class="chart-stat-lbl">Visitatori unici</div>
+              </div>
+              <div class="chart-stat">
+                <div class="chart-stat-val">34%</div>
+                <div class="chart-stat-lbl">Bounce rate</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column: GreenMeter summary + Activity -->
+          <div style="display:flex;flex-direction:column;gap:14px;">
+
+            <!-- GreenMeter summary -->
+            <div class="widget-card">
+              <div class="widget-head">
+                <div>
+                  <div class="widget-head-title">🌿 GreenMeter — Riepilogo</div>
+                  <div class="widget-head-sub">Impatto aggregato tutti i siti</div>
+                </div>
+                <a href="#" class="section-action" style="font-size:11px;">Vedi report →</a>
+              </div>
+              <div class="greenmeter-widget-body">
+                <div class="gm-aggregate">
+                  <div class="gm-score-circle">A+</div>
+                  <div class="gm-summary-stats">
+                    <div class="gm-stat-item">
+                      <div class="gm-stat-val accent">127 kg</div>
+                      <div class="gm-stat-lbl">CO₂ evitata/anno</div>
+                    </div>
+                    <div class="gm-stat-item">
+                      <div class="gm-stat-val">0.058g</div>
+                      <div class="gm-stat-lbl">CO₂ media/pagina</div>
+                    </div>
+                    <div class="gm-stat-item">
+                      <div class="gm-stat-val accent">94%</div>
+                      <div class="gm-stat-lbl">vs. media web</div>
+                    </div>
+                  </div>
+                </div>
+                <!-- Per-site breakdown -->
+                <div class="gm-site-row">
+                  <div class="gm-site-grade grade-aplus">A+</div>
+                  <div class="gm-site-name">rarafactory.com</div>
+                  <div class="gm-bar-wrap">
+                    <div class="gm-bar"><div class="gm-bar-fill" style="width:5%;"></div></div>
+                  </div>
+                  <div class="gm-site-co2">0.018g</div>
+                </div>
+                <div class="gm-site-row">
+                  <div class="gm-site-grade grade-aplus">A+</div>
+                  <div class="gm-site-name">susdef.it</div>
+                  <div class="gm-bar-wrap">
+                    <div class="gm-bar"><div class="gm-bar-fill" style="width:6%;"></div></div>
+                  </div>
+                  <div class="gm-site-co2">0.021g</div>
+                </div>
+                <div class="gm-site-row">
+                  <div class="gm-site-grade grade-b" style="border-color:#FCD34D;color:#92400E;background:#FEF3C7;">B</div>
+                  <div class="gm-site-name">corner-table.com</div>
+                  <div class="gm-bar-wrap">
+                    <div class="gm-bar"><div class="gm-bar-fill" style="width:40%;background:#F59E0B;"></div></div>
+                  </div>
+                  <div class="gm-site-co2">0.14g</div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Activity log -->
+            <div class="widget-card">
+              <div class="widget-head">
+                <div class="widget-head-title">⚡ Attività recente</div>
+              </div>
+              <div class="activity-list">
+                <div class="activity-item">
+                  <div class="activity-dot dot-green"></div>
+                  <div class="activity-body">
+                    <div class="activity-title">Backup completato — <span>rarafactory.com</span></div>
+                    <div class="activity-meta">Backup automatico giornaliero · 3.2 GB</div>
+                  </div>
+                  <div class="activity-time">03:00</div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-dot dot-orange"></div>
+                  <div class="activity-body">
+                    <div class="activity-title">Aggiornamento WordPress — <span>corner-table.com</span></div>
+                    <div class="activity-meta">WP 6.5 → 6.7 · in corso</div>
+                  </div>
+                  <div class="activity-time">08:12</div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-dot dot-blue"></div>
+                  <div class="activity-body">
+                    <div class="activity-title">GreenMeter scan — <span>susdef.it</span></div>
+                    <div class="activity-meta">Score confermato A+ · 12 pagine analizzate</div>
+                  </div>
+                  <div class="activity-time">09:30</div>
+                </div>
+                <div class="activity-item">
+                  <div class="activity-dot dot-purple"></div>
+                  <div class="activity-body">
+                    <div class="activity-title">SSL rinnovato — <span>susdef.it</span></div>
+                    <div class="activity-meta">Certificato valido fino al 10 mar 2027</div>
+                  </div>
+                  <div class="activity-time">ieri</div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /content -->
+    </main><!-- /main -->
+  </div><!-- /app-shell -->
+
+</body>
+</html>
