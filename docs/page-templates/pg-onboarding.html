@@ -764,11 +764,6 @@
             </div>
             <div class="step" data-step="3">
                 <div class="step-circle">3</div>
-                <div class="step-label">DNS & Tecnica</div>
-                <div class="step-connector"></div>
-            </div>
-            <div class="step" data-step="4">
-                <div class="step-circle">4</div>
                 <div class="step-label">Firma</div>
                 <div class="step-connector"></div>
             </div>
@@ -972,92 +967,8 @@
                 </div>
             </div>
 
-            <!-- STEP 3: DNS & TECNICA -->
+            <!-- STEP 3: FIRMA -->
             <div class="step-content" data-step-content="3">
-                <h1>Guida al DNS Handover</h1>
-                <p>Il DNS handover è il processo di trasferimento dei record DNS dal vostro provider attuale ai server di Pianeta.Green. Questo passaggio deve essere coordinato con il vostro tecnico IT in una call dedicata con il nostro team per assicurare che tutto proceda correttamente senza tempi di inattività.</p>
-
-                <h3 style="font-size: 18px; font-weight: 600; margin: 40px 0 24px;">Procedura DNS in 6 Step</h3>
-                <div class="step-cards">
-                    <div class="card">
-                        <div class="card-number">1</div>
-                        <div class="card-title">Screenshot Backup</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-number">2</div>
-                        <div class="card-title">Abbassare TTL</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-number">3</div>
-                        <div class="card-title">Record A</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-number">4</div>
-                        <div class="card-title">CNAME www</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-number">5</div>
-                        <div class="card-title">Record TXT</div>
-                    </div>
-                    <div class="card">
-                        <div class="card-number">6</div>
-                        <div class="card-title">Verifica</div>
-                    </div>
-                </div>
-
-                <div class="warning-box">
-                    <h3>⚠️ Attenzione: Email e Record MX</h3>
-                    <p>Se la vostra email è gestita tramite il dominio (ad es. info@vostrodominio.it), NON modificate i record MX durante il handover DNS. Coordinatevi con il vostro provider email per preservare la continuità del servizio posta. In caso di dubbi, chiedete chiarimenti al nostro team.</p>
-                </div>
-
-                <h3 style="font-size: 16px; font-weight: 600; margin: 40px 0 20px;">Troubleshooting</h3>
-                <table class="troubleshooting-table">
-                    <thead>
-                        <tr>
-                            <th>Problema</th>
-                            <th>Causa Probabile</th>
-                            <th>Soluzione</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Sito non raggiungibile</td>
-                            <td>Record A non propagato</td>
-                            <td>Attendere 24-48h per propagazione, verificare con nslookup</td>
-                        </tr>
-                        <tr>
-                            <td>www non funziona</td>
-                            <td>CNAME www non configurato</td>
-                            <td>Aggiungere record CNAME www → target fornito</td>
-                        </tr>
-                        <tr>
-                            <td>SSL non funziona</td>
-                            <td>Record TXT di verifica mancante</td>
-                            <td>Verificare record TXT e attendere validazione</td>
-                        </tr>
-                        <tr>
-                            <td>Email non funziona</td>
-                            <td>Record MX modificati</td>
-                            <td>Ripristinare record MX originali, contattare support</td>
-                        </tr>
-                    </tbody>
-                </table>
-
-                <div class="checkbox-group">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="dns-check" onchange="toggleButton(3)">
-                        <label for="dns-check" class="checkbox-label">Ho letto e compreso la procedura DNS. Mi impegno a coordinare il mio tecnico per una call dedicata.</label>
-                    </div>
-                </div>
-
-                <div class="button-group">
-                    <button class="btn-secondary" onclick="previousStep()">Indietro</button>
-                    <button class="btn-primary" id="btn-step-3" onclick="nextStep()" disabled>Avanti</button>
-                </div>
-            </div>
-
-            <!-- STEP 4: FIRMA -->
-            <div class="step-content" data-step-content="4">
                 <h1>Sottoscrizione</h1>
                 <p>Siete a un passo dalla conclusione! Verificate il riepilogo dei vostri accordi e compilate i dati della vostra azienda per la sottoscrizione finale.</p>
 
@@ -1069,10 +980,6 @@
                     <div class="summary-item">
                         <div class="summary-checkmark">✓</div>
                         <div class="summary-text">Contratto di Licenza accettato</div>
-                    </div>
-                    <div class="summary-item">
-                        <div class="summary-checkmark">✓</div>
-                        <div class="summary-text">Procedure Tecniche comprese</div>
                     </div>
                 </div>
 
@@ -1125,7 +1032,7 @@
 
                 <div class="checkbox-group">
                     <div class="checkbox-item">
-                        <input type="checkbox" id="final-check" onchange="toggleButton(4)">
+                        <input type="checkbox" id="final-check" onchange="toggleButton(3)">
                         <label for="final-check" class="checkbox-label">Confermo di aver letto tutti i documenti e di accettare integralmente i termini del Contratto di Licenza d'Uso</label>
                     </div>
                 </div>
@@ -1142,7 +1049,7 @@
                 <div id="form-container">
                     <div class="button-group">
                         <button class="btn-secondary" onclick="previousStep()">Indietro</button>
-                        <button class="btn-primary" id="btn-step-4" onclick="submitOnboarding()" disabled>Conferma e Sottoscrivi</button>
+                        <button class="btn-primary" id="btn-step-3" onclick="submitOnboarding()" disabled>Conferma e Sottoscrivi</button>
                     </div>
                 </div>
             </div>
@@ -1157,7 +1064,7 @@
     <script>
         // ========== STATE MANAGEMENT ==========
         let currentStep = 1;
-        const totalSteps = 4;
+        const totalSteps = 3;
 
         // Initialize date field
         function initializeDateField() {
@@ -1234,12 +1141,7 @@
                 isValid = checks.every(id => document.getElementById(id).checked);
                 document.getElementById('btn-step-2').disabled = !isValid;
             } else if (step === 3) {
-                // Step 3: DNS checkbox
-                const check = document.getElementById('dns-check').checked;
-                isValid = check;
-                document.getElementById('btn-step-3').disabled = !isValid;
-            } else if (step === 4) {
-                // Step 4: Final checkbox + all form fields filled
+                // Step 3: Final checkbox + all form fields filled
                 const check = document.getElementById('final-check').checked;
                 const ragioneSociale = document.getElementById('ragione-sociale').value.trim();
                 const piva = document.getElementById('piva').value.trim();
@@ -1250,7 +1152,7 @@
                 const firma = document.getElementById('firma').value.trim();
 
                 isValid = check && ragioneSociale && piva && sedeLegale && pec && referenteNome && referenteEmail && firma;
-                document.getElementById('btn-step-4').disabled = !isValid;
+                document.getElementById('btn-step-3').disabled = !isValid;
             }
         }
 
@@ -1268,12 +1170,12 @@
 
             inputs.forEach(id => {
                 document.getElementById(id).addEventListener('input', () => {
-                    toggleButton(4);
+                    toggleButton(3);
                 });
             });
 
             document.getElementById('final-check').addEventListener('change', () => {
-                toggleButton(4);
+                toggleButton(3);
             });
         }
 

@@ -6,11 +6,11 @@ export default {
 
 export const FAQ = () => templateStory({
   src: 'pg-faq.html',
-  label: '🔴 WIP FAQ',
+  label: '🟢 Done FAQ',
   brand: 'pianeta-green',
-  state: 'WIP',
+  state: 'DONE',
 });
-FAQ.storyName = '🔴 WIP FAQ';
+FAQ.storyName = '🟢 Done FAQ';
 export const Contatti = () => templateStory({
   src: 'pg-contatti.html',
   label: '🟡 Review Contatti',

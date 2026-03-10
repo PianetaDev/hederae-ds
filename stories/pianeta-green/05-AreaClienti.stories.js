@@ -14,11 +14,11 @@ Step1Login.storyName = '🟢 1 — Login / Registrazione';
 
 export const Step2Onboarding = () => templateStory({
   src: 'pg-onboarding.html',
-  label: '🟢 Done 2 — Onboarding (Documenti + Firma)',
+  label: '🟢 Done 2 — Onboarding (Metodo + Contratto + Firma)',
   brand: 'pianeta-green',
   state: 'DONE',
 });
-Step2Onboarding.storyName = '🟢 2 — Onboarding (Documenti + Firma)';
+Step2Onboarding.storyName = '🟢 2 — Onboarding (Metodo + Contratto + Firma)';
 
 export const Step3Payment = () => templateStory({
   src: 'pg-payment.html',
@@ -27,3 +27,11 @@ export const Step3Payment = () => templateStory({
   state: 'DONE',
 });
 Step3Payment.storyName = '🟢 3 — Pagamento Acconto (Stripe)';
+
+export const Step4Firma = () => templateStory({
+  src: 'pg-firma.html',
+  label: '🟢 Done 4 — Firma Digitale',
+  brand: 'pianeta-green',
+  state: 'DONE',
+});
+Step4Firma.storyName = '🟢 4 — Firma Digitale';

@@ -1,245 +1,696 @@
 <!DOCTYPE html>
-<html lang="it" data-brand="pianeta-green">
+<html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>FAQ — Pianeta.Green</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/themes/pianeta-green.css">
-  <style>
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAQ — Pianeta.Green</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--color-surface-page);
-      color: var(--color-content-primary);
-      line-height: 1.6;
-    }
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: #2e2e2e;
+            background-color: #f3ecda;
+            line-height: 1.6;
+        }
 
-    /* ─── WIP Status Bar ─── */
-    .wip-status-bar {
-      position: sticky; top: 0; z-index: 100;
-      display: flex; align-items: center; gap: 16px;
-      padding: 10px 24px;
-      background: #FF6B4A; color: #fff;
-      font-family: var(--font-ui); font-size: 12px;
-      letter-spacing: 0.05em;
-    }
-    .wip-status-label {
-      font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
-    }
-    .wip-flow-tag {
-      padding: 2px 10px; border-radius: 99px;
-      background: rgba(255,255,255,0.2);
-      font-size: 11px;
-    }
-    .wip-approval-actions {
-      margin-left: auto; display: flex; gap: 8px;
-    }
-    .wip-btn {
-      padding: 4px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.4);
-      background: transparent; color: #fff; cursor: pointer;
-      font-family: var(--font-ui); font-size: 11px; font-weight: 500;
-    }
-    .wip-btn:hover { background: rgba(255,255,255,0.15); }
-    .wip-btn-approve { background: rgba(255,255,255,0.25); border-color: #fff; }
+        /* ========== HEADER ========== */
+        header {
+            background-color: white;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 24px 112px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-    /* ─── Page Header ─── */
-    .pg-header {
-      background: var(--color-surface-inverse); color: var(--color-content-inverse);
-      padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
-    }
-    .pg-logo { font-family: var(--font-heading); font-size: 18px; font-weight: 600; }
-    .pg-logo span { color: var(--color-brand-accent); }
-    .pg-nav { display: flex; gap: 24px; }
-    .pg-nav a {
-      color: rgba(255,255,255,0.7); text-decoration: none;
-      font-family: var(--font-ui); font-size: 13px;
-    }
-    .pg-nav a:hover { color: #fff; }
+        .logo {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 24px;
+            font-weight: 600;
+            font-style: italic;
+            color: #059669;
+            text-decoration: none;
+        }
 
-    /* ─── WIP Content ─── */
-    .wip-container { max-width: 1200px; margin: 0 auto; padding: 40px 32px; }
+        nav { display: flex; gap: 32px; align-items: center; }
+        nav a {
+            color: #2e2e2e; text-decoration: none;
+            font-size: 14px; font-weight: 500;
+        }
+        nav a:hover { color: #059669; }
+        nav a.active { color: #059669; }
 
-    .wip-page-title {
-      font-family: var(--font-display); font-size: 36px; font-weight: 600;
-      margin-bottom: 8px; color: var(--color-content-brand);
-    }
-    .wip-page-meta {
-      font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);
-      margin-bottom: 32px; display: flex; gap: 16px;
-    }
+        .cta-header {
+            background-color: #233c36; color: #fff;
+            padding: 10px 24px; border-radius: 8px;
+            text-decoration: none; font-size: 14px; font-weight: 600;
+        }
+        .cta-header:hover { background-color: #1a2d29; }
 
-    /* ─── Section Nav ─── */
-    .wip-section-nav {
-      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
-      padding: 16px 0; border-bottom: 1px solid var(--color-border-default);
-    }
-    .wip-nav-link {
-      padding: 4px 12px; border-radius: 99px;
-      background: var(--color-brand-muted); color: var(--color-content-brand);
-      text-decoration: none; font-size: 13px; font-family: var(--font-ui);
-    }
-    .wip-nav-link:hover { background: var(--color-interactive-primary-bg); color: #fff; }
+        /* ========== HERO ========== */
+        .hero {
+            padding: 80px 112px;
+            text-align: center;
+        }
 
-    /* ─── Sections ─── */
-    .wip-section {
-      margin-bottom: 48px; padding: 28px;
-      background: var(--color-surface-card);
-      border: 1px solid var(--color-border-default);
-      border-radius: var(--radius-md);
-      border-left: 4px solid #FF6B4A;
-    }
-    .wip-section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
-    .wip-section-num {
-      font-family: var(--font-ui); font-size: 12px; font-weight: 500;
-      color: #FF6B4A; opacity: 0.7;
-    }
-    .wip-section-title {
-      font-family: var(--font-heading); font-size: 20px; font-weight: 600;
-    }
-    .wip-section-desc {
-      font-size: 15px; line-height: 1.7; color: var(--color-content-secondary);
-      margin-bottom: 20px;
-    }
-    .wip-placeholder-box {
-      background: repeating-linear-gradient(
-        45deg, transparent, transparent 10px,
-        rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px
-      );
-      border: 2px dashed var(--color-border-default);
-      border-radius: var(--radius-sm);
-      padding: 48px; text-align: center;
-    }
-    .wip-placeholder-label {
-      font-family: var(--font-ui); font-size: 12px;
-      color: var(--color-content-disabled);
-      text-transform: uppercase; letter-spacing: 0.1em;
-    }
+        .hero h1 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 48px;
+            font-weight: 600;
+            color: #233c36;
+            margin-bottom: 16px;
+        }
 
-    /* ─── Footer ─── */
-    .pg-footer {
-      background: var(--color-surface-inverse); color: var(--color-content-inverse);
-      padding: 24px 32px; text-align: center;
-      font-family: var(--font-ui); font-size: 12px;
-      opacity: 0.7;
-    }
-  </style>
+        .hero p {
+            font-size: 18px;
+            color: #565656;
+            max-width: 560px;
+            margin: 0 auto 40px;
+        }
+
+        /* Search */
+        .search-bar {
+            max-width: 560px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .search-bar input {
+            width: 100%;
+            padding: 16px 24px 16px 48px;
+            border: 1px solid rgba(46, 46, 46, 0.15);
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 16px;
+            background-color: #fff;
+            color: #2e2e2e;
+            transition: border-color 0.2s;
+        }
+
+        .search-bar input:focus {
+            outline: none;
+            border-color: #059669;
+            box-shadow: 0 0 0 3px rgba(5, 150, 105, 0.1);
+        }
+
+        .search-bar input::placeholder { color: #989898; }
+
+        .search-icon {
+            position: absolute; left: 16px; top: 50%;
+            transform: translateY(-50%);
+            color: #989898; font-size: 18px;
+        }
+
+        /* Category Filters */
+        .category-filters {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 32px;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            border-radius: 99px;
+            border: 1px solid rgba(46, 46, 46, 0.15);
+            background: #fff;
+            color: #565656;
+            font-size: 14px;
+            font-weight: 500;
+            font-family: 'IBM Plex Sans', sans-serif;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .filter-btn:hover {
+            border-color: #059669;
+            color: #059669;
+        }
+
+        .filter-btn.active {
+            background-color: #059669;
+            color: #fff;
+            border-color: #059669;
+        }
+
+        /* ========== FAQ SECTIONS ========== */
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 112px 80px;
+        }
+
+        .faq-section {
+            margin-bottom: 48px;
+        }
+
+        .faq-section-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #233c36;
+            margin-bottom: 24px;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #059669;
+        }
+
+        /* Accordion FAQ */
+        .faq-item {
+            background-color: #fff;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            margin-bottom: 12px;
+            overflow: hidden;
+            transition: box-shadow 0.2s;
+        }
+
+        .faq-item:hover {
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .faq-question {
+            padding: 20px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            gap: 16px;
+        }
+
+        .faq-question h3 {
+            font-size: 16px;
+            font-weight: 600;
+            color: #2e2e2e;
+            line-height: 1.4;
+        }
+
+        .faq-toggle {
+            width: 28px; height: 28px;
+            border-radius: 50%;
+            background-color: #f3ecda;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 18px; color: #059669;
+            flex-shrink: 0;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+
+        .faq-item.open .faq-toggle {
+            transform: rotate(45deg);
+            background-color: #059669;
+            color: #fff;
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .faq-answer-inner {
+            padding: 0 24px 24px;
+            font-size: 15px;
+            color: #565656;
+            line-height: 1.7;
+        }
+
+        .faq-item.open .faq-answer {
+            max-height: 500px;
+        }
+
+        /* ========== CTA BOTTOM ========== */
+        .cta-bottom {
+            background-color: #233c36;
+            padding: 80px 112px;
+            text-align: center;
+            color: #fff;
+        }
+
+        .cta-bottom h2 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 36px;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+
+        .cta-bottom p {
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 32px;
+            max-width: 480px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-bottom-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn-primary {
+            background-color: #059669;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: background-color 0.2s;
+        }
+
+        .cta-btn-primary:hover { background-color: #047857; }
+
+        .cta-btn-secondary {
+            background-color: transparent;
+            color: #fff;
+            padding: 14px 32px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .cta-btn-secondary:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* ========== FOOTER ========== */
+        footer {
+            background-color: #fff;
+            border-top: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 40px 112px;
+            text-align: center;
+            color: #989898;
+            font-size: 12px;
+        }
+
+        footer a {
+            color: #565656;
+            text-decoration: none;
+        }
+
+        footer a:hover { color: #059669; }
+
+        /* ========== NO RESULTS ========== */
+        .no-results {
+            text-align: center;
+            padding: 60px 24px;
+            display: none;
+        }
+
+        .no-results.show { display: block; }
+
+        .no-results-icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: 0.5;
+        }
+
+        .no-results h3 {
+            font-size: 20px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin-bottom: 8px;
+        }
+
+        .no-results p {
+            font-size: 15px;
+            color: #565656;
+        }
+
+        /* ========== RESPONSIVE ========== */
+        @media (max-width: 768px) {
+            header { padding: 20px 24px; flex-wrap: wrap; gap: 16px; }
+            nav { gap: 16px; }
+            .hero { padding: 48px 24px; }
+            .hero h1 { font-size: 32px; }
+            .faq-container { padding: 0 24px 60px; }
+            .faq-section-title { font-size: 24px; }
+            .cta-bottom { padding: 60px 24px; }
+            .cta-bottom h2 { font-size: 28px; }
+            footer { padding: 32px 24px; }
+        }
+    </style>
 </head>
 <body>
 
-<div class="wip-status-bar">
-  <span class="wip-status-label">WIP — In lavorazione</span>
-  <span class="wip-flow-tag">Flusso: Supporto</span>
-  <span style="opacity:0.5;">·</span>
-  <span>pg-faq.html</span>
-  <div class="wip-approval-actions">
-    <button class="wip-btn" onclick="alert('Commento aggiunto — funzione in sviluppo')">💬 Commenta</button>
-    <button class="wip-btn" onclick="alert('Richiesta modifiche inviata — funzione in sviluppo')">↩ Richiedi modifiche</button>
-    <button class="wip-btn wip-btn-approve" onclick="this.closest('.wip-status-bar').style.background='#38781D';this.closest('.wip-status-bar').querySelector('.wip-status-label').textContent='APPROVED — Approvato'">✓ Approva</button>
-  </div>
-</div>
+    <!-- HEADER -->
+    <header>
+        <a href="#" class="logo">Pianeta.Green</a>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Il Meter</a>
+            <a href="#">Piani</a>
+            <a href="#">Blog</a>
+            <a href="#">Chi siamo</a>
+            <a href="#" class="active">FAQ</a>
+            <a href="#" class="cta-header">Analizza il tuo sito</a>
+        </nav>
+    </header>
 
-<header class="pg-header">
-  <div class="pg-logo">Pianeta<span>.</span>Green</div>
-  <nav class="pg-nav">
-    <a href="#">Home</a>
-    <a href="#">Il Meter</a>
-    <a href="#">Piani</a>
-    <a href="#">Blog</a>
-    <a href="#">Chi siamo</a>
-    <a href="#">Contatti</a>
-  </nav>
-</header>
+    <!-- HERO -->
+    <section class="hero">
+        <h1>Domande Frequenti</h1>
+        <p>Tutto quello che devi sapere su Pianeta.Green, i nostri servizi e la nostra missione green.</p>
 
-<div class="wip-container">
-  <h1 class="wip-page-title">FAQ</h1>
-  <div class="wip-page-meta">
-    <span>Flusso: Supporto</span>
-    <span>Sezioni: 6</span>
-    <span>Stato: WIP</span>
-  </div>
+        <div class="search-bar">
+            <span class="search-icon">🔍</span>
+            <input type="text" id="searchInput" placeholder="Cerca una domanda..." oninput="filterFAQs()">
+        </div>
 
-  <nav class="wip-section-nav"><a href="#hero" class="wip-nav-link">Domande Frequenti</a><a href="#generale" class="wip-nav-link">Generale</a><a href="#hosting" class="wip-nav-link">Hosting</a><a href="#prezzi" class="wip-nav-link">Prezzi e pagamenti</a><a href="#meter-faq" class="wip-nav-link">Il Meter</a><a href="#cta-bottom" class="wip-nav-link">Non hai trovato la risposta?</a></nav>
+        <div class="category-filters">
+            <button class="filter-btn active" data-category="all" onclick="setFilter('all', this)">Tutte</button>
+            <button class="filter-btn" data-category="generale" onclick="setFilter('generale', this)">Generale</button>
+            <button class="filter-btn" data-category="hosting" onclick="setFilter('hosting', this)">Hosting</button>
+            <button class="filter-btn" data-category="prezzi" onclick="setFilter('prezzi', this)">Prezzi</button>
+            <button class="filter-btn" data-category="meter" onclick="setFilter('meter', this)">Il Meter</button>
+            <button class="filter-btn" data-category="tecnica" onclick="setFilter('tecnica', this)">Tecnica</button>
+        </div>
+    </section>
 
-    <div class="wip-section" id="hero">
-      <div class="wip-section-header">
-        <span class="wip-section-num">01</span>
-        <h2 class="wip-section-title">Domande Frequenti</h2>
-      </div>
-      <div class="wip-section-desc">Sottotitolo: 'Tutto quello che devi sapere su Pianeta.Green'. Filtri per categoria.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="generale">
-      <div class="wip-section-header">
-        <span class="wip-section-num">02</span>
-        <h2 class="wip-section-title">Generale</h2>
-      </div>
-      <div class="wip-section-desc">5 FAQ: Cos'è Pianeta.Green?, Cosa significa hosting green?, Come funziona il meter?, Che CMS usate?, Siete una Società Benefit?</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="hosting">
-      <div class="wip-section-header">
-        <span class="wip-section-num">03</span>
-        <h2 class="wip-section-title">Hosting</h2>
-      </div>
-      <div class="wip-section-desc">5 FAQ: Dove sono i server?, Qual è l'uptime garantito?, Posso migrare il mio sito?, Supportate WordPress?, Come funziona il backup?</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="prezzi">
-      <div class="wip-section-header">
-        <span class="wip-section-num">04</span>
-        <h2 class="wip-section-title">Prezzi e pagamenti</h2>
-      </div>
-      <div class="wip-section-desc">5 FAQ: Posso provare gratis?, Come funziona il rinnovo?, Accettate fatturazione?, Posso disdire?, Cosa include il prezzo?</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="meter-faq">
-      <div class="wip-section-header">
-        <span class="wip-section-num">05</span>
-        <h2 class="wip-section-title">Il Meter</h2>
-      </div>
-      <div class="wip-section-desc">5 FAQ: Come calcola la CO2?, È accurato?, Posso monitorare nel tempo?, Il report è gratuito?, Che metodologia usa?</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-    <div class="wip-section" id="cta-bottom">
-      <div class="wip-section-header">
-        <span class="wip-section-num">06</span>
-        <h2 class="wip-section-title">Non hai trovato la risposta?</h2>
-      </div>
-      <div class="wip-section-desc">CTA contatto diretto. Link a documentazione.</div>
-      <div class="wip-section-placeholder">
-        <div class="wip-placeholder-box">
-          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
-        </div>
-      </div>
-    </div>
-</div>
+    <!-- FAQ CONTENT -->
+    <div class="faq-container">
 
-<footer class="pg-footer">
-  © 2026 Pianeta.Green Hosting · pianeta.studio · Società Benefit · Milano / Sicilia
-</footer>
+        <!-- GENERALE -->
+        <div class="faq-section" data-section="generale">
+            <h2 class="faq-section-title">Generale</h2>
+
+            <div class="faq-item" data-category="generale">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Cos'è Pianeta.Green?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Pianeta.Green è una piattaforma di hosting e web design sostenibile. Offriamo siti web performanti, leggeri e a basso impatto ambientale, alimentati da energia rinnovabile. Il nostro obiettivo è rendere il web più green senza compromessi su velocità e design.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="generale">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Cosa significa "hosting green"?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">L'hosting green utilizza data center alimentati al 100% da fonti di energia rinnovabile (solare, eolico, idroelettrico). I nostri server sono ottimizzati per ridurre il consumo energetico, e compensiamo le emissioni residue con progetti certificati di riforestazione.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="generale">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Pianeta.Green è una Società Benefit?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, Pianeta.Green opera sotto Pianeta.Studio, una Società Benefit registrata. Questo significa che il perseguimento del profitto è bilanciato con un impegno concreto verso la sostenibilità ambientale e il beneficio comune.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="generale">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Che CMS utilizzate?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Utilizziamo una piattaforma CMS proprietaria, progettata per essere ultra-leggera ed efficiente. Non usiamo WordPress. Il nostro sistema permette ai clienti di gestire facilmente i contenuti (testi, immagini, prodotti) tramite un'interfaccia intuitiva, senza necessità di competenze tecniche.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- HOSTING -->
+        <div class="faq-section" data-section="hosting">
+            <h2 class="faq-section-title">Hosting</h2>
+
+            <div class="faq-item" data-category="hosting">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Dove si trovano i server?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">I nostri server sono localizzati in data center europei certificati ISO 14001 e ISO 50001, alimentati al 100% da energie rinnovabili. La vicinanza geografica garantisce latenze minime per i visitatori europei e italiani.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="hosting">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Qual è l'uptime garantito?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Garantiamo un uptime del 99.9% su base annua. In caso di disservizi prolungati, è previsto un credito proporzionale sul canone di hosting secondo i termini del contratto.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="hosting">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Posso migrare il mio sito esistente?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, offriamo un servizio di migrazione assistita. Il nostro team si occupa del trasferimento dei contenuti e della configurazione DNS. La migrazione viene coordinata in una call dedicata con il vostro tecnico per garantire zero downtime.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="hosting">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Come funziona il backup?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Eseguiamo backup automatici giornalieri con retention di 30 giorni. I backup vengono conservati in location geograficamente distinte per massima sicurezza. In caso di necessità, il ripristino può essere effettuato entro poche ore.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PREZZI E PAGAMENTI -->
+        <div class="faq-section" data-section="prezzi">
+            <h2 class="faq-section-title">Prezzi e pagamenti</h2>
+
+            <div class="faq-item" data-category="prezzi">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Quanto costa il servizio?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Offriamo tre piani: Green Hosting a €12/mese per chi ha già un sito, Sito T4 + Hosting a partire da ~€1.000 per un sito completo con design e CMS, e Tier 1 Ecosistema per progetti su misura con preventivo personalizzato. L'hosting è incluso nel primo anno per i piani con sito.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="prezzi">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Come funziona il pagamento?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Il pagamento avviene in due tranche: 50% all'accettazione del contratto e 50% alla consegna del progetto. Accettiamo pagamenti via Stripe (carta di credito/debito e bonifico). Il canone hosting annuale viene addebitato separatamente dal secondo anno in poi.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="prezzi">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Posso disdire il servizio?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, puoi disdire il rinnovo dell'hosting con 30 giorni di preavviso prima della scadenza annuale. In caso di mancato rinnovo, il sito viene ridotto a una versione statica base. La licenza d'uso del design rimane attiva ma senza aggiornamenti e supporto.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="prezzi">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Emettete fattura?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, emettiamo regolare fattura elettronica. Durante la fase di onboarding ti chiederemo P.IVA, PEC e Codice SDI per la fatturazione elettronica. Le fatture vengono inviate tramite il Sistema di Interscambio (SDI).</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- IL METER -->
+        <div class="faq-section" data-section="meter">
+            <h2 class="faq-section-title">Il Meter</h2>
+
+            <div class="faq-item" data-category="meter">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Come calcola la CO₂ il Meter?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Il Meter analizza il peso della pagina (KB trasferiti), il tipo di hosting (green o standard), il mix energetico del data center e il numero di visite stimate. Combina questi dati con fattori di emissione certificati per calcolare i grammi di CO₂ per visita e le emissioni annuali.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="meter">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Il report del Meter è gratuito?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, l'analisi base è completamente gratuita. Inserisci l'URL del tuo sito e ricevi subito un report dettagliato con il punteggio di sostenibilità, il confronto con la media del web e suggerimenti pratici per migliorare.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="meter">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Che metodologia usa il Meter?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Ci basiamo sulla metodologia della Sustainable Web Design Community, che utilizza il modello SWD per stimare le emissioni di CO₂ del web. I parametri includono: trasferimento dati, efficienza energetica del data center (PUE), fonte energetica e intensità di carbonio della rete.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- TECNICA -->
+        <div class="faq-section" data-section="tecnica">
+            <h2 class="faq-section-title">Tecnica</h2>
+
+            <div class="faq-item" data-category="tecnica">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Come funziona il cambio DNS?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Il cambio DNS viene gestito dal vostro tecnico IT in coordinamento con il nostro team durante una call dedicata. Vi forniamo una guida completa con tutti i record da configurare (A, CNAME, TXT). Attenzione: i record MX per le email non vanno modificati.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="tecnica">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Posso modificare i contenuti del sito autonomamente?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, il nostro CMS vi permette di aggiornare testi, immagini e contenuti in completa autonomia. L'interfaccia è progettata per essere semplice e intuitiva. Non avrete accesso al codice sorgente o alla struttura del sito, ma potrete gestire tutti i contenuti editoriali.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="tecnica">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Il sito è ottimizzato per mobile?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Assolutamente sì. Ogni sito viene progettato con approccio mobile-first: prima il layout mobile, poi il desktop. Questo garantisce un'esperienza ottimale su tutti i dispositivi, con performance eccellenti anche su connessioni lente.</div>
+                </div>
+            </div>
+
+            <div class="faq-item" data-category="tecnica">
+                <div class="faq-question" onclick="toggleFAQ(this)">
+                    <h3>Il sito include SSL/HTTPS?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-answer">
+                    <div class="faq-answer-inner">Sì, tutti i siti Pianeta.Green includono certificato SSL gratuito con rinnovo automatico. Il traffico è sempre crittografato via HTTPS, garantendo sicurezza per i vostri visitatori e un miglior posizionamento su Google.</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- No results -->
+        <div class="no-results" id="noResults">
+            <div class="no-results-icon">🔍</div>
+            <h3>Nessun risultato</h3>
+            <p>Prova a cercare con parole diverse o contattaci direttamente.</p>
+        </div>
+    </div>
+
+    <!-- CTA BOTTOM -->
+    <section class="cta-bottom">
+        <h2>Non hai trovato la risposta?</h2>
+        <p>Scrivici e ti rispondiamo entro 24 ore. Il nostro team è qui per aiutarti.</p>
+        <div class="cta-bottom-buttons">
+            <a href="#" class="cta-btn-primary">Contattaci</a>
+            <a href="#" class="cta-btn-secondary">Analizza il tuo sito</a>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 Pianeta.Green — Pianeta.Studio Società Benefit · Milano / Sicilia</p>
+        <p style="margin-top: 8px;">
+            <a href="#">Privacy Policy</a> · <a href="#">Termini di Servizio</a> · <a href="#">Contatti</a>
+        </p>
+    </footer>
+
+    <script>
+        let activeFilter = 'all';
+
+        function toggleFAQ(el) {
+            const item = el.closest('.faq-item');
+            const wasOpen = item.classList.contains('open');
+
+            // Close all in same section
+            item.closest('.faq-section').querySelectorAll('.faq-item').forEach(i => {
+                i.classList.remove('open');
+            });
+
+            if (!wasOpen) {
+                item.classList.add('open');
+            }
+        }
+
+        function setFilter(category, btn) {
+            activeFilter = category;
+
+            // Update active button
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            // Clear search
+            document.getElementById('searchInput').value = '';
+
+            applyFilters();
+        }
+
+        function filterFAQs() {
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const query = document.getElementById('searchInput').value.toLowerCase().trim();
+            let visibleCount = 0;
+
+            // Filter sections
+            document.querySelectorAll('.faq-section').forEach(section => {
+                const sectionCategory = section.getAttribute('data-section');
+                const categoryMatch = activeFilter === 'all' || sectionCategory === activeFilter;
+
+                if (!categoryMatch) {
+                    section.style.display = 'none';
+                    return;
+                }
+
+                let sectionHasVisible = false;
+
+                section.querySelectorAll('.faq-item').forEach(item => {
+                    const questionText = item.querySelector('h3').textContent.toLowerCase();
+                    const answerText = item.querySelector('.faq-answer-inner').textContent.toLowerCase();
+                    const textMatch = !query || questionText.includes(query) || answerText.includes(query);
+
+                    if (textMatch) {
+                        item.style.display = 'block';
+                        sectionHasVisible = true;
+                        visibleCount++;
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+
+                section.style.display = sectionHasVisible ? 'block' : 'none';
+            });
+
+            // Show/hide no results
+            const noResults = document.getElementById('noResults');
+            noResults.classList.toggle('show', visibleCount === 0);
+        }
+    </script>
 
 </body>
 </html>
