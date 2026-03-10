@@ -1392,6 +1392,17 @@
        SCRIPTS
   ═══════════════════════════════════════════════════════════ -->
   <script>
+    /* URL param theme override (usato da Storybook) */
+    (function() {
+      const p = new URLSearchParams(location.search).get('theme');
+      if (p && ['rara-dark','rara-light','hedera'].includes(p)) {
+        document.documentElement.setAttribute('data-theme', p);
+        document.querySelectorAll('.ds-theme-btn').forEach(b => {
+          b.classList.toggle('active', b.textContent.trim() === p);
+        });
+      }
+    })();
+
     /* Theme switcher */
     function setTheme(theme, btn) {
       document.documentElement.setAttribute('data-theme', theme);

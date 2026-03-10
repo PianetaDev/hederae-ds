@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="epos">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Città e Territorio — Area tematica · EPOS · Hederae DS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ─── EPOS BRAND TOKENS ───────────────────────────────────── */
+    [data-brand="epos"] {
+      --color-surface-page:    #F9F8F4;
+      --color-surface-raised:  #FFFFFF;
+      --color-surface-card:    #F2F0E9;
+      --color-surface-deep:    #E4E0D4;
+      --color-surface-inverse: #152843;
+      --color-content-primary:   #1A1A18;
+      --color-content-secondary: #5C5A54;
+      --color-content-disabled:  #ACABAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #1B4B8A;
+      --color-border-default:    rgba(21,40,67,0.12);
+      --color-border-strong:     #152843;
+      --color-interactive-primary-bg:       #152843;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-brand-primary:   #152843;
+      --color-brand-accent:    #E8A520;
+      --color-area-citta-primary:       #2563EB;
+      --color-area-citta-muted:         #DBEAFE;
+      --color-area-biodiversita-primary:#16A34A;
+      --color-area-biodiversita-muted:  #DCFCE7;
+      --color-area-acqua-primary:       #0891B2;
+      --color-area-acqua-muted:         #CFFAFE;
+      --color-area-agricoltura-primary: #D97706;
+      --color-area-agricoltura-muted:   #FEF3C7;
+      --color-area-energia-primary:     #DC2626;
+      --color-area-energia-muted:       #FEE2E2;
+      --color-area-diritto-primary:     #7C3AED;
+      --color-area-diritto-muted:       #EDE9FE;
+      /* ── Hub corrente ── */
+      --hub-primary:  #2563EB;
+      --hub-muted:    #DBEAFE;
+      --hub-name:     "Città e Territorio";
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-sm:    4px;
+      --radius-md:    8px;
+      --radius-lg:    16px;
+      --shadow-sm:    0 1px 3px rgba(21,40,67,0.07);
+      --shadow-md:    0 4px 12px rgba(21,40,67,0.10);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── DS Meta Nav ─────────────────────────────────────────── */
+    .ds-nav {
+      background: #152843; padding: 10px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .ds-nav-brand { font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
+    .ds-nav-links { display: flex; gap: 12px; align-items: center; }
+    .ds-nav-links a { font-family: var(--font-ui); font-size: 10px; color: rgba(255,255,255,0.55); text-decoration: none; }
+    .ds-tag-pill { background: rgba(232,165,32,0.20); color: #E8A520; font-family: var(--font-ui); font-size: 10px; padding: 2px 8px; border-radius: 10px; }
+
+    /* ─── SITE HEADER ─────────────────────────────────────────── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 40px; z-index: 100;
+      border-bottom: 3px solid var(--hub-primary);
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .site-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+    .site-logo-mark { font-family: var(--font-display); font-size: 18px; font-weight: 600; font-style: italic; color: var(--color-brand-accent); letter-spacing: -0.02em; }
+    .site-logo-sep { width: 1px; height: 20px; background: rgba(255,255,255,0.2); }
+    .site-logo-full { font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase; color: rgba(255,255,255,0.55); line-height: 1.3; }
+    .site-nav { display: flex; gap: 24px; align-items: center; }
+    .site-nav a { font-family: var(--font-body); font-size: 14px; font-weight: 500; color: rgba(255,255,255,0.70); text-decoration: none; transition: color 0.15s; }
+    .site-nav a:hover { color: #fff; }
+    .site-nav a.active { color: var(--color-brand-accent); }
+    .btn-nav { background: var(--color-brand-accent); color: var(--color-brand-primary) !important; padding: 7px 16px; border-radius: var(--radius-sm); font-weight: 600 !important; }
+
+    /* ─── BREADCRUMB ──────────────────────────────────────────── */
+    .breadcrumb {
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 10px 0;
+    }
+    .breadcrumb nav {
+      display: flex; align-items: center; gap: 6px;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary);
+    }
+    .breadcrumb a { color: var(--color-content-secondary); text-decoration: none; transition: color 0.12s; }
+    .breadcrumb a:hover { color: var(--color-content-brand); }
+    .breadcrumb .sep { opacity: 0.4; }
+    .breadcrumb .current { color: var(--hub-primary); }
+
+    /* ─── HUB HEADER ─────────────────────────────────────────── */
+    .hub-header {
+      background: var(--color-surface-inverse);
+      padding: 48px 0 40px; position: relative; overflow: hidden;
+    }
+    .hub-header::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 4px; background: var(--hub-primary);
+    }
+    .hub-header-inner {
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 40px; align-items: start; position: relative; z-index: 1;
+    }
+    .hub-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--hub-muted); color: var(--hub-primary);
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.10em;
+      text-transform: uppercase; padding: 4px 12px; border-radius: 3px;
+      margin-bottom: 16px;
+    }
+    .hub-chip-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--hub-primary); }
+    .hub-title {
+      font-family: var(--font-display); font-size: clamp(28px, 3.5vw, 42px);
+      font-weight: 500; color: var(--color-content-inverse); line-height: 1.15;
+      margin-bottom: 14px;
+    }
+    .hub-desc {
+      font-size: 16px; color: rgba(255,255,255,0.60); line-height: 1.65;
+      max-width: 560px; margin-bottom: 24px;
+    }
+    .hub-experts {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .hub-expert-avatars { display: flex; }
+    .hub-expert-avatar {
+      width: 28px; height: 28px; border-radius: 50%;
+      background: var(--color-surface-card);
+      border: 2px solid var(--color-surface-inverse);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; margin-left: -6px;
+    }
+    .hub-expert-avatar:first-child { margin-left: 0; }
+    .hub-expert-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.45);
+    }
+    .hub-aside { display: flex; flex-direction: column; gap: 12px; align-items: flex-end; }
+    .hub-stat { text-align: right; }
+    .hub-stat-val { font-family: var(--font-display); font-size: 32px; font-weight: 600; color: var(--hub-primary); line-height: 1; }
+    .hub-stat-label { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em; color: rgba(255,255,255,0.40); margin-top: 4px; }
+    .hub-sub-nav {
+      display: flex; gap: 20px; margin-top: 24px; padding-top: 20px;
+      border-top: 1px solid rgba(255,255,255,0.10);
+      flex-wrap: wrap;
+    }
+    .hub-sub-link {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.45); text-decoration: none;
+      text-transform: uppercase; transition: color 0.15s;
+    }
+    .hub-sub-link:hover { color: rgba(255,255,255,0.85); }
+    .hub-sub-link.active { color: var(--hub-primary); }
+
+    /* ─── FILTER BAR ──────────────────────────────────────────── */
+    .filterbar {
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: 14px 0;
+      position: sticky; top: calc(40px + 64px); z-index: 90;
+    }
+    .filterbar-inner {
+      display: flex; align-items: center; gap: 12px; flex-wrap: wrap;
+    }
+    .filterbar-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      flex-shrink: 0;
+    }
+    .filter-chips { display: flex; gap: 6px; flex-wrap: wrap; flex: 1; }
+    .filter-chip {
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      padding: 5px 14px; border-radius: 99px;
+      border: 1px solid var(--color-border-default);
+      background: var(--color-surface-raised); color: var(--color-content-secondary);
+      cursor: pointer; transition: all 0.12s;
+    }
+    .filter-chip:hover { border-color: var(--color-border-strong); color: var(--color-content-primary); }
+    .filter-chip.active {
+      background: var(--hub-primary); border-color: var(--hub-primary);
+      color: #fff;
+    }
+    .filter-search {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--color-surface-card); border: 1px solid var(--color-border-default);
+      border-radius: 99px; padding: 5px 14px; margin-left: auto;
+    }
+    .filter-search input {
+      border: none; background: transparent; outline: none;
+      font-size: 13px; color: var(--color-content-primary); width: 180px;
+      font-family: var(--font-body);
+    }
+    .filter-search input::placeholder { color: var(--color-content-disabled); }
+    .filter-sort {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      background: transparent; border: 1px solid var(--color-border-default);
+      border-radius: 99px; padding: 5px 14px; cursor: pointer;
+    }
+
+    /* ─── MAIN LAYOUT ─────────────────────────────────────────── */
+    .main-layout {
+      display: grid; grid-template-columns: 1fr 300px;
+      gap: 40px; padding: 48px 0;
+    }
+
+    /* ─── ARTICOLI LISTA ──────────────────────────────────────── */
+    .articles-list { display: flex; flex-direction: column; gap: 20px; }
+    .article-row {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 24px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 16px; align-items: start;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.15s, box-shadow 0.12s;
+    }
+    .article-row:hover { border-color: var(--hub-primary); box-shadow: var(--shadow-sm); }
+    .article-row.featured {
+      border-left: 3px solid var(--color-brand-accent);
+      background: var(--color-surface-card);
+    }
+    .article-type-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 3px;
+      width: fit-content; margin-bottom: 10px;
+    }
+    .article-title {
+      font-family: var(--font-display); font-size: 18px; font-weight: 500;
+      line-height: 1.35; color: var(--color-content-primary); margin-bottom: 8px;
+    }
+    .article-abstract {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.6;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .article-meta {
+      display: flex; gap: 12px; flex-wrap: wrap; align-items: center;
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary);
+      letter-spacing: 0.04em; margin-top: 12px;
+      padding-top: 12px; border-top: 1px solid var(--color-border-default);
+    }
+    .article-author-avatar {
+      width: 22px; height: 22px; border-radius: 50%;
+      background: var(--color-surface-card); border: 1px solid var(--color-border-default);
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 12px;
+    }
+    .article-aside { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; flex-shrink: 0; }
+    .read-btn {
+      font-size: 13px; font-weight: 500; color: var(--color-content-brand);
+      text-decoration: none; border-bottom: 1px solid var(--color-border-strong);
+      padding-bottom: 1px; white-space: nowrap;
+    }
+    .article-reading-time {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-disabled);
+      letter-spacing: 0.04em;
+    }
+    .open-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      padding: 2px 8px; border-radius: 3px;
+      background: #E6F4EA; color: #1B7A3E;
+    }
+    .reserved-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      padding: 2px 8px; border-radius: 3px;
+      background: var(--color-surface-card); color: var(--color-content-secondary);
+    }
+
+    /* ─── PAGINATION ──────────────────────────────────────────── */
+    .pagination {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      padding: 32px 0 0;
+    }
+    .page-btn {
+      width: 36px; height: 36px; border-radius: var(--radius-sm);
+      border: 1px solid var(--color-border-default);
+      background: transparent; cursor: pointer;
+      font-family: var(--font-ui); font-size: 13px;
+      color: var(--color-content-secondary); transition: all 0.12s;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .page-btn:hover { background: var(--color-surface-card); }
+    .page-btn.active { background: var(--hub-primary); border-color: var(--hub-primary); color: #fff; }
+    .page-btn.prev-next { width: auto; padding: 0 14px; }
+
+    /* ─── SIDEBAR ─────────────────────────────────────────────── */
+    .sidebar { display: flex; flex-direction: column; gap: 28px; }
+    .sidebar-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 20px;
+    }
+    .sidebar-card-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.10em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 14px; padding-bottom: 10px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    /* Timeline */
+    .timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+    .timeline::before {
+      content: ''; position: absolute; left: 10px; top: 10px; bottom: 10px;
+      width: 1px; background: var(--color-border-default);
+    }
+    .tl-item { display: flex; gap: 14px; padding: 10px 0; position: relative; z-index: 1; }
+    .tl-dot {
+      width: 20px; height: 20px; border-radius: 50%; flex-shrink: 0;
+      background: var(--color-surface-card); border: 2px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .tl-dot.active { background: var(--hub-primary); border-color: var(--hub-primary); }
+    .tl-dot.active::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #fff; }
+    .tl-dot::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--color-border-default); }
+    .tl-body { flex: 1; }
+    .tl-date {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      color: var(--color-content-disabled); text-transform: uppercase;
+    }
+    .tl-item.active .tl-date { color: var(--hub-primary); }
+    .tl-title {
+      font-family: var(--font-heading); font-size: 13px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.35; margin-top: 2px;
+    }
+    .tl-desc { font-size: 12px; color: var(--color-content-secondary); line-height: 1.5; margin-top: 3px; }
+    /* Hub experts mini -->
+    .mini-expert { display: flex; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--color-border-default); }
+    .mini-expert:last-child { border-bottom: none; padding-bottom: 0; }
+    .mini-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--color-surface-card); border: 1px solid var(--color-border-default); display: flex; align-items: center; justify-content: center; font-size: 15px; flex-shrink: 0; }
+    .mini-name { font-family: var(--font-heading); font-size: 13px; font-weight: 500; color: var(--color-content-primary); line-height: 1.2; }
+    .mini-role { font-size: 12px; color: var(--color-content-secondary); }
+    /* Correlate areas */
+    .corr-area { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--color-border-default); text-decoration: none; color: inherit; transition: color 0.12s; }
+    .corr-area:last-child { border-bottom: none; }
+    .corr-area:hover .corr-area-name { color: var(--color-content-brand); }
+    .corr-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+    .corr-area-name { font-family: var(--font-heading); font-size: 14px; font-weight: 500; color: var(--color-content-primary); flex: 1; }
+    .corr-count { font-family: var(--font-ui); font-size: 11px; color: var(--color-content-disabled); }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    .site-footer { background: var(--color-surface-inverse); border-top: 1px solid rgba(255,255,255,0.08); padding: 40px 0 24px; }
+    .footer-bottom { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+    .footer-copy { font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em; color: rgba(255,255,255,0.30); }
+
+  </style>
+</head>
+<body>
+
+  <!-- DS META NAV -->
+  <nav class="ds-nav">
+    <a class="ds-nav-brand" href="index.html">Hederae DS</a>
+    <div class="ds-nav-links">
+      <a href="epos-home.html">EPOS Home</a>
+      <a href="#" style="color:rgba(255,255,255,0.85);">EPOS Tematica</a>
+      <span class="ds-tag-pill">EPOS · HUB TEMATICA</span>
+    </div>
+  </nav>
+
+  <!-- SITE HEADER -->
+  <header class="site-header">
+    <div class="container">
+      <a href="epos-home.html" class="site-logo">
+        <span class="site-logo-mark">EPOS</span>
+        <span class="site-logo-sep"></span>
+        <span class="site-logo-full">Ecosistemi<br>e Politiche</span>
+      </a>
+      <nav class="site-nav">
+        <a href="epos-home.html">Home</a>
+        <a href="#" class="active">Aree tematiche</a>
+        <a href="#">Dossier</a>
+        <a href="#">Community</a>
+        <a href="#">Archivio</a>
+        <a href="#" class="btn-nav">Newsletter</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- BREADCRUMB -->
+  <div class="breadcrumb">
+    <div class="container">
+      <nav>
+        <a href="epos-home.html">EPOS</a>
+        <span class="sep">›</span>
+        <a href="#">Aree tematiche</a>
+        <span class="sep">›</span>
+        <span class="current">Città e Territorio</span>
+      </nav>
+    </div>
+  </div>
+
+  <!-- HUB HEADER -->
+  <section class="hub-header">
+    <div class="container">
+      <div class="hub-header-inner">
+        <div>
+          <div class="hub-chip">
+            <span class="hub-chip-dot"></span> Area tematica
+          </div>
+          <h1 class="hub-title">Città e Territorio</h1>
+          <p class="hub-desc">
+            Pianificazione urbana, mobilità sostenibile, rigenerazione urbana e adattamento climatico nelle città italiane ed europee. Monitoraggio dei PAES e delle politiche locali.
+          </p>
+          <div class="hub-experts">
+            <div class="hub-expert-avatars">
+              <div class="hub-expert-avatar">👩‍🔬</div>
+              <div class="hub-expert-avatar">👨‍💼</div>
+              <div class="hub-expert-avatar">🧑‍💻</div>
+              <div class="hub-expert-avatar">👩‍⚖️</div>
+            </div>
+            <span class="hub-expert-label">12 esperti attivi in questa area</span>
+          </div>
+          <div class="hub-sub-nav">
+            <a href="#" class="hub-sub-link active">Tutti i contributi</a>
+            <a href="#" class="hub-sub-link">Analisi</a>
+            <a href="#" class="hub-sub-link">Policy brief</a>
+            <a href="#" class="hub-sub-link">Inchieste</a>
+            <a href="#" class="hub-sub-link">Dossier</a>
+            <a href="#" class="hub-sub-link">Ricerche</a>
+          </div>
+        </div>
+        <div class="hub-aside">
+          <div class="hub-stat">
+            <div class="hub-stat-val">48</div>
+            <div class="hub-stat-label">Contributi</div>
+          </div>
+          <div class="hub-stat">
+            <div class="hub-stat-val">8</div>
+            <div class="hub-stat-label">Dossier aperti</div>
+          </div>
+          <div class="hub-stat">
+            <div class="hub-stat-val">12</div>
+            <div class="hub-stat-label">Esperti</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FILTER BAR -->
+  <div class="filterbar">
+    <div class="container">
+      <div class="filterbar-inner">
+        <span class="filterbar-label">Filtra</span>
+        <div class="filter-chips">
+          <button class="filter-chip active">Tutti</button>
+          <button class="filter-chip">Analisi</button>
+          <button class="filter-chip">Policy brief</button>
+          <button class="filter-chip">Inchiesta</button>
+          <button class="filter-chip">Ricerca</button>
+          <button class="filter-chip">Open access</button>
+        </div>
+        <div class="filter-search">
+          <span style="color:var(--color-content-disabled);font-size:13px;">🔍</span>
+          <input type="text" placeholder="Cerca in Città e Territorio…">
+        </div>
+        <select class="filter-sort">
+          <option>Più recenti</option>
+          <option>Più letti</option>
+          <option>Per autore</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container">
+    <div class="main-layout">
+
+      <!-- ARTICLES -->
+      <main>
+        <p style="font-family:var(--font-ui);font-size:11px;letter-spacing:.06em;color:var(--color-content-secondary);text-transform:uppercase;margin-bottom:20px;">48 contributi trovati</p>
+        <div class="articles-list">
+
+          <!-- Featured article -->
+          <a href="#" class="article-row featured">
+            <div>
+              <div class="article-type-chip"
+                   style="background:rgba(232,165,32,0.12);color:var(--color-brand-accent);border:1px solid rgba(232,165,32,0.25);">
+                ◆ Dossier
+              </div>
+              <h2 class="article-title">Piani clima urbani: dalle promesse alla misura — aggiornamento Q1 2025</h2>
+              <p class="article-abstract">Quindici città italiane stanno aggiornando i PAES. A un anno dall'avvio del dossier EPOS, i dati mostrano progressi disomogenei: Milano e Bologna avanzano, Roma e Napoli accumulano ritardi. Analisi dettagliata con dataset pubblici e interviste ai referenti tecnici municipali.</p>
+              <div class="article-meta">
+                <span class="article-author-avatar">👩‍🔬</span>
+                <span>A. Bernardi, M. Ferretti · EPOS Research Team</span>
+                <span>14 Feb 2025</span>
+                <span class="open-badge">Open access</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-btn">Leggi →</a>
+              <span class="article-reading-time">25 min</span>
+            </div>
+          </a>
+
+          <!-- Regular 1 -->
+          <a href="#" class="article-row">
+            <div>
+              <div class="article-type-chip"
+                   style="background:var(--color-area-citta-muted);color:var(--color-area-citta-primary);">
+                Analisi
+              </div>
+              <h2 class="article-title">Superblock urbani: il modello Barcellona può funzionare in Italia?</h2>
+              <p class="article-abstract">Un'analisi comparativa tra il Superblocks program di Barcellona e i tentativi milanesi di Zone 30. Governance partecipata, opposizione commerciale e resistenza al cambiamento nei quartieri storici.</p>
+              <div class="article-meta">
+                <span class="article-author-avatar">👨‍💼</span>
+                <span>M. Ferretti · Politecnico di Milano</span>
+                <span>10 Feb 2025</span>
+                <span class="open-badge">Open access</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-btn">Leggi →</a>
+              <span class="article-reading-time">12 min</span>
+            </div>
+          </a>
+
+          <!-- Regular 2 -->
+          <a href="#" class="article-row">
+            <div>
+              <div class="article-type-chip"
+                   style="background:#FEF3C7;color:#D97706;">
+                Inchiesta
+              </div>
+              <h2 class="article-title">PNRR Missione 2 e rigenerazione urbana: chi ha davvero eseguito?</h2>
+              <p class="article-abstract">Un'analisi dei 71 comuni beneficiari dei fondi PNRR per la rigenerazione urbana. Stato dei cantieri, rendicontazione e rischio revoca. I dati aggiornati a febbraio 2025.</p>
+              <div class="article-meta">
+                <span class="article-author-avatar">🧑‍💻</span>
+                <span>F. Greco · ISTAT, G. Marini · Ministero Infrastrutture</span>
+                <span>6 Feb 2025</span>
+                <span class="reserved-badge">Riservato</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-btn">Accedi →</a>
+              <span class="article-reading-time">16 min</span>
+            </div>
+          </a>
+
+          <!-- Regular 3 -->
+          <a href="#" class="article-row">
+            <div>
+              <div class="article-type-chip"
+                   style="background:var(--color-area-citta-muted);color:var(--color-area-citta-primary);">
+                Policy brief
+              </div>
+              <h2 class="article-title">Mobilità scolastica autonoma: le sperimentazioni Pedibus in 12 città</h2>
+              <p class="article-abstract">Il Pedibus (scuolabus a piedi) riduce il traffico mattutino del 18–23% nelle zone di sperimentazione. Analisi delle esperienze italiane e raccomandazioni per la scalabilità.</p>
+              <div class="article-meta">
+                <span class="article-author-avatar">👩‍⚖️</span>
+                <span>S. Conti, L. Mantovani · Univ. Padova</span>
+                <span>1 Feb 2025</span>
+                <span class="open-badge">Open access</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-btn">Leggi →</a>
+              <span class="article-reading-time">8 min</span>
+            </div>
+          </a>
+
+          <!-- Regular 4 -->
+          <a href="#" class="article-row">
+            <div>
+              <div class="article-type-chip"
+                   style="background:var(--color-area-citta-muted);color:var(--color-area-citta-primary);">
+                Ricerca
+              </div>
+              <h2 class="article-title">Verde urbano e salute mentale: evidenze dalle greenways milanesi</h2>
+              <p class="article-abstract">Studio longitudinale su 1.200 residenti nelle zone adiacenti al Parco Nord e ai Navigli rinaturalizzati. Relazione tra esposizione quotidiana al verde e indicatori di benessere psicologico.</p>
+              <div class="article-meta">
+                <span class="article-author-avatar">👩‍🔬</span>
+                <span>R. Colombo · Humanitas Research, T. Negri · ISS</span>
+                <span>25 Gen 2025</span>
+                <span class="open-badge">Open access</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-btn">Leggi →</a>
+              <span class="article-reading-time">14 min</span>
+            </div>
+          </a>
+
+        </div><!-- /articles-list -->
+
+        <!-- PAGINATION -->
+        <div class="pagination">
+          <button class="page-btn prev-next">← Prec</button>
+          <button class="page-btn active">1</button>
+          <button class="page-btn">2</button>
+          <button class="page-btn">3</button>
+          <span style="font-family:var(--font-ui);font-size:12px;color:var(--color-content-disabled);padding:0 4px;">…</span>
+          <button class="page-btn">8</button>
+          <button class="page-btn prev-next">Succ →</button>
+        </div>
+
+      </main><!-- /main -->
+
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+
+        <!-- Timeline pubblicazioni -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Cronologia — dossier PAES</div>
+          <div class="timeline">
+            <div class="tl-item active">
+              <div class="tl-dot active"></div>
+              <div class="tl-body">
+                <div class="tl-date">Feb 2025</div>
+                <div class="tl-title">Aggiornamento Q1 2025</div>
+                <div class="tl-desc">Nuovi dati da 15 comuni, 2 nuovi contributi</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-body">
+                <div class="tl-date">Nov 2024</div>
+                <div class="tl-title">Report intermedio</div>
+                <div class="tl-desc">Analisi dei ritardi Milano e Roma</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-body">
+                <div class="tl-date">Lug 2024</div>
+                <div class="tl-title">Kick-off dossier PAES</div>
+                <div class="tl-desc">Avvio monitoraggio 15 città</div>
+              </div>
+            </div>
+            <div class="tl-item">
+              <div class="tl-dot"></div>
+              <div class="tl-body">
+                <div class="tl-date">Gen 2024</div>
+                <div class="tl-title">Metodologia approvata</div>
+                <div class="tl-desc">Peer review completata dal panel EPOS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Esperti area -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Esperti di questa area</div>
+          <div class="mini-expert">
+            <div class="mini-avatar">👩‍🔬</div>
+            <div>
+              <div class="mini-name">Prof.ssa A. Bernardi</div>
+              <div class="mini-role">Univ. Bologna · Idrologia</div>
+            </div>
+          </div>
+          <div class="mini-expert">
+            <div class="mini-avatar">👨‍💼</div>
+            <div>
+              <div class="mini-name">M. Ferretti</div>
+              <div class="mini-role">Politecnico MI · Urbanistica</div>
+            </div>
+          </div>
+          <div class="mini-expert">
+            <div class="mini-avatar">👩‍⚖️</div>
+            <div>
+              <div class="mini-name">Avv. S. Conti</div>
+              <div class="mini-role">Diritto ambientale EU</div>
+            </div>
+          </div>
+          <a href="#" style="display:inline-block;margin-top:14px;font-size:13px;font-weight:500;color:var(--color-content-brand);text-decoration:none;border-bottom:1px solid var(--color-border-strong);padding-bottom:1px;">Tutti gli esperti →</a>
+        </div>
+
+        <!-- Aree correlate -->
+        <div class="sidebar-card">
+          <div class="sidebar-card-title">Aree correlate</div>
+          <a href="#" class="corr-area">
+            <span class="corr-dot" style="background:var(--color-area-acqua-primary);"></span>
+            <span class="corr-area-name">Risorse Idriche</span>
+            <span class="corr-count">29</span>
+          </a>
+          <a href="#" class="corr-area">
+            <span class="corr-dot" style="background:var(--color-area-biodiversita-primary);"></span>
+            <span class="corr-area-name">Biodiversità</span>
+            <span class="corr-count">34</span>
+          </a>
+          <a href="#" class="corr-area">
+            <span class="corr-dot" style="background:var(--color-area-energia-primary);"></span>
+            <span class="corr-area-name">Energia</span>
+            <span class="corr-count">52</span>
+          </a>
+          <a href="#" class="corr-area">
+            <span class="corr-dot" style="background:var(--color-area-diritto-primary);"></span>
+            <span class="corr-area-name">Diritto Ambientale</span>
+            <span class="corr-count">23</span>
+          </a>
+        </div>
+
+      </aside><!-- /sidebar -->
+    </div><!-- /main-layout -->
+  </div><!-- /container -->
+
+  <!-- FOOTER -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 EPOS — Ecosistemi e Politiche · hub editoriale · Milano</span>
+        <span style="font-family:var(--font-ui);font-size:11px;color:rgba(232,165,32,0.50);">Hederae DS · Profilo C</span>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    /* Filter chip toggle */
+    document.querySelectorAll('.filter-chip').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.closest('.filter-chips').querySelectorAll('.filter-chip').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

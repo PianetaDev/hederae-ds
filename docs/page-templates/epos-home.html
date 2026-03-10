@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="epos">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>EPOS — Ecosistemi e Politiche · Home · Hederae DS</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400;1,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+
+    /* ─── EPOS BRAND TOKENS ───────────────────────────────────── */
+    [data-brand="epos"] {
+      --color-surface-page:    #F9F8F4;
+      --color-surface-raised:  #FFFFFF;
+      --color-surface-card:    #F2F0E9;
+      --color-surface-deep:    #E4E0D4;
+      --color-surface-inverse: #152843;
+      --color-content-primary:   #1A1A18;
+      --color-content-secondary: #5C5A54;
+      --color-content-disabled:  #ACABAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #1B4B8A;
+      --color-border-default:    rgba(21,40,67,0.12);
+      --color-border-strong:     #152843;
+      --color-interactive-primary-bg:       #152843;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #1C3558;
+      --color-brand-primary:   #152843;
+      --color-brand-secondary: #1B4B8A;
+      --color-brand-accent:    #E8A520;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      /* ── Aree tematiche EPOS ── */
+      --color-area-citta-primary:       #2563EB;
+      --color-area-citta-muted:         #DBEAFE;
+      --color-area-biodiversita-primary:#16A34A;
+      --color-area-biodiversita-muted:  #DCFCE7;
+      --color-area-acqua-primary:       #0891B2;
+      --color-area-acqua-muted:         #CFFAFE;
+      --color-area-agricoltura-primary: #D97706;
+      --color-area-agricoltura-muted:   #FEF3C7;
+      --color-area-energia-primary:     #DC2626;
+      --color-area-energia-muted:       #FEE2E2;
+      --color-area-diritto-primary:     #7C3AED;
+      --color-area-diritto-muted:       #EDE9FE;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-sm:    4px;
+      --radius-md:    8px;
+      --radius-lg:    16px;
+      --shadow-sm:    0 1px 3px rgba(21,40,67,0.07);
+      --shadow-md:    0 4px 12px rgba(21,40,67,0.10);
+    }
+
+    /* ─── RESET ──────────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── DS Meta Nav ─────────────────────────────────────────── */
+    .ds-nav {
+      background: #152843; padding: 10px 24px;
+      display: flex; align-items: center; justify-content: space-between; gap: 12px;
+      position: sticky; top: 0; z-index: 200;
+    }
+    .ds-nav-brand { font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.9); letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none; }
+    .ds-nav-links { display: flex; gap: 12px; align-items: center; }
+    .ds-nav-links a { font-family: var(--font-ui); font-size: 10px; color: rgba(255,255,255,0.55); text-decoration: none; }
+    .ds-tag-pill { background: rgba(232,165,32,0.20); color: #E8A520; font-family: var(--font-ui); font-size: 10px; padding: 2px 8px; border-radius: 10px; }
+
+    /* ─── SITE HEADER ─────────────────────────────────────────── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 40px; z-index: 100;
+      border-bottom: 3px solid var(--color-brand-accent);
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between; height: 64px;
+    }
+    .site-logo {
+      display: flex; align-items: center; gap: 10px;
+      text-decoration: none;
+    }
+    .site-logo-mark {
+      font-family: var(--font-display); font-size: 18px; font-weight: 600; font-style: italic;
+      color: var(--color-brand-accent);
+      letter-spacing: -0.02em;
+    }
+    .site-logo-sep {
+      width: 1px; height: 20px; background: rgba(255,255,255,0.2);
+    }
+    .site-logo-full {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.10em;
+      text-transform: uppercase; color: rgba(255,255,255,0.55);
+      line-height: 1.3;
+    }
+    .site-nav { display: flex; gap: 24px; align-items: center; }
+    .site-nav a {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.70); text-decoration: none; transition: color 0.15s;
+    }
+    .site-nav a:hover { color: #fff; }
+    .site-nav a.active { color: var(--color-brand-accent); }
+    .btn-nav {
+      background: var(--color-brand-accent); color: var(--color-brand-primary) !important;
+      padding: 7px 16px; border-radius: var(--radius-sm); font-weight: 600 !important;
+    }
+
+    /* ─── HERO DOSSIER ────────────────────────────────────────── */
+    .hero {
+      background: var(--color-surface-inverse);
+      padding: 64px 0 56px; position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: 'EPOS';
+      position: absolute; right: -20px; top: 50%; transform: translateY(-50%);
+      font-family: var(--font-display); font-size: 280px; font-weight: 600; font-style: italic;
+      color: rgba(255,255,255,0.025); line-height: 1; pointer-events: none; user-select: none;
+    }
+    .hero-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+      position: relative; z-index: 1;
+    }
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(232,165,32,0.15); border: 1px solid rgba(232,165,32,0.3);
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.10em; text-transform: uppercase;
+      color: var(--color-brand-accent);
+      padding: 4px 12px; border-radius: 3px; margin-bottom: 20px;
+    }
+    .hero-tag::before { content: '◆'; font-size: 7px; }
+    .hero-title {
+      font-family: var(--font-display); font-size: clamp(32px, 4vw, 48px);
+      font-weight: 500; line-height: 1.15; color: var(--color-content-inverse);
+      margin-bottom: 16px; letter-spacing: -0.01em;
+    }
+    .hero-title em { color: var(--color-brand-accent); font-style: italic; }
+    .hero-sub {
+      font-size: 16px; line-height: 1.7; color: rgba(255,255,255,0.65);
+      margin-bottom: 32px; max-width: 520px;
+    }
+    .hero-meta {
+      display: flex; gap: 16px; flex-wrap: wrap; align-items: center;
+      font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.40);
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.10);
+      margin-top: 24px;
+    }
+    .hero-meta strong { color: rgba(255,255,255,0.70); font-weight: 500; }
+    /* Right: featured article stack */
+    .hero-articles { display: flex; flex-direction: column; gap: 12px; }
+    .hero-article-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.10);
+      border-radius: var(--radius-md); padding: 18px 20px;
+      display: flex; gap: 14px; align-items: flex-start;
+      text-decoration: none; color: inherit;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .hero-article-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(232,165,32,0.30); }
+    .hero-article-card.featured {
+      background: rgba(232,165,32,0.10);
+      border-color: rgba(232,165,32,0.30);
+    }
+    .hero-article-num {
+      font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+      color: var(--color-brand-accent); width: 20px; flex-shrink: 0; padding-top: 2px;
+    }
+    .hero-article-title {
+      font-family: var(--font-display); font-size: 15px; font-weight: 500;
+      color: rgba(255,255,255,0.88); line-height: 1.35;
+      flex: 1;
+    }
+    .hero-article-area {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.40);
+      margin-top: 4px;
+    }
+
+    /* ─── AREE TEMATICHE ──────────────────────────────────────── */
+    .section { padding: 64px 0; }
+    .section + .section { border-top: 1px solid var(--color-border-default); }
+    .section-header { margin-bottom: 32px; }
+    .section-eyebrow {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: 26px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.25;
+    }
+    .section-header-row {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .section-link {
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      color: var(--color-content-brand); text-decoration: none;
+      border-bottom: 1px solid var(--color-border-strong); padding-bottom: 1px;
+    }
+
+    .aree-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px;
+    }
+    .area-card {
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 20px;
+      text-decoration: none; display: flex; flex-direction: column; gap: 10px;
+      background: var(--color-surface-raised);
+      transition: border-color 0.15s, box-shadow 0.12s, transform 0.1s;
+    }
+    .area-card:hover {
+      border-color: var(--a-primary);
+      box-shadow: 0 0 0 3px var(--a-muted);
+      transform: translateY(-2px);
+    }
+    .area-dot {
+      width: 34px; height: 34px; border-radius: 50%;
+      background: var(--a-muted);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .area-dot::after {
+      content: ''; width: 12px; height: 12px; border-radius: 50%; background: var(--a-primary);
+    }
+    .area-name {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.3;
+    }
+    .area-desc { font-size: 13px; color: var(--color-content-secondary); line-height: 1.5; }
+    .area-count {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      color: var(--color-content-secondary); margin-top: auto;
+    }
+    .area-bar { height: 3px; border-radius: 2px; background: var(--a-primary); opacity: 0.35; margin-top: 4px; }
+
+    /* ─── ARTICOLI RECENTI ────────────────────────────────────── */
+    .articles-grid {
+      display: grid; grid-template-columns: 2fr 1fr; gap: 40px;
+    }
+    .articles-main { display: flex; flex-direction: column; gap: 24px; }
+    .article-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 24px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 16px; align-items: start;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.15s, box-shadow 0.12s;
+    }
+    .article-card:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-sm); }
+    .article-card.featured {
+      grid-template-columns: 1fr;
+      background: var(--color-surface-inverse); color: var(--color-content-inverse);
+      border-color: var(--color-surface-inverse);
+    }
+    .article-area-chip {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; padding: 3px 10px; border-radius: 3px;
+      width: fit-content; margin-bottom: 10px;
+    }
+    .article-chip-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
+    .article-title {
+      font-family: var(--font-display); font-size: 18px; font-weight: 500;
+      line-height: 1.35; margin-bottom: 8px;
+    }
+    .article-card.featured .article-title { color: var(--color-content-inverse); font-size: 22px; }
+    .article-abstract {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.6;
+      display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden;
+    }
+    .article-card.featured .article-abstract { color: rgba(255,255,255,0.65); -webkit-line-clamp: 4; }
+    .article-meta {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary);
+      letter-spacing: 0.04em; margin-top: 12px; display: flex; gap: 12px; flex-wrap: wrap;
+    }
+    .article-card.featured .article-meta { color: rgba(255,255,255,0.45); margin-top: 16px; }
+    .article-aside {
+      display: flex; flex-direction: column; align-items: flex-end; gap: 8px;
+    }
+    .read-link {
+      font-size: 13px; font-weight: 500; color: var(--color-content-brand);
+      text-decoration: none; border-bottom: 1px solid var(--color-border-strong); padding-bottom: 1px;
+    }
+    .article-card.featured .read-link {
+      color: var(--color-brand-accent); border-bottom-color: var(--color-brand-accent);
+    }
+
+    /* Sidebar recenti */
+    .articles-sidebar { display: flex; flex-direction: column; gap: 0; }
+    .sidebar-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.10em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 16px;
+    }
+    .sidebar-article {
+      padding: 14px 0; border-bottom: 1px solid var(--color-border-default);
+      text-decoration: none; color: inherit;
+    }
+    .sidebar-article:first-of-type { padding-top: 0; }
+    .sidebar-article:hover .sidebar-article-title { color: var(--color-content-brand); }
+    .sidebar-article-title {
+      font-family: var(--font-display); font-size: 14px; font-weight: 500;
+      line-height: 1.35; color: var(--color-content-primary); margin-bottom: 6px;
+      transition: color 0.12s;
+    }
+    .sidebar-article-meta {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── DOSSIER IN EVIDENZA ─────────────────────────────────── */
+    .dossier-banner {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-left: 4px solid var(--color-brand-accent);
+      border-radius: var(--radius-md); padding: 32px 36px;
+      display: grid; grid-template-columns: 1fr auto;
+      gap: 24px; align-items: center;
+    }
+    .dossier-eyebrow {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 10px;
+    }
+    .dossier-title {
+      font-family: var(--font-display); font-size: 24px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.25; margin-bottom: 10px;
+    }
+    .dossier-desc {
+      font-size: 15px; color: var(--color-content-secondary); line-height: 1.6; max-width: 580px;
+    }
+    .dossier-chips {
+      display: flex; gap: 8px; flex-wrap: wrap; margin-top: 16px;
+    }
+    .dossier-chip {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      padding: 3px 10px; border-radius: 3px; border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary); background: var(--color-surface-raised);
+    }
+    .dossier-aside { text-align: right; flex-shrink: 0; }
+    .dossier-count { font-family: var(--font-display); font-size: 42px; font-weight: 600; color: var(--color-brand-accent); line-height: 1; }
+    .dossier-count-label { font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary); letter-spacing: 0.06em; margin-top: 4px; }
+    .btn-dossier {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-surface-inverse); color: var(--color-content-inverse);
+      padding: 10px 20px; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 500; text-decoration: none;
+      margin-top: 16px; transition: opacity 0.15s;
+    }
+    .btn-dossier:hover { opacity: 0.85; }
+
+    /* ─── COMMUNITY PROFILI ───────────────────────────────────── */
+    .community-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px;
+    }
+    .expert-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md); padding: 20px;
+      text-decoration: none; color: inherit;
+      transition: border-color 0.15s, box-shadow 0.12s;
+      display: flex; flex-direction: column; gap: 12px;
+    }
+    .expert-card:hover { border-color: var(--color-border-strong); box-shadow: var(--shadow-sm); }
+    .expert-avatar {
+      width: 48px; height: 48px; border-radius: 50%;
+      background: var(--color-surface-card);
+      border: 2px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; flex-shrink: 0;
+    }
+    .expert-name {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.2;
+    }
+    .expert-role {
+      font-size: 13px; color: var(--color-content-secondary); line-height: 1.4;
+    }
+    .expert-areas {
+      display: flex; flex-wrap: wrap; gap: 5px; margin-top: auto;
+    }
+    .expert-area-tag {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.05em;
+      padding: 2px 8px; border-radius: 3px;
+      background: var(--color-surface-card); color: var(--color-content-secondary);
+      border: 1px solid var(--color-border-default);
+    }
+    .expert-articles {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary);
+      letter-spacing: 0.04em;
+    }
+
+    /* ─── NEWSLETTER ──────────────────────────────────────────── */
+    .newsletter-band {
+      background: var(--color-surface-inverse); padding: 56px 0;
+    }
+    .newsletter-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+    }
+    .newsletter-title {
+      font-family: var(--font-display); font-size: 28px; font-weight: 500;
+      color: var(--color-content-inverse); line-height: 1.25; margin-bottom: 10px;
+    }
+    .newsletter-title em { color: var(--color-brand-accent); font-style: italic; }
+    .newsletter-sub {
+      font-size: 15px; color: rgba(255,255,255,0.60); line-height: 1.65;
+    }
+    .newsletter-form { display: flex; gap: 10px; }
+    .newsletter-input {
+      flex: 1; padding: 12px 16px; border-radius: var(--radius-sm);
+      border: 1px solid rgba(255,255,255,0.20); background: rgba(255,255,255,0.08);
+      color: #fff; font-size: 15px; font-family: var(--font-body);
+    }
+    .newsletter-input::placeholder { color: rgba(255,255,255,0.35); }
+    .newsletter-input:focus { outline: none; border-color: var(--color-brand-accent); }
+    .newsletter-btn {
+      background: var(--color-brand-accent); color: var(--color-brand-primary);
+      border: none; padding: 12px 22px; border-radius: var(--radius-sm);
+      font-size: 14px; font-weight: 600; cursor: pointer; font-family: var(--font-body);
+      white-space: nowrap;
+    }
+    .newsletter-privacy {
+      font-size: 12px; color: rgba(255,255,255,0.35); margin-top: 10px;
+    }
+    .newsletter-stats {
+      display: flex; gap: 32px; flex-wrap: wrap; margin-top: 24px;
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.10);
+    }
+    .nl-stat-val {
+      font-family: var(--font-display); font-size: 28px; font-weight: 500;
+      color: var(--color-brand-accent); line-height: 1;
+    }
+    .nl-stat-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      color: rgba(255,255,255,0.45); margin-top: 4px;
+    }
+
+    /* ─── FOOTER ──────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--color-surface-inverse);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding: 48px 0 28px;
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px; margin-bottom: 40px;
+    }
+    .footer-brand-name {
+      font-family: var(--font-display); font-size: 20px; font-weight: 600; font-style: italic;
+      color: var(--color-brand-accent); margin-bottom: 8px;
+    }
+    .footer-brand-full {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px;
+    }
+    .footer-tagline {
+      font-size: 13px; color: rgba(255,255,255,0.50); line-height: 1.65; max-width: 280px;
+    }
+    .footer-col-title {
+      font-family: var(--font-heading); font-size: 13px; font-weight: 600;
+      color: rgba(255,255,255,0.80); margin-bottom: 14px;
+      letter-spacing: -0.01em;
+    }
+    .footer-links { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-links a {
+      font-size: 13px; color: rgba(255,255,255,0.45); text-decoration: none;
+      transition: color 0.12s;
+    }
+    .footer-links a:hover { color: rgba(255,255,255,0.85); }
+    .footer-bottom {
+      padding-top: 24px; border-top: 1px solid rgba(255,255,255,0.08);
+      display: flex; align-items: center; justify-content: space-between; gap: 16px;
+      flex-wrap: wrap;
+    }
+    .footer-copy {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em;
+      color: rgba(255,255,255,0.30);
+    }
+    .footer-cert {
+      display: flex; gap: 8px; flex-wrap: wrap;
+    }
+    .cert-badge {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      padding: 2px 10px; border-radius: 3px;
+      border: 1px solid rgba(232,165,32,0.30); color: rgba(232,165,32,0.70);
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- ═══ DS META NAV ════════════════════════════════════════════ -->
+  <nav class="ds-nav">
+    <a class="ds-nav-brand" href="index.html">Hederae DS</a>
+    <div class="ds-nav-links">
+      <a href="susdef-home.html">Susdef Home</a>
+      <a href="susdef-hub.html">Susdef Hub</a>
+      <a href="#" style="color:rgba(255,255,255,0.85);">EPOS Home</a>
+      <a href="epos-thematic.html">EPOS Tematica</a>
+      <span class="ds-tag-pill">EPOS · PROFILO C</span>
+    </div>
+  </nav>
+
+  <!-- ═══ SITE HEADER ════════════════════════════════════════════ -->
+  <header class="site-header">
+    <div class="container">
+      <a href="#" class="site-logo">
+        <span class="site-logo-mark">EPOS</span>
+        <span class="site-logo-sep"></span>
+        <span class="site-logo-full">Ecosistemi<br>e Politiche</span>
+      </a>
+      <nav class="site-nav">
+        <a href="#" class="active">Home</a>
+        <a href="epos-thematic.html">Aree tematiche</a>
+        <a href="#">Dossier</a>
+        <a href="#">Community</a>
+        <a href="#">Archivio</a>
+        <a href="#newsletter" class="btn-nav">Newsletter</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════════ -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-tag">Dossier aperto</div>
+          <h1 class="hero-title">
+            Piani clima urbani:<br>
+            <em>dalle promesse<br>alla misura.</em>
+          </h1>
+          <p class="hero-sub">
+            Quindici città italiane stanno aggiornando i Piani di Azione per il Clima e l'Energia Sostenibile. EPOS monitora gli impegni, le scadenze e i dati di avanzamento.
+          </p>
+          <div class="hero-meta">
+            <span><strong>Dossier</strong> PAES 2024–2030</span>
+            <span><strong>Avviato</strong> Gennaio 2025</span>
+            <span><strong>Aggiornamento</strong> Mensile</span>
+            <span><strong>Contributi</strong> 24 esperti</span>
+          </div>
+        </div>
+        <div class="hero-articles">
+          <a href="#" class="hero-article-card featured">
+            <span class="hero-article-num">01</span>
+            <div>
+              <div class="hero-article-title">Milano: obiettivo neutralità carbonica al 2030 — stato di avanzamento Q1 2025</div>
+              <div class="hero-article-area">Città e Territorio · analisi</div>
+            </div>
+          </a>
+          <a href="#" class="hero-article-card">
+            <span class="hero-article-num">02</span>
+            <div>
+              <div class="hero-article-title">Il ruolo della pianificazione forestale nei PAES periurbani</div>
+              <div class="hero-article-area">Biodiversità · contributo</div>
+            </div>
+          </a>
+          <a href="#" class="hero-article-card">
+            <span class="hero-article-num">03</span>
+            <div>
+              <div class="hero-article-title">Finanziamenti PNRR e clima: quali comuni stanno davvero eseguendo</div>
+              <div class="hero-article-area">Politiche · inchiesta</div>
+            </div>
+          </a>
+          <a href="#" class="hero-article-card">
+            <span class="hero-article-num">04</span>
+            <div>
+              <div class="hero-article-title">Soglie di resilienza: le città costiere italiane di fronte al rischio idrico</div>
+              <div class="hero-article-area">Risorse Idriche · ricerca</div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ AREE TEMATICHE ═════════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <div>
+          <div class="section-eyebrow">Esplora per area</div>
+          <h2 class="section-title">Sei aree di ricerca</h2>
+        </div>
+        <a href="epos-thematic.html" class="section-link">Tutte le aree →</a>
+      </div>
+      <div class="aree-grid">
+
+        <a href="epos-thematic.html" class="area-card"
+           style="--a-primary:var(--color-area-citta-primary);--a-muted:var(--color-area-citta-muted);">
+          <div class="area-dot"></div>
+          <div class="area-name">Città e Territorio</div>
+          <div class="area-desc">Pianificazione urbana, mobilità sostenibile, rigenerazione e adattamento climatico.</div>
+          <div class="area-count">48 contributi · 8 dossier</div>
+          <div class="area-bar"></div>
+        </a>
+
+        <a href="#" class="area-card"
+           style="--a-primary:var(--color-area-biodiversita-primary);--a-muted:var(--color-area-biodiversita-muted);">
+          <div class="area-dot"></div>
+          <div class="area-name">Biodiversità</div>
+          <div class="area-desc">Ecosistemi terrestri e marini, specie a rischio, corridoi ecologici, politiche EU.</div>
+          <div class="area-count">34 contributi · 5 dossier</div>
+          <div class="area-bar"></div>
+        </a>
+
+        <a href="#" class="area-card"
+           style="--a-primary:var(--color-area-acqua-primary);--a-muted:var(--color-area-acqua-muted);">
+          <div class="area-dot"></div>
+          <div class="area-name">Risorse Idriche</div>
+          <div class="area-desc">Siccità, alluvioni, gestione dei bacini, qualità delle acque e governance.</div>
+          <div class="area-count">29 contributi · 4 dossier</div>
+          <div class="area-bar"></div>
+        </a>
+
+        <a href="#" class="area-card"
+           style="--a-primary:var(--color-area-agricoltura-primary);--a-muted:var(--color-area-agricoltura-muted);">
+          <div class="area-dot"></div>
+          <div class="area-name">Agricoltura</div>
+          <div class="area-desc">Transizione agroecologica, suoli, PAC e impatto del cambiamento climatico sui raccolti.</div>
+          <div class="area-count">41 contributi · 6 dossier</div>
+          <div class="area-bar"></div>
+        </a>
+
+        <a href="#" class="area-card"
+           style="--a-primary:var(--color-area-energia-primary);--a-muted:var(--color-area-energia-muted);">
+          <div class="area-dot"></div>
+          <div class="area-name">Energia</div>
+          <div class="area-desc">Fonti rinnovabili, efficienza energetica, comunità energetiche, mercato EU del gas.</div>
+          <div class="area-count">52 contributi · 9 dossier</div>
+          <div class="area-bar"></div>
+        </a>
+
+        <a href="#" class="area-card"
+           style="--a-primary:var(--color-area-diritto-primary);--a-muted:var(--color-area-diritto-muted);">
+          <div class="area-dot"></div>
+          <div class="area-name">Diritto Ambientale</div>
+          <div class="area-desc">Normativa europea e italiana, contenziosi climatici, responsabilità d'impresa.</div>
+          <div class="area-count">23 contributi · 3 dossier</div>
+          <div class="area-bar"></div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ ARTICOLI RECENTI + SIDEBAR ════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <div>
+          <div class="section-eyebrow">Ultimi contributi</div>
+          <h2 class="section-title">Ricerca, analisi e inchieste</h2>
+        </div>
+        <a href="#" class="section-link">Archivio completo →</a>
+      </div>
+      <div class="articles-grid">
+        <div class="articles-main">
+
+          <!-- Featured -->
+          <a href="#" class="article-card featured">
+            <div class="article-area-chip"
+                 style="background:rgba(232,165,32,0.15);color:var(--color-brand-accent);border:1px solid rgba(232,165,32,0.30);">
+              <span class="article-chip-dot" style="background:var(--color-brand-accent);"></span>Dossier
+            </div>
+            <h3 class="article-title">La pianura padana tra siccità e alluvioni: il paradosso idrico italiano</h3>
+            <p class="article-abstract">Dal 2022 al 2024 la pianura padana ha attraversato tre eventi estremi opposti in 24 mesi. Cosa ci dicono i dati meteorologici, idrologici e le scelte di governance su ciò che ci aspetta nei prossimi dieci anni.</p>
+            <div class="article-meta">
+              <span>Prof.ssa A. Bernardi · Univ. Bologna</span>
+              <span>Risorse Idriche</span>
+              <span>14 Feb 2025 · 18 min</span>
+            </div>
+            <a href="#" class="read-link" style="margin-top:16px;">Leggi il contributo →</a>
+          </a>
+
+          <!-- Regular article 1 -->
+          <a href="#" class="article-card">
+            <div>
+              <div class="article-area-chip"
+                   style="background:var(--color-area-citta-muted);color:var(--color-area-citta-primary);">
+                <span class="article-chip-dot" style="background:var(--color-area-citta-primary);"></span>Città e Territorio
+              </div>
+              <h3 class="article-title">Superblock urbani: il modello Barcellona può funzionare in Italia?</h3>
+              <p class="article-abstract">Un'analisi comparativa tra il Superblocks program di Barcellona e i tentativi milanesi di Zone 30. Governance, cogestione e resistenza al cambiamento.</p>
+              <div class="article-meta">
+                <span>M. Ferretti · Politecnico Milano</span>
+                <span>10 Feb 2025 · 12 min</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-link">Leggi →</a>
+            </div>
+          </a>
+
+          <!-- Regular article 2 -->
+          <a href="#" class="article-card">
+            <div>
+              <div class="article-area-chip"
+                   style="background:var(--color-area-energia-muted);color:var(--color-area-energia-primary);">
+                <span class="article-chip-dot" style="background:var(--color-area-energia-primary);"></span>Energia
+              </div>
+              <h3 class="article-title">Comunità energetiche rurali: chi governa, chi finanzia, chi decide</h3>
+              <p class="article-abstract">Il D.Lgs. 199/2021 ha aperto la strada. Ma i dati mostrano che a 18 mesi dall'entrata in vigore solo il 4% dei comuni ha avviato una CER. Perché?</p>
+              <div class="article-meta">
+                <span>L. Sartori · GSE, F. Neri · Legambiente</span>
+                <span>7 Feb 2025 · 9 min</span>
+              </div>
+            </div>
+            <div class="article-aside">
+              <a href="#" class="read-link">Leggi →</a>
+            </div>
+          </a>
+
+        </div>
+
+        <!-- Sidebar -->
+        <aside class="articles-sidebar">
+          <div class="sidebar-title">In breve</div>
+          <a href="#" class="sidebar-article">
+            <div class="sidebar-article-title">Corte europea: il caso Carvalho e la legittimazione climatica dei privati</div>
+            <div class="sidebar-article-meta">Diritto Ambientale · 8 Feb 2025</div>
+          </a>
+          <a href="#" class="sidebar-article">
+            <div class="sidebar-article-title">PAC 2023–2027: il bilancio ambientale alla fine del primo anno</div>
+            <div class="sidebar-article-meta">Agricoltura · 5 Feb 2025</div>
+          </a>
+          <a href="#" class="sidebar-article">
+            <div class="sidebar-article-title">Fotovoltaico agrivoltaico in Puglia: il conflitto uso del suolo</div>
+            <div class="sidebar-article-meta">Energia · 3 Feb 2025</div>
+          </a>
+          <a href="#" class="sidebar-article">
+            <div class="sidebar-article-title">Habitat 3.0: le ZPS e le politiche europee di conservazione</div>
+            <div class="sidebar-article-meta">Biodiversità · 1 Feb 2025</div>
+          </a>
+          <a href="#" class="sidebar-article">
+            <div class="sidebar-article-title">PNRR Missione 2: stato di avanzamento dei 71 comuni coinvolti</div>
+            <div class="sidebar-article-meta">Città e Territorio · 28 Gen 2025</div>
+          </a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ DOSSIER IN EVIDENZA ════════════════════════════════════ -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow">Dossier aperto</div>
+        <h2 class="section-title">Focus in corso</h2>
+      </div>
+      <div class="dossier-banner">
+        <div>
+          <div class="dossier-eyebrow">◆ Dossier multidisciplinare · avviato gen 2025</div>
+          <h3 class="dossier-title">Piani clima urbani: dalle promesse alla misura</h3>
+          <p class="dossier-desc">
+            EPOS monitora in tempo reale i 15 Piani di Azione per il Clima e l'Energia Sostenibile delle principali città italiane. Ogni mese pubblichiamo aggiornamenti su impegni, scadenze e dati verificabili.
+          </p>
+          <div class="dossier-chips">
+            <span class="dossier-chip">Milano</span>
+            <span class="dossier-chip">Roma</span>
+            <span class="dossier-chip">Napoli</span>
+            <span class="dossier-chip">Torino</span>
+            <span class="dossier-chip">Bologna</span>
+            <span class="dossier-chip">Palermo</span>
+            <span class="dossier-chip">+9 città</span>
+          </div>
+          <a href="#" class="btn-dossier">Esplora il dossier →</a>
+        </div>
+        <div class="dossier-aside">
+          <div class="dossier-count">24</div>
+          <div class="dossier-count-label">CONTRIBUTI</div>
+          <div style="margin-top:16px;">
+            <div class="dossier-count" style="font-size:28px;">15</div>
+            <div class="dossier-count-label">CITTÀ MONITORATE</div>
+          </div>
+          <div style="margin-top:16px;">
+            <div class="dossier-count" style="font-size:28px;">Mensile</div>
+            <div class="dossier-count-label">AGGIORNAMENTO</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ COMMUNITY PROFILI ══════════════════════════════════════ -->
+  <section class="section" style="background:var(--color-surface-card);">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <div>
+          <div class="section-eyebrow">Community EPOS</div>
+          <h2 class="section-title">Gli esperti della piattaforma</h2>
+        </div>
+        <a href="#" class="section-link">Tutti i profili →</a>
+      </div>
+      <div class="community-grid">
+
+        <a href="#" class="expert-card">
+          <div class="expert-avatar">👩‍🔬</div>
+          <div>
+            <div class="expert-name">Prof.ssa Anna Bernardi</div>
+            <div class="expert-role">Idrologia e cambiamenti climatici, Università di Bologna</div>
+          </div>
+          <div class="expert-areas">
+            <span class="expert-area-tag" style="background:var(--color-area-acqua-muted);color:var(--color-area-acqua-primary);">Risorse Idriche</span>
+            <span class="expert-area-tag" style="background:var(--color-area-citta-muted);color:var(--color-area-citta-primary);">Città</span>
+          </div>
+          <div class="expert-articles">12 contributi pubblicati</div>
+        </a>
+
+        <a href="#" class="expert-card">
+          <div class="expert-avatar">👨‍💼</div>
+          <div>
+            <div class="expert-name">Marco Ferretti</div>
+            <div class="expert-role">Urbanistica e mobilità sostenibile, Politecnico di Milano</div>
+          </div>
+          <div class="expert-areas">
+            <span class="expert-area-tag" style="background:var(--color-area-citta-muted);color:var(--color-area-citta-primary);">Città e Territorio</span>
+          </div>
+          <div class="expert-articles">9 contributi pubblicati</div>
+        </a>
+
+        <a href="#" class="expert-card">
+          <div class="expert-avatar">👩‍⚖️</div>
+          <div>
+            <div class="expert-name">Avv. Sara Conti</div>
+            <div class="expert-role">Diritto ambientale europeo, Studio Conti & Associati</div>
+          </div>
+          <div class="expert-areas">
+            <span class="expert-area-tag" style="background:var(--color-area-diritto-muted);color:var(--color-area-diritto-primary);">Diritto Ambientale</span>
+          </div>
+          <div class="expert-articles">7 contributi pubblicati</div>
+        </a>
+
+        <a href="#" class="expert-card">
+          <div class="expert-avatar">👨‍🌾</div>
+          <div>
+            <div class="expert-name">Dr. Luca Sartori</div>
+            <div class="expert-role">Politiche energetiche e CER, Gestore Servizi Energetici</div>
+          </div>
+          <div class="expert-areas">
+            <span class="expert-area-tag" style="background:var(--color-area-energia-muted);color:var(--color-area-energia-primary);">Energia</span>
+            <span class="expert-area-tag" style="background:var(--color-area-agricoltura-muted);color:var(--color-area-agricoltura-primary);">Agricoltura</span>
+          </div>
+          <div class="expert-articles">11 contributi pubblicati</div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ NEWSLETTER ════════════════════════════════════════════ -->
+  <section class="newsletter-band" id="newsletter">
+    <div class="container">
+      <div class="newsletter-inner">
+        <div>
+          <h2 class="newsletter-title">La ricerca che conta,<br><em>ogni due settimane.</em></h2>
+          <p class="newsletter-sub">EPOS Digest — selezione dei migliori contributi, dossier in evidenza e aggiornamenti sulle politiche ambientali europee.</p>
+          <div class="newsletter-stats">
+            <div>
+              <div class="nl-stat-val">4.800</div>
+              <div class="nl-stat-label">Iscritti</div>
+            </div>
+            <div>
+              <div class="nl-stat-val">62%</div>
+              <div class="nl-stat-label">Open rate</div>
+            </div>
+            <div>
+              <div class="nl-stat-val">Bisettimanale</div>
+              <div class="nl-stat-label">Frequenza</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <form class="newsletter-form" onsubmit="return false;">
+            <input type="email" class="newsletter-input" placeholder="La tua email istituzionale">
+            <button type="submit" class="newsletter-btn">Iscriviti</button>
+          </form>
+          <p class="newsletter-privacy">Nessuno spam. Disdici in ogni momento. Dati trattati secondo GDPR.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ FOOTER ════════════════════════════════════════════════ -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <div class="footer-brand-name">EPOS</div>
+          <div class="footer-brand-full">Ecosistemi, Politiche,<br>Osservazione Scientifica</div>
+          <p class="footer-tagline">Hub editoriale indipendente per la ricerca e l'analisi delle politiche ambientali italiane ed europee.</p>
+        </div>
+        <div>
+          <div class="footer-col-title">Aree</div>
+          <ul class="footer-links">
+            <li><a href="epos-thematic.html">Città e Territorio</a></li>
+            <li><a href="#">Biodiversità</a></li>
+            <li><a href="#">Risorse Idriche</a></li>
+            <li><a href="#">Agricoltura</a></li>
+            <li><a href="#">Energia</a></li>
+            <li><a href="#">Diritto Ambientale</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Piattaforma</div>
+          <ul class="footer-links">
+            <li><a href="#">Archivio</a></li>
+            <li><a href="#">Dossier</a></li>
+            <li><a href="#">Community</a></li>
+            <li><a href="#">Newsletter</a></li>
+            <li><a href="#">Pubblica su EPOS</a></li>
+          </ul>
+        </div>
+        <div>
+          <div class="footer-col-title">Info</div>
+          <ul class="footer-links">
+            <li><a href="#">Chi siamo</a></li>
+            <li><a href="#">Metodologia</a></li>
+            <li><a href="#">Contatti</a></li>
+            <li><a href="#">Privacy</a></li>
+            <li><a href="#">Hederae DS</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span class="footer-copy">© 2026 EPOS — hub editoriale · C.F. 00000000000 · Milano</span>
+        <div class="footer-cert">
+          <span class="cert-badge">Open Access</span>
+          <span class="cert-badge">Peer reviewed</span>
+          <span class="cert-badge">GDPR compliant</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
