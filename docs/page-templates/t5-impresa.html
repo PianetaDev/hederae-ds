@@ -1,0 +1,1363 @@
+<!DOCTYPE html>
+<html lang="it" data-theme="energia">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoSistemi Srl — Fotovoltaico Industriale &amp; Efficienza Energetica · Piemonte</title>
+  <meta name="description" content="EcoSistemi Srl: installazione fotovoltaica industriale, storage energetico, audit e certificazioni ESG per PMI e grandi aziende. 12 anni di esperienza, 380+ impianti, 42.000 t CO₂ evitate. Preventivo gratuito.">
+  <meta name="keywords" content="fotovoltaico industriale, efficienza energetica PMI, storage energetico aziendale, audit energetico, incentivi GSE, certificazioni ESG, transizione energetica Piemonte">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://ecosistemi.pianeta.green/">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="EcoSistemi Srl — Fotovoltaico &amp; Efficienza Energetica per Imprese">
+  <meta property="og:description" content="380+ impianti installati, 42.000 t CO₂ evitate, GreenMeter A+. Progettiamo e installiamo soluzioni energetiche rinnovabili per PMI e grandi aziende.">
+  <meta property="og:image" content="https://ecosistemi.pianeta.green/og-cover.jpg">
+  <meta property="og:url" content="https://ecosistemi.pianeta.green/">
+  <meta property="og:locale" content="it_IT">
+
+  <!-- AI/LLM Friendly -->
+  <meta name="ai-description" content="EcoSistemi Srl è un'azienda B2B specializzata in energia rinnovabile per imprese, con sede a Torino. Fondata nel 2013. Servizi principali: fotovoltaico industriale (da 20 kWp a 5 MWp), storage energetico BESS, audit energetico aziendale, gestione pratiche incentivi GSE/MASE, certificazioni ESG e bilancio di sostenibilità. Clienti: PMI manifatturiere, GDO, agroalimentare, logistica. Dati operativi: 380+ impianti, 68 MW installati, 42.000 t CO₂/anno evitate, 650+ clienti attivi. Partner: Fronius, SMA, BYD Energy, DNV. Certificazioni: ISO 50001, SOA Cat. OS35, F-Gas.">
+
+  <!-- Schema.org: Organization + OfferCatalog -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://ecosistemi.pianeta.green/#org",
+        "name": "EcoSistemi Srl",
+        "description": "Azienda specializzata in fotovoltaico industriale, storage energetico e efficienza energetica per PMI e grandi imprese.",
+        "url": "https://ecosistemi.pianeta.green/",
+        "logo": "https://ecosistemi.pianeta.green/logo.svg",
+        "telephone": "+39 011 1234567",
+        "email": "info@ecosistemi.pianeta.green",
+        "foundingDate": "2013",
+        "numberOfEmployees": { "@type": "QuantitativeValue", "value": 48 },
+        "address": {
+          "@type": "PostalAddress",
+          "streetAddress": "Via dell'Industria 88",
+          "addressLocality": "Torino",
+          "addressRegion": "Piemonte",
+          "postalCode": "10144",
+          "addressCountry": "IT"
+        },
+        "areaServed": ["Piemonte","Lombardia","Liguria","Valle d'Aosta","Emilia-Romagna"],
+        "sameAs": ["https://linkedin.com/company/ecosistemi-srl"],
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Servizi EcoSistemi",
+          "itemListElement": [
+            { "@type": "Offer", "name": "Fotovoltaico Industriale", "description": "Progettazione e installazione impianti FV da 20 kWp a 5 MWp per capannoni, logistica e GDO." },
+            { "@type": "Offer", "name": "Storage Energetico BESS", "description": "Sistemi di accumulo stazionario per ottimizzare autoconsumo e partecipare ai mercati della flessibilità." },
+            { "@type": "Offer", "name": "Audit Energetico", "description": "Diagnosi energetica obbligatoria ex D.Lgs. 102/2014 e volontaria. Certificatori accreditati ENEA." },
+            { "@type": "Offer", "name": "Incentivi GSE/MASE", "description": "Gestione completa delle pratiche per Conto Energia, Certificati Bianchi, Transizione 5.0." },
+            { "@type": "Offer", "name": "Report ESG e Carbon Footprint", "description": "Bilancio di sostenibilità, calcolo GHG Scope 1/2/3, rating ESG per istituti bancari." }
+          ]
+        }
+      }
+    ]
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* =============================================
+       T5 IMPRESA GREEN B2B — HEDERAE DS  v0.3.4
+       Temi: energia · verde-chiaro · hedera
+       Target: PMI, manifattura, logistica, GDO
+       ============================================= */
+
+    /* --- THEME: energia (dark navy + electric blue + solar yellow) --- */
+    [data-theme="energia"] {
+      --ti-bg:            #F0F3F9;
+      --ti-surface:       #FFFFFF;
+      --ti-surface-alt:   #E8EEF8;
+      --ti-accent:        #1D4ED8;
+      --ti-accent-hover:  #1A3FBB;
+      --ti-accent-soft:   #DBEAFE;
+      --ti-accent2:       #F59E0B;        /* solar yellow */
+      --ti-accent2-soft:  #FEF3C7;
+      --ti-text:          #0B1628;
+      --ti-text-muted:    #374970;
+      --ti-text-light:    #6B7FA3;
+      --ti-border:        rgba(29,78,216,0.1);
+      --ti-border-strong: rgba(29,78,216,0.2);
+      --ti-shadow:        0 2px 10px rgba(11,22,40,0.07);
+      --ti-shadow-lg:     0 8px 28px rgba(11,22,40,0.12);
+      --ti-hero-bg:       #0B1628;
+      --ti-hero-text:     #EFF6FF;
+      --ti-hero-muted:    rgba(239,246,255,0.6);
+      --ti-green:         #22C55E;
+      --ti-green-soft:    #DCFCE7;
+    }
+
+    /* --- THEME: verde-chiaro --- */
+    [data-theme="verde-chiaro"] {
+      --ti-bg:            #F7FAF7;
+      --ti-surface:       #FFFFFF;
+      --ti-surface-alt:   #EFF5EF;
+      --ti-accent:        #1A8C52;
+      --ti-accent-hover:  #157040;
+      --ti-accent-soft:   #E6F5EE;
+      --ti-accent2:       #E8A520;
+      --ti-accent2-soft:  #FDF4DC;
+      --ti-text:          #0D1F12;
+      --ti-text-muted:    #4A6655;
+      --ti-text-light:    #7A9A85;
+      --ti-border:        rgba(26,140,82,0.12);
+      --ti-border-strong: rgba(26,140,82,0.22);
+      --ti-shadow:        0 2px 10px rgba(13,31,18,0.07);
+      --ti-shadow-lg:     0 8px 28px rgba(13,31,18,0.12);
+      --ti-hero-bg:       #0D2B1A;
+      --ti-hero-text:     #E8FFF2;
+      --ti-hero-muted:    rgba(232,255,242,0.6);
+      --ti-green:         #5BD48A;
+      --ti-green-soft:    #E6F5EE;
+    }
+
+    /* --- THEME: hedera --- */
+    [data-theme="hedera"] {
+      --ti-bg:            var(--color-surface-page, #F8FCF9);
+      --ti-surface:       var(--color-surface-card, #FFFFFF);
+      --ti-surface-alt:   var(--color-surface-tint, #EAF5EF);
+      --ti-accent:        var(--color-brand-primary, #138C52);
+      --ti-accent-hover:  var(--color-brand-dark, #0E6B3E);
+      --ti-accent-soft:   var(--color-brand-tint, #E6F5EE);
+      --ti-accent2:       #F59E0B;
+      --ti-accent2-soft:  #FEF3C7;
+      --ti-text:          var(--color-text-primary, #0D1F12);
+      --ti-text-muted:    var(--color-text-secondary, #4A6655);
+      --ti-text-light:    var(--color-text-tertiary, #7A9A85);
+      --ti-border:        var(--color-border-default, rgba(19,140,82,0.12));
+      --ti-border-strong: var(--color-border-strong, rgba(19,140,82,0.25));
+      --ti-shadow:        0 2px 10px rgba(13,31,18,0.07);
+      --ti-shadow-lg:     0 8px 28px rgba(13,31,18,0.12);
+      --ti-hero-bg:       var(--color-surface-inverse, #0D2B1A);
+      --ti-hero-text:     var(--color-text-inverse, #E8FFF2);
+      --ti-hero-muted:    rgba(232,255,242,0.6);
+      --ti-green:         var(--color-brand-secondary, #5BD48A);
+      --ti-green-soft:    var(--color-brand-tint, #E6F5EE);
+    }
+
+    /* --- BASE --- */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Inter', system-ui, sans-serif;
+      background: var(--ti-bg);
+      color: var(--ti-text);
+      line-height: 1.6;
+      transition: background 0.3s, color 0.3s;
+    }
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+
+    /* --- DS META-NAV --- */
+    .ds-metanav {
+      position: sticky; top: 0; z-index: 200;
+      background: var(--ti-hero-bg);
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+      padding: 0 24px; height: 40px;
+      display: flex; align-items: center; gap: 16px;
+      font-family: 'Inter', monospace; font-size: 11px;
+      color: var(--ti-hero-text);
+    }
+    .ds-label { opacity: 0.45; letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+    .ds-pill {
+      padding: 2px 10px; border-radius: 20px;
+      font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      background: rgba(29,78,216,0.25); color: #93C5FD;
+      border: 1px solid rgba(29,78,216,0.4);
+    }
+    [data-theme="verde-chiaro"] .ds-pill,
+    [data-theme="hedera"] .ds-pill { background: rgba(91,212,138,0.15); color: #5BD48A; border-color: rgba(91,212,138,0.3); }
+    .ds-spacer { flex: 1; }
+    .ds-theme-switcher { display: flex; gap: 4px; }
+    .ds-theme-btn {
+      background: transparent; border: 1px solid rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.5); padding: 3px 10px; border-radius: 4px;
+      font-size: 10px; font-family: 'Inter', monospace; cursor: pointer; transition: all 0.15s;
+    }
+    .ds-theme-btn:hover { color: #fff; border-color: rgba(255,255,255,0.4); }
+    .ds-theme-btn.active { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.4); }
+
+    /* --- SITE HEADER --- */
+    .site-header {
+      position: sticky; top: 40px; z-index: 100;
+      background: var(--ti-surface);
+      border-bottom: 2px solid var(--ti-accent);
+      padding: 0 40px; height: 68px;
+      display: flex; align-items: center; gap: 36px;
+      box-shadow: var(--ti-shadow);
+    }
+    .logo {
+      display: flex; align-items: center; gap: 10px;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .logo-icon {
+      width: 36px; height: 36px; border-radius: 10px;
+      background: var(--ti-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #fff;
+    }
+    .logo-text-main { font-size: 17px; font-weight: 800; color: var(--ti-text); letter-spacing: -0.02em; }
+    .logo-text-sub { font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ti-text-light); }
+    .site-nav { display: flex; gap: 28px; list-style: none; }
+    .site-nav a { font-size: 14px; font-weight: 500; color: var(--ti-text-muted); transition: color 0.15s; }
+    .site-nav a:hover { color: var(--ti-accent); }
+    .header-spacer { flex: 1; }
+    .header-tel {
+      display: flex; align-items: center; gap: 6px;
+      font-size: 14px; font-weight: 600; color: var(--ti-text-muted);
+    }
+    .btn-cta {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--ti-accent); color: #fff;
+      padding: 10px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-cta:hover { background: var(--ti-accent-hover); transform: translateY(-1px); }
+    .btn-outline {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent; color: var(--ti-accent);
+      border: 1.5px solid var(--ti-accent);
+      padding: 9px 20px; border-radius: 8px;
+      font-size: 14px; font-weight: 600;
+      transition: all 0.15s;
+    }
+    .btn-outline:hover { background: var(--ti-accent-soft); }
+
+    /* --- HERO --- */
+    .hero {
+      background: var(--ti-hero-bg);
+      color: var(--ti-hero-text);
+      padding: 80px 40px;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(29,78,216,0.15) 0%, transparent 65%);
+      pointer-events: none;
+    }
+    /* Circuit-board texture hint */
+    .hero::after {
+      content: '';
+      position: absolute; right: 0; top: 0; bottom: 0; width: 50%;
+      background-image:
+        linear-gradient(rgba(29,78,216,0.04) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(29,78,216,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+    [data-theme="verde-chiaro"] .hero::before { background: radial-gradient(ellipse 60% 80% at 70% 50%, rgba(91,212,138,0.1) 0%, transparent 65%); }
+    [data-theme="verde-chiaro"] .hero::after { background-image: linear-gradient(rgba(91,212,138,0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(91,212,138,0.04) 1px, transparent 1px); background-size: 40px 40px; }
+    .hero-inner {
+      max-width: 1200px; margin: 0 auto; position: relative; z-index: 1;
+      display: grid; grid-template-columns: 1fr 440px;
+      gap: 72px; align-items: center;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,158,11,0.12);
+      border: 1px solid rgba(245,158,11,0.25);
+      color: #FCD34D;
+      padding: 5px 14px; border-radius: 20px;
+      font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    [data-theme="verde-chiaro"] .hero-eyebrow,
+    [data-theme="hedera"] .hero-eyebrow { color: #FCD34D; }
+    .hero-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 52px; font-weight: 800; line-height: 1.05;
+      letter-spacing: -0.025em; color: var(--ti-hero-text);
+      margin-bottom: 20px;
+    }
+    .hero-title em {
+      font-style: normal;
+      color: #93C5FD;
+    }
+    [data-theme="verde-chiaro"] .hero-title em,
+    [data-theme="hedera"] .hero-title em { color: #5BD48A; }
+    .hero-sub {
+      font-size: 17px; color: var(--ti-hero-muted);
+      line-height: 1.7; max-width: 520px; margin-bottom: 36px;
+    }
+    .hero-ctas { display: flex; gap: 12px; flex-wrap: wrap; margin-bottom: 52px; }
+    .btn-hero-primary {
+      background: var(--ti-accent); color: #fff;
+      padding: 14px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: background 0.15s, transform 0.1s;
+    }
+    .btn-hero-primary:hover { background: var(--ti-accent-hover); transform: translateY(-1px); }
+    [data-theme="energia"] .btn-hero-primary { background: #F59E0B; color: #0B1628; }
+    [data-theme="energia"] .btn-hero-primary:hover { background: #D97706; }
+    .btn-hero-ghost {
+      background: transparent; border: 1.5px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.8); padding: 13px 28px; border-radius: 10px;
+      font-size: 15px; font-weight: 600;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      display: inline-flex; align-items: center; gap: 8px;
+      transition: all 0.15s;
+    }
+    .btn-hero-ghost:hover { background: rgba(255,255,255,0.06); border-color: rgba(255,255,255,0.38); }
+    /* Hero KPI bar */
+    .hero-kpis {
+      display: grid; grid-template-columns: repeat(4, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 14px; overflow: hidden;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .hero-kpi {
+      background: rgba(255,255,255,0.04);
+      padding: 20px 18px; text-align: center;
+    }
+    .hero-kpi-num {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 30px; font-weight: 800; line-height: 1;
+      color: var(--ti-hero-text); margin-bottom: 4px;
+    }
+    .hero-kpi-num span { font-size: 16px; font-weight: 600; }
+    .hero-kpi-label { font-size: 11px; color: var(--ti-hero-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .hero-kpi-accent { color: #93C5FD; }
+    [data-theme="verde-chiaro"] .hero-kpi-accent,
+    [data-theme="hedera"] .hero-kpi-accent { color: #5BD48A; }
+    /* Hero visual panel */
+    .hero-visual {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 28px;
+    }
+    .hv-title {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--ti-hero-muted); margin-bottom: 20px;
+    }
+    .hv-plant-row {
+      display: flex; align-items: center; gap: 12px;
+      padding: 12px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .hv-plant-row:last-child { border-bottom: none; }
+    .hv-plant-icon { font-size: 22px; flex-shrink: 0; width: 32px; text-align: center; }
+    .hv-plant-name { font-size: 14px; font-weight: 600; color: var(--ti-hero-text); flex: 1; }
+    .hv-plant-type { font-size: 11px; color: var(--ti-hero-muted); margin-top: 2px; }
+    .hv-plant-stat {
+      text-align: right; flex-shrink: 0;
+    }
+    .hv-plant-kw {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 800; color: #93C5FD; line-height: 1;
+    }
+    [data-theme="verde-chiaro"] .hv-plant-kw,
+    [data-theme="hedera"] .hv-plant-kw { color: #5BD48A; }
+    .hv-plant-kwlabel { font-size: 10px; color: var(--ti-hero-muted); }
+    .hv-bar {
+      margin-top: 8px;
+      height: 4px; background: rgba(255,255,255,0.07); border-radius: 2px; overflow: hidden;
+    }
+    .hv-bar-fill { height: 100%; background: #93C5FD; border-radius: 2px; }
+    [data-theme="verde-chiaro"] .hv-bar-fill,
+    [data-theme="hedera"] .hv-bar-fill { background: #5BD48A; }
+    .hv-footer {
+      margin-top: 16px; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .hv-total-label { font-size: 12px; color: var(--ti-hero-muted); }
+    .hv-total-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 20px; font-weight: 800; color: #F59E0B;
+    }
+
+    /* --- SECTIONS COMMON --- */
+    .section { padding: 80px 40px; }
+    .section-inner { max-width: 1200px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      color: var(--ti-accent); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 36px; font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .section-lead { font-size: 16px; color: var(--ti-text-muted); line-height: 1.65; max-width: 580px; }
+    .section-header { margin-bottom: 48px; }
+
+    /* --- PARTNER STRIP --- */
+    .partner-strip {
+      background: var(--ti-surface);
+      border-top: 1px solid var(--ti-border);
+      border-bottom: 1px solid var(--ti-border);
+      padding: 24px 40px;
+    }
+    .partner-strip-inner {
+      max-width: 1200px; margin: 0 auto;
+      display: flex; align-items: center; gap: 40px; flex-wrap: wrap;
+    }
+    .partner-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ti-text-light); flex-shrink: 0; }
+    .partner-logos { display: flex; gap: 12px; flex-wrap: wrap; }
+    .partner-pill {
+      background: var(--ti-surface-alt);
+      border: 1px solid var(--ti-border);
+      border-radius: 8px; padding: 6px 16px;
+      font-size: 13px; font-weight: 700; color: var(--ti-text-muted);
+    }
+    .cert-strip-row { display: flex; gap: 10px; flex-wrap: wrap; }
+    .cert-tag {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: var(--ti-green-soft);
+      border: 1px solid rgba(34,197,94,0.2);
+      border-radius: 20px; padding: 4px 12px;
+      font-size: 12px; font-weight: 700; color: var(--ti-green);
+    }
+
+    /* --- SERVIZI --- */
+    .servizi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .servizio-card {
+      background: var(--ti-surface);
+      border: 1px solid var(--ti-border);
+      border-radius: 16px; padding: 28px;
+      box-shadow: var(--ti-shadow);
+      transition: box-shadow 0.2s, border-color 0.2s, transform 0.15s;
+      position: relative; overflow: hidden;
+    }
+    .servizio-card::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, var(--ti-accent), var(--ti-accent2));
+      opacity: 0; transition: opacity 0.2s;
+    }
+    .servizio-card:hover { box-shadow: var(--ti-shadow-lg); border-color: var(--ti-border-strong); transform: translateY(-2px); }
+    .servizio-card:hover::after { opacity: 1; }
+    .servizio-icon {
+      width: 52px; height: 52px; border-radius: 14px;
+      background: var(--ti-accent-soft);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px; margin-bottom: 18px;
+    }
+    .servizio-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px; font-weight: 700; margin-bottom: 10px;
+    }
+    .servizio-desc { font-size: 14px; color: var(--ti-text-muted); line-height: 1.65; margin-bottom: 16px; }
+    .servizio-features { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+    .servizio-features li {
+      display: flex; align-items: flex-start; gap: 8px;
+      font-size: 13px; color: var(--ti-text-muted);
+    }
+    .servizio-features li::before {
+      content: '→'; color: var(--ti-accent); font-weight: 700; flex-shrink: 0; font-size: 12px; margin-top: 1px;
+    }
+    .servizio-incentivi {
+      margin-top: 16px; padding: 10px 12px;
+      background: var(--ti-accent2-soft);
+      border: 1px solid rgba(245,158,11,0.2);
+      border-radius: 8px;
+      font-size: 12px; font-weight: 600; color: var(--ti-accent2);
+    }
+
+    /* --- COME LAVORIAMO --- */
+    .process-section { background: var(--ti-surface-alt); }
+    .process-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr);
+      gap: 0; position: relative;
+    }
+    .process-grid::before {
+      content: '';
+      position: absolute; top: 36px; left: calc(33.33% - 0px); right: calc(33.33% - 0px);
+      height: 2px; background: var(--ti-border-strong);
+    }
+    .process-step {
+      background: var(--ti-surface);
+      border: 1px solid var(--ti-border);
+      border-radius: 16px; padding: 28px 24px;
+      margin: 0 12px;
+      box-shadow: var(--ti-shadow);
+      position: relative;
+    }
+    .process-step-num {
+      width: 44px; height: 44px; border-radius: 50%;
+      background: var(--ti-accent); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 16px; font-weight: 800;
+      margin-bottom: 20px; position: relative; z-index: 1;
+    }
+    .process-step-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px; font-weight: 700; margin-bottom: 10px;
+    }
+    .process-step-desc { font-size: 14px; color: var(--ti-text-muted); line-height: 1.65; }
+    .process-duration {
+      margin-top: 16px; padding-top: 14px;
+      border-top: 1px solid var(--ti-border);
+      font-size: 12px; font-weight: 600; color: var(--ti-accent);
+    }
+
+    /* --- IMPATTO --- */
+    .impatto-section { background: var(--ti-hero-bg); color: var(--ti-hero-text); }
+    .impatto-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; align-items: center;
+    }
+    .impatto-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 40px; font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .impatto-sub { font-size: 16px; color: var(--ti-hero-muted); line-height: 1.65; margin-bottom: 36px; }
+    .impatto-kpis {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+    }
+    .impatto-kpi {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 14px; padding: 20px;
+    }
+    .impatto-kpi-val {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 32px; font-weight: 800; color: #93C5FD; line-height: 1; margin-bottom: 6px;
+    }
+    [data-theme="verde-chiaro"] .impatto-kpi-val,
+    [data-theme="hedera"] .impatto-kpi-val { color: #5BD48A; }
+    .impatto-kpi-label { font-size: 12px; color: var(--ti-hero-muted); }
+    /* GreenMeter right panel */
+    .gm-impatto-panel {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px; padding: 32px;
+    }
+    .gm-panel-header {
+      display: flex; align-items: center; gap: 16px;
+      margin-bottom: 28px; padding-bottom: 20px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .gm-grade-big {
+      width: 70px; height: 70px; border-radius: 50%;
+      background: rgba(34,197,94,0.12);
+      border: 2px solid rgba(34,197,94,0.3);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 28px; font-weight: 800; color: #4ADE80;
+      flex-shrink: 0;
+    }
+    .gm-panel-info-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 18px; font-weight: 700; margin-bottom: 4px;
+    }
+    .gm-panel-info-sub { font-size: 13px; color: var(--ti-hero-muted); }
+    .gm-breakdown { display: flex; flex-direction: column; gap: 14px; }
+    .gm-row {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .gm-row-ico { font-size: 16px; flex-shrink: 0; width: 24px; text-align: center; }
+    .gm-row-name { font-size: 13px; color: var(--ti-hero-muted); flex: 1; }
+    .gm-row-bar-wrap { width: 100px; height: 5px; background: rgba(255,255,255,0.07); border-radius: 3px; overflow: hidden; flex-shrink: 0; }
+    .gm-row-bar { height: 100%; background: #4ADE80; border-radius: 3px; }
+    .gm-row-pct { font-size: 12px; font-weight: 700; color: #4ADE80; width: 32px; text-align: right; flex-shrink: 0; }
+    .gm-panel-note {
+      margin-top: 20px; padding-top: 16px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      font-size: 11px; color: rgba(255,255,255,0.3); line-height: 1.5;
+    }
+
+    /* --- CASI STUDIO --- */
+    .casi-grid {
+      display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+    }
+    .caso-card {
+      background: var(--ti-surface);
+      border: 1px solid var(--ti-border);
+      border-radius: 16px; overflow: hidden;
+      box-shadow: var(--ti-shadow);
+      transition: box-shadow 0.2s, transform 0.15s;
+    }
+    .caso-card:hover { box-shadow: var(--ti-shadow-lg); transform: translateY(-2px); }
+    .caso-header {
+      padding: 20px;
+      background: var(--ti-accent-soft);
+      border-bottom: 1px solid var(--ti-border);
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .caso-sector-icon { font-size: 28px; flex-shrink: 0; }
+    .caso-sector-name { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ti-accent); margin-bottom: 4px; }
+    .caso-client { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; }
+    .caso-body { padding: 20px; }
+    .caso-desc { font-size: 14px; color: var(--ti-text-muted); line-height: 1.65; margin-bottom: 16px; }
+    .caso-results {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .caso-result-row {
+      display: flex; align-items: center; gap: 10px;
+      font-size: 13px;
+    }
+    .caso-result-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ti-accent); flex-shrink: 0; }
+    .caso-result-val { font-weight: 700; color: var(--ti-accent); }
+    .caso-result-label { color: var(--ti-text-muted); }
+    .caso-incentivo {
+      margin-top: 14px; padding: 8px 12px;
+      background: var(--ti-accent2-soft);
+      border-radius: 8px;
+      font-size: 12px; font-weight: 600; color: var(--ti-accent2);
+    }
+
+    /* --- TEAM --- */
+    .team-grid {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px;
+    }
+    .team-card {
+      background: var(--ti-surface);
+      border: 1px solid var(--ti-border);
+      border-radius: 16px; padding: 24px;
+      text-align: center;
+      box-shadow: var(--ti-shadow);
+    }
+    .team-avatar {
+      width: 64px; height: 64px; border-radius: 50%;
+      background: var(--ti-accent-soft);
+      border: 2px solid var(--ti-border-strong);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; margin: 0 auto 16px;
+    }
+    .team-name { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; font-weight: 700; margin-bottom: 4px; }
+    .team-role { font-size: 13px; color: var(--ti-accent); font-weight: 600; margin-bottom: 8px; }
+    .team-cert { font-size: 11px; color: var(--ti-text-light); }
+
+    /* --- PREVENTIVO FORM --- */
+    .form-section { background: var(--ti-hero-bg); color: var(--ti-hero-text); }
+    .form-grid {
+      display: grid; grid-template-columns: 1fr 480px; gap: 80px; align-items: start;
+    }
+    .form-left-title {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 40px; font-weight: 800; line-height: 1.1;
+      letter-spacing: -0.02em; margin-bottom: 16px;
+    }
+    .form-left-sub { font-size: 16px; color: var(--ti-hero-muted); line-height: 1.65; margin-bottom: 32px; }
+    .promise-items { display: flex; flex-direction: column; gap: 14px; }
+    .promise-item {
+      display: flex; align-items: flex-start; gap: 12px;
+    }
+    .promise-icon {
+      width: 36px; height: 36px; border-radius: 8px;
+      background: rgba(245,158,11,0.12); border: 1px solid rgba(245,158,11,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; flex-shrink: 0;
+    }
+    [data-theme="verde-chiaro"] .promise-icon,
+    [data-theme="hedera"] .promise-icon { background: rgba(91,212,138,0.12); border-color: rgba(91,212,138,0.2); }
+    .promise-text strong { display: block; font-size: 14px; margin-bottom: 2px; }
+    .promise-text span { font-size: 13px; color: var(--ti-hero-muted); }
+    .preventivo-form {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.09);
+      border-radius: 20px; padding: 36px;
+    }
+    .pf-title { font-family: 'Plus Jakarta Sans', sans-serif; font-size: 20px; font-weight: 700; margin-bottom: 24px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+    .form-group { margin-bottom: 14px; }
+    .form-label {
+      display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.07em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 6px;
+    }
+    .form-input, .form-select, .form-textarea {
+      width: 100%; background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1); border-radius: 8px;
+      padding: 10px 14px; font-size: 14px; color: var(--ti-hero-text);
+      font-family: 'Inter', sans-serif; transition: border-color 0.15s; outline: none;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus { border-color: rgba(147,197,253,0.4); }
+    [data-theme="verde-chiaro"] .form-input:focus,
+    [data-theme="hedera"] .form-input:focus { border-color: rgba(91,212,138,0.4); }
+    .form-input::placeholder, .form-textarea::placeholder { color: rgba(255,255,255,0.2); }
+    .form-select option { background: #0B1628; }
+    .form-textarea { resize: vertical; min-height: 80px; }
+    .form-submit {
+      width: 100%; background: var(--ti-accent); color: #fff;
+      border: none; border-radius: 10px; padding: 14px;
+      font-size: 15px; font-weight: 700;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      cursor: pointer; margin-top: 8px;
+      transition: background 0.15s, transform 0.1s;
+    }
+    [data-theme="energia"] .form-submit { background: #F59E0B; color: #0B1628; }
+    [data-theme="energia"] .form-submit:hover { background: #D97706; }
+    .form-submit:hover { opacity: 0.9; transform: translateY(-1px); }
+    .form-privacy { font-size: 11px; color: rgba(255,255,255,0.25); margin-top: 12px; line-height: 1.5; }
+
+    /* --- FOOTER --- */
+    .site-footer {
+      background: var(--ti-hero-bg);
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 40px; display: flex;
+      align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 20px;
+      color: rgba(239,246,255,0.35); font-size: 13px;
+    }
+    .footer-logo {
+      display: flex; align-items: center; gap: 10px;
+    }
+    .footer-logo-icon {
+      width: 32px; height: 32px; border-radius: 8px;
+      background: var(--ti-accent); display: flex; align-items: center;
+      justify-content: center; font-size: 15px; color: #fff;
+    }
+    .footer-logo-name {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 15px; font-weight: 700; color: var(--ti-hero-text);
+    }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { color: rgba(239,246,255,0.35); transition: color 0.15s; }
+    .footer-links a:hover { color: var(--ti-hero-text); }
+    .footer-built { font-size: 11px; display: flex; align-items: center; gap: 5px; }
+    .footer-built a { color: #5BD48A; font-weight: 600; }
+
+    /* --- RESPONSIVE --- */
+    @media (max-width: 960px) {
+      .hero-inner, .impatto-grid, .form-grid { grid-template-columns: 1fr; gap: 40px; }
+      .servizi-grid, .casi-grid { grid-template-columns: 1fr 1fr; }
+      .team-grid { grid-template-columns: 1fr 1fr; }
+      .process-grid { grid-template-columns: 1fr; gap: 16px; }
+      .process-grid::before { display: none; }
+      .hero-kpis { grid-template-columns: repeat(2, 1fr); }
+      .section { padding: 60px 24px; }
+      .hero { padding: 60px 24px; }
+      .hero-title { font-size: 38px; }
+    }
+    @media (max-width: 600px) {
+      .servizi-grid, .casi-grid, .team-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- DS META-NAV -->
+  <nav class="ds-metanav" aria-label="Design System navigation">
+    <span class="ds-label">Hederae DS</span>
+    <span class="ds-pill">PIANETA.GREEN</span>
+    <span class="ds-label" style="opacity:0.2">|</span>
+    <span class="ds-label">T5 · Impresa Green B2B</span>
+    <div class="ds-spacer"></div>
+    <div class="ds-theme-switcher">
+      <button class="ds-theme-btn active" onclick="setTheme('energia',this)">energia</button>
+      <button class="ds-theme-btn" onclick="setTheme('verde-chiaro',this)">verde-chiaro</button>
+      <button class="ds-theme-btn" onclick="setTheme('hedera',this)">hedera</button>
+    </div>
+  </nav>
+
+  <!-- SITE HEADER -->
+  <header class="site-header" role="banner">
+    <div class="logo">
+      <div class="logo-icon">⚡</div>
+      <div>
+        <div class="logo-text-main">EcoSistemi</div>
+        <div class="logo-text-sub">Energie Rinnovabili · Torino</div>
+      </div>
+    </div>
+    <nav aria-label="Navigazione principale">
+      <ul class="site-nav">
+        <li><a href="#servizi">Servizi</a></li>
+        <li><a href="#come-lavoriamo">Come lavoriamo</a></li>
+        <li><a href="#casi-studio">Casi Studio</a></li>
+        <li><a href="#impatto">Impatto</a></li>
+        <li><a href="#team">Team</a></li>
+      </ul>
+    </nav>
+    <div class="header-spacer"></div>
+    <div class="header-tel">📞 011 1234567</div>
+    <a href="#preventivo" class="btn-cta">Preventivo gratuito →</a>
+  </header>
+
+  <main id="main-content">
+
+    <!-- HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-inner">
+        <div>
+          <div class="hero-eyebrow">⚡ Energie rinnovabili per imprese · dal 2013</div>
+          <h1 class="hero-title" id="hero-title">
+            Energia <em>rinnovabile</em><br>
+            che lavora quanto<br>la tua impresa.
+          </h1>
+          <p class="hero-sub">
+            Progettiamo e installiamo impianti fotovoltaici industriali, sistemi di storage
+            e soluzioni di efficienza energetica per PMI, logistica e GDO.
+            Gestiamo noi le pratiche di incentivo — tu pensi al tuo business.
+          </p>
+          <div class="hero-ctas">
+            <a href="#preventivo" class="btn-hero-primary">⚡ Preventivo gratuito →</a>
+            <a href="#casi-studio" class="btn-hero-ghost">Vedi i casi studio</a>
+          </div>
+          <div class="hero-kpis">
+            <div class="hero-kpi">
+              <div class="hero-kpi-num"><span class="hero-kpi-accent">380</span><span>+</span></div>
+              <div class="hero-kpi-label">impianti installati</div>
+            </div>
+            <div class="hero-kpi">
+              <div class="hero-kpi-num"><span class="hero-kpi-accent">68</span><span> MW</span></div>
+              <div class="hero-kpi-label">capacità installata</div>
+            </div>
+            <div class="hero-kpi">
+              <div class="hero-kpi-num"><span class="hero-kpi-accent">42K</span><span>t</span></div>
+              <div class="hero-kpi-label">CO₂/anno evitate</div>
+            </div>
+            <div class="hero-kpi">
+              <div class="hero-kpi-num"><span class="hero-kpi-accent">12</span></div>
+              <div class="hero-kpi-label">anni di esperienza</div>
+            </div>
+          </div>
+        </div>
+        <aside class="hero-visual" aria-label="Portafoglio impianti attivi">
+          <div class="hv-title">📡 Impianti monitorati in tempo reale</div>
+          <div class="hv-plant-row">
+            <div class="hv-plant-icon">🏭</div>
+            <div>
+              <div class="hv-plant-name">Manifattura Tessile Biella</div>
+              <div class="hv-plant-type">Fotovoltaico + Storage</div>
+            </div>
+            <div class="hv-plant-stat">
+              <div class="hv-plant-kw">280 kWp</div>
+              <div class="hv-plant-kwlabel">installati</div>
+            </div>
+          </div>
+          <div class="hv-bar"><div class="hv-bar-fill" style="width:91%"></div></div>
+          <div class="hv-plant-row">
+            <div class="hv-plant-icon">🏗️</div>
+            <div>
+              <div class="hv-plant-name">Centro Logistico Cuneo</div>
+              <div class="hv-plant-type">Fotovoltaico Industrial</div>
+            </div>
+            <div class="hv-plant-stat">
+              <div class="hv-plant-kw">520 kWp</div>
+              <div class="hv-plant-kwlabel">installati</div>
+            </div>
+          </div>
+          <div class="hv-bar"><div class="hv-bar-fill" style="width:96%"></div></div>
+          <div class="hv-plant-row">
+            <div class="hv-plant-icon">🛒</div>
+            <div>
+              <div class="hv-plant-name">GDO Supermercato Asti</div>
+              <div class="hv-plant-type">FV + Efficienza Luci</div>
+            </div>
+            <div class="hv-plant-stat">
+              <div class="hv-plant-kw">95 kWp</div>
+              <div class="hv-plant-kwlabel">installati</div>
+            </div>
+          </div>
+          <div class="hv-bar"><div class="hv-bar-fill" style="width:84%"></div></div>
+          <div class="hv-plant-row">
+            <div class="hv-plant-icon">🌾</div>
+            <div>
+              <div class="hv-plant-name">Agroalimentare Fossano</div>
+              <div class="hv-plant-type">Agrivoltaico + BESS</div>
+            </div>
+            <div class="hv-plant-stat">
+              <div class="hv-plant-kw">1.2 MWp</div>
+              <div class="hv-plant-kwlabel">installati</div>
+            </div>
+          </div>
+          <div class="hv-bar"><div class="hv-bar-fill" style="width:100%"></div></div>
+          <div class="hv-footer">
+            <div class="hv-total-label">Produzione media giornaliera</div>
+            <div class="hv-total-val">↑ 214.000 kWh</div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- PARTNER STRIP -->
+    <div class="partner-strip" role="complementary" aria-label="Partner e certificazioni">
+      <div class="partner-strip-inner">
+        <span class="partner-label">Partner</span>
+        <div class="partner-logos">
+          <span class="partner-pill">Fronius</span>
+          <span class="partner-pill">SMA Solar</span>
+          <span class="partner-pill">BYD Energy</span>
+          <span class="partner-pill">Huawei FusionSolar</span>
+          <span class="partner-pill">DNV GL</span>
+        </div>
+        <span class="partner-label" style="margin-left:auto">Certificazioni</span>
+        <div class="cert-strip-row">
+          <span class="cert-tag">✓ ISO 50001</span>
+          <span class="cert-tag">✓ SOA Cat. OS35</span>
+          <span class="cert-tag">✓ F-Gas</span>
+          <span class="cert-tag">✓ GreenMeter A+</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- SERVIZI -->
+    <section class="section" id="servizi" aria-labelledby="servizi-title">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-tag">Servizi</span>
+          <h2 class="section-title" id="servizi-title">Tutto quello che serve<br>per azzerare la bolletta.</h2>
+          <p class="section-lead">Dalla diagnosi energetica all'impianto in produzione, fino alla rendicontazione ESG. Tutto in-house, nessun subappalto.</p>
+        </div>
+        <div class="servizi-grid">
+          <article class="servizio-card">
+            <div class="servizio-icon">☀️</div>
+            <h3 class="servizio-name">Fotovoltaico Industriale</h3>
+            <p class="servizio-desc">Impianti da 20 kWp a 5 MWp su capannoni industriali, logistica, parcheggi e coperture agricole. Progettazione strutturale e impiantistica inclusa.</p>
+            <ul class="servizio-features">
+              <li>Sopralluogo e studio di fattibilità gratuito</li>
+              <li>Progettazione strutturale + impiantistica</li>
+              <li>Installazione con squadre interne certificate</li>
+              <li>Monitoraggio remoto 24/7 incluso 10 anni</li>
+            </ul>
+            <div class="servizio-incentivi">⚡ Accesso Transizione 5.0 — credito d'imposta fino al 45%</div>
+          </article>
+          <article class="servizio-card">
+            <div class="servizio-icon">🔋</div>
+            <h3 class="servizio-name">Storage Energetico BESS</h3>
+            <p class="servizio-desc">Sistemi di accumulo stazionari per massimizzare l'autoconsumo, ridurre i picchi di potenza e partecipare ai mercati della flessibilità (MSD).</p>
+            <ul class="servizio-features">
+              <li>Dimensionamento ottimale sulla base dei profili di carico</li>
+              <li>Batterie LFP (BYD, Huawei) — ciclo vita 6.000+</li>
+              <li>Gestione EMS intelligente + peak shaving</li>
+              <li>Virtual Power Plant su richiesta</li>
+            </ul>
+            <div class="servizio-incentivi">💰 Certificati Bianchi — risparmio misurabile e certificato</div>
+          </article>
+          <article class="servizio-card">
+            <div class="servizio-icon">🔍</div>
+            <h3 class="servizio-name">Audit Energetico</h3>
+            <p class="servizio-desc">Diagnosi energetica obbligatoria (D.Lgs. 102/2014) e volontaria. Certificatori accreditati ENEA. Identifichiamo dove stai perdendo energia e denaro.</p>
+            <ul class="servizio-features">
+              <li>Audit conforme EN 16247 e ENEA</li>
+              <li>Analisi consumi storici + campagna misure</li>
+              <li>Piano di intervento prioritizzato per ROI</li>
+              <li>Relazione tecnica per finanziamenti agevolati</li>
+            </ul>
+          </article>
+          <article class="servizio-card">
+            <div class="servizio-icon">📋</div>
+            <h3 class="servizio-name">Gestione Incentivi</h3>
+            <p class="servizio-desc">Ti togliamo il peso della burocrazia. Gestiamo tutte le pratiche GSE, MASE, Transizione 5.0 e Certificati Bianchi dalla A alla Z.</p>
+            <ul class="servizio-features">
+              <li>Transizione 5.0 — credito imposta 35/45%</li>
+              <li>Conto Energia (pratiche in corso)</li>
+              <li>Certificati Bianchi / TEE</li>
+              <li>Pratiche SUAP, connessione Terna/e-distribuzione</li>
+            </ul>
+            <div class="servizio-incentivi">📊 Recuperato mediamente €185.000 per cliente nel 2024</div>
+          </article>
+          <article class="servizio-card">
+            <div class="servizio-icon">📊</div>
+            <h3 class="servizio-name">Report ESG &amp; Carbon</h3>
+            <p class="servizio-desc">Bilancio di sostenibilità conforme GRI Standards, calcolo GHG Scope 1/2/3, rating ESG per istituti bancari e rendicontazione CSRD.</p>
+            <ul class="servizio-features">
+              <li>Carbon footprint aziendale — Scope 1/2/3</li>
+              <li>Bilancio di sostenibilità GRI/CSRD</li>
+              <li>Rating ESG per accesso a green finance</li>
+              <li>GreenMeter score su pianeta.green</li>
+            </ul>
+          </article>
+          <article class="servizio-card">
+            <div class="servizio-icon">⚡</div>
+            <h3 class="servizio-name">Efficienza &amp; LED</h3>
+            <p class="servizio-desc">Sostituzione illuminazione industriale e interventi sull'involucro edilizio: capannoni, uffici, celle frigorifere. Spesso il ROI più rapido del portafoglio.</p>
+            <ul class="servizio-features">
+              <li>Audit illuminotecnico + progetto LED</li>
+              <li>Isolamento termico coperture e pareti</li>
+              <li>Inverter drives per motori industriali</li>
+              <li>Monitoraggio energetico continuo IoT</li>
+            </ul>
+            <div class="servizio-incentivi">✓ Certificati Bianchi sull'efficienza illuminazione</div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- COME LAVORIAMO -->
+    <section class="section process-section" id="come-lavoriamo" aria-labelledby="process-title">
+      <div class="section-inner">
+        <div class="section-header" style="text-align:center; max-width:600px; margin:0 auto 56px;">
+          <span class="section-tag">Come lavoriamo</span>
+          <h2 class="section-title" id="process-title">Dal preventivo all'energia in rete in 90 giorni.</h2>
+          <p class="section-lead" style="margin:0 auto;">Processo standardizzato, tempi certi, nessuna sorpresa in fattura.</p>
+        </div>
+        <div class="process-grid">
+          <div class="process-step">
+            <div class="process-step-num">1</div>
+            <h3 class="process-step-title">Audit &amp; Fattibilità</h3>
+            <p class="process-step-desc">Sopralluogo gratuito in azienda. Analizziamo bollette, consumi, copertura e struttura. Ti consegniamo uno studio di fattibilità con ROI, payback e risparmio annuo stimato.</p>
+            <div class="process-duration">⏱ 5–10 giorni lavorativi</div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">2</div>
+            <h3 class="process-step-title">Progettazione &amp; Incentivi</h3>
+            <p class="process-step-desc">Progettazione elettrica e strutturale esecutiva. Apertura simultanea delle pratiche di incentivo (GSE, Transizione 5.0, SUAP) — non aspettiamo il cantiere.</p>
+            <div class="process-duration">⏱ 20–35 giorni lavorativi</div>
+          </div>
+          <div class="process-step">
+            <div class="process-step-num">3</div>
+            <h3 class="process-step-title">Installazione &amp; Monitoraggio</h3>
+            <p class="process-step-desc">Installazione con squadre interne certificate. Collaudo, allaccio alla rete, configurazione monitoraggio remoto. Poi produci energia e noi monitoriamo 24/7 per 10 anni.</p>
+            <div class="process-duration">⏱ 15–30 giorni lavorativi · poi monitoraggio continuo</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- IMPATTO -->
+    <section class="section impatto-section" id="impatto" aria-labelledby="impatto-title">
+      <div class="section-inner">
+        <div class="impatto-grid">
+          <div>
+            <span class="section-tag" style="color:rgba(147,197,253,0.6)">Impatto 2025</span>
+            <h2 class="impatto-title" id="impatto-title">Numeri reali,<br>non promesse.</h2>
+            <p class="impatto-sub">Ogni anno pubblichiamo i dati di impatto aggregati del nostro portafoglio. Verificati da DNV, rendicontati su pianeta.green.</p>
+            <div class="impatto-kpis">
+              <div class="impatto-kpi">
+                <div class="impatto-kpi-val">68 MW</div>
+                <div class="impatto-kpi-label">capacità totale installata</div>
+              </div>
+              <div class="impatto-kpi">
+                <div class="impatto-kpi-val">42Kt</div>
+                <div class="impatto-kpi-label">CO₂ evitate / anno</div>
+              </div>
+              <div class="impatto-kpi">
+                <div class="impatto-kpi-val">€8.4M</div>
+                <div class="impatto-kpi-label">risparmi energetici clienti 2025</div>
+              </div>
+              <div class="impatto-kpi">
+                <div class="impatto-kpi-val">94%</div>
+                <div class="impatto-kpi-label">clienti con ROI &lt; 5 anni</div>
+              </div>
+            </div>
+          </div>
+          <div class="gm-impatto-panel">
+            <div class="gm-panel-header">
+              <div class="gm-grade-big">A+</div>
+              <div>
+                <div class="gm-panel-info-title">GreenMeter EcoSistemi</div>
+                <p class="gm-panel-info-sub">La nostra azienda pratica quello che installa. Energia 100% rinnovabile da impianto proprio, flotta aziendale elettrica, uffici certificati.</p>
+              </div>
+            </div>
+            <div class="gm-breakdown">
+              <div class="gm-row">
+                <span class="gm-row-ico">☀️</span>
+                <span class="gm-row-name">Energia rinnovabile</span>
+                <div class="gm-row-bar-wrap"><div class="gm-row-bar" style="width:100%"></div></div>
+                <span class="gm-row-pct">100%</span>
+              </div>
+              <div class="gm-row">
+                <span class="gm-row-ico">🚗</span>
+                <span class="gm-row-name">Flotta elettrica</span>
+                <div class="gm-row-bar-wrap"><div class="gm-row-bar" style="width:92%"></div></div>
+                <span class="gm-row-pct">92%</span>
+              </div>
+              <div class="gm-row">
+                <span class="gm-row-ico">♻️</span>
+                <span class="gm-row-name">Rifiuti speciali</span>
+                <div class="gm-row-bar-wrap"><div class="gm-row-bar" style="width:88%"></div></div>
+                <span class="gm-row-pct">88%</span>
+              </div>
+              <div class="gm-row">
+                <span class="gm-row-ico">📦</span>
+                <span class="gm-row-name">Supply chain green</span>
+                <div class="gm-row-bar-wrap"><div class="gm-row-bar" style="width:78%"></div></div>
+                <span class="gm-row-pct">78%</span>
+              </div>
+              <div class="gm-row">
+                <span class="gm-row-ico">🏢</span>
+                <span class="gm-row-name">Uffici certificati</span>
+                <div class="gm-row-bar-wrap"><div class="gm-row-bar" style="width:95%"></div></div>
+                <span class="gm-row-pct">95%</span>
+              </div>
+            </div>
+            <div class="gm-panel-note">
+              Dati verificati DNV · Metodologia GHG Protocol · Pubblicati annualmente su <a href="#" style="color:#4ADE80">pianeta.green/ecosistemi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CASI STUDIO -->
+    <section class="section" id="casi-studio" aria-labelledby="casi-title">
+      <div class="section-inner">
+        <div class="section-header">
+          <span class="section-tag">Casi Studio</span>
+          <h2 class="section-title" id="casi-title">Imprese che hanno già cambiato rotta.</h2>
+          <p class="section-lead">Numeri reali. Nessun dato gonfiato — puoi chiedere referenze dirette per ogni progetto.</p>
+        </div>
+        <div class="casi-grid">
+          <article class="caso-card">
+            <div class="caso-header">
+              <div class="caso-sector-icon">🧵</div>
+              <div>
+                <div class="caso-sector-name">Manifattura Tessile</div>
+                <div class="caso-client">Tessuti Biella Srl</div>
+              </div>
+            </div>
+            <div class="caso-body">
+              <p class="caso-desc">Capannone 8.000 m², consumo annuo 920.000 kWh. Impianto FV 280 kWp + storage 400 kWh + sostituzione LED reparto produzione.</p>
+              <div class="caso-results">
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">-74%</span>
+                  <span class="caso-result-label">bolletta elettrica</span>
+                </div>
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">4.1 anni</span>
+                  <span class="caso-result-label">payback</span>
+                </div>
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">218 t CO₂</span>
+                  <span class="caso-result-label">evitate / anno</span>
+                </div>
+              </div>
+              <div class="caso-incentivo">⚡ Transizione 5.0 · €184.000 credito imposta</div>
+            </div>
+          </article>
+          <article class="caso-card">
+            <div class="caso-header">
+              <div class="caso-sector-icon">🚚</div>
+              <div>
+                <div class="caso-sector-name">Logistica &amp; Trasporti</div>
+                <div class="caso-client">LogiVerde SpA</div>
+              </div>
+            </div>
+            <div class="caso-body">
+              <p class="caso-desc">Hub logistico 22.000 m² copertura, consumo 2.1 GWh/anno. Impianto agrivoltaico 520 kWp su tettoia parcheggio con colonnine EV integrate.</p>
+              <div class="caso-results">
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">-61%</span>
+                  <span class="caso-result-label">costi energetici</span>
+                </div>
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">5.2 anni</span>
+                  <span class="caso-result-label">payback</span>
+                </div>
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">ESG A</span>
+                  <span class="caso-result-label">rating banca</span>
+                </div>
+              </div>
+              <div class="caso-incentivo">💰 €240.000 Certificati Bianchi — anno 1</div>
+            </div>
+          </article>
+          <article class="caso-card">
+            <div class="caso-header">
+              <div class="caso-sector-icon">🌾</div>
+              <div>
+                <div class="caso-sector-name">Agroalimentare</div>
+                <div class="caso-client">Cooperativa Agri-Fossano</div>
+              </div>
+            </div>
+            <div class="caso-body">
+              <p class="caso-desc">Cooperativa cerealicola, 4 magazzini, mulino e impianto di essicazione. Agrivoltaico 1.2 MWp + BESS 2 MWh per picchi di essiccazione.</p>
+              <div class="caso-results">
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">-82%</span>
+                  <span class="caso-result-label">costo essiccazione</span>
+                </div>
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">6.8 anni</span>
+                  <span class="caso-result-label">payback</span>
+                </div>
+                <div class="caso-result-row">
+                  <div class="caso-result-dot"></div>
+                  <span class="caso-result-val">760 t CO₂</span>
+                  <span class="caso-result-label">evitate / anno</span>
+                </div>
+              </div>
+              <div class="caso-incentivo">⚡ Accesso a green finance agevolato (tasso -0.8%)</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TEAM -->
+    <section class="section" id="team" aria-labelledby="team-title" style="background: var(--ti-surface-alt);">
+      <div class="section-inner">
+        <div class="section-header" style="text-align:center; max-width:600px; margin:0 auto 48px;">
+          <span class="section-tag">Il team</span>
+          <h2 class="section-title" id="team-title">48 professionisti.<br>Tutti in-house.</h2>
+          <p class="section-lead" style="margin:0 auto;">Elettricisti, ingegneri energetici, pratici GSE, esperti ESG. Zero subappalti: il team che firma il preventivo è quello che installa.</p>
+        </div>
+        <div class="team-grid">
+          <div class="team-card">
+            <div class="team-avatar" aria-hidden="true">👩‍💼</div>
+            <div class="team-name">Elena Morandi</div>
+            <div class="team-role">CEO &amp; Energy Manager</div>
+            <div class="team-cert">EGE certificato FIRE · Ing. Energetica</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar" aria-hidden="true">👨‍🔧</div>
+            <div class="team-name">Luca Fasano</div>
+            <div class="team-role">Direttore Tecnico</div>
+            <div class="team-cert">Ing. Elettrico · SOA OS35 · CEI 021</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar" aria-hidden="true">👩‍💻</div>
+            <div class="team-name">Sara Bianchi</div>
+            <div class="team-role">ESG &amp; Sustainability</div>
+            <div class="team-cert">GRI Certified · LCA ISO 14040</div>
+          </div>
+          <div class="team-card">
+            <div class="team-avatar" aria-hidden="true">👨‍⚖️</div>
+            <div class="team-name">Marco Pellegrini</div>
+            <div class="team-role">Incentivi &amp; Pratiche</div>
+            <div class="team-cert">GSE Expert · Transizione 5.0</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FORM PREVENTIVO -->
+    <section class="section form-section" id="preventivo" aria-labelledby="form-title">
+      <div class="section-inner">
+        <div class="form-grid">
+          <div>
+            <span class="section-tag" style="color:rgba(147,197,253,0.5)">Preventivo gratuito</span>
+            <h2 class="form-left-title" id="form-title">Scopri quanto<br>puoi risparmiare.</h2>
+            <p class="form-left-sub">
+              Mandaci le ultime 3 bollette e i dati della copertura — in 48 ore hai uno studio di fattibilità con payback, ROI e incentivi applicabili.
+              Senza impegno.
+            </p>
+            <div class="promise-items">
+              <div class="promise-item">
+                <div class="promise-icon">⚡</div>
+                <div class="promise-text">
+                  <strong>Risposta in 48 ore</strong>
+                  <span>Non aspetti settimane: un nostro tecnico ti richiama entro 2 giorni lavorativi.</span>
+                </div>
+              </div>
+              <div class="promise-item">
+                <div class="promise-icon">📊</div>
+                <div class="promise-text">
+                  <strong>Studio di fattibilità gratuito</strong>
+                  <span>Payback, IRR, risparmio annuo, incentivi applicabili — tutto calcolato sul tuo caso reale.</span>
+                </div>
+              </div>
+              <div class="promise-item">
+                <div class="promise-icon">🔒</div>
+                <div class="promise-text">
+                  <strong>Nessun impegno</strong>
+                  <span>Il preventivo non crea alcun obbligo contrattuale. Puoi usarlo anche per confrontare offerte.</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="preventivo-form">
+            <div class="pf-title">Richiedi il tuo preventivo →</div>
+            <form>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="pf-name">Nome e Cognome</label>
+                  <input type="text" id="pf-name" class="form-input" placeholder="Mario Rossi" autocomplete="name">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="pf-company">Azienda</label>
+                  <input type="text" id="pf-company" class="form-input" placeholder="Rossi Srl">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label class="form-label" for="pf-email">Email</label>
+                  <input type="email" id="pf-email" class="form-input" placeholder="mario@azienda.it" autocomplete="email">
+                </div>
+                <div class="form-group">
+                  <label class="form-label" for="pf-tel">Telefono</label>
+                  <input type="tel" id="pf-tel" class="form-input" placeholder="011 000000" autocomplete="tel">
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pf-settore">Settore</label>
+                <select id="pf-settore" class="form-select">
+                  <option value="">Seleziona settore…</option>
+                  <option>Manifattura / Industria</option>
+                  <option>Logistica / Trasporti</option>
+                  <option>Agroalimentare</option>
+                  <option>GDO / Retail</option>
+                  <option>Servizi / Terziario</option>
+                  <option>Edilizia / Immobiliare</option>
+                  <option>Altro</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pf-consumo">Consumo annuo stimato (kWh)</label>
+                <select id="pf-consumo" class="form-select">
+                  <option value="">Seleziona fascia…</option>
+                  <option>Fino a 100.000 kWh / anno</option>
+                  <option>100.000 – 500.000 kWh / anno</option>
+                  <option>500.000 – 2.000.000 kWh / anno</option>
+                  <option>Oltre 2.000.000 kWh / anno</option>
+                  <option>Non so — mandatemi le bollette</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="pf-note">Note o domande (opzionale)</label>
+                <textarea id="pf-note" class="form-textarea" placeholder="Dimensioni copertura, tipo di tetto, scadenza contratto energia…"></textarea>
+              </div>
+              <button type="submit" class="form-submit">⚡ Richiedi preventivo gratuito</button>
+              <p class="form-privacy">I tuoi dati sono trattati esclusivamente per rispondere alla tua richiesta. Nessuna cessione a terzi. Informativa completa su ecosistemi.pianeta.green/privacy.</p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="footer-logo">
+      <div class="footer-logo-icon">⚡</div>
+      <div class="footer-logo-name">EcoSistemi Srl</div>
+    </div>
+    <nav class="footer-links" aria-label="Link legali">
+      <a href="#">Privacy Policy</a>
+      <a href="#">ISO 50001</a>
+      <a href="#">SOA OS35</a>
+      <a href="#">Impatto 2025</a>
+    </nav>
+    <div class="footer-built">
+      Sito su <a href="https://pianeta.green">&nbsp;pianeta.green</a>&nbsp;· GreenMeter A+
+    </div>
+  </footer>
+
+  <script>
+    (function() {
+      const p = new URLSearchParams(location.search).get('theme');
+      if (p && ['energia','verde-chiaro','hedera'].includes(p)) {
+        document.documentElement.setAttribute('data-theme', p);
+        document.querySelectorAll('.ds-theme-btn').forEach(b => {
+          b.classList.toggle('active', b.textContent.trim() === p);
+        });
+      }
+    })();
+
+    function setTheme(theme, btn) {
+      document.documentElement.setAttribute('data-theme', theme);
+      document.querySelectorAll('.ds-theme-btn').forEach(b => b.classList.remove('active'));
+      if (btn) btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
