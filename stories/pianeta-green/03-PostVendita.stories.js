@@ -6,11 +6,18 @@ export default {
 
 export const Login = () => templateStory({
   src: 'pg-login.html',
-  label: '🟡 Review Login',
+  label: '🟢 Done Login',
   brand: 'pianeta-green',
-  state: 'REVIEW',
+  state: 'DONE',
 });
-Login.storyName = '🟡 Review Login';
+Login.storyName = '🟢 Done Login';
+export const Onboarding = () => templateStory({
+  src: 'pg-onboarding.html',
+  label: '🟢 Done Onboarding',
+  brand: 'pianeta-green',
+  state: 'DONE',
+});
+Onboarding.storyName = '🟢 Done Onboarding';
 export const DashboardCliente = () => templateStory({
   src: 'pg-dashboard.html',
   label: '🔴 WIP Dashboard Cliente',

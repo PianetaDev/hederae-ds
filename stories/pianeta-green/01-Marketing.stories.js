@@ -6,11 +6,11 @@ export default {
 
 export const Home = () => templateStory({
   src: 'pg-home.html',
-  label: '🟡 Review Home',
+  label: '🟢 Done Home',
   brand: 'pianeta-green',
-  state: 'REVIEW',
+  state: 'DONE',
 });
-Home.storyName = '🟡 Review Home';
+Home.storyName = '🟢 Done Home';
 export const Chisiamo = () => templateStory({
   src: 'pg-about.html',
   label: '🔴 WIP Chi siamo',
@@ -20,11 +20,11 @@ export const Chisiamo = () => templateStory({
 Chisiamo.storyName = '🔴 WIP Chi siamo';
 export const IlMeter = () => templateStory({
   src: 'pg-meter.html',
-  label: '🟡 Review Il Meter',
+  label: '🟢 Done Il Meter',
   brand: 'pianeta-green',
-  state: 'REVIEW',
+  state: 'DONE',
 });
-IlMeter.storyName = '🟡 Review Il Meter';
+IlMeter.storyName = '🟢 Done Il Meter';
 export const RisultatoAnalisi = () => templateStory({
   src: 'pg-result.html',
   label: '🟡 Review Risultato Analisi',
