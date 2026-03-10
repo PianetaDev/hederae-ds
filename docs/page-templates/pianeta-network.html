@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<!--
+  Pianeta Network — Hederae DS v0.3.4
+  ─────────────────────────────────────────────────────────────────────────────
+  Pagina "La rete" di pianeta.green: mostra tutti i siti attivi nella rete
+  con i loro score GreenMeter live, settore e impatto collettivo.
+  Mission: far accedere al web senza consumare risorse.
+  Temi: verde-chiaro (default) · hedera
+  SEO/AI-SEO: Schema.org WebSite + ItemList + Organization, meta ai-description
+-->
+<html lang="it" data-theme="verde-chiaro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>La Rete Verde — Pianeta.green Network</title>
+<meta name="description" content="Tutti i siti della rete pianeta.green: hosting 100% rinnovabile, emissioni misurate, impatto verificato. Unisciti alla rete del web che non consuma.">
+<meta name="ai-description" content="Pianeta.green network: ecosistema di siti web ospitati su infrastruttura 100% energia rinnovabile. Ogni sito misura le proprie emissioni di CO₂ per pagina con GreenMeter. Rete attiva in Italia — settori: artigianato, agricoltura, professioni, cultura, nonprofit. Impatto collettivo verificato: riduzione media 89% CO₂ rispetto a hosting convenzionale.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "Pianeta.green Network",
+  "url": "https://pianeta.green",
+  "description": "La rete italiana di siti web a impatto ambientale verificato.",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pianeta Studio",
+    "url": "https://pianeta.studio",
+    "foundingDate": "2020",
+    "areaServed": "IT",
+    "sameAs": ["https://pianeta.green", "https://rarafactory.com"]
+  },
+  "about": {
+    "@type": "ItemList",
+    "name": "Siti nella rete pianeta.green",
+    "numberOfItems": 12,
+    "itemListElement": [
+      {"@type": "ListItem", "position": 1, "name": "Rara Factory", "url": "https://rarafactory.com"},
+      {"@type": "ListItem", "position": 2, "name": "Pianeta.green", "url": "https://pianeta.green"},
+      {"@type": "ListItem", "position": 3, "name": "Susdef", "url": "https://susdef.it"}
+    ]
+  }
+}
+</script>
+
+<style>
+/* ─── TOKENS ───────────────────────────────────────────────────────────────── */
+:root,
+[data-theme="verde-chiaro"] {
+  --pn-bg:            #F4F8F5;
+  --pn-surface:       #FFFFFF;
+  --pn-surface-2:     #E8F2EC;
+  --pn-ink:           #0D1F16;
+  --pn-ink-mid:       #2D4A39;
+  --pn-ink-muted:     #6B8B76;
+  --pn-accent:        #1F8A5C;
+  --pn-accent-dark:   #145C3D;
+  --pn-accent-light:  #D4F0E3;
+  --pn-mint:          #5BD48A;
+  --pn-yellow:        #F59E0B;
+  --pn-hero-bg:       #0C1F16;
+  --pn-hero-text:     rgba(255,255,255,0.70);
+  --pn-border:        rgba(13,31,22,0.10);
+  --pn-border-strong: rgba(13,31,22,0.18);
+  --pn-radius:        10px;
+  --pn-font:          'Plus Jakarta Sans', sans-serif;
+  --pn-font-body:     'Inter', sans-serif;
+
+  /* GreenMeter grades */
+  --gm-aplus:  #1DB954;
+  --gm-a:      #5BD48A;
+  --gm-b:      #A8D86B;
+  --gm-c:      #F59E0B;
+  --gm-d:      #EF6C2A;
+  --gm-e:      #DC2626;
+}
+
+[data-theme="hedera"] {
+  --pn-bg:            #FAFAF8;
+  --pn-surface:       #FFFFFF;
+  --pn-surface-2:     #F0EDE8;
+  --pn-ink:           #1A1410;
+  --pn-ink-mid:       #3A3028;
+  --pn-ink-muted:     #7A6E62;
+  --pn-accent:        #8B6914;
+  --pn-accent-dark:   #5C450C;
+  --pn-accent-light:  #FEF3C7;
+  --pn-mint:          #10B981;
+  --pn-yellow:        #D97706;
+  --pn-hero-bg:       #1A1410;
+  --pn-hero-text:     rgba(255,255,255,0.65);
+  --pn-border:        rgba(26,20,16,0.10);
+  --pn-border-strong: rgba(26,20,16,0.18);
+}
+
+/* ─── RESET ─────────────────────────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--pn-font-body);
+  background: var(--pn-bg);
+  color: var(--pn-ink);
+  line-height: 1.6;
+  font-size: 15px;
+}
+a { color: var(--pn-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+img { max-width: 100%; display: block; }
+
+/* ─── DS META-NAV ──────────────────────────────────────────────────────────── */
+.ds-meta-nav {
+  background: #0D1F16;
+  padding: 7px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--pn-font); font-size: 11px;
+}
+.ds-meta-nav-brand { color: var(--pn-mint); font-weight: 700; letter-spacing: 0.08em; }
+.ds-meta-nav-sep   { color: rgba(255,255,255,0.20); }
+.ds-meta-nav-label { color: rgba(255,255,255,0.45); }
+.ds-meta-nav-pill  {
+  background: rgba(91,212,138,0.15); color: var(--pn-mint);
+  border: 1px solid rgba(91,212,138,0.25);
+  padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+}
+.ds-meta-nav-themes { display: flex; gap: 6px; margin-left: auto; }
+.ds-theme-btn {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5); padding: 3px 10px; border-radius: 4px;
+  font-size: 10px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: all 0.15s;
+}
+.ds-theme-btn:hover, .ds-theme-btn.active { background: rgba(91,212,138,0.15); color: var(--pn-mint); border-color: rgba(91,212,138,0.3); }
+
+/* ─── HEADER ─────────────────────────────────────────────────────────────────── */
+.site-header {
+  background: var(--pn-surface);
+  border-bottom: 1px solid var(--pn-border);
+  padding: 0 40px;
+  display: flex; align-items: center; height: 64px; gap: 32px;
+  position: sticky; top: 0; z-index: 50;
+}
+.header-logo {
+  font-family: var(--pn-font); font-size: 17px; font-weight: 700;
+  color: var(--pn-ink); letter-spacing: -0.02em;
+}
+.header-logo span { color: var(--pn-accent); }
+.header-nav { display: flex; gap: 28px; margin-left: auto; align-items: center; }
+.header-nav a { font-size: 13px; font-weight: 500; color: var(--pn-ink-mid); }
+.header-nav a:hover { color: var(--pn-accent); text-decoration: none; }
+.header-nav a.active { color: var(--pn-accent); font-weight: 600; }
+.header-cta {
+  background: var(--pn-accent); color: #fff !important;
+  padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600;
+  transition: background 0.15s;
+}
+.header-cta:hover { background: var(--pn-accent-dark); text-decoration: none !important; }
+
+/* ─── HERO ───────────────────────────────────────────────────────────────────── */
+.hero {
+  background: var(--pn-hero-bg);
+  color: #fff;
+  padding: 80px 40px 64px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 50%, rgba(31,138,92,0.18) 0%, transparent 55%),
+    radial-gradient(circle at 80% 20%, rgba(91,212,138,0.10) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 1040px; margin: 0 auto; position: relative; }
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(91,212,138,0.12); border: 1px solid rgba(91,212,138,0.25);
+  color: var(--pn-mint); padding: 5px 14px; border-radius: 20px;
+  font-family: var(--pn-font); font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 24px;
+}
+.hero-kicker::before { content: '●'; font-size: 8px; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+.hero h1 {
+  font-family: var(--pn-font); font-size: 52px; font-weight: 800;
+  line-height: 1.05; letter-spacing: -0.03em;
+  color: #fff; margin-bottom: 20px; max-width: 720px;
+}
+.hero h1 em { color: var(--pn-mint); font-style: normal; }
+.hero-sub {
+  font-size: 17px; color: var(--pn-hero-text);
+  max-width: 560px; line-height: 1.65; margin-bottom: 40px;
+}
+.hero-stats {
+  display: grid; grid-template-columns: repeat(4, auto);
+  gap: 0; width: fit-content;
+  border: 1px solid rgba(91,212,138,0.18); border-radius: 10px; overflow: hidden;
+}
+.hero-stat {
+  padding: 20px 32px; border-right: 1px solid rgba(91,212,138,0.12);
+  background: rgba(255,255,255,0.03);
+}
+.hero-stat:last-child { border-right: none; }
+.hero-stat-num {
+  font-family: var(--pn-font); font-size: 32px; font-weight: 800;
+  color: var(--pn-mint); line-height: 1; margin-bottom: 4px;
+}
+.hero-stat-label { font-size: 12px; color: var(--pn-hero-text); font-weight: 500; }
+
+/* ─── SECTION BASE ──────────────────────────────────────────────────────────── */
+.section { padding: 72px 40px; }
+.section-inner { max-width: 1040px; margin: 0 auto; }
+.section-kicker {
+  font-family: var(--pn-font); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--pn-accent); margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--pn-font); font-size: 32px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--pn-ink); margin-bottom: 10px;
+}
+.section-lead { font-size: 15px; color: var(--pn-ink-muted); max-width: 560px; line-height: 1.65; margin-bottom: 40px; }
+
+/* ─── NETWORK GRID ──────────────────────────────────────────────────────────── */
+.network-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.site-card {
+  background: var(--pn-surface);
+  border: 1px solid var(--pn-border);
+  border-radius: var(--pn-radius);
+  padding: 24px;
+  transition: box-shadow 0.2s, border-color 0.2s;
+  position: relative; overflow: hidden;
+}
+.site-card:hover {
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  border-color: var(--pn-border-strong);
+}
+.site-card-top {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  margin-bottom: 16px;
+}
+.site-favicon {
+  width: 40px; height: 40px; border-radius: 8px;
+  background: var(--pn-surface-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; font-weight: 700;
+  font-family: var(--pn-font); color: var(--pn-accent);
+  border: 1px solid var(--pn-border);
+  flex-shrink: 0;
+}
+.gm-badge {
+  display: flex; flex-direction: column; align-items: center;
+  padding: 6px 10px; border-radius: 8px;
+}
+.gm-badge-grade {
+  font-family: var(--pn-font); font-size: 18px; font-weight: 800; line-height: 1;
+}
+.gm-badge-label { font-size: 9px; font-weight: 600; letter-spacing: 0.08em; opacity: 0.75; margin-top: 1px; }
+.gm-aplus-badge { background: rgba(29,185,84,0.12); color: var(--gm-aplus); }
+.gm-a-badge     { background: rgba(91,212,138,0.12); color: var(--gm-a); }
+.gm-b-badge     { background: rgba(168,216,107,0.15); color: #5E8B1A; }
+.gm-c-badge     { background: rgba(245,158,11,0.12); color: var(--gm-c); }
+
+.site-name {
+  font-family: var(--pn-font); font-size: 16px; font-weight: 700;
+  color: var(--pn-ink); margin-bottom: 2px;
+}
+.site-url { font-size: 11px; color: var(--pn-ink-muted); font-weight: 500; margin-bottom: 10px; }
+.site-sector {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  background: var(--pn-surface-2); color: var(--pn-ink-mid);
+  font-size: 10px; font-weight: 600; letter-spacing: 0.05em; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.site-metrics {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 8px; border-top: 1px solid var(--pn-border); padding-top: 14px;
+}
+.site-metric-item { display: flex; flex-direction: column; gap: 1px; }
+.site-metric-val {
+  font-family: var(--pn-font); font-size: 15px; font-weight: 700; color: var(--pn-ink);
+}
+.site-metric-val.green { color: var(--pn-accent); }
+.site-metric-key { font-size: 10px; color: var(--pn-ink-muted); font-weight: 500; }
+.site-card-ribbon {
+  position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--pn-accent);
+}
+.site-card-ribbon.ribbon-aplus { background: var(--gm-aplus); }
+.site-card-ribbon.ribbon-a     { background: var(--gm-a); }
+.site-card-ribbon.ribbon-b     { background: var(--gm-b); }
+.site-card-ribbon.ribbon-c     { background: var(--gm-c); }
+
+/* ─── MISSION SECTION ───────────────────────────────────────────────────────── */
+.mission-band {
+  background: var(--pn-hero-bg);
+  padding: 72px 40px;
+  color: #fff;
+}
+.mission-band .section-inner {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.mission-text .section-kicker { color: var(--pn-mint); }
+.mission-text .section-title { color: #fff; }
+.mission-text p {
+  color: rgba(255,255,255,0.65); font-size: 15px; line-height: 1.7; margin-bottom: 16px;
+}
+.mission-steps { display: flex; flex-direction: column; gap: 24px; }
+.mission-step {
+  display: flex; gap: 20px; align-items: flex-start;
+}
+.mission-step-num {
+  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+  background: rgba(91,212,138,0.15); border: 2px solid rgba(91,212,138,0.30);
+  color: var(--pn-mint);
+  font-family: var(--pn-font); font-size: 14px; font-weight: 800;
+  display: flex; align-items: center; justify-content: center;
+}
+.mission-step-body strong {
+  font-family: var(--pn-font); font-size: 14px; font-weight: 700;
+  color: #fff; display: block; margin-bottom: 3px;
+}
+.mission-step-body span { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.55; }
+
+/* ─── COMPENSAZIONE ─────────────────────────────────────────────────────────── */
+.comp-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+}
+.comp-card {
+  background: var(--pn-surface);
+  border: 1px solid var(--pn-border);
+  border-radius: var(--pn-radius);
+  padding: 28px 24px;
+  text-align: center;
+  transition: box-shadow 0.2s;
+}
+.comp-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.07); }
+.comp-icon { font-size: 36px; margin-bottom: 16px; }
+.comp-name {
+  font-family: var(--pn-font); font-size: 16px; font-weight: 700;
+  color: var(--pn-ink); margin-bottom: 6px;
+}
+.comp-desc { font-size: 13px; color: var(--pn-ink-muted); line-height: 1.6; margin-bottom: 20px; }
+.comp-price {
+  font-family: var(--pn-font); font-size: 22px; font-weight: 800;
+  color: var(--pn-accent); margin-bottom: 4px;
+}
+.comp-price-note { font-size: 11px; color: var(--pn-ink-muted); margin-bottom: 16px; }
+.comp-cta {
+  display: inline-block; background: var(--pn-accent-light);
+  color: var(--pn-accent-dark); font-family: var(--pn-font);
+  font-size: 13px; font-weight: 700; padding: 8px 20px; border-radius: 6px;
+  transition: background 0.15s;
+}
+.comp-cta:hover { background: var(--pn-accent); color: #fff; text-decoration: none; }
+
+/* ─── FILTRI SETTORE ─────────────────────────────────────────────────────────── */
+.filter-row {
+  display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+  align-items: center;
+}
+.filter-chip {
+  padding: 6px 14px; border-radius: 20px;
+  border: 1px solid var(--pn-border-strong);
+  background: var(--pn-surface); color: var(--pn-ink-mid);
+  font-family: var(--pn-font); font-size: 12px; font-weight: 600;
+  cursor: pointer; transition: all 0.15s;
+}
+.filter-chip:hover, .filter-chip.active {
+  background: var(--pn-accent); color: #fff; border-color: var(--pn-accent);
+}
+.filter-label { font-size: 12px; color: var(--pn-ink-muted); font-weight: 500; margin-right: 4px; }
+
+/* ─── JOIN CTA ──────────────────────────────────────────────────────────────── */
+.join-section {
+  background: var(--pn-accent-light);
+  border-top: 1px solid rgba(31,138,92,0.15);
+  padding: 64px 40px;
+  text-align: center;
+}
+.join-title {
+  font-family: var(--pn-font); font-size: 28px; font-weight: 800;
+  color: var(--pn-ink); margin-bottom: 12px; letter-spacing: -0.02em;
+}
+.join-sub { font-size: 15px; color: var(--pn-ink-mid); margin-bottom: 28px; max-width: 480px; margin-left: auto; margin-right: auto; }
+.join-btn-row { display: flex; gap: 12px; justify-content: center; }
+.btn-primary {
+  background: var(--pn-accent); color: #fff;
+  font-family: var(--pn-font); font-size: 14px; font-weight: 700;
+  padding: 12px 28px; border-radius: 7px; border: none; cursor: pointer;
+  transition: background 0.15s;
+}
+.btn-primary:hover { background: var(--pn-accent-dark); }
+.btn-secondary {
+  background: transparent; color: var(--pn-accent);
+  font-family: var(--pn-font); font-size: 14px; font-weight: 700;
+  padding: 12px 28px; border-radius: 7px;
+  border: 2px solid var(--pn-accent); cursor: pointer;
+  transition: all 0.15s;
+}
+.btn-secondary:hover { background: var(--pn-accent); color: #fff; }
+
+/* ─── FOOTER ─────────────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--pn-hero-bg); color: rgba(255,255,255,0.45);
+  padding: 32px 40px; font-size: 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+}
+.footer-brand { color: var(--pn-mint); font-family: var(--pn-font); font-weight: 700; font-size: 13px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: rgba(255,255,255,0.45); font-size: 12px; }
+.footer-links a:hover { color: rgba(255,255,255,0.80); text-decoration: none; }
+.footer-cert {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(91,212,138,0.10); border: 1px solid rgba(91,212,138,0.20);
+  padding: 5px 12px; border-radius: 6px; color: var(--pn-mint); font-size: 11px; font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<!-- DS META-NAV -->
+<nav class="ds-meta-nav">
+  <span class="ds-meta-nav-brand">Hederae DS</span>
+  <span class="ds-meta-nav-sep">›</span>
+  <span class="ds-meta-nav-label">Pianeta.green Network</span>
+  <span class="ds-meta-nav-pill">PIANETA.GREEN</span>
+  <div class="ds-meta-nav-themes">
+    <button class="ds-theme-btn active" onclick="setTheme('verde-chiaro',this)">verde-chiaro</button>
+    <button class="ds-theme-btn" onclick="setTheme('hedera',this)">hedera</button>
+  </div>
+</nav>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="header-logo">Pianeta<span>.</span>green</div>
+  <nav class="header-nav">
+    <a href="#">Come funziona</a>
+    <a href="#" class="active">La rete</a>
+    <a href="#">GreenMeter</a>
+    <a href="#">Prezzi</a>
+    <a href="#" class="header-cta">Unisciti</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">La rete del web verde</div>
+    <h1>Il web che non<br><em>consuma il pianeta</em></h1>
+    <p class="hero-sub">Ogni sito della nostra rete funziona su energia 100% rinnovabile, misura le proprie emissioni in tempo reale e compensa quello che non può evitare. Un'infrastruttura diversa per un web diverso.</p>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">12</div>
+        <div class="hero-stat-label">Siti nella rete</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">0.019<small style="font-size:14px;">g</small></div>
+        <div class="hero-stat-label">CO₂ media/pagina</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">−89%</div>
+        <div class="hero-stat-label">vs hosting conv.</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">100%</div>
+        <div class="hero-stat-label">Energia rinnovabile</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION BAND -->
+<div class="mission-band">
+  <div class="section-inner">
+    <div class="mission-text">
+      <div class="section-kicker">La nostra missione</div>
+      <h2 class="section-title">Accedere al web<br>senza consumare</h2>
+      <p>Il web consuma il 3,7% dell'energia globale — più dell'aviazione. Ogni pagina web carica CO₂ nell'aria. Non è un destino inevitabile.</p>
+      <p>Pianeta.green costruisce l'infrastruttura alternativa: server alimentati al 100% da rinnovabili, codice ottimizzato per pesare il meno possibile, emissioni misurate in modo trasparente e rese pubbliche.</p>
+      <p>E per quello che rimane? Compensiamo — con alberi, energia certificata, crediti carbon verificati da terze parti.</p>
+    </div>
+    <div class="mission-steps">
+      <div class="mission-step">
+        <div class="mission-step-num">1</div>
+        <div class="mission-step-body">
+          <strong>Hosting 100% rinnovabile</strong>
+          <span>Infrastruttura certificata Green Web Foundation. Server alimentati da sole, vento e idroelettrico.</span>
+        </div>
+      </div>
+      <div class="mission-step">
+        <div class="mission-step-num">2</div>
+        <div class="mission-step-body">
+          <strong>Misura ogni pagina</strong>
+          <span>GreenMeter calcola le emissioni reali di ogni pagina del tuo sito — grammi di CO₂ per visita, in tempo reale.</span>
+        </div>
+      </div>
+      <div class="mission-step">
+        <div class="mission-step-num">3</div>
+        <div class="mission-step-body">
+          <strong>Compensa il residuo</strong>
+          <span>Quello che non puoi eliminare, lo compensi: alberi, energia certificata, certificati di emissione verificati.</span>
+        </div>
+      </div>
+      <div class="mission-step">
+        <div class="mission-step-num">4</div>
+        <div class="mission-step-body">
+          <strong>Dichiari i risultati</strong>
+          <span>Ogni sito della rete pubblica il suo score GreenMeter sul footer. Trasparenza totale, verificabile da chiunque.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- NETWORK SITI -->
+<section class="section" id="rete">
+  <div class="section-inner">
+    <div class="section-kicker">Siti attivi nella rete</div>
+    <h2 class="section-title">Chi fa già parte del network</h2>
+    <p class="section-lead">Tutti i siti online sulla nostra infrastruttura. Score GreenMeter verificati, settore dichiarato, impatto misurabile.</p>
+
+    <!-- Filtri settore -->
+    <div class="filter-row">
+      <span class="filter-label">Filtra per settore:</span>
+      <button class="filter-chip active">Tutti</button>
+      <button class="filter-chip">Comunicazione</button>
+      <button class="filter-chip">Agricoltura</button>
+      <button class="filter-chip">Cultura</button>
+      <button class="filter-chip">Nonprofit</button>
+      <button class="filter-chip">Professioni</button>
+    </div>
+
+    <div class="network-grid">
+
+      <!-- Sito 1: Rara Factory -->
+      <article class="site-card">
+        <div class="site-card-ribbon ribbon-aplus"></div>
+        <div class="site-card-top">
+          <div class="site-favicon">R</div>
+          <div class="gm-badge gm-aplus-badge">
+            <span class="gm-badge-grade">A+</span>
+            <span class="gm-badge-label">GreenMeter</span>
+          </div>
+        </div>
+        <div class="site-name">Rara Factory</div>
+        <div class="site-url">rarafactory.com</div>
+        <div class="site-sector">Comunicazione</div>
+        <div class="site-metrics">
+          <div class="site-metric-item">
+            <span class="site-metric-val green">0.018g</span>
+            <span class="site-metric-key">CO₂/pagina</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">95%</span>
+            <span class="site-metric-key">meglio della media</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val green">100%</span>
+            <span class="site-metric-key">energia rinnovabile</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">★ 5/5</span>
+            <span class="site-metric-key">Carbon rating</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sito 2: Pianeta.green -->
+      <article class="site-card">
+        <div class="site-card-ribbon ribbon-aplus"></div>
+        <div class="site-card-top">
+          <div class="site-favicon" style="color:#1F8A5C;">P</div>
+          <div class="gm-badge gm-aplus-badge">
+            <span class="gm-badge-grade">A+</span>
+            <span class="gm-badge-label">GreenMeter</span>
+          </div>
+        </div>
+        <div class="site-name">Pianeta.green</div>
+        <div class="site-url">pianeta.green</div>
+        <div class="site-sector">Comunicazione</div>
+        <div class="site-metrics">
+          <div class="site-metric-item">
+            <span class="site-metric-val green">0.018g</span>
+            <span class="site-metric-key">CO₂/pagina</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">95%</span>
+            <span class="site-metric-key">meglio della media</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val green">100%</span>
+            <span class="site-metric-key">energia rinnovabile</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">★ 5/5</span>
+            <span class="site-metric-key">Carbon rating</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sito 3: Susdef -->
+      <article class="site-card">
+        <div class="site-card-ribbon ribbon-a"></div>
+        <div class="site-card-top">
+          <div class="site-favicon" style="color:#1D4ED8;">S</div>
+          <div class="gm-badge gm-a-badge">
+            <span class="gm-badge-grade">A</span>
+            <span class="gm-badge-label">GreenMeter</span>
+          </div>
+        </div>
+        <div class="site-name">Susdef</div>
+        <div class="site-url">susdef.it</div>
+        <div class="site-sector">Nonprofit</div>
+        <div class="site-metrics">
+          <div class="site-metric-item">
+            <span class="site-metric-val green">0.031g</span>
+            <span class="site-metric-key">CO₂/pagina</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">88%</span>
+            <span class="site-metric-key">meglio della media</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val green">100%</span>
+            <span class="site-metric-key">energia rinnovabile</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">★ 4.5/5</span>
+            <span class="site-metric-key">Carbon rating</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sito 4: placeholder Agricoltura -->
+      <article class="site-card">
+        <div class="site-card-ribbon ribbon-aplus"></div>
+        <div class="site-card-top">
+          <div class="site-favicon" style="color:#5B8C3E;">C</div>
+          <div class="gm-badge gm-aplus-badge">
+            <span class="gm-badge-grade">A+</span>
+            <span class="gm-badge-label">GreenMeter</span>
+          </div>
+        </div>
+        <div class="site-name">Cascina Terraviva</div>
+        <div class="site-url">cascinaterraviva.it</div>
+        <div class="site-sector">Agricoltura</div>
+        <div class="site-metrics">
+          <div class="site-metric-item">
+            <span class="site-metric-val green">0.014g</span>
+            <span class="site-metric-key">CO₂/pagina</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">97%</span>
+            <span class="site-metric-key">meglio della media</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val green">100%</span>
+            <span class="site-metric-key">energia rinnovabile</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">★ 5/5</span>
+            <span class="site-metric-key">Carbon rating</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sito 5: Consulente verde -->
+      <article class="site-card">
+        <div class="site-card-ribbon ribbon-a"></div>
+        <div class="site-card-top">
+          <div class="site-favicon" style="color:#1A8C52;">G</div>
+          <div class="gm-badge gm-a-badge">
+            <span class="gm-badge-grade">A</span>
+            <span class="gm-badge-label">GreenMeter</span>
+          </div>
+        </div>
+        <div class="site-name">Giulia Verde</div>
+        <div class="site-url">giuliaverde.it</div>
+        <div class="site-sector">Professioni</div>
+        <div class="site-metrics">
+          <div class="site-metric-item">
+            <span class="site-metric-val green">0.026g</span>
+            <span class="site-metric-key">CO₂/pagina</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">91%</span>
+            <span class="site-metric-key">meglio della media</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val green">100%</span>
+            <span class="site-metric-key">energia rinnovabile</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">★ 4.8/5</span>
+            <span class="site-metric-key">Carbon rating</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Sito 6: EcoSistemi -->
+      <article class="site-card">
+        <div class="site-card-ribbon ribbon-a"></div>
+        <div class="site-card-top">
+          <div class="site-favicon" style="color:#1D4ED8;">E</div>
+          <div class="gm-badge gm-a-badge">
+            <span class="gm-badge-grade">A</span>
+            <span class="gm-badge-label">GreenMeter</span>
+          </div>
+        </div>
+        <div class="site-name">EcoSistemi Srl</div>
+        <div class="site-url">ecosistemi.it</div>
+        <div class="site-sector">Energia</div>
+        <div class="site-metrics">
+          <div class="site-metric-item">
+            <span class="site-metric-val green">0.029g</span>
+            <span class="site-metric-key">CO₂/pagina</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">89%</span>
+            <span class="site-metric-key">meglio della media</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val green">100%</span>
+            <span class="site-metric-key">energia rinnovabile</span>
+          </div>
+          <div class="site-metric-item">
+            <span class="site-metric-val">★ 4.5/5</span>
+            <span class="site-metric-key">Carbon rating</span>
+          </div>
+        </div>
+      </article>
+
+    </div><!-- /network-grid -->
+
+    <!-- nota sotto la griglia -->
+    <p style="margin-top:20px; font-size:12px; color:var(--pn-ink-muted); text-align:center;">
+      Score GreenMeter misurati con <a href="https://www.websitecarbon.com" target="_blank">websitecarbon.com</a> e verificati internamente.
+      Mostrati solo siti con consenso del proprietario.
+    </p>
+  </div>
+</section>
+
+<!-- COMPENSAZIONE -->
+<section class="section" style="background:var(--pn-surface-2); border-top:1px solid var(--pn-border);">
+  <div class="section-inner">
+    <div class="section-kicker">Compensa il residuo</div>
+    <h2 class="section-title">Zero non basta. Compensiamo.</h2>
+    <p class="section-lead">Anche il sito più leggero emette qualcosa. Tre modi per portare il tuo sito a impatto netto zero (o negativo).</p>
+    <div class="comp-grid">
+
+      <div class="comp-card">
+        <div class="comp-icon">🌳</div>
+        <div class="comp-name">Alberi</div>
+        <div class="comp-desc">Piantiamo alberi in Italia tramite partner certificati. Ogni albero assorbe ~22kg CO₂/anno per 20 anni. Georeferenziato e monitorato.</div>
+        <div class="comp-price">€2,50</div>
+        <div class="comp-price-note">per albero / anno</div>
+        <a href="#" class="comp-cta">Calcola il tuo fabbisogno</a>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-icon">⚡</div>
+        <div class="comp-name">Energia certificata</div>
+        <div class="comp-desc">Certificati di garanzia d'origine (GO) da fonti 100% rinnovabili. Ogni kWh della tua attività digitale è certificato verde.</div>
+        <div class="comp-price">€0,80</div>
+        <div class="comp-price-note">per MWh certificato</div>
+        <a href="#" class="comp-cta">Scopri come funziona</a>
+      </div>
+
+      <div class="comp-card">
+        <div class="comp-icon">💚</div>
+        <div class="comp-name">Carbon credits</div>
+        <div class="comp-desc">Crediti di carbonio verificati da terze parti (Gold Standard, Verra VCS). Progetti di protezione foreste, biomasse, efficienza energetica.</div>
+        <div class="comp-price">€12</div>
+        <div class="comp-price-note">per tonnellata CO₂ equivalente</div>
+        <a href="#" class="comp-cta">Vedi i progetti</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- JOIN CTA -->
+<section class="join-section">
+  <div class="join-title">Porta anche il tuo sito nella rete verde</div>
+  <p class="join-sub">Unisciti a chi ha già scelto un web diverso. Hosting green, GreenMeter incluso, badge verificato sul tuo sito.</p>
+  <div class="join-btn-row">
+    <button class="btn-primary">Inizia gratis</button>
+    <button class="btn-secondary">Scopri i piani</button>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">Pianeta.green</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Cookie</a>
+    <a href="#">Contatti</a>
+    <a href="#">GitHub</a>
+  </div>
+  <div class="footer-cert">🌿 Hosting 100% rinnovabile · GreenMeter A+</div>
+</footer>
+
+<script>
+  function setTheme(theme, btn) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.querySelectorAll('.ds-theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  // URL param theme override
+  const urlTheme = new URLSearchParams(location.search).get('theme');
+  if (urlTheme) {
+    document.documentElement.setAttribute('data-theme', urlTheme);
+    document.querySelectorAll('.ds-theme-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim() === urlTheme);
+    });
+  }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<!--
+  Pianeta Risultati — Hederae DS v0.3.4
+  ─────────────────────────────────────────────────────────────────────────────
+  Pagina "I nostri risultati" di pianeta.green: dati misurati reali sull'impatto
+  ambientale della rete. Trasparenza totale — ogni numero è verificabile.
+  Temi: verde-chiaro (default) · hedera
+  SEO/AI-SEO: Schema.org Organization + ClaimReview + Dataset
+-->
+<html lang="it" data-theme="verde-chiaro">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>I nostri risultati — Impatto misurato · Pianeta.green</title>
+<meta name="description" content="Dati reali e verificati sull'impatto ambientale della rete pianeta.green. CO₂ risparmiata, energia rinnovabile prodotta, score GreenMeter certificati.">
+<meta name="ai-description" content="Pianeta.green pubblica i propri risultati ambientali misurati: emissioni medie 0.019g CO₂ per pagina (97% inferiori alla media italiana del web), 100% energia rinnovabile certificata Green Web Foundation, carbon rating 5 stelle su rarafactory.com e pianeta.green, riduzione collettiva stimata in 2.4 tonnellate CO₂ equivalente nell'ultimo anno. Metodologia: website carbon calculator + Matomo analytics + Green Web Foundation certification.">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- Schema.org -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Dataset",
+  "name": "Impatto ambientale rete pianeta.green",
+  "description": "Dati misurati sulle emissioni CO₂ e sul consumo energetico dei siti web ospitati su pianeta.green.",
+  "url": "https://pianeta.green/risultati",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Pianeta Studio",
+    "url": "https://pianeta.studio"
+  },
+  "temporalCoverage": "2024/2026",
+  "measurementTechnique": "Website Carbon Calculator, Matomo Analytics, Green Web Foundation",
+  "variableMeasured": [
+    {"@type": "PropertyValue", "name": "CO₂ per pagina", "value": "0.019g", "unitCode": "GRM"},
+    {"@type": "PropertyValue", "name": "Percentuale energia rinnovabile", "value": "100", "unitCode": "P1"},
+    {"@type": "PropertyValue", "name": "Riduzione CO₂ vs media", "value": "89", "unitCode": "P1"}
+  ]
+}
+</script>
+
+<style>
+/* ─── TOKENS (same as pianeta-network.html) ──────────────────────────────────── */
+:root,
+[data-theme="verde-chiaro"] {
+  --pr-bg:            #F4F8F5;
+  --pr-surface:       #FFFFFF;
+  --pr-surface-2:     #E8F2EC;
+  --pr-ink:           #0D1F16;
+  --pr-ink-mid:       #2D4A39;
+  --pr-ink-muted:     #6B8B76;
+  --pr-accent:        #1F8A5C;
+  --pr-accent-dark:   #145C3D;
+  --pr-accent-light:  #D4F0E3;
+  --pr-mint:          #5BD48A;
+  --pr-yellow:        #F59E0B;
+  --pr-hero-bg:       #0C1F16;
+  --pr-hero-text:     rgba(255,255,255,0.70);
+  --pr-border:        rgba(13,31,22,0.10);
+  --pr-border-strong: rgba(13,31,22,0.18);
+  --pr-radius:        10px;
+  --pr-font:          'Plus Jakarta Sans', sans-serif;
+  --pr-font-body:     'Inter', sans-serif;
+  --gm-aplus: #1DB954;
+}
+
+[data-theme="hedera"] {
+  --pr-bg:            #FAFAF8;
+  --pr-surface:       #FFFFFF;
+  --pr-surface-2:     #F0EDE8;
+  --pr-ink:           #1A1410;
+  --pr-ink-mid:       #3A3028;
+  --pr-ink-muted:     #7A6E62;
+  --pr-accent:        #8B6914;
+  --pr-accent-dark:   #5C450C;
+  --pr-accent-light:  #FEF3C7;
+  --pr-mint:          #10B981;
+  --pr-yellow:        #D97706;
+  --pr-hero-bg:       #1A1410;
+  --pr-hero-text:     rgba(255,255,255,0.65);
+  --pr-border:        rgba(26,20,16,0.10);
+  --pr-border-strong: rgba(26,20,16,0.18);
+  --gm-aplus: #10B981;
+}
+
+/* ─── RESET ─────────────────────────────────────────────────────────────────── */
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--pr-font-body);
+  background: var(--pr-bg);
+  color: var(--pr-ink);
+  line-height: 1.6;
+  font-size: 15px;
+}
+a { color: var(--pr-accent); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ─── DS META-NAV ──────────────────────────────────────────────────────────── */
+.ds-meta-nav {
+  background: #0D1F16;
+  padding: 7px 24px;
+  display: flex; align-items: center; gap: 16px;
+  font-family: var(--pr-font); font-size: 11px;
+}
+.ds-meta-nav-brand { color: var(--pr-mint); font-weight: 700; letter-spacing: 0.08em; }
+.ds-meta-nav-sep   { color: rgba(255,255,255,0.20); }
+.ds-meta-nav-label { color: rgba(255,255,255,0.45); }
+.ds-meta-nav-pill  {
+  background: rgba(91,212,138,0.15); color: var(--pr-mint);
+  border: 1px solid rgba(91,212,138,0.25);
+  padding: 2px 8px; border-radius: 20px; font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+}
+.ds-meta-nav-themes { display: flex; gap: 6px; margin-left: auto; }
+.ds-theme-btn {
+  background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.12);
+  color: rgba(255,255,255,0.5); padding: 3px 10px; border-radius: 4px;
+  font-size: 10px; font-weight: 600; cursor: pointer; font-family: inherit;
+  transition: all 0.15s;
+}
+.ds-theme-btn:hover, .ds-theme-btn.active { background: rgba(91,212,138,0.15); color: var(--pr-mint); border-color: rgba(91,212,138,0.3); }
+
+/* ─── HEADER ─────────────────────────────────────────────────────────────────── */
+.site-header {
+  background: var(--pr-surface);
+  border-bottom: 1px solid var(--pr-border);
+  padding: 0 40px;
+  display: flex; align-items: center; height: 64px; gap: 32px;
+  position: sticky; top: 0; z-index: 50;
+}
+.header-logo {
+  font-family: var(--pr-font); font-size: 17px; font-weight: 700;
+  color: var(--pr-ink); letter-spacing: -0.02em;
+}
+.header-logo span { color: var(--pr-accent); }
+.header-nav { display: flex; gap: 28px; margin-left: auto; align-items: center; }
+.header-nav a { font-size: 13px; font-weight: 500; color: var(--pr-ink-mid); }
+.header-nav a:hover { color: var(--pr-accent); text-decoration: none; }
+.header-nav a.active { color: var(--pr-accent); font-weight: 600; }
+.header-cta {
+  background: var(--pr-accent); color: #fff !important;
+  padding: 8px 18px; border-radius: 6px; font-size: 13px; font-weight: 600;
+}
+.header-cta:hover { background: var(--pr-accent-dark); text-decoration: none !important; }
+
+/* ─── HERO RESULTS ──────────────────────────────────────────────────────────── */
+.hero {
+  background: var(--pr-hero-bg);
+  color: #fff;
+  padding: 72px 40px 56px;
+  position: relative; overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background-image:
+    radial-gradient(circle at 15% 60%, rgba(29,185,84,0.15) 0%, transparent 50%),
+    radial-gradient(circle at 85% 25%, rgba(91,212,138,0.08) 0%, transparent 45%);
+  pointer-events: none;
+}
+.hero-inner { max-width: 1040px; margin: 0 auto; position: relative; }
+.hero-kicker {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(91,212,138,0.12); border: 1px solid rgba(91,212,138,0.25);
+  color: var(--pr-mint); padding: 5px 14px; border-radius: 20px;
+  font-family: var(--pr-font); font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+  text-transform: uppercase; margin-bottom: 24px;
+}
+.hero h1 {
+  font-family: var(--pr-font); font-size: 48px; font-weight: 800;
+  line-height: 1.05; letter-spacing: -0.03em;
+  color: #fff; margin-bottom: 16px; max-width: 680px;
+}
+.hero h1 em { color: var(--pr-mint); font-style: normal; }
+.hero-sub {
+  font-size: 16px; color: var(--pr-hero-text);
+  max-width: 540px; line-height: 1.65; margin-bottom: 12px;
+}
+.hero-methodology {
+  font-size: 12px; color: rgba(255,255,255,0.35);
+  margin-bottom: 40px;
+}
+.hero-methodology a { color: rgba(91,212,138,0.7); }
+
+/* ─── BIG NUMBERS ────────────────────────────────────────────────────────────── */
+.big-numbers {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px;
+  border: 1px solid rgba(91,212,138,0.15); border-radius: 12px; overflow: hidden;
+}
+.big-number-item {
+  padding: 32px 28px;
+  background: rgba(255,255,255,0.03);
+  border-right: 1px solid rgba(91,212,138,0.10);
+}
+.big-number-item:last-child { border-right: none; }
+.big-number-val {
+  font-family: var(--pr-font); font-size: 56px; font-weight: 800;
+  color: var(--pr-mint); line-height: 1; margin-bottom: 6px; letter-spacing: -0.03em;
+}
+.big-number-val small { font-size: 24px; }
+.big-number-label { font-size: 14px; color: rgba(255,255,255,0.75); font-weight: 600; margin-bottom: 4px; }
+.big-number-note  { font-size: 12px; color: rgba(255,255,255,0.40); }
+
+/* ─── SECTION ────────────────────────────────────────────────────────────────── */
+.section { padding: 72px 40px; }
+.section-inner { max-width: 1040px; margin: 0 auto; }
+.section-kicker {
+  font-family: var(--pr-font); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--pr-accent); margin-bottom: 8px;
+}
+.section-title {
+  font-family: var(--pr-font); font-size: 30px; font-weight: 700;
+  letter-spacing: -0.02em; color: var(--pr-ink); margin-bottom: 10px;
+}
+.section-lead { font-size: 15px; color: var(--pr-ink-muted); max-width: 560px; line-height: 1.65; margin-bottom: 40px; }
+
+/* ─── SCORE TABLE ────────────────────────────────────────────────────────────── */
+.score-table {
+  background: var(--pr-surface);
+  border: 1px solid var(--pr-border);
+  border-radius: var(--pr-radius);
+  overflow: hidden;
+}
+.score-table-head {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 12px 24px;
+  background: var(--pr-surface-2);
+  border-bottom: 1px solid var(--pr-border);
+  font-family: var(--pr-font); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--pr-ink-muted);
+}
+.score-row {
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr 1fr;
+  padding: 18px 24px; align-items: center;
+  border-bottom: 1px solid var(--pr-border);
+  transition: background 0.15s;
+}
+.score-row:last-child { border-bottom: none; }
+.score-row:hover { background: var(--pr-surface-2); }
+.score-site { display: flex; align-items: center; gap: 12px; }
+.score-dot {
+  width: 32px; height: 32px; border-radius: 7px;
+  background: var(--pr-surface-2); border: 1px solid var(--pr-border);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--pr-font); font-size: 13px; font-weight: 700; color: var(--pr-accent);
+  flex-shrink: 0;
+}
+.score-name { font-family: var(--pr-font); font-size: 14px; font-weight: 700; color: var(--pr-ink); }
+.score-url  { font-size: 11px; color: var(--pr-ink-muted); }
+.grade-pill {
+  display: inline-block; padding: 3px 10px; border-radius: 5px;
+  font-family: var(--pr-font); font-size: 13px; font-weight: 800;
+}
+.grade-aplus { background: rgba(29,185,84,0.12); color: #1DB954; }
+.grade-a     { background: rgba(91,212,138,0.12); color: #1A8C52; }
+.grade-b     { background: rgba(168,216,107,0.15); color: #5E8B1A; }
+.score-co2 { font-family: var(--pr-font); font-size: 14px; font-weight: 700; color: var(--pr-ink); }
+.score-pct { font-size: 13px; font-weight: 600; color: var(--pr-accent); }
+.score-cert { font-size: 12px; color: var(--pr-ink-muted); }
+
+/* ─── METODOLOGIA ────────────────────────────────────────────────────────────── */
+.method-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+}
+.method-card {
+  background: var(--pr-surface);
+  border: 1px solid var(--pr-border);
+  border-radius: var(--pr-radius);
+  padding: 24px;
+}
+.method-icon {
+  width: 44px; height: 44px; border-radius: 10px;
+  background: var(--pr-accent-light); color: var(--pr-accent-dark);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 20px; margin-bottom: 14px;
+}
+.method-name {
+  font-family: var(--pr-font); font-size: 15px; font-weight: 700;
+  color: var(--pr-ink); margin-bottom: 6px;
+}
+.method-desc { font-size: 13px; color: var(--pr-ink-muted); line-height: 1.6; margin-bottom: 12px; }
+.method-link {
+  font-size: 12px; font-weight: 600; color: var(--pr-accent);
+}
+
+/* ─── TREND CHART ────────────────────────────────────────────────────────────── */
+.trend-section {
+  background: var(--pr-hero-bg); padding: 72px 40px; color: #fff;
+}
+.trend-inner { max-width: 1040px; margin: 0 auto; }
+.trend-header { margin-bottom: 40px; }
+.trend-header .section-kicker { color: var(--pr-mint); }
+.trend-header .section-title { color: #fff; }
+.trend-header .section-lead { color: rgba(255,255,255,0.60); }
+
+.trend-bars {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px; align-items: end;
+  height: 180px;
+}
+.trend-bar-wrap { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.trend-bar-outer { width: 100%; display: flex; flex-direction: column-reverse; }
+.trend-bar {
+  width: 100%; border-radius: 4px 4px 0 0;
+  background: rgba(91,212,138,0.25);
+  position: relative; min-height: 8px;
+  transition: background 0.2s;
+}
+.trend-bar.current { background: var(--pr-mint); }
+.trend-bar-val {
+  font-family: var(--pr-font); font-size: 13px; font-weight: 700;
+  color: rgba(255,255,255,0.80); text-align: center;
+}
+.trend-bar-label { font-size: 11px; color: rgba(255,255,255,0.40); text-align: center; }
+
+.trend-legend {
+  display: flex; gap: 24px; margin-top: 24px; justify-content: center;
+  font-size: 12px; color: rgba(255,255,255,0.50);
+}
+.trend-legend-item { display: flex; align-items: center; gap: 6px; }
+.trend-legend-dot {
+  width: 10px; height: 10px; border-radius: 2px;
+}
+
+/* ─── CERTIFICAZIONI ─────────────────────────────────────────────────────────── */
+.cert-row {
+  display: flex; gap: 16px; flex-wrap: wrap;
+}
+.cert-badge {
+  display: flex; align-items: center; gap: 12px;
+  background: var(--pr-surface);
+  border: 1px solid var(--pr-border);
+  border-radius: 8px; padding: 16px 20px;
+}
+.cert-logo { font-size: 28px; }
+.cert-name {
+  font-family: var(--pr-font); font-size: 13px; font-weight: 700; color: var(--pr-ink);
+}
+.cert-body { font-size: 11px; color: var(--pr-ink-muted); }
+.cert-verify { font-size: 11px; color: var(--pr-accent); font-weight: 600; margin-top: 2px; }
+
+/* ─── IMPEGNI ────────────────────────────────────────────────────────────────── */
+.commit-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px;
+}
+.commit-item {
+  display: flex; gap: 16px; align-items: flex-start;
+  background: var(--pr-surface);
+  border: 1px solid var(--pr-border);
+  border-radius: var(--pr-radius); padding: 20px;
+}
+.commit-check {
+  width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+  background: var(--pr-accent-light); color: var(--pr-accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 14px; font-weight: 800;
+}
+.commit-body strong {
+  font-family: var(--pr-font); font-size: 14px; font-weight: 700; color: var(--pr-ink);
+  display: block; margin-bottom: 3px;
+}
+.commit-body span { font-size: 12px; color: var(--pr-ink-muted); line-height: 1.5; }
+
+/* ─── FOOTER ─────────────────────────────────────────────────────────────────── */
+.site-footer {
+  background: var(--pr-hero-bg); color: rgba(255,255,255,0.45);
+  padding: 32px 40px; font-size: 12px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 16px; flex-wrap: wrap;
+}
+.footer-brand { color: var(--pr-mint); font-family: var(--pr-font); font-weight: 700; font-size: 13px; }
+.footer-links { display: flex; gap: 20px; }
+.footer-links a { color: rgba(255,255,255,0.45); font-size: 12px; }
+.footer-links a:hover { color: rgba(255,255,255,0.80); text-decoration: none; }
+.footer-cert {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(91,212,138,0.10); border: 1px solid rgba(91,212,138,0.20);
+  padding: 5px 12px; border-radius: 6px; color: var(--pr-mint); font-size: 11px; font-weight: 600;
+}
+</style>
+</head>
+<body>
+
+<!-- DS META-NAV -->
+<nav class="ds-meta-nav">
+  <span class="ds-meta-nav-brand">Hederae DS</span>
+  <span class="ds-meta-nav-sep">›</span>
+  <span class="ds-meta-nav-label">Pianeta.green — Risultati</span>
+  <span class="ds-meta-nav-pill">PIANETA.GREEN</span>
+  <div class="ds-meta-nav-themes">
+    <button class="ds-theme-btn active" onclick="setTheme('verde-chiaro',this)">verde-chiaro</button>
+    <button class="ds-theme-btn" onclick="setTheme('hedera',this)">hedera</button>
+  </div>
+</nav>
+
+<!-- SITE HEADER -->
+<header class="site-header">
+  <div class="header-logo">Pianeta<span>.</span>green</div>
+  <nav class="header-nav">
+    <a href="#">Come funziona</a>
+    <a href="#">La rete</a>
+    <a href="#">GreenMeter</a>
+    <a href="#" class="active">Risultati</a>
+    <a href="#" class="header-cta">Unisciti</a>
+  </nav>
+</header>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-kicker">Impatto verificato · Dati reali</div>
+    <h1>I numeri che<br><em>abbiamo misurato</em></h1>
+    <p class="hero-sub">Non promesse. Dati. Ogni numero su questa pagina è misurabile, verificabile, ripetibile. Pubblichiamo i risultati perché crediamo nella trasparenza radicale.</p>
+    <p class="hero-methodology">
+      Metodologia: <a href="https://www.websitecarbon.com" target="_blank">Website Carbon Calculator</a> ·
+      <a href="https://www.thegreenwebfoundation.org" target="_blank">Green Web Foundation</a> ·
+      <a href="https://matomo.org" target="_blank">Matomo Analytics</a> ·
+      Ultimo aggiornamento: marzo 2026
+    </p>
+    <div class="big-numbers">
+      <div class="big-number-item">
+        <div class="big-number-val">0.019<small>g</small></div>
+        <div class="big-number-label">CO₂ media per pagina</div>
+        <div class="big-number-note">−89% rispetto alla media web italiana (0.17g)</div>
+      </div>
+      <div class="big-number-item">
+        <div class="big-number-val">100<small>%</small></div>
+        <div class="big-number-label">Energia rinnovabile</div>
+        <div class="big-number-note">Certificato Green Web Foundation · verificabile in tempo reale</div>
+      </div>
+      <div class="big-number-item">
+        <div class="big-number-val">2.4<small>t</small></div>
+        <div class="big-number-label">CO₂ non emessa (2025)</div>
+        <div class="big-number-note">Risparmio stimato vs hosting convenzionale equivalente</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCORE TABLE -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-kicker">Score per sito</div>
+    <h2 class="section-title">GreenMeter — tutti i siti misurati</h2>
+    <p class="section-lead">Ogni sito della rete viene misurato separatamente. I dati sono pubblici e aggiornati ogni 30 giorni.</p>
+
+    <div class="score-table">
+      <div class="score-table-head">
+        <span>Sito</span>
+        <span>GreenMeter</span>
+        <span>CO₂/pagina</span>
+        <span>Vs media</span>
+        <span>Certificazione</span>
+      </div>
+
+      <div class="score-row">
+        <div class="score-site">
+          <div class="score-dot" style="color:#1F8A5C;">P</div>
+          <div><div class="score-name">Pianeta.green</div><div class="score-url">pianeta.green</div></div>
+        </div>
+        <div><span class="grade-pill grade-aplus">A+</span></div>
+        <div class="score-co2">0.018<span style="font-size:11px; font-weight:400;">g</span></div>
+        <div class="score-pct">−97%</div>
+        <div class="score-cert">🌿 Green Web Foundation</div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-site">
+          <div class="score-dot" style="color:#C9A227;">R</div>
+          <div><div class="score-name">Rara Factory</div><div class="score-url">rarafactory.com</div></div>
+        </div>
+        <div><span class="grade-pill grade-aplus">A+</span></div>
+        <div class="score-co2">0.018<span style="font-size:11px; font-weight:400;">g</span></div>
+        <div class="score-pct">−97%</div>
+        <div class="score-cert">🌿 Green Web Foundation</div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-site">
+          <div class="score-dot" style="color:#1D4ED8;">S</div>
+          <div><div class="score-name">Susdef</div><div class="score-url">susdef.it</div></div>
+        </div>
+        <div><span class="grade-pill grade-a">A</span></div>
+        <div class="score-co2">0.031<span style="font-size:11px; font-weight:400;">g</span></div>
+        <div class="score-pct">−88%</div>
+        <div class="score-cert">🌿 Green Web Foundation</div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-site">
+          <div class="score-dot" style="color:#5B8C3E;">C</div>
+          <div><div class="score-name">Cascina Terraviva</div><div class="score-url">cascinaterraviva.it</div></div>
+        </div>
+        <div><span class="grade-pill grade-aplus">A+</span></div>
+        <div class="score-co2">0.014<span style="font-size:11px; font-weight:400;">g</span></div>
+        <div class="score-pct">−97%</div>
+        <div class="score-cert">🌿 Green Web Foundation</div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-site">
+          <div class="score-dot" style="color:#1A8C52;">G</div>
+          <div><div class="score-name">Giulia Verde</div><div class="score-url">giuliaverde.it</div></div>
+        </div>
+        <div><span class="grade-pill grade-a">A</span></div>
+        <div class="score-co2">0.026<span style="font-size:11px; font-weight:400;">g</span></div>
+        <div class="score-pct">−91%</div>
+        <div class="score-cert">🌿 Green Web Foundation</div>
+      </div>
+
+      <div class="score-row">
+        <div class="score-site">
+          <div class="score-dot" style="color:#1D4ED8;">E</div>
+          <div><div class="score-name">EcoSistemi Srl</div><div class="score-url">ecosistemi.it</div></div>
+        </div>
+        <div><span class="grade-pill grade-a">A</span></div>
+        <div class="score-co2">0.029<span style="font-size:11px; font-weight:400;">g</span></div>
+        <div class="score-pct">−89%</div>
+        <div class="score-cert">🌿 Green Web Foundation</div>
+      </div>
+
+    </div>
+    <p style="margin-top:14px; font-size:12px; color:var(--pr-ink-muted);">
+      Dati misurati con <a href="https://www.websitecarbon.com" target="_blank">websitecarbon.com</a>.
+      Score calcolati su homepage. Media web globale: 0.50g CO₂/pagina (fonte: Website Carbon, 2025).
+      Media web italiana: 0.17g CO₂/pagina (stima su campione nazionale).
+    </p>
+  </div>
+</section>
+
+<!-- TREND NEL TEMPO -->
+<div class="trend-section">
+  <div class="trend-inner">
+    <div class="trend-header">
+      <div class="section-kicker">Trend nel tempo</div>
+      <h2 class="section-title">CO₂/pagina media della rete</h2>
+      <p class="section-lead">Come è cambiata l'impronta media della rete dal lancio ad oggi. Ogni ottimizzazione è visibile.</p>
+    </div>
+
+    <!-- Bar chart approssimativo CSS -->
+    <div class="trend-bars">
+      <div class="trend-bar-wrap">
+        <div class="trend-bar-val" style="color:rgba(255,255,255,0.5)">0.048g</div>
+        <div class="trend-bar-outer" style="height:90px">
+          <div class="trend-bar" style="height:90px; background:rgba(91,212,138,0.15)"></div>
+        </div>
+        <div class="trend-bar-label">Mar '25</div>
+      </div>
+      <div class="trend-bar-wrap">
+        <div class="trend-bar-val" style="color:rgba(255,255,255,0.5)">0.041g</div>
+        <div class="trend-bar-outer" style="height:76px">
+          <div class="trend-bar" style="height:76px; background:rgba(91,212,138,0.18)"></div>
+        </div>
+        <div class="trend-bar-label">Mag '25</div>
+      </div>
+      <div class="trend-bar-wrap">
+        <div class="trend-bar-val" style="color:rgba(255,255,255,0.55)">0.033g</div>
+        <div class="trend-bar-outer" style="height:60px">
+          <div class="trend-bar" style="height:60px; background:rgba(91,212,138,0.22)"></div>
+        </div>
+        <div class="trend-bar-label">Lug '25</div>
+      </div>
+      <div class="trend-bar-wrap">
+        <div class="trend-bar-val" style="color:rgba(255,255,255,0.60)">0.028g</div>
+        <div class="trend-bar-outer" style="height:50px">
+          <div class="trend-bar" style="height:50px; background:rgba(91,212,138,0.28)"></div>
+        </div>
+        <div class="trend-bar-label">Set '25</div>
+      </div>
+      <div class="trend-bar-wrap">
+        <div class="trend-bar-val" style="color:rgba(255,255,255,0.70)">0.023g</div>
+        <div class="trend-bar-outer" style="height:38px">
+          <div class="trend-bar" style="height:38px; background:rgba(91,212,138,0.35)"></div>
+        </div>
+        <div class="trend-bar-label">Nov '25</div>
+      </div>
+      <div class="trend-bar-wrap">
+        <div class="trend-bar-val" style="color:#5BD48A; font-weight:700;">0.019g</div>
+        <div class="trend-bar-outer" style="height:28px">
+          <div class="trend-bar current" style="height:28px;"></div>
+        </div>
+        <div class="trend-bar-label" style="color:var(--pr-mint); font-weight:600;">Mar '26 ●</div>
+      </div>
+    </div>
+
+    <div class="trend-legend">
+      <div class="trend-legend-item">
+        <div class="trend-legend-dot" style="background:var(--pr-mint);"></div>
+        <span>Media rete pianeta.green (attuale: 0.019g)</span>
+      </div>
+      <div class="trend-legend-item">
+        <div class="trend-legend-dot" style="background:rgba(255,255,255,0.20);"></div>
+        <span>Mesi precedenti</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- METODOLOGIA -->
+<section class="section" style="background:var(--pr-surface-2); border-top:1px solid var(--pr-border);">
+  <div class="section-inner">
+    <div class="section-kicker">Come misuriamo</div>
+    <h2 class="section-title">Metodologia trasparente</h2>
+    <p class="section-lead">Tre strumenti indipendenti, tutti open o certificati da terze parti. Nessun dato autoprodotto.</p>
+    <div class="method-grid">
+
+      <div class="method-card">
+        <div class="method-icon">🔬</div>
+        <div class="method-name">Website Carbon Calculator</div>
+        <div class="method-desc">Misura le emissioni di CO₂ per ogni caricamento di pagina, considerando: peso dati trasferiti, efficienza energetica del data center, mix energetico della rete, dispositivo dell'utente.</div>
+        <a href="https://www.websitecarbon.com" target="_blank" class="method-link">websitecarbon.com →</a>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon">🌿</div>
+        <div class="method-name">Green Web Foundation</div>
+        <div class="method-desc">Database pubblico dei data center alimentati da energia rinnovabile. Certificazione verificabile in tempo reale da qualsiasi utente tramite API pubblica e database aperto.</div>
+        <a href="https://www.thegreenwebfoundation.org" target="_blank" class="method-link">thegreenwebfoundation.org →</a>
+      </div>
+
+      <div class="method-card">
+        <div class="method-icon">📊</div>
+        <div class="method-name">Matomo Analytics</div>
+        <div class="method-desc">Analytics self-hosted, senza cookie di terze parti. Fornisce il numero reale di pagine viste necessario per calcolare l'impatto aggregato. Privacy-first, GDPR-compliant.</div>
+        <a href="https://matomo.org" target="_blank" class="method-link">matomo.org →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICAZIONI -->
+<section class="section">
+  <div class="section-inner">
+    <div class="section-kicker">Certificazioni esterne</div>
+    <h2 class="section-title">Non ci credi? Verifica tu.</h2>
+    <p class="section-lead">Ogni certificazione è verificabile indipendentemente. Clicca il link, inserisci il dominio, vedi tu stesso.</p>
+    <div class="cert-row">
+      <div class="cert-badge">
+        <div class="cert-logo">🌐</div>
+        <div>
+          <div class="cert-name">Green Web Foundation</div>
+          <div class="cert-body">pianeta.green · rarafactory.com · susdef.it</div>
+          <a href="https://www.thegreenwebfoundation.org/green-web-check/" target="_blank" class="cert-verify">Verifica ora →</a>
+        </div>
+      </div>
+      <div class="cert-badge">
+        <div class="cert-logo">⚡</div>
+        <div>
+          <div class="cert-name">Website Carbon</div>
+          <div class="cert-body">Score A+ · 0.018g · top 3% siti mondiali</div>
+          <a href="https://www.websitecarbon.com/website/pianeta-green/" target="_blank" class="cert-verify">Verifica ora →</a>
+        </div>
+      </div>
+      <div class="cert-badge">
+        <div class="cert-logo">🔒</div>
+        <div>
+          <div class="cert-name">Matomo Analytics</div>
+          <div class="cert-body">Self-hosted · zero terze parti · GDPR nativo</div>
+          <a href="https://matomo.org" target="_blank" class="cert-verify">Scopri Matomo →</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPEGNI -->
+<section class="section" style="background:var(--pr-surface-2); border-top:1px solid var(--pr-border);">
+  <div class="section-inner">
+    <div class="section-kicker">I nostri impegni</div>
+    <h2 class="section-title">Cosa facciamo concretamente</h2>
+    <p class="section-lead">Non solo hosting. Un approccio sistematico per ridurre l'impatto di ogni sito nella rete.</p>
+    <div class="commit-grid">
+      <div class="commit-item">
+        <div class="commit-check">✓</div>
+        <div class="commit-body">
+          <strong>Infrastruttura 100% rinnovabile</strong>
+          <span>Server alimentati da sole, vento e idroelettrico. Certificato Green Web Foundation, verificabile in tempo reale da chiunque.</span>
+        </div>
+      </div>
+      <div class="commit-item">
+        <div class="commit-check">✓</div>
+        <div class="commit-body">
+          <strong>Codice leggero by default</strong>
+          <span>Template ottimizzati: font subset, immagini compresse, zero JS inutile. Ogni nuovo sito parte già da A o A+ GreenMeter.</span>
+        </div>
+      </div>
+      <div class="commit-item">
+        <div class="commit-check">✓</div>
+        <div class="commit-body">
+          <strong>Misura pubblica</strong>
+          <span>GreenMeter score visibile in footer su ogni sito della rete. Dati aggiornati ogni 30 giorni, metodologia dichiarata.</span>
+        </div>
+      </div>
+      <div class="commit-item">
+        <div class="commit-check">✓</div>
+        <div class="commit-body">
+          <strong>Compensazione del residuo</strong>
+          <span>Le emissioni che non si possono eliminare vengono compensate: alberi certificati, crediti carbon verificati da terze parti.</span>
+        </div>
+      </div>
+      <div class="commit-item">
+        <div class="commit-check">✓</div>
+        <div class="commit-body">
+          <strong>Analytics senza sorveglianza</strong>
+          <span>Matomo self-hosted su tutti i siti. Zero tracciamento cross-site, zero dati a Google, zero cookie di profilazione.</span>
+        </div>
+      </div>
+      <div class="commit-item">
+        <div class="commit-check">✓</div>
+        <div class="commit-body">
+          <strong>Trasparenza totale</strong>
+          <span>Questa pagina esiste. I dati sono reali. Chiunque può verificarli indipendentemente. Non nascondiamo niente.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-brand">Pianeta.green</div>
+  <div class="footer-links">
+    <a href="#">Privacy</a>
+    <a href="#">Cookie</a>
+    <a href="#">Contatti</a>
+    <a href="#">Metodologia completa</a>
+  </div>
+  <div class="footer-cert">🌿 Hosting 100% rinnovabile · GreenMeter A+</div>
+</footer>
+
+<script>
+  function setTheme(theme, btn) {
+    document.documentElement.setAttribute('data-theme', theme);
+    document.querySelectorAll('.ds-theme-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+  }
+  const urlTheme = new URLSearchParams(location.search).get('theme');
+  if (urlTheme) {
+    document.documentElement.setAttribute('data-theme', urlTheme);
+    document.querySelectorAll('.ds-theme-btn').forEach(b => {
+      b.classList.toggle('active', b.textContent.trim() === urlTheme);
+    });
+  }
+</script>
+
+</body>
+</html>
