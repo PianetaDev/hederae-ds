@@ -1,21 +1,12 @@
 /**
- * T5 Microsite Variants — Hederae DS v0.3.3
+ * T5 Microsite — Influencer Verde · Hederae DS v0.3.4
  *
- * Il prodotto T5 è il livello base di pianeta.green:
- * hosting green + microsite (landing) — tier di ingresso.
- *
- * Varianti disponibili:
- *   - T5 Landing    → La SaaS landing page di pianeta.green (showcase prodotto)
- *   - T5 Influencer → Microsite per influencer/consulente verde (personal brand)
- *   - T5 Produttore → Microsite per produttore locale / azienda agricola
- *
- * Ogni variante supporta 3 temi via URL param ?theme=
- * Storybook carica i template via iframe da /page-templates/
+ * Microsite per consulenti ambientali e content creator green.
+ * Brand entries: t5-verde (default) · t5-verde-scuro
+ * Tokens: css/themes/pianeta-green-t5.css
  */
 
 import { templateStory } from '../_template.js';
-
-// ─── T5 INFLUENCER VERDE ────────────────────────────────────────────────────
 
 export default {
   title: '🌿 Pianeta.green / T5 — Microsite Influencer Verde',
@@ -30,41 +21,33 @@ Incluso nel piano T5 pianeta.green (hosting green + microsite).
 
 **Sezioni:** Hero con stats reach · Chi sono + certificazioni · Dati audience · Servizi (4 card) · Contenuti recenti · Collaborazioni + case studies · Testimonianze · Form contatti
 
-**Temi:** \`verde-chiaro\` · \`verde-scuro\` · \`hedera\`
+**Brand:** \`t5-verde\` (chiaro, default) · \`t5-verde-scuro\` (dark) — commutabili via switcher in-page
 
-**SEO/AI-SEO:** Schema.org \`Person\` + \`OfferCatalog\`, meta \`ai-description\`, headings semantici, \`<article>\` per ogni servizio.
+**Token vocab:** Hederae DS · css/themes/pianeta-green-t5.css
+
+**SEO/AI-SEO:** Schema.org Person + OfferCatalog, meta ai-description.
         `.trim(),
       },
     },
   },
 };
 
-export const InfluencerVerdeCiaro = {
-  name: 'Influencer · verde-chiaro',
+export const InfluencerVerde = {
+  name: 'Influencer · t5-verde (chiaro, default)',
   render: () => templateStory({
-    src: 't5-influencer.html?theme=verde-chiaro',
-    label: 'T5 Influencer — verde-chiaro',
+    src: 't5-influencer.html',
+    label: 'T5 Influencer — t5-verde',
     brand: 'pianeta-green',
     state: 'Light',
   }),
 };
 
 export const InfluencerVerdescuro = {
-  name: 'Influencer · verde-scuro (dark)',
+  name: 'Influencer · t5-verde-scuro (dark)',
   render: () => templateStory({
-    src: 't5-influencer.html?theme=verde-scuro',
-    label: 'T5 Influencer — verde-scuro',
+    src: 't5-influencer.html?brand=t5-verde-scuro',
+    label: 'T5 Influencer — t5-verde-scuro',
     brand: 'pianeta-green',
     state: 'Dark',
-  }),
-};
-
-export const InfluencerHedera = {
-  name: 'Influencer · hedera',
-  render: () => templateStory({
-    src: 't5-influencer.html?theme=hedera',
-    label: 'T5 Influencer — hedera',
-    brand: 'pianeta-green',
-    state: 'Hedera',
   }),
 };

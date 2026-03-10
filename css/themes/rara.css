@@ -51,14 +51,16 @@
   --color-content-primary:   #f9f9f9;
   --color-content-secondary: rgba(249, 249, 249, 0.70);
   --color-content-disabled:  rgba(249, 249, 249, 0.35);
-  --color-content-inverse:   #0d1d1d;
-  --color-content-brand:     #8fdb7e;
+  --color-content-inverse:        #0d1d1d;
+  --color-content-inverse-muted:  rgba(13, 29, 29, 0.60);
+  --color-content-brand:          #8fdb7e;
   --color-content-accent:    #FF6B33;
 
   /* ─── Border ───────────────────────────────────────────────── */
 
   --color-border-default: rgba(249, 249, 249, 0.12);
   --color-border-subtle:  rgba(249, 249, 249, 0.06);
+  --color-border-strong:  rgba(249, 249, 249, 0.25);
   --color-border-brand:   #8fdb7e;
   --color-border-focus:   #8fdb7e;
 
@@ -107,9 +109,11 @@
 
   /* ─── Brand ────────────────────────────────────────────────── */
 
-  --color-brand-primary:   #8fdb7e;
-  --color-brand-secondary: #FF6B33;
-  --color-brand-muted:     rgba(143, 219, 126, 0.20);
+  --color-brand-primary:    #8fdb7e;
+  --color-brand-secondary:  #FF6B33;
+  --color-brand-muted:      rgba(143, 219, 126, 0.20);
+  --color-brand-warm:       #FF6B33;
+  --color-brand-warm-muted: rgba(255, 107, 51, 0.20);
 
   /* ─── Elevation / Shadows ──────────────────────────────────── */
 

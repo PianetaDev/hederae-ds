@@ -1,17 +1,9 @@
 /**
- * T5 Produttore Locale — Hederae DS v0.3.3
+ * T5 Microsite — Produttore Locale · Hederae DS v0.3.4
  *
  * Microsite per aziende agricole, produttori locali e artigiani alimentari.
- * Incluso nel piano T5 pianeta.green (hosting green + microsite).
- *
- * Sezioni: Hero + GreenMeter card · Cert strip · Chi siamo · Processo 4-step
- *          Catalogo prodotti (6 card) · GreenMeter breakdown · Dove siamo · Box abbonamento
- *
- * Tema "terra" (ocra/verde olivastro): nuovo nel DS — warm, earthy, agricolo.
- * Temi: terra · verde-chiaro · hedera
- *
- * SEO/AI-SEO: Schema.org LocalBusiness + Farm + Product, meta ai-description,
- *             GeoCoordinates, openingHoursSpecification, OfferCatalog con 4 Product.
+ * Brand entries: t5-terra (default, Lora serif) · t5-verde
+ * Tokens: css/themes/pianeta-green-t5.css
  */
 
 import { templateStory } from '../_template.js';
@@ -27,11 +19,13 @@ export default {
 
 Incluso nel piano T5 pianeta.green (hosting green + microsite).
 
-**Sezioni:** Hero + GreenMeter score card · Strip certificazioni · Chi siamo + timeline · Processo produttivo 4-step · Catalogo prodotti 6-card (riusa molecule ProductCard) · GreenMeter breakdown dettagliato · Dove siamo / mercati · Box settimanale abbonamento
+**Sezioni:** Hero + GreenMeter score card · Strip certificazioni · Chi siamo + timeline · Processo produttivo 4-step · Catalogo prodotti 6-card · GreenMeter breakdown · Dove siamo / mercati · Box abbonamento
 
-**Temi:** \`terra\` (nuovo — ocra/verde olivastro, Lora serif) · \`verde-chiaro\` · \`hedera\`
+**Brand:** \`t5-terra\` (earthy ocra + verde olivastro, Lora serif, default) · \`t5-verde\` (verde-chiaro)
 
-**SEO/AI-SEO:** Schema.org \`LocalBusiness\` + \`Farm\`, \`GeoCoordinates\`, \`openingHoursSpecification\`, \`OfferCatalog\` con \`Product\`, meta \`ai-description\`.
+**Token vocab:** Hederae DS · css/themes/pianeta-green-t5.css
+
+**SEO/AI-SEO:** Schema.org LocalBusiness + Farm, GeoCoordinates, openingHoursSpecification, OfferCatalog con Product.
         `.trim(),
       },
     },
@@ -39,31 +33,21 @@ Incluso nel piano T5 pianeta.green (hosting green + microsite).
 };
 
 export const ProduttoreTerra = {
-  name: 'Produttore · terra (earthy, default)',
+  name: 'Produttore · t5-terra (earthy, default)',
   render: () => templateStory({
-    src: 't5-produttore.html?theme=terra',
-    label: 'T5 Produttore — terra',
+    src: 't5-produttore.html',
+    label: 'T5 Produttore — t5-terra',
     brand: 'pianeta-green',
     state: 'Terra',
   }),
 };
 
-export const ProduttoreVerdeCiaro = {
-  name: 'Produttore · verde-chiaro',
+export const ProduttoreVerde = {
+  name: 'Produttore · t5-verde (chiaro)',
   render: () => templateStory({
-    src: 't5-produttore.html?theme=verde-chiaro',
-    label: 'T5 Produttore — verde-chiaro',
+    src: 't5-produttore.html?brand=t5-verde',
+    label: 'T5 Produttore — t5-verde',
     brand: 'pianeta-green',
     state: 'Light',
-  }),
-};
-
-export const ProduttoreHedera = {
-  name: 'Produttore · hedera',
-  render: () => templateStory({
-    src: 't5-produttore.html?theme=hedera',
-    label: 'T5 Produttore — hedera',
-    brand: 'pianeta-green',
-    state: 'Hedera',
   }),
 };

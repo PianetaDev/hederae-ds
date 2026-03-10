@@ -1,0 +1,544 @@
+/**
+ * Hederae DS — Pianeta.green T5 Themes
+ * Brand: Pianeta.green — T5 Microsite Suite
+ *
+ * 4 brand entries per il sistema T5:
+ *   t5-verde       → Influencer / Creator green (light)
+ *   t5-verde-scuro → Influencer / Creator green (dark)
+ *   t5-terra       → Produttore locale / Azienda agricola (warm earthy)
+ *   t5-energia     → Impresa green B2B (navy + electric blue + solar yellow)
+ *
+ * Usage:
+ *   <html data-brand="t5-verde">
+ *   <html data-brand="t5-terra">
+ *   <html data-brand="t5-energia">
+ *
+ * Fonts required (load in <head> of consuming page):
+ *   t5-verde, t5-verde-scuro, t5-energia:
+ *     Plus Jakarta Sans 400,500,600,700,800 + Inter 400,500,600
+ *   t5-terra:
+ *     Lora 400,600 italic variants + Inter 400,500,600
+ *
+ * Token vocab: Hederae DS semantic tokens (see css/themes/rara.css)
+ * Tokens marked [NEW] are additions to the Hederae vocab defined in rara.css.
+ */
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   T5-VERDE — Influencer Creator Green · Light
+   Palette: verde-chiaro · Plus Jakarta Sans + Inter
+───────────────────────────────────────────────────────────────────────────── */
+
+[data-brand="t5-verde"],
+.brand-t5-verde {
+
+  /* ─── Primitive Scale ─────────────────────────────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ───────────────────────────────────────── */
+
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* ─── Surface ─────────────────────────────────────────────── */
+
+  --color-surface-page:    #F7FAF7;
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-card:    #F0F7F0;
+  --color-surface-overlay: rgba(13, 31, 18, 0.85);
+  --color-surface-inverse: #0D2B1A;
+
+  /* ─── Content (Text & Icons) ──────────────────────────────── */
+
+  --color-content-primary:        #0D1F12;
+  --color-content-secondary:      #4A6655;
+  --color-content-disabled:       #7A9A85;
+  --color-content-inverse:        #E8FFF2;
+  --color-content-inverse-muted:  rgba(232, 255, 242, 0.60); /* [NEW] */
+  --color-content-brand:          #1A8C52;
+  --color-content-accent:         #E8A520;
+
+  /* ─── Border ──────────────────────────────────────────────── */
+
+  --color-border-default: rgba(26, 140, 82, 0.12);
+  --color-border-subtle:  rgba(26, 140, 82, 0.06);
+  --color-border-strong:  rgba(26, 140, 82, 0.22); /* [NEW] */
+  --color-border-brand:   #1A8C52;
+  --color-border-focus:   #1A8C52;
+
+  /* ─── Interactive — Primary (Green CTA) ──────────────────── */
+
+  --color-interactive-primary-bg:          #1A8C52;
+  --color-interactive-primary-bg-hover:    #157040;
+  --color-interactive-primary-bg-active:   #0F5530;
+  --color-interactive-primary-bg-disabled: rgba(26, 140, 82, 0.30);
+  --color-interactive-primary-label:       #FFFFFF;
+
+  /* ─── Interactive — Secondary (Outlined) ─────────────────── */
+
+  --color-interactive-secondary-bg:         transparent;
+  --color-interactive-secondary-bg-hover:   rgba(26, 140, 82, 0.08);
+  --color-interactive-secondary-border:     #1A8C52;
+  --color-interactive-secondary-label:      #1A8C52;
+
+  /* ─── Interactive — Ghost ─────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(13, 31, 18, 0.06);
+  --color-interactive-ghost-label:    #0D1F12;
+
+  /* ─── Interactive — Accent CTA (Warm Yellow) ─────────────── */
+
+  --color-interactive-accent-bg:       #E8A520;
+  --color-interactive-accent-bg-hover: #C47A00;
+  --color-interactive-accent-label:    #FFFFFF;
+
+  /* ─── Interactive — Link ──────────────────────────────────── */
+
+  --color-link-default: #1A8C52;
+  --color-link-hover:   #157040;
+  --color-link-visited: rgba(26, 140, 82, 0.70);
+
+  /* ─── Feedback ────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   rgba(26, 140, 82, 0.12);
+  --color-feedback-success-text: #1A8C52;
+  --color-feedback-warning-bg:   rgba(232, 165, 32, 0.15);
+  --color-feedback-warning-text: #C47A00;
+  --color-feedback-error-bg:     rgba(239, 68, 68, 0.12);
+  --color-feedback-error-text:   #ef4444;
+  --color-feedback-info-bg:      rgba(59, 130, 246, 0.12);
+  --color-feedback-info-text:    #3b82f6;
+
+  /* ─── Brand ───────────────────────────────────────────────── */
+
+  --color-brand-primary:    #1A8C52;
+  --color-brand-secondary:  #E8A520;
+  --color-brand-muted:      #E6F5EE;
+  --color-brand-warm:       #E8A520; /* [NEW] */
+  --color-brand-warm-muted: #FDF4DC; /* [NEW] */
+
+  /* ─── Elevation / Shadows ─────────────────────────────────── */
+
+  --shadow-sm:         0 2px 12px rgba(13, 31, 18, 0.08);
+  --shadow-md:         0 4px 20px rgba(13, 31, 18, 0.10);
+  --shadow-lg:         0 8px 32px rgba(13, 31, 18, 0.12);
+  --shadow-glow-brand: 0 0 24px 0 rgba(26, 140, 82, 0.20);
+
+  /* ─── Motion ──────────────────────────────────────────────── */
+
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   T5-VERDE-SCURO — Influencer Creator Green · Dark
+   Palette: verde-scuro · Plus Jakarta Sans + Inter
+───────────────────────────────────────────────────────────────────────────── */
+
+[data-brand="t5-verde-scuro"],
+.brand-t5-verde-scuro {
+
+  /* ─── Primitive Scale ─────────────────────────────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ───────────────────────────────────────── */
+
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* ─── Surface ─────────────────────────────────────────────── */
+
+  --color-surface-page:    #060E09;
+  --color-surface-raised:  #0D1F12;
+  --color-surface-card:    #152B1C;
+  --color-surface-overlay: rgba(6, 14, 9, 0.92);
+  --color-surface-inverse: #060E09;
+
+  /* ─── Content (Text & Icons) ──────────────────────────────── */
+
+  --color-content-primary:        #E8FFF2;
+  --color-content-secondary:      #7ACC9A;
+  --color-content-disabled:       #4A9966;
+  --color-content-inverse:        #E8FFF2;
+  --color-content-inverse-muted:  rgba(232, 255, 242, 0.60); /* [NEW] */
+  --color-content-brand:          #5BD48A;
+  --color-content-accent:         #F0C040;
+
+  /* ─── Border ──────────────────────────────────────────────── */
+
+  --color-border-default: rgba(91, 212, 138, 0.15);
+  --color-border-subtle:  rgba(91, 212, 138, 0.07);
+  --color-border-strong:  rgba(91, 212, 138, 0.28); /* [NEW] */
+  --color-border-brand:   #5BD48A;
+  --color-border-focus:   #5BD48A;
+
+  /* ─── Interactive — Primary (Green CTA) ──────────────────── */
+
+  --color-interactive-primary-bg:          #5BD48A;
+  --color-interactive-primary-bg-hover:    #4DC47A;
+  --color-interactive-primary-bg-active:   #3AAE60;
+  --color-interactive-primary-bg-disabled: rgba(91, 212, 138, 0.25);
+  --color-interactive-primary-label:       #060E09;
+
+  /* ─── Interactive — Secondary (Outlined) ─────────────────── */
+
+  --color-interactive-secondary-bg:         transparent;
+  --color-interactive-secondary-bg-hover:   rgba(91, 212, 138, 0.10);
+  --color-interactive-secondary-border:     #5BD48A;
+  --color-interactive-secondary-label:      #5BD48A;
+
+  /* ─── Interactive — Ghost ─────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(232, 255, 242, 0.08);
+  --color-interactive-ghost-label:    #E8FFF2;
+
+  /* ─── Interactive — Accent CTA (Gold) ────────────────────── */
+
+  --color-interactive-accent-bg:       #F0C040;
+  --color-interactive-accent-bg-hover: #D4A520;
+  --color-interactive-accent-label:    #060E09;
+
+  /* ─── Interactive — Link ──────────────────────────────────── */
+
+  --color-link-default: #5BD48A;
+  --color-link-hover:   #4DC47A;
+  --color-link-visited: rgba(91, 212, 138, 0.60);
+
+  /* ─── Feedback ────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   rgba(91, 212, 138, 0.12);
+  --color-feedback-success-text: #5BD48A;
+  --color-feedback-warning-bg:   rgba(240, 192, 64, 0.15);
+  --color-feedback-warning-text: #F0C040;
+  --color-feedback-error-bg:     rgba(239, 68, 68, 0.15);
+  --color-feedback-error-text:   #ef4444;
+  --color-feedback-info-bg:      rgba(59, 130, 246, 0.15);
+  --color-feedback-info-text:    #3b82f6;
+
+  /* ─── Brand ───────────────────────────────────────────────── */
+
+  --color-brand-primary:    #5BD48A;
+  --color-brand-secondary:  #F0C040;
+  --color-brand-muted:      rgba(91, 212, 138, 0.12);
+  --color-brand-warm:       #F0C040; /* [NEW] */
+  --color-brand-warm-muted: rgba(240, 192, 64, 0.15); /* [NEW] */
+
+  /* ─── Elevation / Shadows ─────────────────────────────────── */
+
+  --shadow-sm:         0 2px 12px rgba(0, 0, 0, 0.40);
+  --shadow-md:         0 4px 20px rgba(0, 0, 0, 0.45);
+  --shadow-lg:         0 8px 32px rgba(0, 0, 0, 0.50);
+  --shadow-glow-brand: 0 0 24px 0 rgba(91, 212, 138, 0.25);
+
+  /* ─── Motion ──────────────────────────────────────────────── */
+
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   T5-TERRA — Produttore Locale / Azienda Agricola · Warm Earthy
+   Palette: terra · Lora (display serif) + Inter
+───────────────────────────────────────────────────────────────────────────── */
+
+[data-brand="t5-terra"],
+.brand-t5-terra {
+
+  /* ─── Primitive Scale ─────────────────────────────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ───────────────────────────────────────── */
+
+  --font-display: "Lora", Georgia, serif;
+  --font-heading: "Lora", Georgia, serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* ─── Surface ─────────────────────────────────────────────── */
+
+  --color-surface-page:    #FAF5ED;
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-card:    #F3EBD9;
+  --color-surface-overlay: rgba(42, 31, 14, 0.85);
+  --color-surface-inverse: #2A1F0E;
+
+  /* ─── Content (Text & Icons) ──────────────────────────────── */
+
+  --color-content-primary:        #2A1F0E;
+  --color-content-secondary:      #6B5840;
+  --color-content-disabled:       #9C8060;
+  --color-content-inverse:        #FFF8EC;
+  --color-content-inverse-muted:  rgba(255, 248, 236, 0.60); /* [NEW] */
+  --color-content-brand:          #5B8C3E;
+  --color-content-accent:         #C47A2B;
+
+  /* ─── Border ──────────────────────────────────────────────── */
+
+  --color-border-default: rgba(90, 60, 20, 0.10);
+  --color-border-subtle:  rgba(90, 60, 20, 0.05);
+  --color-border-strong:  rgba(90, 60, 20, 0.20); /* [NEW] */
+  --color-border-brand:   #5B8C3E;
+  --color-border-focus:   #5B8C3E;
+
+  /* ─── Interactive — Primary (Olive Green CTA) ─────────────── */
+
+  --color-interactive-primary-bg:          #5B8C3E;
+  --color-interactive-primary-bg-hover:    #4A7230;
+  --color-interactive-primary-bg-active:   #3A5A24;
+  --color-interactive-primary-bg-disabled: rgba(91, 140, 62, 0.30);
+  --color-interactive-primary-label:       #FFFFFF;
+
+  /* ─── Interactive — Secondary (Outlined) ─────────────────── */
+
+  --color-interactive-secondary-bg:         transparent;
+  --color-interactive-secondary-bg-hover:   rgba(91, 140, 62, 0.08);
+  --color-interactive-secondary-border:     #5B8C3E;
+  --color-interactive-secondary-label:      #5B8C3E;
+
+  /* ─── Interactive — Ghost ─────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(42, 31, 14, 0.06);
+  --color-interactive-ghost-label:    #2A1F0E;
+
+  /* ─── Interactive — Accent CTA (Ochre) ───────────────────── */
+
+  --color-interactive-accent-bg:       #C47A2B;
+  --color-interactive-accent-bg-hover: #A86220;
+  --color-interactive-accent-label:    #FFFFFF;
+
+  /* ─── Interactive — Link ──────────────────────────────────── */
+
+  --color-link-default: #5B8C3E;
+  --color-link-hover:   #4A7230;
+  --color-link-visited: rgba(91, 140, 62, 0.70);
+
+  /* ─── Feedback ────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   rgba(91, 140, 62, 0.12);
+  --color-feedback-success-text: #5B8C3E;
+  --color-feedback-warning-bg:   rgba(196, 122, 43, 0.15);
+  --color-feedback-warning-text: #C47A2B;
+  --color-feedback-error-bg:     rgba(239, 68, 68, 0.12);
+  --color-feedback-error-text:   #ef4444;
+  --color-feedback-info-bg:      rgba(59, 130, 246, 0.12);
+  --color-feedback-info-text:    #3b82f6;
+
+  /* ─── Brand ───────────────────────────────────────────────── */
+
+  --color-brand-primary:    #5B8C3E;
+  --color-brand-secondary:  #C47A2B;
+  --color-brand-muted:      #EAF2E4;
+  --color-brand-warm:       #C47A2B; /* [NEW] */
+  --color-brand-warm-muted: #F9EDD8; /* [NEW] */
+
+  /* ─── Elevation / Shadows ─────────────────────────────────── */
+
+  --shadow-sm:         0 2px 10px rgba(42, 31, 14, 0.07);
+  --shadow-md:         0 4px 16px rgba(42, 31, 14, 0.09);
+  --shadow-lg:         0 8px 28px rgba(42, 31, 14, 0.12);
+  --shadow-glow-brand: 0 0 24px 0 rgba(91, 140, 62, 0.20);
+
+  /* ─── Motion ──────────────────────────────────────────────── */
+
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+
+/* ─────────────────────────────────────────────────────────────────────────────
+   T5-ENERGIA — Impresa Green B2B · Navy + Electric Blue + Solar Yellow
+   Palette: energia · Plus Jakarta Sans + Inter
+───────────────────────────────────────────────────────────────────────────── */
+
+[data-brand="t5-energia"],
+.brand-t5-energia {
+
+  /* ─── Primitive Scale ─────────────────────────────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   8px;
+  --radius-md:   16px;
+  --radius-lg:   24px;
+  --radius-xl:   32px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ───────────────────────────────────────── */
+
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-heading: "Plus Jakarta Sans", sans-serif;
+  --font-body:    "Inter", sans-serif;
+
+  /* ─── Surface ─────────────────────────────────────────────── */
+
+  --color-surface-page:    #F0F3F9;
+  --color-surface-raised:  #FFFFFF;
+  --color-surface-card:    #E8EEF8;
+  --color-surface-overlay: rgba(11, 22, 40, 0.88);
+  --color-surface-inverse: #0B1628;
+
+  /* ─── Content (Text & Icons) ──────────────────────────────── */
+
+  --color-content-primary:        #0B1628;
+  --color-content-secondary:      #374970;
+  --color-content-disabled:       #6B7FA3;
+  --color-content-inverse:        #EFF6FF;
+  --color-content-inverse-muted:  rgba(239, 246, 255, 0.60); /* [NEW] */
+  --color-content-brand:          #1D4ED8;
+  --color-content-accent:         #F59E0B;
+
+  /* ─── Border ──────────────────────────────────────────────── */
+
+  --color-border-default: rgba(29, 78, 216, 0.10);
+  --color-border-subtle:  rgba(29, 78, 216, 0.05);
+  --color-border-strong:  rgba(29, 78, 216, 0.20); /* [NEW] */
+  --color-border-brand:   #1D4ED8;
+  --color-border-focus:   #1D4ED8;
+
+  /* ─── Interactive — Primary (Blue CTA) ───────────────────── */
+
+  --color-interactive-primary-bg:          #1D4ED8;
+  --color-interactive-primary-bg-hover:    #1A3FBB;
+  --color-interactive-primary-bg-active:   #1535A0;
+  --color-interactive-primary-bg-disabled: rgba(29, 78, 216, 0.30);
+  --color-interactive-primary-label:       #FFFFFF;
+
+  /* ─── Interactive — Secondary (Outlined) ─────────────────── */
+
+  --color-interactive-secondary-bg:         transparent;
+  --color-interactive-secondary-bg-hover:   rgba(29, 78, 216, 0.08);
+  --color-interactive-secondary-border:     #1D4ED8;
+  --color-interactive-secondary-label:      #1D4ED8;
+
+  /* ─── Interactive — Ghost ─────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(11, 22, 40, 0.06);
+  --color-interactive-ghost-label:    #0B1628;
+
+  /* ─── Interactive — Accent CTA (Solar Yellow) ────────────── */
+
+  --color-interactive-accent-bg:       #F59E0B;
+  --color-interactive-accent-bg-hover: #D97708;
+  --color-interactive-accent-label:    #0B1628;
+
+  /* ─── Interactive — Link ──────────────────────────────────── */
+
+  --color-link-default: #1D4ED8;
+  --color-link-hover:   #1A3FBB;
+  --color-link-visited: rgba(29, 78, 216, 0.70);
+
+  /* ─── Feedback ────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   rgba(34, 197, 94, 0.12);
+  --color-feedback-success-text: #22C55E;
+  --color-feedback-warning-bg:   rgba(245, 158, 11, 0.15);
+  --color-feedback-warning-text: #F59E0B;
+  --color-feedback-error-bg:     rgba(239, 68, 68, 0.12);
+  --color-feedback-error-text:   #ef4444;
+  --color-feedback-info-bg:      rgba(29, 78, 216, 0.12);
+  --color-feedback-info-text:    #1D4ED8;
+
+  /* ─── Brand ───────────────────────────────────────────────── */
+
+  --color-brand-primary:    #1D4ED8;
+  --color-brand-secondary:  #F59E0B;
+  --color-brand-muted:      #DBEAFE;
+  --color-brand-warm:       #F59E0B; /* [NEW] */
+  --color-brand-warm-muted: #FEF3C7; /* [NEW] */
+
+  /* ─── Elevation / Shadows ─────────────────────────────────── */
+
+  --shadow-sm:         0 2px 10px rgba(11, 22, 40, 0.07);
+  --shadow-md:         0 4px 16px rgba(11, 22, 40, 0.09);
+  --shadow-lg:         0 8px 28px rgba(11, 22, 40, 0.12);
+  --shadow-glow-brand: 0 0 24px 0 rgba(29, 78, 216, 0.20);
+
+  /* ─── Motion ──────────────────────────────────────────────── */
+
+  --duration-fast:    100ms;
+  --duration-normal:  200ms;
+  --duration-slow:    350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
