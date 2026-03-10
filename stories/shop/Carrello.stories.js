@@ -1,7 +1,7 @@
 import { templateStory } from '../_template.js';
 
 export default {
-  title: 'Shop (generico)/Carrello',
+  title: '🌿 Pianeta.green / Shop/Carrello',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -14,10 +14,10 @@ export default {
 
 export const CarrelloPieno = {
   name: 'Carrello con prodotti',
-  render: () => templateStory({ src: 'shop-carrello.html', label: 'Carrello', brand: 'generic', state: '3 prodotti' }),
+  render: () => templateStory({ src: 'shop-carrello.html', label: 'Carrello', brand: 'pianeta-green', state: '3 prodotti' }),
 };
 
 export const CarrelloVuoto = {
   name: 'Carrello vuoto',
-  render: () => templateStory({ src: 'shop-carrello.html', label: 'Carrello', brand: 'generic', state: 'Vuoto' }),
+  render: () => templateStory({ src: 'shop-carrello.html', label: 'Carrello', brand: 'pianeta-green', state: 'Vuoto' }),
 };

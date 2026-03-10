@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="it" data-brand="generic">
+<html lang="it" data-brand="pianeta-green">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,16 +8,37 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --color-surface-page:#FFFFFF; --color-surface-raised:#F7F7F7; --color-surface-card:#F0F0F0;
-      --color-surface-deep:#E0E0E0; --color-surface-inverse:#111111;
-      --color-content-primary:#111111; --color-content-secondary:#6B6B6B; --color-content-disabled:#BBBBBB;
-      --color-border-default:#E5E5E5; --color-border-strong:#111111;
-      --color-feedback-success-bg:#E6F4EA; --color-feedback-success-text:#1B7A3E;
-      --color-feedback-warning-bg:#FFF8E1; --color-feedback-warning-text:#856400;
-      --color-feedback-error-bg:#FDECEA; --color-feedback-error-text:#C62828;
-      --font-display:'IBM Plex Serif',Georgia,serif; --font-body:'IBM Plex Sans',system-ui,sans-serif; --font-ui:'IBM Plex Mono',monospace;
-      --radius-pill:40px; --radius-card:12px;
+[data-brand="pianeta-green"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F2FAF7;
+      --color-surface-card:    #E6F5ED;
+      --color-surface-deep:    #CEEADB;
+      --color-surface-inverse: #0D3D26;
+      --color-content-primary:   #0F2218;
+      --color-content-secondary: #4D7060;
+      --color-content-disabled:  #9BB9A9;
+      --color-content-inverse:   #FFFFFF;
+      --color-border-default:    rgba(31,138,92,0.18);
+      --color-border-strong:     #0D3D26;
+      --color-interactive-primary-bg:       #1F8A5C;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-text:     #FFFFFF;
+      --color-interactive-primary-bg-hover: #197A50;
+      --color-feedback-success-bg:   #D1FAE5; --color-feedback-success-text: #065F46;
+      --color-feedback-warning-bg:   #FEF3C7; --color-feedback-warning-text: #92400E;
+      --color-feedback-error-bg:     #FEE2E2; --color-feedback-error-text:   #991B1B;
+      --color-feedback-info-bg:      #DBEAFE; --color-feedback-info-text:    #1E40AF;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-pill:  40px;
+      --radius-card:  12px;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --shadow-sm:    0 1px 2px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.07);
+      --shadow-md:    0 4px 6px -1px rgba(15,34,24,0.08);
     }
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
     body{background:var(--color-surface-page);color:var(--color-content-primary);font-family:var(--font-body);font-size:15px;line-height:1.5;-webkit-font-smoothing:antialiased;}

@@ -1,7 +1,7 @@
 import { templateStory } from '../_template.js';
 
 export default {
-  title: 'Shop (generico)/Scheda prodotto',
+  title: '🌿 Pianeta.green / Shop/Scheda prodotto',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -14,10 +14,10 @@ export default {
 
 export const Disponibile = {
   name: 'Disponibile',
-  render: () => templateStory({ src: 'shop-prodotto.html', label: 'Scheda prodotto', brand: 'generic', state: 'Disponibile' }),
+  render: () => templateStory({ src: 'shop-prodotto.html', label: 'Scheda prodotto', brand: 'pianeta-green', state: 'Disponibile' }),
 };
 
 export const Esaurito = {
   name: 'Esaurito + notify me',
-  render: () => templateStory({ src: 'shop-prodotto.html', label: 'Scheda prodotto', brand: 'generic', state: 'Esaurito' }),
+  render: () => templateStory({ src: 'shop-prodotto.html', label: 'Scheda prodotto', brand: 'pianeta-green', state: 'Esaurito' }),
 };

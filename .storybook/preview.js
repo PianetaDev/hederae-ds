@@ -2,6 +2,7 @@ import '../css/themes/susdef.css';
 import '../css/themes/agesci.css';
 import '../css/themes/rara.css';
 import '../css/themes/corner-table.css';
+import '../css/themes/pianeta-green.css';
 
 /** @type { import('@storybook/html').Preview } */
 const preview = {
@@ -13,10 +14,11 @@ const preview = {
         title: '🎨 Brand',
         icon: 'paintbrush',
         items: [
-          { value: 'susdef',       title: 'Susdef — Fondazione Sviluppo Sostenibile' },
-          { value: 'agesci',       title: 'AGESCI — Scouts' },
-          { value: 'rara',         title: 'Rara' },
-          { value: 'corner-table', title: 'Corner Table' },
+          { value: 'susdef',          title: 'Susdef — Fondazione Sviluppo Sostenibile' },
+          { value: 'agesci',          title: 'AGESCI — Scouts' },
+          { value: 'pianeta-green',   title: 'Pianeta.green — Pianeta Studio' },
+          { value: 'rara',            title: 'Rara' },
+          { value: 'corner-table',    title: 'Corner Table' },
         ],
         dynamicTitle: true,
       },

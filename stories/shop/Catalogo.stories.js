@@ -1,7 +1,7 @@
 import { templateStory } from '../_template.js';
 
 export default {
-  title: 'Shop (generico)/Catalogo prodotti',
+  title: '🌿 Pianeta.green / Shop/Catalogo prodotti',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -14,10 +14,10 @@ export default {
 
 export const ConRisultati = {
   name: 'Con prodotti',
-  render: () => templateStory({ src: 'shop-catalogo.html', label: 'Catalogo prodotti', brand: 'generic', state: 'Con risultati' }),
+  render: () => templateStory({ src: 'shop-catalogo.html', label: 'Catalogo prodotti', brand: 'pianeta-green', state: 'Con risultati' }),
 };
 
 export const NessunRisultato = {
   name: 'Nessun risultato',
-  render: () => templateStory({ src: 'shop-catalogo.html', label: 'Catalogo prodotti', brand: 'generic', state: 'Nessun risultato' }),
+  render: () => templateStory({ src: 'shop-catalogo.html', label: 'Catalogo prodotti', brand: 'pianeta-green', state: 'Nessun risultato' }),
 };

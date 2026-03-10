@@ -222,7 +222,7 @@
       </div>
       <div class="meta-row">
         <span class="meta-label">Brand attivi</span>
-        <span class="meta-value">Susdef · AGESCI · Rara · Corner Table</span>
+        <span class="meta-value">Pianeta.green · Susdef · AGESCI · Rara · Corner Table</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Profilo attuale</span>
@@ -309,10 +309,24 @@
 <section id="brand">
   <div class="container">
     <div class="section-label">02 — Brand coverage</div>
-    <h2>4 brand · 1 DS</h2>
+    <h2>5 brand · 1 DS</h2>
     <p class="lead">Ogni brand ha token JSON, CSS theme e viene mostrato nel brand switcher di Storybook. Lo stato indica quanto il brand è documentato con stories e template reali.</p>
 
     <div class="brand-grid">
+
+      <div class="brand-card" style="border-top:3px solid #1F8A5C;">
+        <div class="brand-name" style="color:#1F8A5C;">Pianeta.green</div>
+        <div class="brand-type">Commerce + Vetrina — Profilo B · interno Pianeta Studio</div>
+        <div class="brand-check">
+          <div class="brand-check-row"><span>CSS theme</span><span class="tag tag-done">✓ fatto 10/03</span></div>
+          <div class="brand-check-row"><span>Brand switcher Storybook</span><span class="tag tag-done">✓ fatto 10/03</span></div>
+          <div class="brand-check-row"><span>Template Home landing</span><span class="tag tag-done">✓ fatto 10/03</span></div>
+          <div class="brand-check-row"><span>Shop (catalogo, prodotto, carrello, checkout)</span><span class="tag tag-done">✓ rebrandato 10/03</span></div>
+          <div class="brand-check-row"><span>GreenMeter — ex Pianeta.Meter</span><span class="tag tag-partial">~ token, vedi pivot #2</span></div>
+          <div class="brand-check-row"><span>Template pagine vendita</span><span class="tag tag-todo">— in arrivo</span></div>
+          <div class="brand-check-row"><span>Token JSON / Tailwind config</span><span class="tag tag-todo">— da fare</span></div>
+        </div>
+      </div>
 
       <div class="brand-card">
         <div class="brand-name">Susdef</div>
@@ -400,6 +414,27 @@
       </div>
     </div>
 
+    <!-- PIVOT 2 — 10 marzo 2026 -->
+    <div class="pivot-box">
+      <div class="pivot-date">Pivot #2 — 10 Marzo 2026</div>
+      <div class="pivot-title">Pianeta.Meter → GreenMeter</div>
+      <p class="pivot-desc">Il prodotto di misurazione impatto ambientale precedentemente denominato <strong>Pianeta.Meter</strong> viene rinominato <strong>GreenMeter</strong>. Il nuovo nome è più universale, non legato all'ombrello Pianeta Studio, e si posiziona meglio come prodotto autonomo all'interno della piattaforma Pianeta.green. Il DS aggiorna tutti i riferimenti: CSS token <code>--color-greenmeter-*</code>, content nelle storie e nei template.</p>
+      <div class="pivot-before-after">
+        <div class="pivot-col pivot-col-before">
+          <div class="pivot-col-label">Prima</div>
+          <div class="pivot-item">Prodotto: Pianeta.Meter</div>
+          <div class="pivot-item">Nome legato al brand Pianeta Studio</div>
+          <div class="pivot-item">Percepito come feature interna</div>
+        </div>
+        <div class="pivot-col pivot-col-after">
+          <div class="pivot-col-label">Adesso</div>
+          <div class="pivot-item">Prodotto: GreenMeter</div>
+          <div class="pivot-item">Nome autonomo, universale</div>
+          <div class="pivot-item">Posizionato come prodotto flagship Pianeta.green</div>
+        </div>
+      </div>
+    </div>
+
     <!-- AGGIUNGI NUOVI PIVOT SOPRA QUESTA RIGA -->
 
   </div>
@@ -415,6 +450,28 @@
     <div class="log">
 
       <!-- ENTRY: aggiungere nuove IN CIMA a questa lista -->
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot pivot"></div>
+        <div class="log-body">
+          <div class="log-type type-pivot">PIVOT</div>
+          <div class="log-heading">Pianeta.Meter → GreenMeter · rinomina prodotto</div>
+          <div class="log-detail">Il prodotto di misurazione impatto ambientale viene rinominato GreenMeter. Aggiornati CSS token nel tema pianeta-green.css (<code>--color-greenmeter-*</code>), template home Pianeta.green, documentazione STATUS.</div>
+          <div class="log-tags"><span class="log-tag">prodotto</span><span class="log-tag">pivot #2</span><span class="log-tag">pianeta.green</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feature">FEATURE</div>
+          <div class="log-heading">Brand Pianeta.green aggiunto al DS</div>
+          <div class="log-detail">Creati: <code>css/themes/pianeta-green.css</code> (token completi, WCAG AA, emerald green + bright mint), template <code>pianeta-green-home.html</code> con hero, piani hosting, GreenMeter feature, testimonial e footer. Shop rebrandato da <em>generic</em> a <em>pianeta-green</em> (4 template). Nuova sezione "Pianeta.green" nel Storybook sidebar. Brand switcher aggiornato a 5 brand.</div>
+          <div class="log-tags"><span class="log-tag">brand</span><span class="log-tag">pianeta.green</span><span class="log-tag">shop</span><span class="log-tag">home</span></div>
+        </div>
+      </div>
 
       <div class="log-entry">
         <div class="log-date">8 mar 2026</div>
@@ -633,7 +690,7 @@
         <ol class="instruction-steps">
           <li class="instruction-step"><span class="step-num">1</span>Vai su <a href="https://pianetadev.github.io/hederae-ds/" target="_blank">pianetadev.github.io/hederae-ds</a></li>
           <li class="instruction-step"><span class="step-num">2</span>Usa il menu a sinistra per navigare tra Token, Atoms, Molecules, pagine brand</li>
-          <li class="instruction-step"><span class="step-num">3</span>In alto a destra: selettore brand (Susdef / AGESCI / Rara / Corner Table) per vedere gli stessi componenti con colori/font diversi</li>
+          <li class="instruction-step"><span class="step-num">3</span>In alto a destra: selettore brand (Pianeta.green / Susdef / AGESCI / Rara / Corner Table) per vedere gli stessi componenti con colori/font diversi</li>
           <li class="instruction-step"><span class="step-num">4</span>Usa il viewport selector per vedere mobile/tablet/desktop</li>
         </ol>
         <div class="instruction-note">Il Storybook si aggiorna automaticamente ad ogni commit su <code>main</code>. Il deploy impiega ~30 secondi.</div>
@@ -678,7 +735,7 @@
 
 <footer class="page-footer">
   <span><strong>Hederae DS</strong> — Pianeta Studio S.r.l. Società Benefit — Documento interno</span>
-  <span>v0.2.0 · 8 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
+  <span>v0.3.0 · 10 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
 </footer>
 
 </body>

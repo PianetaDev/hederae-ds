@@ -1,7 +1,7 @@
 import { templateStory } from '../_template.js';
 
 export default {
-  title: 'Shop (generico)/Checkout',
+  title: '🌿 Pianeta.green / Shop/Checkout',
   parameters: {
     layout: 'fullscreen',
     docs: {
@@ -14,20 +14,20 @@ export default {
 
 export const Step1Indirizzo = {
   name: 'Step 1 — Indirizzo',
-  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'generic', state: 'Step 1: Indirizzo' }),
+  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'pianeta-green', state: 'Step 1: Indirizzo' }),
 };
 
 export const Step2Spedizione = {
   name: 'Step 2 — Spedizione',
-  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'generic', state: 'Step 2: Spedizione' }),
+  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'pianeta-green', state: 'Step 2: Spedizione' }),
 };
 
 export const Step3Pagamento = {
   name: 'Step 3 — Pagamento',
-  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'generic', state: 'Step 3: Pagamento' }),
+  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'pianeta-green', state: 'Step 3: Pagamento' }),
 };
 
 export const ConfermaOrdine = {
   name: 'Conferma ordine',
-  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'generic', state: 'Conferma ordine' }),
+  render: () => templateStory({ src: 'shop-checkout.html', label: 'Checkout', brand: 'pianeta-green', state: 'Conferma ordine' }),
 };

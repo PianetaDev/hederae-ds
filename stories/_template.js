@@ -10,9 +10,10 @@
  */
 export function templateStory({ src, label, brand = 'susdef', state = '' }) {
   const brandColors = {
-    susdef:  { bg: '#013E39', accent: '#D8EC28', text: '#FFFFFF' },
-    agesci:  { bg: '#000000', accent: '#FFFFFF', text: '#FFFFFF' },
-    generic: { bg: '#111111', accent: '#D8EC28', text: '#FFFFFF' },
+    susdef:          { bg: '#013E39', accent: '#D8EC28',  text: '#FFFFFF' },
+    agesci:          { bg: '#000000', accent: '#FFFFFF',  text: '#FFFFFF' },
+    'pianeta-green': { bg: '#0D3D26', accent: '#5BD48A',  text: '#FFFFFF' },
+    generic:         { bg: '#111111', accent: '#D8EC28',  text: '#FFFFFF' },
   };
   const c = brandColors[brand] || brandColors.generic;
 
