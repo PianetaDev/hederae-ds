@@ -25,13 +25,6 @@ export const PDPCMSPlusSito = () => templateStory({
   state: 'WIP',
 });
 PDPCMSPlusSito.storyName = '🔴 WIP PDP CMS + Sito';
-export const Payment = () => templateStory({
-  src: 'pg-payment.html',
-  label: '🟢 Done Payment (Stripe)',
-  brand: 'pianeta-green',
-  state: 'DONE',
-});
-Payment.storyName = '🟢 Done Payment (Stripe)';
 export const Checkout = () => templateStory({
   src: 'pg-checkout.html',
   label: '🟡 Review Checkout',
