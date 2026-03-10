@@ -306,45 +306,216 @@
       color: var(--color-content-secondary);
     }
 
-    /* ─── CERCA BAR ─── */
-    .search-bar-section {
-      background: var(--color-surface-raised);
-      border-top: 1px solid var(--color-border-default);
-      border-bottom: 1px solid var(--color-border-default);
-      padding: 32px 0;
+    /* ─── PROMPT WIDGET ─── */
+    .prompt-section {
+      background: var(--color-surface-inverse);
+      padding: 56px 0 48px;
     }
-    .search-bar-inner { display: flex; gap: 12px; align-items: center; }
-    .search-input {
-      flex: 1;
-      height: 48px; padding: 0 16px;
-      background: var(--color-surface-page);
-      border: 1px solid var(--color-border-default);
-      border-radius: 4px;
-      font-family: var(--font-body); font-size: 16px;
-      color: var(--color-content-primary);
-      outline: none;
-      transition: border-color 0.15s;
+    .prompt-eyebrow {
+      font-family: var(--font-ui);
+      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-brand-accent);
+      margin-bottom: 10px;
     }
-    .search-input:focus { border-color: var(--color-border-focus); }
-    .search-input::placeholder { color: var(--color-content-disabled); }
-    .search-btn {
-      height: 48px; padding: 0 20px;
-      background: var(--color-interactive-primary-bg);
-      color: var(--color-interactive-primary-label);
-      font-family: var(--font-body); font-size: 14px; font-weight: 600;
-      border: none; border-radius: 4px; cursor: pointer;
+    .prompt-title {
+      font-family: var(--font-display);
+      font-size: clamp(24px, 3vw, 36px); font-weight: 400;
+      color: var(--color-content-inverse);
+      margin-bottom: 28px; line-height: 1.25;
+    }
+    .prompt-title em { font-style: italic; opacity: 0.7; }
+
+    /* the box */
+    .prompt-box {
+      background: rgba(255,255,255,0.06);
+      border: 1.5px solid rgba(255,255,255,0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .prompt-box:focus-within {
+      border-color: var(--color-brand-accent);
+      box-shadow: 0 0 0 3px rgba(216,236,40,0.12);
+    }
+
+    /* rotating placeholder row */
+    .prompt-placeholder-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 14px 18px 0;
+      pointer-events: none; user-select: none;
+      min-height: 28px;
+    }
+    .prompt-rotate-label {
+      font-family: var(--font-ui);
+      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: rgba(255,255,255,0.3);
       white-space: nowrap;
     }
-    .search-btn:hover { background: var(--color-interactive-primary-bg-hover); }
-    .search-hint {
-      font-size: 13px; color: var(--color-content-secondary);
-      margin-top: 10px; font-family: var(--font-ui);
+    .prompt-rotate-track {
+      position: relative; flex: 1; height: 20px; overflow: hidden;
     }
-    .search-hint kbd {
-      background: var(--color-surface-card);
-      border: 1px solid var(--color-border-default);
-      border-radius: 3px; padding: 1px 5px;
-      font-size: 11px;
+    .prompt-rotate-slot {
+      position: absolute; width: 100%;
+      font-size: 13px; font-style: italic;
+      color: rgba(255,255,255,0.4);
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      opacity: 0; transform: translateY(100%);
+    }
+    .prompt-rotate-slot.visible { opacity: 1; transform: translateY(0); }
+    .prompt-rotate-slot.exit   { opacity: 0; transform: translateY(-100%); }
+
+    /* textarea */
+    .prompt-textarea {
+      display: block; width: 100%;
+      padding: 12px 18px 10px;
+      background: transparent;
+      border: none; outline: none; resize: none;
+      font-family: var(--font-body); font-size: 16px; line-height: 1.6;
+      color: var(--color-content-inverse);
+      min-height: 64px; max-height: 200px;
+      overflow-y: auto;
+    }
+    .prompt-textarea::placeholder { color: rgba(255,255,255,0.25); }
+
+    /* attachments strip (hidden by default) */
+    .prompt-attachments {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 0 18px 10px;
+    }
+    .prompt-attachments:empty { display: none; }
+    .attach-chip {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-ui); font-size: 12px;
+      padding: 4px 10px 4px 8px;
+      background: rgba(216,236,40,0.12);
+      border: 1px solid rgba(216,236,40,0.3);
+      border-radius: 100px;
+      color: var(--color-brand-accent);
+    }
+    .attach-chip svg { width: 12px; height: 12px; opacity: 0.7; }
+    .attach-chip-remove {
+      width: 14px; height: 14px; cursor: pointer;
+      border-radius: 50%; background: rgba(255,255,255,0.1);
+      display: flex; align-items: center; justify-content: center;
+      border: none; color: inherit; padding: 0; line-height: 1;
+      font-size: 10px; transition: background 0.12s;
+    }
+    .attach-chip-remove:hover { background: rgba(255,255,255,0.25); }
+
+    /* action bar */
+    .prompt-actions {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 14px 14px;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+    .prompt-icon-btn {
+      display: flex; align-items: center; justify-content: center;
+      width: 34px; height: 34px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 8px; cursor: pointer;
+      color: rgba(255,255,255,0.55);
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      position: relative;
+    }
+    .prompt-icon-btn:hover {
+      background: rgba(255,255,255,0.12);
+      color: white;
+      border-color: rgba(255,255,255,0.25);
+    }
+    .prompt-icon-btn svg { width: 16px; height: 16px; }
+    .prompt-icon-btn input[type="file"] {
+      position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
+    }
+    .prompt-icon-btn-label {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: rgba(255,255,255,0.3);
+      white-space: nowrap;
+    }
+    .prompt-divider {
+      width: 1px; height: 20px;
+      background: rgba(255,255,255,0.1);
+      margin: 0 4px;
+    }
+    .prompt-send-btn {
+      margin-left: auto;
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 18px;
+      background: var(--color-brand-accent);
+      color: #013E39;
+      font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+      letter-spacing: 0.04em;
+      border: none; border-radius: 8px; cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+    }
+    .prompt-send-btn:hover { opacity: 0.9; transform: translateY(-1px); }
+    .prompt-send-btn:active { transform: none; }
+    .prompt-send-btn svg { width: 15px; height: 15px; }
+
+    /* suggestion chips */
+    .prompt-suggestions {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 16px;
+    }
+    .prompt-suggestion {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px;
+      padding: 7px 14px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 100px;
+      color: rgba(255,255,255,0.65);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+      white-space: nowrap;
+    }
+    .prompt-suggestion:hover {
+      background: rgba(216,236,40,0.1);
+      border-color: rgba(216,236,40,0.3);
+      color: var(--color-brand-accent);
+    }
+    .prompt-suggestion svg { width: 13px; height: 13px; opacity: 0.5; }
+
+    /* link modal backdrop */
+    .link-modal-backdrop {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.5); z-index: 300;
+      align-items: center; justify-content: center;
+    }
+    .link-modal-backdrop.open { display: flex; }
+    .link-modal {
+      background: #0d4b44; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 12px; padding: 24px; width: 400px; max-width: 90vw;
+    }
+    .link-modal h3 {
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-brand-accent);
+      margin-bottom: 12px;
+    }
+    .link-modal input {
+      width: 100%; padding: 10px 14px;
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
+      font-size: 14px; color: white; outline: none;
+      font-family: var(--font-body);
+      transition: border-color 0.15s;
+    }
+    .link-modal input::placeholder { color: rgba(255,255,255,0.3); }
+    .link-modal input:focus { border-color: var(--color-brand-accent); }
+    .link-modal-actions {
+      display: flex; justify-content: flex-end; gap: 8px; margin-top: 14px;
+    }
+    .link-modal-cancel {
+      padding: 8px 14px; background: transparent;
+      border: 1px solid rgba(255,255,255,0.15); border-radius: 6px;
+      color: rgba(255,255,255,0.6); font-size: 13px; cursor: pointer;
+    }
+    .link-modal-confirm {
+      padding: 8px 16px;
+      background: var(--color-brand-accent); color: #013E39;
+      border: none; border-radius: 6px;
+      font-size: 13px; font-weight: 600; cursor: pointer;
     }
 
     /* ─── NEWSLETTER CTA ─── */
@@ -493,22 +664,84 @@
     </div>
   </section>
 
-  <!-- ─── SEARCH BAR ─── -->
-  <div class="search-bar-section" role="search">
+  <!-- ─── PROMPT WIDGET ─── -->
+  <section class="prompt-section" aria-label="Chiedi alla biblioteca">
     <div class="container">
-      <div class="search-bar-inner">
-        <input
-          type="search"
-          class="search-input"
-          placeholder="Cerca per titolo, autore, parola chiave…"
-          aria-label="Cerca nella biblioteca"
-        >
-        <button class="search-btn" type="button">Cerca</button>
+      <p class="prompt-eyebrow">Chiedi alla biblioteca</p>
+      <h2 class="prompt-title">Cosa vuoi esplorare oggi?<br><em>Un prompt, una parola chiave, un documento.</em></h2>
+
+      <div class="prompt-box" id="prompt-box">
+
+        <!-- rotating suggestion row -->
+        <div class="prompt-placeholder-row" aria-hidden="true">
+          <span class="prompt-rotate-label">Suggerito →</span>
+          <div class="prompt-rotate-track" id="rotate-track">
+            <span class="prompt-rotate-slot visible" id="rslot-0"></span>
+            <span class="prompt-rotate-slot" id="rslot-1"></span>
+          </div>
+        </div>
+
+        <!-- textarea -->
+        <textarea
+          class="prompt-textarea"
+          id="prompt-input"
+          placeholder="Scrivi la tua domanda…"
+          rows="2"
+          aria-label="Inserisci un prompt o una domanda"
+        ></textarea>
+
+        <!-- attachments preview -->
+        <div class="prompt-attachments" id="attachments-row" role="list" aria-label="Allegati"></div>
+
+        <!-- action bar -->
+        <div class="prompt-actions">
+
+          <!-- attach file -->
+          <button class="prompt-icon-btn" title="Allega un documento" aria-label="Allega documento">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
+            </svg>
+            <input type="file" accept=".pdf,.doc,.docx,.txt,.csv,.xls,.xlsx" multiple onchange="handleFiles(this.files)" aria-hidden="true" tabindex="-1">
+          </button>
+          <span class="prompt-icon-btn-label">Allega</span>
+
+          <div class="prompt-divider"></div>
+
+          <!-- link URL -->
+          <button class="prompt-icon-btn" title="Aggiungi un link" aria-label="Aggiungi link" onclick="openLinkModal()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+            </svg>
+          </button>
+          <span class="prompt-icon-btn-label">Link</span>
+
+          <!-- send -->
+          <button class="prompt-send-btn" onclick="sendPrompt()" aria-label="Invia">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <line x1="22" y1="2" x2="11" y2="13"/>
+              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+            </svg>
+            Cerca
+          </button>
+        </div>
+      </div><!-- /prompt-box -->
+
+      <!-- suggested prompts -->
+      <div class="prompt-suggestions" id="prompt-suggestions-row" role="list" aria-label="Prompt suggeriti"></div>
+
+    </div>
+  </section>
+
+  <!-- link modal -->
+  <div class="link-modal-backdrop" id="link-modal" role="dialog" aria-modal="true" aria-label="Aggiungi link">
+    <div class="link-modal">
+      <h3>Aggiungi un link</h3>
+      <input type="url" id="link-input" placeholder="https://esempio.it/documento" autocomplete="off">
+      <div class="link-modal-actions">
+        <button class="link-modal-cancel" onclick="closeLinkModal()">Annulla</button>
+        <button class="link-modal-confirm" onclick="confirmLink()">Aggiungi</button>
       </div>
-      <p class="search-hint">
-        Premi <kbd>⌘K</kbd> per aprire la ricerca avanzata — oppure
-        <a href="search.html" style="color:var(--color-content-brand);">vai alla pagina di ricerca completa</a>
-      </p>
     </div>
   </div>
 
@@ -735,6 +968,136 @@
       <span class="footer-copy">© 2025 · Template Hederae DS v0.2.0 · Brand: Susdef</span>
     </div>
   </footer>
+
+
+<script>
+// ── Rotating prompts ──────────────────────────────────────────────────
+const rotatingPrompts = [
+  'Cerca le normative UE sull\'economia circolare aggiornate al 2024',
+  'Quali sono i dati sulla produzione fotovoltaica in Italia negli ultimi 5 anni?',
+  'Trova casi studio di rigenerazione urbana sostenibile nelle città medie',
+  'Report PNRR: stato di avanzamento delle misure per la mobilità verde',
+  'Confronta gli incentivi per le energie rinnovabili in Italia e Germania',
+  'Trova documenti sull\'agroecologia e la PAC 2023-2027',
+];
+
+let rIdx = 0, rSlot = 0;
+function initRotating() {
+  document.getElementById('rslot-0').textContent = rotatingPrompts[0];
+  setInterval(() => {
+    const next = (rIdx + 1) % rotatingPrompts.length;
+    const cur = document.getElementById('rslot-' + rSlot);
+    const nxt = document.getElementById('rslot-' + (1 - rSlot));
+    nxt.textContent = rotatingPrompts[next];
+    nxt.style.transform = 'translateY(100%)'; nxt.style.opacity = '0';
+    nxt.classList.add('visible');
+    setTimeout(() => {
+      cur.style.transform = 'translateY(-100%)'; cur.style.opacity = '0';
+      nxt.style.transform = 'translateY(0)'; nxt.style.opacity = '1';
+    }, 20);
+    setTimeout(() => { cur.classList.remove('visible'); cur.style.cssText = ''; }, 500);
+    rIdx = next; rSlot = 1 - rSlot;
+  }, 4000);
+}
+
+// ── Suggestion chips ──────────────────────────────────────────────────
+const suggestions = [
+  { icon: '⚡', text: 'Energia solare in Italia 2024' },
+  { icon: '♻️', text: 'Economia circolare PMI' },
+  { icon: '🌿', text: 'Agroecologia e PAC' },
+  { icon: '🚌', text: 'Mobilità sostenibile PNRR' },
+  { icon: '🏙️', text: 'Green city best practice' },
+  { icon: '📊', text: 'Dati riciclo per regione' },
+];
+
+function renderSuggestions() {
+  document.getElementById('prompt-suggestions-row').innerHTML =
+    suggestions.map(s => `
+      <button class="prompt-suggestion" onclick="fillPrompt('${s.text}')" role="listitem">
+        <span>${s.icon}</span> ${s.text}
+      </button>
+    `).join('');
+}
+
+function fillPrompt(text) {
+  const ta = document.getElementById('prompt-input');
+  ta.value = text;
+  ta.focus();
+}
+
+// ── Attachments ───────────────────────────────────────────────────────
+const attachments = []; // { type: 'file'|'link', label, icon }
+
+function handleFiles(files) {
+  Array.from(files).forEach(f => {
+    attachments.push({ type: 'file', label: f.name, icon: '📎' });
+  });
+  renderAttachments();
+}
+
+function openLinkModal() {
+  document.getElementById('link-modal').classList.add('open');
+  setTimeout(() => document.getElementById('link-input').focus(), 50);
+}
+function closeLinkModal() {
+  document.getElementById('link-modal').classList.remove('open');
+  document.getElementById('link-input').value = '';
+}
+function confirmLink() {
+  const url = document.getElementById('link-input').value.trim();
+  if (!url) return;
+  try {
+    const hostname = new URL(url).hostname;
+    attachments.push({ type: 'link', label: hostname, icon: '🔗' });
+  } catch(e) {
+    attachments.push({ type: 'link', label: url.slice(0, 40), icon: '🔗' });
+  }
+  renderAttachments();
+  closeLinkModal();
+}
+
+function removeAttachment(i) {
+  attachments.splice(i, 1);
+  renderAttachments();
+}
+
+function renderAttachments() {
+  document.getElementById('attachments-row').innerHTML =
+    attachments.map((a, i) => `
+      <span class="attach-chip" role="listitem">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          ${a.type === 'file'
+            ? '<path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>'
+            : '<path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>'}
+        </svg>
+        ${a.label}
+        <button class="attach-chip-remove" onclick="removeAttachment(${i})" aria-label="Rimuovi ${a.label}">×</button>
+      </span>
+    `).join('');
+}
+
+// ── Close modal on backdrop click ─────────────────────────────────────
+document.getElementById('link-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeLinkModal();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLinkModal();
+  if (e.key === 'Enter' && document.getElementById('link-modal').classList.contains('open')) {
+    e.preventDefault(); confirmLink();
+  }
+});
+
+// ── Send (demo) ───────────────────────────────────────────────────────
+function sendPrompt() {
+  const q = document.getElementById('prompt-input').value.trim();
+  if (!q) return;
+  window.location.href = 'susdef-genui.html';
+}
+
+// ── Init ──────────────────────────────────────────────────────────────
+initRotating();
+renderSuggestions();
+</script>
 
 </body>
 </html>
