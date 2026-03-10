@@ -306,199 +306,263 @@
       color: var(--color-content-secondary);
     }
 
-    /* ─── PROMPT WIDGET ─── */
-    .prompt-section {
-      background: var(--color-surface-inverse);
-      padding: 56px 0 48px;
-    }
-    .prompt-eyebrow {
-      font-family: var(--font-ui);
-      font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
-      color: var(--color-brand-accent);
-      margin-bottom: 10px;
-    }
-    .prompt-title {
-      font-family: var(--font-display);
-      font-size: clamp(24px, 3vw, 36px); font-weight: 400;
-      color: var(--color-content-inverse);
-      margin-bottom: 28px; line-height: 1.25;
-    }
-    .prompt-title em { font-style: italic; opacity: 0.7; }
+    /* ─── PROMPT FLOAT ─── */
 
-    /* the box */
-    .prompt-box {
+    /* wrapper: full-viewport, pointer-events passthrough by default */
+    .pf-wrap {
+      position: fixed; inset: 0; z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 24px 24px 80px;
+      pointer-events: none;
+    }
+
+    /* the card */
+    .pf-card {
+      pointer-events: auto;
+      width: 100%; max-width: 620px;
+      background: rgba(0, 28, 24, 0.78);
+      backdrop-filter: blur(28px) saturate(160%);
+      -webkit-backdrop-filter: blur(28px) saturate(160%);
+      border: 1px solid rgba(216,236,40,0.22);
+      border-radius: 18px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.55), 0 0 0 1px rgba(255,255,255,0.04) inset;
+      transition: opacity 0.35s cubic-bezier(0.4,0,0.2,1),
+                  transform 0.35s cubic-bezier(0.4,0,0.2,1);
+      transform-origin: bottom center;
+      animation: pfIn 0.5s cubic-bezier(0.4,0,0.2,1) both;
+    }
+    @keyframes pfIn {
+      from { opacity: 0; transform: translateY(24px) scale(0.97); }
+      to   { opacity: 1; transform: none; }
+    }
+    .pf-card.pf-hidden {
+      opacity: 0;
+      transform: translateY(16px) scale(0.97);
+      pointer-events: none;
+    }
+
+    /* card header */
+    .pf-header {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.07);
+    }
+    .pf-header-text { flex: 1; }
+    .pf-eyebrow {
+      font-family: var(--font-ui); font-size: 10px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--color-brand-accent); opacity: 0.8;
+      margin-bottom: 4px;
+    }
+    .pf-title {
+      font-family: var(--font-display); font-size: 17px; font-weight: 400;
+      color: rgba(255,255,255,0.92); line-height: 1.3;
+    }
+    .pf-title em { font-style: italic; color: rgba(255,255,255,0.5); }
+    .pf-dismiss {
+      width: 28px; height: 28px; flex-shrink: 0;
       background: rgba(255,255,255,0.06);
-      border: 1.5px solid rgba(255,255,255,0.15);
-      border-radius: 12px;
-      overflow: hidden;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .prompt-box:focus-within {
-      border-color: var(--color-brand-accent);
-      box-shadow: 0 0 0 3px rgba(216,236,40,0.12);
-    }
-
-    /* rotating placeholder row */
-    .prompt-placeholder-row {
-      display: flex; align-items: center; gap: 10px;
-      padding: 14px 18px 0;
-      pointer-events: none; user-select: none;
-      min-height: 28px;
-    }
-    .prompt-rotate-label {
-      font-family: var(--font-ui);
-      font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
-      color: rgba(255,255,255,0.3);
-      white-space: nowrap;
-    }
-    .prompt-rotate-track {
-      position: relative; flex: 1; height: 20px; overflow: hidden;
-    }
-    .prompt-rotate-slot {
-      position: absolute; width: 100%;
-      font-size: 13px; font-style: italic;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 7px; cursor: pointer;
       color: rgba(255,255,255,0.4);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 16px; line-height: 1;
+      transition: background 0.15s, color 0.15s;
+    }
+    .pf-dismiss:hover { background: rgba(255,255,255,0.12); color: white; }
+
+    /* rotating hint */
+    .pf-hint-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 18px 0;
+      pointer-events: none; user-select: none; min-height: 26px;
+    }
+    .pf-hint-label {
+      font-family: var(--font-ui); font-size: 9px;
+      letter-spacing: 0.14em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); white-space: nowrap;
+    }
+    .pf-rotate-track {
+      position: relative; flex: 1; height: 18px; overflow: hidden;
+    }
+    .pf-rotate-slot {
+      position: absolute; width: 100%;
+      font-size: 12px; font-style: italic;
+      color: rgba(255,255,255,0.35);
       white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
       transition: opacity 0.4s ease, transform 0.4s ease;
       opacity: 0; transform: translateY(100%);
     }
-    .prompt-rotate-slot.visible { opacity: 1; transform: translateY(0); }
-    .prompt-rotate-slot.exit   { opacity: 0; transform: translateY(-100%); }
+    .pf-rotate-slot.visible { opacity: 1; transform: translateY(0); }
 
     /* textarea */
-    .prompt-textarea {
+    .pf-textarea {
       display: block; width: 100%;
-      padding: 12px 18px 10px;
-      background: transparent;
-      border: none; outline: none; resize: none;
-      font-family: var(--font-body); font-size: 16px; line-height: 1.6;
-      color: var(--color-content-inverse);
-      min-height: 64px; max-height: 200px;
-      overflow-y: auto;
+      padding: 10px 18px 8px;
+      background: transparent; border: none; outline: none; resize: none;
+      font-family: var(--font-body); font-size: 15px; line-height: 1.65;
+      color: rgba(255,255,255,0.9);
+      min-height: 56px; max-height: 160px; overflow-y: auto;
     }
-    .prompt-textarea::placeholder { color: rgba(255,255,255,0.25); }
+    .pf-textarea::placeholder { color: rgba(255,255,255,0.2); }
 
-    /* attachments strip (hidden by default) */
-    .prompt-attachments {
+    /* attachments */
+    .pf-attachments {
       display: flex; flex-wrap: wrap; gap: 6px;
-      padding: 0 18px 10px;
+      padding: 0 18px 8px;
     }
-    .prompt-attachments:empty { display: none; }
+    .pf-attachments:empty { display: none; }
     .attach-chip {
       display: inline-flex; align-items: center; gap: 6px;
-      font-family: var(--font-ui); font-size: 12px;
+      font-family: var(--font-ui); font-size: 11px;
       padding: 4px 10px 4px 8px;
-      background: rgba(216,236,40,0.12);
-      border: 1px solid rgba(216,236,40,0.3);
-      border-radius: 100px;
-      color: var(--color-brand-accent);
+      background: rgba(216,236,40,0.1); border: 1px solid rgba(216,236,40,0.25);
+      border-radius: 100px; color: var(--color-brand-accent);
     }
-    .attach-chip svg { width: 12px; height: 12px; opacity: 0.7; }
+    .attach-chip svg { width: 11px; height: 11px; opacity: 0.7; }
     .attach-chip-remove {
       width: 14px; height: 14px; cursor: pointer;
       border-radius: 50%; background: rgba(255,255,255,0.1);
       display: flex; align-items: center; justify-content: center;
-      border: none; color: inherit; padding: 0; line-height: 1;
+      border: none; color: inherit; padding: 0;
       font-size: 10px; transition: background 0.12s;
     }
-    .attach-chip-remove:hover { background: rgba(255,255,255,0.25); }
+    .attach-chip-remove:hover { background: rgba(255,255,255,0.2); }
 
     /* action bar */
-    .prompt-actions {
-      display: flex; align-items: center; gap: 8px;
-      padding: 10px 14px 14px;
-      border-top: 1px solid rgba(255,255,255,0.08);
+    .pf-actions {
+      display: flex; align-items: center; gap: 6px;
+      padding: 8px 14px 14px;
+      border-top: 1px solid rgba(255,255,255,0.07);
     }
-    .prompt-icon-btn {
+    .pf-icon-btn {
       display: flex; align-items: center; justify-content: center;
-      width: 34px; height: 34px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 8px; cursor: pointer;
-      color: rgba(255,255,255,0.55);
+      width: 32px; height: 32px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 7px; cursor: pointer;
+      color: rgba(255,255,255,0.45);
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       position: relative;
     }
-    .prompt-icon-btn:hover {
-      background: rgba(255,255,255,0.12);
-      color: white;
-      border-color: rgba(255,255,255,0.25);
+    .pf-icon-btn:hover {
+      background: rgba(255,255,255,0.1); color: white;
+      border-color: rgba(255,255,255,0.2);
     }
-    .prompt-icon-btn svg { width: 16px; height: 16px; }
-    .prompt-icon-btn input[type="file"] {
+    .pf-icon-btn svg { width: 15px; height: 15px; }
+    .pf-icon-btn input[type="file"] {
       position: absolute; inset: 0; opacity: 0; cursor: pointer; width: 100%;
     }
-    .prompt-icon-btn-label {
-      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
-      text-transform: uppercase; color: rgba(255,255,255,0.3);
-      white-space: nowrap;
+    .pf-icon-label {
+      font-family: var(--font-ui); font-size: 9px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.25); white-space: nowrap;
     }
-    .prompt-divider {
-      width: 1px; height: 20px;
-      background: rgba(255,255,255,0.1);
-      margin: 0 4px;
+    .pf-divider {
+      width: 1px; height: 18px; background: rgba(255,255,255,0.08); margin: 0 4px;
     }
-    .prompt-send-btn {
+    .pf-send {
       margin-left: auto;
-      display: flex; align-items: center; gap: 8px;
+      display: flex; align-items: center; gap: 7px;
       padding: 8px 18px;
-      background: var(--color-brand-accent);
-      color: #013E39;
-      font-family: var(--font-ui); font-size: 13px; font-weight: 600;
-      letter-spacing: 0.04em;
+      background: var(--color-brand-accent); color: #013E39;
+      font-family: var(--font-ui); font-size: 12px; font-weight: 600;
+      letter-spacing: 0.05em;
       border: none; border-radius: 8px; cursor: pointer;
       transition: opacity 0.15s, transform 0.1s;
     }
-    .prompt-send-btn:hover { opacity: 0.9; transform: translateY(-1px); }
-    .prompt-send-btn:active { transform: none; }
-    .prompt-send-btn svg { width: 15px; height: 15px; }
+    .pf-send:hover { opacity: 0.9; transform: translateY(-1px); }
+    .pf-send:active { transform: none; }
+    .pf-send svg { width: 14px; height: 14px; }
 
     /* suggestion chips */
-    .prompt-suggestions {
-      display: flex; flex-wrap: wrap; gap: 8px;
-      margin-top: 16px;
+    .pf-suggestions {
+      display: flex; flex-wrap: wrap; gap: 6px;
+      padding: 12px 18px 16px;
+      border-top: 1px solid rgba(255,255,255,0.05);
     }
-    .prompt-suggestion {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: 13px;
-      padding: 7px 14px;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.12);
-      border-radius: 100px;
-      color: rgba(255,255,255,0.65);
+    .pf-suggestion {
+      display: inline-flex; align-items: center; gap: 5px;
+      font-size: 12px;
+      padding: 5px 12px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 100px; color: rgba(255,255,255,0.55);
       cursor: pointer;
       transition: background 0.15s, color 0.15s, border-color 0.15s;
       white-space: nowrap;
     }
-    .prompt-suggestion:hover {
+    .pf-suggestion:hover {
       background: rgba(216,236,40,0.1);
       border-color: rgba(216,236,40,0.3);
       color: var(--color-brand-accent);
     }
-    .prompt-suggestion svg { width: 13px; height: 13px; opacity: 0.5; }
 
-    /* link modal backdrop */
+    /* ── PILL (collapsed state) ── */
+    .pf-pill {
+      position: fixed; bottom: 24px; left: 50%;
+      transform: translateX(-50%) translateY(12px);
+      z-index: 200; pointer-events: none; opacity: 0;
+      display: flex; align-items: center; gap: 10px;
+      padding: 12px 20px 12px 14px;
+      background: rgba(0, 28, 24, 0.88);
+      backdrop-filter: blur(20px);
+      border: 1px solid rgba(216,236,40,0.25);
+      border-radius: 100px; cursor: pointer;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      white-space: nowrap;
+    }
+    .pf-pill.pf-pill-visible {
+      opacity: 1; pointer-events: auto;
+      transform: translateX(-50%) translateY(0);
+    }
+    .pf-pill-dot {
+      width: 7px; height: 7px;
+      background: var(--color-brand-accent); border-radius: 50%;
+      animation: dotPulse 2.4s ease infinite;
+    }
+    @keyframes dotPulse {
+      0%,100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.75); }
+    }
+    .pf-pill-text {
+      font-family: var(--font-body); font-size: 14px;
+      color: rgba(255,255,255,0.65);
+    }
+    .pf-pill-cta {
+      font-family: var(--font-ui); font-size: 10px;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--color-brand-accent); margin-left: 6px;
+    }
+    .pf-pill-icon {
+      display: flex; align-items: center; justify-content: center;
+      width: 26px; height: 26px;
+      background: rgba(216,236,40,0.12);
+      border-radius: 50%;
+    }
+    .pf-pill-icon svg { width: 13px; height: 13px; color: var(--color-brand-accent); }
+
+    /* link modal */
     .link-modal-backdrop {
       display: none; position: fixed; inset: 0;
-      background: rgba(0,0,0,0.5); z-index: 300;
+      background: rgba(0,0,0,0.6); z-index: 400;
       align-items: center; justify-content: center;
     }
     .link-modal-backdrop.open { display: flex; }
     .link-modal {
-      background: #0d4b44; border: 1px solid rgba(255,255,255,0.15);
-      border-radius: 12px; padding: 24px; width: 400px; max-width: 90vw;
+      background: #0c3d38; border: 1px solid rgba(255,255,255,0.15);
+      border-radius: 14px; padding: 24px; width: 400px; max-width: 90vw;
     }
     .link-modal h3 {
-      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.08em;
-      text-transform: uppercase; color: var(--color-brand-accent);
-      margin-bottom: 12px;
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-brand-accent); margin-bottom: 12px;
     }
     .link-modal input {
       width: 100%; padding: 10px 14px;
       background: rgba(255,255,255,0.08);
       border: 1px solid rgba(255,255,255,0.2); border-radius: 6px;
-      font-size: 14px; color: white; outline: none;
-      font-family: var(--font-body);
+      font-size: 14px; color: white; outline: none; font-family: var(--font-body);
       transition: border-color 0.15s;
     }
     .link-modal input::placeholder { color: rgba(255,255,255,0.3); }
@@ -512,10 +576,8 @@
       color: rgba(255,255,255,0.6); font-size: 13px; cursor: pointer;
     }
     .link-modal-confirm {
-      padding: 8px 16px;
-      background: var(--color-brand-accent); color: #013E39;
-      border: none; border-radius: 6px;
-      font-size: 13px; font-weight: 600; cursor: pointer;
+      padding: 8px 16px; background: var(--color-brand-accent); color: #013E39;
+      border: none; border-radius: 6px; font-size: 13px; font-weight: 600; cursor: pointer;
     }
 
     /* ─── NEWSLETTER CTA ─── */
@@ -664,74 +726,92 @@
     </div>
   </section>
 
-  <!-- ─── PROMPT WIDGET ─── -->
-  <section class="prompt-section" aria-label="Chiedi alla biblioteca">
-    <div class="container">
-      <p class="prompt-eyebrow">Chiedi alla biblioteca</p>
-      <h2 class="prompt-title">Cosa vuoi esplorare oggi?<br><em>Un prompt, una parola chiave, un documento.</em></h2>
+  <!-- ─── PROMPT FLOAT ─── -->
 
-      <div class="prompt-box" id="prompt-box">
+  <!-- wrapper: floating over the page -->
+  <div class="pf-wrap" id="pf-wrap" aria-label="Chiedi alla biblioteca">
+    <div class="pf-card" id="pf-card" role="search">
 
-        <!-- rotating suggestion row -->
-        <div class="prompt-placeholder-row" aria-hidden="true">
-          <span class="prompt-rotate-label">Suggerito →</span>
-          <div class="prompt-rotate-track" id="rotate-track">
-            <span class="prompt-rotate-slot visible" id="rslot-0"></span>
-            <span class="prompt-rotate-slot" id="rslot-1"></span>
-          </div>
+      <!-- header -->
+      <div class="pf-header">
+        <div class="pf-header-text">
+          <p class="pf-eyebrow">Chiedi alla biblioteca</p>
+          <p class="pf-title">Cosa vuoi esplorare? <em>Un prompt, un tema, un documento.</em></p>
         </div>
+        <button class="pf-dismiss" onclick="collapsePrompt()" aria-label="Minimizza">
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M2 2l10 10M12 2L2 12"/>
+          </svg>
+        </button>
+      </div>
 
-        <!-- textarea -->
-        <textarea
-          class="prompt-textarea"
-          id="prompt-input"
-          placeholder="Scrivi la tua domanda…"
-          rows="2"
-          aria-label="Inserisci un prompt o una domanda"
-        ></textarea>
-
-        <!-- attachments preview -->
-        <div class="prompt-attachments" id="attachments-row" role="list" aria-label="Allegati"></div>
-
-        <!-- action bar -->
-        <div class="prompt-actions">
-
-          <!-- attach file -->
-          <button class="prompt-icon-btn" title="Allega un documento" aria-label="Allega documento">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
-            </svg>
-            <input type="file" accept=".pdf,.doc,.docx,.txt,.csv,.xls,.xlsx" multiple onchange="handleFiles(this.files)" aria-hidden="true" tabindex="-1">
-          </button>
-          <span class="prompt-icon-btn-label">Allega</span>
-
-          <div class="prompt-divider"></div>
-
-          <!-- link URL -->
-          <button class="prompt-icon-btn" title="Aggiungi un link" aria-label="Aggiungi link" onclick="openLinkModal()">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-              <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
-              <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-            </svg>
-          </button>
-          <span class="prompt-icon-btn-label">Link</span>
-
-          <!-- send -->
-          <button class="prompt-send-btn" onclick="sendPrompt()" aria-label="Invia">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-              <line x1="22" y1="2" x2="11" y2="13"/>
-              <polygon points="22 2 15 22 11 13 2 9 22 2"/>
-            </svg>
-            Cerca
-          </button>
+      <!-- rotating hint -->
+      <div class="pf-hint-row" aria-hidden="true">
+        <span class="pf-hint-label">Oggi →</span>
+        <div class="pf-rotate-track" id="rotate-track">
+          <span class="pf-rotate-slot visible" id="rslot-0"></span>
+          <span class="pf-rotate-slot" id="rslot-1"></span>
         </div>
-      </div><!-- /prompt-box -->
+      </div>
 
-      <!-- suggested prompts -->
-      <div class="prompt-suggestions" id="prompt-suggestions-row" role="list" aria-label="Prompt suggeriti"></div>
+      <!-- textarea -->
+      <textarea
+        class="pf-textarea"
+        id="prompt-input"
+        placeholder="Scrivi la tua domanda…"
+        rows="2"
+        aria-label="Inserisci un prompt"
+      ></textarea>
+
+      <!-- attachments -->
+      <div class="pf-attachments" id="attachments-row" role="list" aria-label="Allegati"></div>
+
+      <!-- actions -->
+      <div class="pf-actions">
+        <button class="pf-icon-btn" title="Allega un documento" aria-label="Allega documento">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/>
+          </svg>
+          <input type="file" accept=".pdf,.doc,.docx,.txt,.csv,.xls,.xlsx" multiple onchange="handleFiles(this.files)" aria-hidden="true" tabindex="-1">
+        </button>
+        <span class="pf-icon-label">Allega</span>
+
+        <div class="pf-divider"></div>
+
+        <button class="pf-icon-btn" title="Aggiungi un link" aria-label="Aggiungi link" onclick="openLinkModal()">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/>
+            <path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
+          </svg>
+        </button>
+        <span class="pf-icon-label">Link</span>
+
+        <button class="pf-send" onclick="sendPrompt()" aria-label="Invia">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="22" y1="2" x2="11" y2="13"/>
+            <polygon points="22 2 15 22 11 13 2 9 22 2"/>
+          </svg>
+          Cerca
+        </button>
+      </div>
+
+      <!-- suggestions -->
+      <div class="pf-suggestions" id="pf-suggestions-row" role="list" aria-label="Prompt suggeriti"></div>
 
     </div>
-  </section>
+  </div><!-- /pf-wrap -->
+
+  <!-- pill (collapsed state) -->
+  <button class="pf-pill" id="pf-pill" onclick="expandPrompt()" aria-label="Apri ricerca">
+    <span class="pf-pill-icon">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/>
+      </svg>
+    </span>
+    <span class="pf-pill-text">Chiedi alla biblioteca</span>
+    <span class="pf-pill-cta">Esplora ✦</span>
+    <span class="pf-pill-dot"></span>
+  </button>
 
   <!-- link modal -->
   <div class="link-modal-backdrop" id="link-modal" role="dialog" aria-modal="true" aria-label="Aggiungi link">
@@ -1011,9 +1091,9 @@ const suggestions = [
 ];
 
 function renderSuggestions() {
-  document.getElementById('prompt-suggestions-row').innerHTML =
+  document.getElementById('pf-suggestions-row').innerHTML =
     suggestions.map(s => `
-      <button class="prompt-suggestion" onclick="fillPrompt('${s.text}')" role="listitem">
+      <button class="pf-suggestion" onclick="fillPrompt('${s.text.replace(/'/g, "\\'")}')" role="listitem">
         <span>${s.icon}</span> ${s.text}
       </button>
     `).join('');
@@ -1023,6 +1103,33 @@ function fillPrompt(text) {
   const ta = document.getElementById('prompt-input');
   ta.value = text;
   ta.focus();
+}
+
+// ── Float expand / collapse ───────────────────────────────────────────
+function collapsePrompt() {
+  document.getElementById('pf-card').classList.add('pf-hidden');
+  document.getElementById('pf-pill').classList.add('pf-pill-visible');
+}
+
+function expandPrompt() {
+  document.getElementById('pf-card').classList.remove('pf-hidden');
+  document.getElementById('pf-pill').classList.remove('pf-pill-visible');
+  setTimeout(() => document.getElementById('prompt-input').focus(), 350);
+}
+
+// auto-collapse after scrolling 60% of hero height
+function initScrollCollapse() {
+  const hero = document.querySelector('.hero');
+  if (!hero) return;
+  let collapsed = false;
+  window.addEventListener('scroll', () => {
+    const threshold = hero.offsetHeight * 0.55;
+    if (window.scrollY > threshold && !collapsed) {
+      collapsed = true; collapsePrompt();
+    } else if (window.scrollY <= threshold && collapsed) {
+      collapsed = false; expandPrompt();
+    }
+  }, { passive: true });
 }
 
 // ── Attachments ───────────────────────────────────────────────────────
@@ -1096,6 +1203,7 @@ function sendPrompt() {
 
 // ── Init ──────────────────────────────────────────────────────────────
 initRotating();
+initScrollCollapse();
 renderSuggestions();
 </script>
 
