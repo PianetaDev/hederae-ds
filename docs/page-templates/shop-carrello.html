@@ -63,7 +63,8 @@
 
     /* Site header */
     .sh-header{background:var(--color-surface-page);border-bottom:1px solid var(--color-border-default);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-    .sh-logo{font-family:var(--font-display);font-size:22px;font-weight:500;text-decoration:none;color:var(--color-content-primary);}
+    .sh-logo{font-family:var(--font-display);font-size:20px;font-weight:700;text-decoration:none;color:var(--color-content-primary);display:flex;align-items:center;gap:8px;}
+    .sh-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--color-brand-accent);flex-shrink:0;}
     .sh-nav{display:flex;gap:28px;}
     .sh-nav a{font-size:14px;color:var(--color-content-secondary);text-decoration:none;}
     .breadcrumb{padding:14px 32px;font-size:13px;color:var(--color-content-secondary);display:flex;gap:6px;}
@@ -170,7 +171,7 @@
   <!-- ═══════════════════════════════ CARRELLO CON PRODOTTI ═══════════ -->
   <div id="s-cart" class="page-preview">
     <header class="sh-header">
-      <a href="#" class="sh-logo">Negozio</a>
+      <a href="#" class="sh-logo"><span class="sh-logo-dot"></span>Pianeta.green</a>
       <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
     </header>
 
@@ -389,7 +390,7 @@
   <!-- ═══════════════════════════════ CARRELLO VUOTO ═════════════════ -->
   <div id="s-empty" class="page-preview" hidden>
     <header class="sh-header">
-      <a href="#" class="sh-logo">Negozio</a>
+      <a href="#" class="sh-logo"><span class="sh-logo-dot"></span>Pianeta.green</a>
       <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
     </header>
     <div style="max-width:1440px;margin:0 auto;padding:0 32px;">

@@ -65,7 +65,8 @@
 
     /* Site header */
     .sh-header{background:var(--color-surface-page);border-bottom:1px solid var(--color-border-default);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-    .sh-logo{font-family:var(--font-display);font-size:22px;font-weight:500;text-decoration:none;color:var(--color-content-primary);}
+    .sh-logo{font-family:var(--font-display);font-size:20px;font-weight:700;text-decoration:none;color:var(--color-content-primary);display:flex;align-items:center;gap:8px;}
+    .sh-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--color-brand-accent);flex-shrink:0;}
     .sh-nav{display:flex;gap:28px;}
     .sh-nav a{font-size:14px;color:var(--color-content-secondary);text-decoration:none;font-weight:500;}
     .sh-header-right{display:flex;gap:16px;align-items:center;}
@@ -225,7 +226,7 @@
   <!-- ═══════════════════════════════════ IN STOCK ═══════════════════════ -->
   <div id="s-instock" class="page-preview">
     <header class="sh-header">
-      <a href="#" class="sh-logo">Negozio</a>
+      <a href="#" class="sh-logo"><span class="sh-logo-dot"></span>Pianeta.green</a>
       <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
       <div class="sh-header-right">
         <a href="shop-carrello.html" class="sh-cart-btn">🛒 Carrello<span class="sh-cart-badge">3</span></a>
@@ -451,7 +452,7 @@
   <!-- ═══════════════════════════════ OUT OF STOCK ════════════════════ -->
   <div id="s-oos" class="page-preview" hidden>
     <header class="sh-header">
-      <a href="#" class="sh-logo">Negozio</a>
+      <a href="#" class="sh-logo"><span class="sh-logo-dot"></span>Pianeta.green</a>
       <nav class="sh-nav"><a href="#">Libri</a><a href="#">Uniformi</a><a href="#">Materiali</a><a href="#">Gadget</a></nav>
       <div class="sh-header-right">
         <a href="shop-carrello.html" class="sh-cart-btn">🛒 Carrello<span class="sh-cart-badge">3</span></a>

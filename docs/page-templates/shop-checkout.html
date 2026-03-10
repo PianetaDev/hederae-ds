@@ -65,7 +65,8 @@
 
     /* Simplified header for checkout */
     .co-header{background:var(--color-surface-page);border-bottom:1px solid var(--color-border-default);padding:0 32px;height:64px;display:flex;align-items:center;justify-content:space-between;}
-    .co-logo{font-family:var(--font-display);font-size:22px;font-weight:500;text-decoration:none;color:var(--color-content-primary);}
+    .co-logo{font-family:var(--font-display);font-size:20px;font-weight:700;text-decoration:none;color:var(--color-content-primary);display:flex;align-items:center;gap:8px;}
+    .co-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--color-brand-accent);flex-shrink:0;}
     .co-secure{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--color-content-secondary);}
 
     /* Progress indicator */
@@ -175,7 +176,8 @@
 
     /* ─── CONFIRMATION PAGE ─────────────────────────────── */
     .conf-header{background:var(--color-surface-inverse);padding:24px 32px;display:flex;align-items:center;gap:16px;}
-    .conf-logo{font-family:var(--font-display);font-size:22px;font-weight:500;color:white;text-decoration:none;}
+    .conf-logo{font-family:var(--font-display);font-size:20px;font-weight:700;color:white;text-decoration:none;display:flex;align-items:center;gap:8px;}
+    .conf-logo-dot{width:8px;height:8px;border-radius:50%;background:var(--color-brand-accent);flex-shrink:0;}
     .conf-layout{max-width:800px;margin:0 auto;padding:48px 32px;}
     .conf-success-box{background:var(--color-feedback-success-bg);border:1px solid #9ECAB1;border-radius:var(--radius-card);padding:32px;text-align:center;margin-bottom:40px;}
     .conf-check{font-size:48px;margin-bottom:12px;}
@@ -235,7 +237,7 @@
   <!-- ════════════════════════ STEP 1 — INDIRIZZO ════════════════════ -->
   <div id="s-step1" class="page-preview">
     <header class="co-header">
-      <a href="#" class="co-logo">Negozio</a>
+      <a href="#" class="co-logo"><span class="co-logo-dot"></span>Pianeta.green</a>
       <span class="co-secure">🔒 Checkout sicuro</span>
     </header>
 
@@ -372,7 +374,7 @@
 
   <!-- ════════════════════════ STEP 2 — SPEDIZIONE ═══════════════════ -->
   <div id="s-step2" class="page-preview" hidden>
-    <header class="co-header"><a href="#" class="co-logo">Negozio</a><span class="co-secure">🔒 Checkout sicuro</span></header>
+    <header class="co-header"><a href="#" class="co-logo"><span class="co-logo-dot"></span>Pianeta.green</a><span class="co-secure">🔒 Checkout sicuro</span></header>
     <div class="co-progress">
       <div class="co-progress-inner">
         <div class="co-step done"><span class="co-step-num"><span>1</span></span> Indirizzo</div>
@@ -436,7 +438,7 @@
 
   <!-- ════════════════════════ STEP 3 — PAGAMENTO ════════════════════ -->
   <div id="s-step3" class="page-preview" hidden>
-    <header class="co-header"><a href="#" class="co-logo">Negozio</a><span class="co-secure">🔒 Checkout sicuro</span></header>
+    <header class="co-header"><a href="#" class="co-logo"><span class="co-logo-dot"></span>Pianeta.green</a><span class="co-secure">🔒 Checkout sicuro</span></header>
     <div class="co-progress">
       <div class="co-progress-inner">
         <div class="co-step done"><span class="co-step-num"><span>1</span></span> Indirizzo</div>
@@ -637,7 +639,7 @@
   <!-- ════════════════════════ CONFERMA ORDINE ═══════════════════════ -->
   <div id="s-conf" class="page-preview" hidden>
     <header class="conf-header">
-      <a href="#" class="conf-logo">Negozio</a>
+      <a href="#" class="conf-logo"><span class="conf-logo-dot"></span>Pianeta.green</a>
     </header>
 
     <div class="conf-layout">
