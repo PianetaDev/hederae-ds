@@ -1,0 +1,1469 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SUSDEF · Documenti — Gen UI Demo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Serif:ital,wght@0,300;0,400;0,500;1,300;1,400&display=swap" rel="stylesheet">
+  <style>
+    /* ── Reset & tokens ─────────────────────────────────────────── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ui-01: #FBF9F7;
+      --ui-02: #F4F1EB;
+      --ui-03: #E9E3D7;
+      --ui-04: #212121;
+      --text-01: #212121;
+      --text-02: #6D6D69;
+      --text-03: #9E9E99;
+      --brand-dark: #013E39;
+      --brand-accent: #D8EC28;
+      --font-serif: 'IBM Plex Serif', Georgia, serif;
+      --font-sans: 'IBM Plex Sans', system-ui, sans-serif;
+      --font-mono: 'IBM Plex Mono', 'Courier New', monospace;
+      /* sector colors */
+      --s-energia: #2792B9;
+      --s-economia: #7B7BE8;
+      --s-mobilita: #CE9B62;
+      --s-greencity: #B9284F;
+      --s-agro: #E6A800;
+      --s-stati: #3DB890;
+      --s-eco: #FF7F00;
+      --s-corsi: #F26CB0;
+    }
+
+    body {
+      font-family: var(--font-sans);
+      background: var(--ui-01);
+      color: var(--text-01);
+      min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── Layout ─────────────────────────────────────────────────── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── Nav ────────────────────────────────────────────────────── */
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 48px;
+      border-bottom: 1px solid var(--ui-03);
+      background: var(--ui-01);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brand-dark);
+    }
+    .nav-logo span {
+      display: inline-block;
+      width: 8px; height: 8px;
+      background: var(--brand-accent);
+      border-radius: 50%;
+      margin-right: 8px;
+      vertical-align: middle;
+    }
+    .nav-back {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-02);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: none;
+      border: none;
+      padding: 6px 12px;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-back:hover { background: var(--ui-03); color: var(--text-01); }
+    .nav-back svg { width: 14px; height: 14px; }
+
+    /* ── GEN UI label ───────────────────────────────────────────── */
+    .genui-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 3px 8px;
+      background: var(--brand-dark);
+      color: var(--brand-accent);
+      border-radius: 3px;
+    }
+
+    /* ══ PAGE: SEARCH ═══════════════════════════════════════════════ */
+    .search-hero {
+      text-align: center;
+      padding: 80px 24px 48px;
+    }
+    .search-hero h1 {
+      font-family: var(--font-serif);
+      font-size: clamp(36px, 5vw, 56px);
+      font-weight: 400;
+      letter-spacing: -0.02em;
+      color: var(--text-01);
+      margin-bottom: 16px;
+    }
+    .search-hero p {
+      font-size: 16px;
+      color: var(--text-02);
+      line-height: 1.6;
+    }
+
+    /* search box */
+    .search-wrap {
+      max-width: 640px;
+      margin: 40px auto 0;
+      position: relative;
+    }
+    .search-input {
+      width: 100%;
+      padding: 18px 56px 18px 24px;
+      font-family: var(--font-sans);
+      font-size: 16px;
+      border: 1.5px solid var(--ui-03);
+      border-radius: 8px;
+      background: white;
+      color: var(--text-01);
+      outline: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .search-input:focus {
+      border-color: var(--brand-dark);
+      box-shadow: 0 0 0 3px rgba(1,62,57,0.08);
+    }
+    .search-btn {
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: var(--text-02);
+      padding: 4px;
+      transition: color 0.15s;
+    }
+    .search-btn:hover { color: var(--brand-dark); }
+    .search-btn svg { width: 22px; height: 22px; display: block; }
+
+    /* rotating prompt hint */
+    .prompt-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+      justify-content: center;
+    }
+    .prompt-hint-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-03);
+    }
+    .prompt-rotating {
+      font-size: 13px;
+      color: var(--text-02);
+      font-style: italic;
+      overflow: hidden;
+      height: 20px;
+      position: relative;
+    }
+    .prompt-rotating .r-slot {
+      display: block;
+      position: absolute;
+      width: 100%;
+      animation: none;
+      opacity: 0;
+      transform: translateY(100%);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      white-space: nowrap;
+    }
+    .prompt-rotating .r-slot.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    .prompt-rotating .r-slot.exit {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+
+    /* sections */
+    .section { max-width: 860px; margin: 0 auto; padding: 0 24px 56px; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-03);
+      margin-bottom: 20px;
+    }
+
+    /* sector grid */
+    .sector-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+      margin-bottom: 0;
+    }
+    @media (max-width: 700px) { .sector-grid { grid-template-columns: repeat(2, 1fr); } }
+    .sector-card {
+      background: white;
+      border: 1px solid var(--ui-03);
+      border-radius: 8px;
+      padding: 18px 16px;
+      cursor: pointer;
+      transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s;
+      position: relative;
+      overflow: hidden;
+    }
+    .sector-card:hover {
+      border-color: currentColor;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+      transform: translateY(-2px);
+    }
+    .sector-dot {
+      width: 10px; height: 10px;
+      border-radius: 50%;
+      margin-bottom: 12px;
+      display: block;
+    }
+    .sector-name {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-01);
+      line-height: 1.3;
+      margin-bottom: 4px;
+    }
+    .sector-count {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-03);
+    }
+    /* sector card hover strip */
+    .sector-card::after {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: currentColor;
+      opacity: 0;
+      transition: opacity 0.15s;
+      border-radius: 8px 0 0 8px;
+    }
+    .sector-card:hover::after { opacity: 1; }
+
+    /* tag pills */
+    .tags-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag-pill {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 6px 12px;
+      background: var(--ui-02);
+      border: 1px solid var(--ui-03);
+      border-radius: 100px;
+      color: var(--text-02);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s, border-color 0.15s;
+    }
+    .tag-pill:hover {
+      background: var(--brand-dark);
+      color: white;
+      border-color: var(--brand-dark);
+    }
+
+    /* prompt chips */
+    .prompts-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .prompt-chip {
+      font-size: 13px;
+      padding: 8px 14px;
+      background: white;
+      border: 1px solid var(--ui-03);
+      border-radius: 6px;
+      color: var(--text-01);
+      cursor: pointer;
+      transition: all 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .prompt-chip:hover {
+      background: var(--brand-dark);
+      color: white;
+      border-color: var(--brand-dark);
+    }
+    .prompt-chip svg { width: 14px; height: 14px; opacity: 0.5; flex-shrink: 0; }
+    .prompt-chip:hover svg { opacity: 1; }
+
+    /* ══ PAGE: RESULTS ═══════════════════════════════════════════════ */
+    .results-header {
+      padding: 32px 48px 24px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+    .query-display {
+      font-family: var(--font-serif);
+      font-size: 22px;
+      font-weight: 400;
+      color: var(--text-01);
+      margin-bottom: 12px;
+      font-style: italic;
+    }
+    .query-display strong { font-style: normal; font-weight: 500; }
+
+    .meta-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .meta-count {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      color: var(--text-02);
+    }
+
+    /* AI classification badge */
+    .ai-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      padding: 4px 10px;
+      border-radius: 4px;
+      background: var(--badge-bg, #f0f0f0);
+      color: var(--badge-fg, #333);
+      border: 1px solid var(--badge-border, #ddd);
+      animation: badgeIn 0.4s ease both;
+    }
+    .ai-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--badge-fg);
+      display: block;
+      animation: pulse 2s ease infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+    @keyframes badgeIn {
+      from { opacity: 0; transform: translateY(-4px) scale(0.95); }
+      to { opacity: 1; transform: none; }
+    }
+
+    /* view toggle */
+    .view-toggle {
+      display: flex;
+      gap: 4px;
+      background: var(--ui-02);
+      border-radius: 6px;
+      padding: 3px;
+      margin-left: auto;
+    }
+    .view-btn {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      padding: 5px 10px;
+      background: none;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      color: var(--text-02);
+      letter-spacing: 0.06em;
+      transition: all 0.15s;
+    }
+    .view-btn.active {
+      background: white;
+      color: var(--text-01);
+      box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    }
+
+    /* AI summary card */
+    .ai-summary {
+      margin: 0 48px 28px;
+      max-width: 864px;
+      margin-left: auto;
+      margin-right: auto;
+      background: var(--brand-dark);
+      color: white;
+      border-radius: 10px;
+      padding: 24px 28px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      animation: slideIn 0.35s ease both;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: none; }
+    }
+    .ai-summary-icon {
+      width: 32px; height: 32px;
+      background: rgba(216,236,40,0.15);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .ai-summary-icon svg { width: 16px; height: 16px; }
+    .ai-summary-body h3 {
+      font-size: 13px;
+      font-family: var(--font-mono);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--brand-accent);
+      margin-bottom: 8px;
+    }
+    .ai-summary-body p {
+      font-size: 15px;
+      line-height: 1.65;
+      color: rgba(255,255,255,0.85);
+    }
+    .ai-summary-body p em { color: var(--brand-accent); font-style: normal; }
+
+    /* results content area */
+    .results-content {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0 48px 60px;
+    }
+
+    /* ── LAYOUT: TABLE (normativa) ───── */
+    .layout-table { animation: fadeIn 0.3s ease both 0.1s; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .r-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+    .r-table thead th {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-03);
+      text-align: left;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--ui-03);
+      background: var(--ui-02);
+    }
+    .r-table tbody tr {
+      border-bottom: 1px solid var(--ui-03);
+      cursor: pointer;
+      transition: background 0.12s;
+    }
+    .r-table tbody tr:hover { background: var(--ui-02); }
+    .r-table tbody td {
+      padding: 14px 16px;
+      color: var(--text-01);
+      vertical-align: middle;
+    }
+    .r-table .td-tipo {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .r-table .td-settore {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .r-table .td-settore::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+      display: block;
+    }
+    .r-table .td-data { color: var(--text-02); white-space: nowrap; }
+    .r-table .td-link { color: var(--brand-dark); font-size: 12px; text-decoration: none; }
+    .r-table .td-link:hover { text-decoration: underline; }
+    .tipo-badge {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      padding: 2px 7px;
+      border-radius: 3px;
+      text-transform: uppercase;
+    }
+    .tipo-decreto { background: rgba(39,146,185,0.12); color: #1a7ba0; }
+    .tipo-legge { background: rgba(185,40,79,0.12); color: #8f1e3e; }
+    .tipo-direttiva { background: rgba(123,123,232,0.12); color: #5353b8; }
+    .tipo-circolare { background: rgba(61,184,144,0.12); color: #237a5e; }
+
+    /* ── LAYOUT: DATA / charts ───── */
+    .layout-data { animation: fadeIn 0.3s ease both 0.1s; }
+    .data-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 600px) { .data-grid { grid-template-columns: 1fr; } }
+    .data-card {
+      background: white;
+      border: 1px solid var(--ui-03);
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .data-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .data-card-type {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-03);
+      margin-bottom: 8px;
+    }
+    .data-card-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 16px;
+    }
+    .mini-chart { margin-bottom: 16px; }
+    .mini-chart-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 6px;
+    }
+    .mini-chart-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-02);
+      width: 32px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .mini-chart-track {
+      flex: 1;
+      height: 6px;
+      background: var(--ui-02);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+    .mini-chart-fill {
+      height: 100%;
+      border-radius: 3px;
+      background: var(--chart-color, var(--brand-dark));
+      transform-origin: left;
+      animation: barGrow 0.6s ease both;
+      animation-delay: var(--delay, 0s);
+    }
+    @keyframes barGrow {
+      from { transform: scaleX(0); }
+      to { transform: scaleX(1); }
+    }
+    .mini-chart-val {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-02);
+      width: 28px;
+      flex-shrink: 0;
+    }
+    .data-card-meta {
+      display: flex;
+      gap: 12px;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-03);
+    }
+
+    /* ── LAYOUT: CASE STUDY ───── */
+    .layout-case { animation: fadeIn 0.3s ease both 0.1s; }
+    .case-list { display: flex; flex-direction: column; gap: 14px; }
+    .case-card {
+      display: grid;
+      grid-template-columns: 4px 1fr;
+      gap: 0;
+      background: white;
+      border: 1px solid var(--ui-03);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.15s;
+    }
+    .case-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.08); }
+    .case-strip { background: var(--strip-color, var(--brand-dark)); }
+    .case-body { padding: 20px 22px; }
+    .case-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; margin-bottom: 10px; }
+    .case-title {
+      font-family: var(--font-serif);
+      font-size: 17px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--text-01);
+    }
+    .case-year {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-03);
+      white-space: nowrap;
+      padding-top: 3px;
+    }
+    .case-excerpt {
+      font-size: 14px;
+      line-height: 1.65;
+      color: var(--text-02);
+      margin-bottom: 14px;
+    }
+    .case-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .case-tag {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 9px;
+      background: var(--ui-02);
+      border-radius: 3px;
+      color: var(--text-02);
+    }
+
+    /* ── LAYOUT: FORMAZIONE ───── */
+    .layout-form { animation: fadeIn 0.3s ease both 0.1s; }
+    .form-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 700px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-card {
+      background: white;
+      border: 1px solid var(--ui-03);
+      border-radius: 10px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .form-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .form-card-top {
+      background: var(--top-color, var(--brand-dark));
+      padding: 18px 18px 14px;
+    }
+    .form-date-chip {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 4px 8px;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      border-radius: 4px;
+      display: inline-block;
+      margin-bottom: 10px;
+    }
+    .form-card-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 400;
+      color: white;
+      line-height: 1.35;
+    }
+    .form-card-body { padding: 16px 18px; }
+    .form-org {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--text-03);
+      margin-bottom: 8px;
+    }
+    .form-desc {
+      font-size: 13px;
+      color: var(--text-02);
+      line-height: 1.55;
+      margin-bottom: 14px;
+    }
+    .form-cta {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--brand-dark);
+    }
+
+    /* ── LAYOUT: DEFAULT (documenti) ───── */
+    .layout-default { animation: fadeIn 0.3s ease both 0.1s; }
+    .doc-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+    }
+    @media (max-width: 700px) { .doc-grid { grid-template-columns: 1fr; } }
+    .doc-card {
+      background: white;
+      border: 1px solid var(--ui-03);
+      border-radius: 10px;
+      padding: 20px;
+      cursor: pointer;
+      transition: box-shadow 0.15s, transform 0.15s;
+    }
+    .doc-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,0.08); transform: translateY(-2px); }
+    .doc-type {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-03);
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .doc-type::before {
+      content: '';
+      width: 7px; height: 7px;
+      border-radius: 50%;
+      background: var(--dot-color, var(--text-03));
+      display: block;
+    }
+    .doc-title {
+      font-family: var(--font-serif);
+      font-size: 16px;
+      font-weight: 400;
+      line-height: 1.4;
+      margin-bottom: 10px;
+      color: var(--text-01);
+    }
+    .doc-excerpt {
+      font-size: 13px;
+      color: var(--text-02);
+      line-height: 1.6;
+      margin-bottom: 14px;
+    }
+    .doc-meta {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      color: var(--text-03);
+      display: flex;
+      gap: 10px;
+    }
+
+    /* AI-generated relevance note */
+    .relevance-note {
+      font-size: 12px;
+      color: var(--text-03);
+      font-style: italic;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px solid var(--ui-02);
+    }
+    .relevance-note strong { color: var(--brand-dark); font-style: normal; }
+
+    /* ── Demo annotation ───── */
+    .demo-banner {
+      background: var(--brand-dark);
+      color: white;
+      padding: 10px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      font-size: 13px;
+    }
+    .demo-banner .genui-label { background: var(--brand-accent); color: var(--brand-dark); }
+
+    /* annotation callouts */
+    .callout {
+      position: relative;
+      border-left: 3px solid var(--brand-accent);
+      background: rgba(216,236,40,0.06);
+      padding: 10px 14px 10px 14px;
+      margin-top: 10px;
+      border-radius: 0 6px 6px 0;
+    }
+    .callout-label {
+      font-family: var(--font-mono);
+      font-size: 10px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--brand-dark);
+      margin-bottom: 4px;
+    }
+    .callout p { font-size: 12px; color: var(--text-02); line-height: 1.5; }
+
+    /* loading shimmer */
+    .shimmer {
+      background: linear-gradient(90deg, var(--ui-02) 25%, var(--ui-03) 50%, var(--ui-02) 75%);
+      background-size: 200% 100%;
+      animation: shimmer 1.2s ease infinite;
+      border-radius: 4px;
+      height: 14px;
+    }
+    @keyframes shimmer {
+      from { background-position: 200% 0; }
+      to { background-position: -200% 0; }
+    }
+
+    /* thinking indicator */
+    .thinking-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(251,249,247,0.85);
+      backdrop-filter: blur(4px);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 200;
+      gap: 16px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .thinking-overlay.active { opacity: 1; pointer-events: all; }
+    .thinking-dots {
+      display: flex;
+      gap: 8px;
+    }
+    .thinking-dots span {
+      width: 8px; height: 8px;
+      background: var(--brand-dark);
+      border-radius: 50%;
+      animation: dot-bounce 1.2s ease infinite;
+    }
+    .thinking-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .thinking-dots span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes dot-bounce {
+      0%,80%,100% { transform: translateY(0); opacity: 0.4; }
+      40% { transform: translateY(-8px); opacity: 1; }
+    }
+    .thinking-text {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text-02);
+    }
+    .thinking-query {
+      font-family: var(--font-serif);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--text-01);
+    }
+  </style>
+</head>
+<body>
+
+<!-- Demo banner -->
+<div class="demo-banner">
+  <span class="genui-label">Gen UI</span>
+  <span>Demo interattiva — SUSDEF Documenti · Digita una query o clicca sui prompt per vedere l'UI adattarsi</span>
+</div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo"><span></span>Fondazione Sviluppo Sostenibile</div>
+  <div style="display:flex;align-items:center;gap:16px;">
+    <button class="nav-back" id="nav-back" style="display:none;" onclick="goSearch()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M10 12L6 8l4-4"/>
+      </svg>
+      Nuova ricerca
+    </button>
+    <span class="genui-label">Documenti</span>
+  </div>
+</nav>
+
+<!-- ══ PAGE: SEARCH ══════════════════════════════════════════════════ -->
+<div id="page-search" class="page active">
+
+  <div class="search-hero">
+    <h1>Cosa stai cercando?</h1>
+    <p>Cerca per parole chiave oppure per prompt.<br>Oppure usa i nostri suggerimenti.</p>
+
+    <div class="search-wrap">
+      <input
+        type="text"
+        class="search-input"
+        id="search-input"
+        placeholder=""
+        autocomplete="off"
+        onkeydown="if(event.key==='Enter') doSearch()"
+      >
+      <button class="search-btn" onclick="doSearch()">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="11" cy="11" r="8"/>
+          <path d="M21 21l-4.35-4.35"/>
+        </svg>
+      </button>
+    </div>
+
+    <div class="prompt-hint">
+      <span class="prompt-hint-label">Suggerimento AI →</span>
+      <div class="prompt-rotating" id="rotating-container">
+        <span class="r-slot" id="slot-0"></span>
+        <span class="r-slot" id="slot-1"></span>
+      </div>
+    </div>
+
+    <div class="callout" style="max-width:640px;margin:10px auto 0;">
+      <div class="callout-label">Gen UI · Prompt rotanti</div>
+      <p>Il placeholder ruota tra prompt generati contestualmente — basati sull'ora del giorno, sugli ultimi documenti indicizzati e sulle query di tendenza della settimana. Nessun testo fisso.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-label" style="margin-bottom:16px;">Sfoglia per settore</div>
+    <div class="callout" style="margin-bottom:20px;">
+      <div class="callout-label">Gen UI · Card settore adattive</div>
+      <p>Le card mostrano un micro-briefing generato sull'ultimo batch di documenti — trending topic + nuovi arrivi, non solo il conteggio statico.</p>
+    </div>
+    <div class="sector-grid" id="sector-grid"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Più cercati</div>
+    <div class="tags-row" id="tags-row"></div>
+  </div>
+
+  <div class="section">
+    <div class="section-label">Prompt più usati</div>
+    <div class="callout" style="margin-bottom:16px;">
+      <div class="callout-label">Gen UI · Prompt personalizzati</div>
+      <p>Questa sezione mostra prompt suggeriti dall'AI basati sulla cronologia di lettura e sul profilo dell'utente loggato — non una classifica globale.</p>
+    </div>
+    <div class="prompts-row" id="prompts-row"></div>
+  </div>
+
+</div>
+
+<!-- ══ PAGE: RESULTS ══════════════════════════════════════════════════ -->
+<div id="page-results" class="page">
+
+  <div class="results-header">
+    <p class="query-display">"<strong id="query-display-text"></strong>"</p>
+    <div class="meta-row">
+      <span class="meta-count" id="results-count"></span>
+      <span class="ai-badge" id="ai-type-badge"></span>
+      <div class="view-toggle">
+        <button class="view-btn active" id="vbtn-gen" onclick="setView('gen')">Adattivo</button>
+        <button class="view-btn" id="vbtn-list" onclick="setView('list')">Lista</button>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:14px;">
+      <div class="callout-label">Gen UI · Layout adattivo</div>
+      <p id="layout-explanation"></p>
+    </div>
+  </div>
+
+  <div class="ai-summary" id="ai-summary">
+    <div class="ai-summary-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <circle cx="8" cy="8" r="6"/>
+        <path d="M8 5v3l2 1.5"/>
+      </svg>
+    </div>
+    <div class="ai-summary-body">
+      <h3>Sintesi AI</h3>
+      <p id="ai-summary-text"></p>
+    </div>
+  </div>
+
+  <div class="results-content" id="results-content"></div>
+
+</div>
+
+<!-- Thinking overlay -->
+<div class="thinking-overlay" id="thinking">
+  <div class="thinking-query" id="thinking-query"></div>
+  <div class="thinking-dots">
+    <span></span><span></span><span></span>
+  </div>
+  <div class="thinking-text">Classifico la query · genero il layout…</div>
+</div>
+
+<script>
+// ── Data ───────────────────────────────────────────────────────────────
+
+const sectors = [
+  { id: 'energia', name: 'Energia e clima', count: 318, color: '#2792B9', trend: 'Fotovoltaico +34%', new: 7 },
+  { id: 'economia', name: 'Economia circolare', count: 212, color: '#7B7BE8', trend: 'Imballaggi', new: 3 },
+  { id: 'mobilita', name: 'Mobilità sostenibile', count: 156, color: '#CE9B62', trend: 'PNRR Mobilità', new: 5 },
+  { id: 'greencity', name: 'Green city', count: 198, color: '#B9284F', trend: 'NBS urbane', new: 2 },
+  { id: 'agro', name: 'Agroecologia', count: 143, color: '#E6A800', trend: 'PAC 2024', new: 4 },
+  { id: 'stati', name: 'Stati generali', count: 89, color: '#3DB890', trend: 'COP30', new: 1 },
+  { id: 'eco', name: 'Ecoinnovazione', count: 284, color: '#FF7F00', trend: 'Bioplastiche', new: 6 },
+  { id: 'corsi', name: 'Corsi di formazione', count: 61, color: '#F26CB0', trend: 'Life+ 2025', new: 2 },
+];
+
+const tags = ['ECONOMIA CIRCOLARE','RICICLO','PNRR','TRANSIZIONE ECOLOGICA','PMI','PLASTICA','BIOECONOMIA','SETTORE TESSILE','RINNOVABILI','BIODIVERSITÀ'];
+
+const promptSuggestions = [
+  'Cerca tutti i dati sul riciclo in Italia negli ultimi 10 anni',
+  'Riciclo in Italia',
+  'Plastica free',
+  "L'economia circolare nelle PMI italiane",
+  'Report fotovoltaico 2024',
+  'Normative europee sulla mobilità sostenibile',
+];
+
+const rotatingPrompts = [
+  '→ Tendenza oggi: "Bioplastiche e packaging sostenibile"',
+  '→ 7 nuovi documenti sull\'energia solare questa settimana',
+  '→ Cerca: normative PNRR aggiornate a febbraio 2025',
+  '→ In evidenza: COP30 — documenti preparatori',
+  '→ Prompt suggerito: "Confronta dati riciclo Italia vs UE 2023-2024"',
+];
+
+// ── Rotating placeholder ───────────────────────────────────────────────
+
+let rotIdx = 0;
+let currentSlot = 0;
+
+function initRotating() {
+  const s0 = document.getElementById('slot-0');
+  const s1 = document.getElementById('slot-1');
+  s0.textContent = rotatingPrompts[0];
+  s0.classList.add('visible');
+
+  setInterval(() => {
+    const nextIdx = (rotIdx + 1) % rotatingPrompts.length;
+    const activeSlot = currentSlot;
+    const nextSlot = 1 - currentSlot;
+    const active = document.getElementById('slot-' + activeSlot);
+    const next = document.getElementById('slot-' + nextSlot);
+
+    next.textContent = rotatingPrompts[nextIdx];
+    next.style.transform = 'translateY(100%)';
+    next.style.opacity = '0';
+    next.classList.add('visible');
+
+    setTimeout(() => {
+      active.style.transform = 'translateY(-100%)';
+      active.style.opacity = '0';
+      next.style.transform = 'translateY(0)';
+      next.style.opacity = '1';
+    }, 20);
+
+    setTimeout(() => {
+      active.classList.remove('visible');
+      active.style.transform = '';
+      active.style.opacity = '';
+    }, 500);
+
+    rotIdx = nextIdx;
+    currentSlot = nextSlot;
+  }, 3500);
+}
+
+// ── Render search page ─────────────────────────────────────────────────
+
+function renderSearch() {
+  // sector grid
+  const grid = document.getElementById('sector-grid');
+  grid.innerHTML = sectors.map(s => `
+    <div class="sector-card" style="color:${s.color}" onclick="searchByTag('${s.name}')">
+      <span class="sector-dot" style="background:${s.color}"></span>
+      <div class="sector-name">${s.name}</div>
+      <div class="sector-count">${s.count} documenti</div>
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid var(--ui-03);font-size:12px;color:var(--text-03);">
+        <span style="font-family:var(--font-mono);font-size:10px;letter-spacing:0.06em;text-transform:uppercase;">
+          <span style="color:${s.color}">↑</span> ${s.trend} · <span style="color:${s.color}">${s.new} nuovi</span>
+        </span>
+      </div>
+    </div>
+  `).join('');
+
+  // tags
+  document.getElementById('tags-row').innerHTML = tags.map(t => `
+    <span class="tag-pill" onclick="searchByTag('${t}')">${t}</span>
+  `).join('');
+
+  // prompts
+  document.getElementById('prompts-row').innerHTML = promptSuggestions.map(p => `
+    <button class="prompt-chip" onclick="fillAndSearch('${p.replace(/'/g,"\\'")}')">
+      ${p}
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+        <path d="M4 12L12 4M12 4H7M12 4v5"/>
+      </svg>
+    </button>
+  `).join('');
+}
+
+function searchByTag(tag) {
+  document.getElementById('search-input').value = tag;
+  doSearch();
+}
+
+function fillAndSearch(prompt) {
+  document.getElementById('search-input').value = prompt;
+  doSearch();
+}
+
+// ── Query classification ───────────────────────────────────────────────
+
+function classifyQuery(q) {
+  const lower = q.toLowerCase();
+  if (/legge|norma|decreto|regolament|direttiv|circolare|gdl|testo unico|legisl/i.test(lower))
+    return 'normativa';
+  if (/dati|statistiche|trend|report|percentual|numeri|anni|confronta|crescita|aumento|calo/i.test(lower))
+    return 'dati';
+  if (/caso|progetto|esempio|esperienza|applicazione|best practice|iniziativa|comune|città|azienda/i.test(lower))
+    return 'case-study';
+  if (/corso|formazione|webinar|workshop|seminario|master|evento|iscr/i.test(lower))
+    return 'formazione';
+  return 'documenti';
+}
+
+// ── Results data ───────────────────────────────────────────────────────
+
+const resultsData = {
+  normativa: {
+    summary: 'Ho trovato <em>12 atti normativi</em> pertinenti alla tua query. Il quadro regolatorio italiano si è significativamente evoluto nel 2024, con il D.Lgs. 190/2024 come testo di riferimento. A livello europeo, la Direttiva 2024/1799 è in fase di recepimento.',
+    count: '12 atti normativi',
+    badgeText: 'Vista regolamentare',
+    badgeBg: 'rgba(39,146,185,0.1)', badgeFg: '#1a7ba0', badgeBorder: 'rgba(39,146,185,0.2)',
+    layoutExplanation: 'Query normativa rilevata → layout tabellare con colonne: Titolo, Tipo, Data, Area tematica. Il tipo di atto è evidenziato con badge colorati.',
+    items: [
+      { tipo: 'decreto', tipoLabel: 'D.Lgs.', titolo: 'D.Lgs. 190/2024 — Disposizioni sull\'economia circolare e gestione rifiuti', settore: 'Economia circolare', settoreColor: '#7B7BE8', data: 'Nov 2024' },
+      { tipo: 'direttiva', tipoLabel: 'Direttiva EU', titolo: 'Direttiva 2024/1799/UE — Packaging sostenibile e riduzione plastica', settore: 'Economia circolare', settoreColor: '#7B7BE8', data: 'Ott 2024' },
+      { tipo: 'legge', tipoLabel: 'Legge', titolo: 'L. 112/2024 — Incentivi per la mobilità elettrica nelle aree urbane', settore: 'Mobilità sostenibile', settoreColor: '#CE9B62', data: 'Lug 2024' },
+      { tipo: 'circolare', tipoLabel: 'Circolare', titolo: 'Circolare MASE 3/2024 — Criteri ambientali minimi appalti verdi', settore: 'Green city', settoreColor: '#B9284F', data: 'Mag 2024' },
+      { tipo: 'decreto', tipoLabel: 'DM', titolo: 'DM 15 marzo 2024 — Aggiornamento incentivi fotovoltaico residenziale', settore: 'Energia e clima', settoreColor: '#2792B9', data: 'Mar 2024' },
+      { tipo: 'legge', tipoLabel: 'Legge', titolo: 'L. 43/2024 — Delega al Governo per la transizione ecologica del settore agricolo', settore: 'Agroecologia', settoreColor: '#E6A800', data: 'Feb 2024' },
+    ]
+  },
+  dati: {
+    summary: 'Ho individuato <em>8 report statistici</em> con dati aggiornati. Il trend principale è positivo: le energie rinnovabili hanno raggiunto <em>il 42% del mix energetico italiano</em> nel 2024. Ti mostro i dataset più rilevanti con visualizzazione integrata.',
+    count: '8 report statistici',
+    badgeText: 'Vista dati',
+    badgeBg: 'rgba(123,123,232,0.1)', badgeFg: '#5353b8', badgeBorder: 'rgba(123,123,232,0.2)',
+    layoutExplanation: 'Query orientata ai dati → card con mini-grafici inline. Ogni documento mostra una preview della serie temporale principale per aiutare la scelta prima di aprire il report completo.',
+    items: [
+      {
+        tipo: 'Report annuale', titolo: 'Italia Circolare 2024 — Dati sul riciclo e recupero materiali',
+        anno: '2024', settore: 'Economia circolare', color: '#7B7BE8',
+        bars: [{ label: '2020', val: 62, w: 0.62 }, { label: '2021', val: 66, w: 0.66 }, { label: '2022', val: 71, w: 0.71 }, { label: '2023', val: 74, w: 0.74 }, { label: '2024', val: 79, w: 0.79 }]
+      },
+      {
+        tipo: 'Dataset ISPRA', titolo: 'Produzione energia da fonti rinnovabili 2015–2024',
+        anno: '2024', settore: 'Energia e clima', color: '#2792B9',
+        bars: [{ label: '2020', val: 33, w: 0.33 }, { label: '2021', val: 36, w: 0.36 }, { label: '2022', val: 38, w: 0.38 }, { label: '2023', val: 41, w: 0.41 }, { label: '2024', val: 42, w: 0.42 }]
+      },
+      {
+        tipo: 'Rapporto GSE', titolo: 'Statistiche impianti fotovoltaici installati per regione 2024',
+        anno: '2024', settore: 'Energia e clima', color: '#2792B9',
+        bars: [{ label: 'Lom', val: 85, w: 0.85 }, { label: 'Ven', val: 72, w: 0.72 }, { label: 'Emi', val: 68, w: 0.68 }, { label: 'Pug', val: 91, w: 0.91 }, { label: 'Sic', val: 63, w: 0.63 }]
+      },
+      {
+        tipo: 'Indagine ENEA', titolo: 'Consumi energetici nel settore industriale: evoluzione 2019–2024',
+        anno: '2024', settore: 'Energia e clima', color: '#2792B9',
+        bars: [{ label: '2020', val: 78, w: 0.78 }, { label: '2021', val: 82, w: 0.82 }, { label: '2022', val: 76, w: 0.76 }, { label: '2023', val: 69, w: 0.69 }, { label: '2024', val: 61, w: 0.61 }]
+      },
+    ]
+  },
+  'case-study': {
+    summary: 'Ho selezionato <em>9 casi studio</em> tra i più documentati nel corpus. I progetti europei mostrano come l\'approccio <em>integrato città-territorio</em> produca risultati superiori del 40% rispetto a interventi verticali. I casi italiani sono in crescita.',
+    count: '9 casi studio',
+    badgeText: 'Vista narrativa',
+    badgeBg: 'rgba(61,184,144,0.1)', badgeFg: '#237a5e', badgeBorder: 'rgba(61,184,144,0.2)',
+    layoutExplanation: 'Query case-study rilevata → card narrative con striscia di colore settoriale, estratto e tag tematici. L\'AI genera un abstract personalizzato in base alla query dell\'utente.',
+    items: [
+      { titolo: 'Milano Green Corridors — Riqualificazione asse Sempione con infrastruttura verde urbana', anno: '2023', settore: 'Green city', color: '#B9284F', excerpt: 'Il progetto ha trasformato 4,2 km del Corridoio Sempione in un\'infrastruttura verde multifunzionale, combinando ciclabilità, permeabilità del suolo e riduzione effetto isola di calore. Riduzione temperatura estiva locale di 2,4°C.', tags: ['NBS', 'Mobilità', 'Adattamento climatico'] },
+      { titolo: 'Distretto Tessile di Prato — Circular Economy District: da rifiuto a materia prima', anno: '2023', settore: 'Economia circolare', color: '#7B7BE8', excerpt: '47 imprese del distretto tessile hanno adottato un sistema di scambio di scarti produttivi, raggiungendo un tasso di recupero dell\'82% dei materiali in entrata. Modello replicato in Portogallo e Romania.', tags: ['Industria', 'Textile', 'Sinergie industriali'] },
+      { titolo: 'Emilia Romagna AgroEco 2023 — Transizione agroecologica di 12 aziende pilota PAC', anno: '2024', settore: 'Agroecologia', color: '#E6A800', excerpt: 'Progetto pilota su 1.800 ettari con riduzione del 35% di input sintetici nel primo triennio. Le aziende aderenti hanno registrato un aumento del 18% del valore aggiunto per ettaro e significativo incremento della biodiversità edafica.', tags: ['PAC', 'Biodiversità', 'Suolo'] },
+    ]
+  },
+  formazione: {
+    summary: 'Ho trovato <em>6 eventi formativi</em> in programma. La prossima scadenza è il <em>corso LIFE+ Gestione Sostenibile</em> (15 aprile 2025). I corsi con posti disponibili sono stati evidenziati.',
+    count: '6 corsi e webinar',
+    badgeText: 'Vista eventi',
+    badgeBg: 'rgba(242,108,176,0.1)', badgeFg: '#b03a80', badgeBorder: 'rgba(242,108,176,0.2)',
+    layoutExplanation: 'Query formazione rilevata → card evento con data in evidenza, organizzatore e stato disponibilità. Le scadenze imminenti vengono ordinate per priorità.',
+    items: [
+      { titolo: 'Life+ Gestione Sostenibile delle Risorse Naturali', data: '15 APR 2025', org: 'Fondazione Sviluppo Sostenibile', desc: 'Corso intensivo di 3 giorni su strumenti e metodologie per la gestione integrata delle risorse naturali in ottica Life+ 2025-2030.', color: '#013E39', disponibile: true },
+      { titolo: 'Economia Circolare Avanzata — Progettare per la circolarità', data: '22 APR 2025', org: 'ENEA · Università di Bologna', desc: 'Webinar (4h) su approcci sistemici al design circolare: cradle-to-cradle, simbiosi industriale, EPD e strumenti LCA semplificati.', color: '#7B7BE8', disponibile: true },
+      { titolo: 'Master in Transizione Ecologica e PNRR', data: 'SEPT 2025', org: 'Università La Sapienza · Roma', desc: 'Master annuale (60 CFU) che forma professionisti capaci di gestire progetti di transizione ecologica finanziati da fondi europei e PNRR.', color: '#2792B9', disponibile: false },
+    ]
+  },
+  documenti: {
+    summary: 'Ho trovato <em>23 documenti</em> pertinenti alla tua query. Ho evidenziato i più recenti e i più citati nel corpus. Il topic principale emerso è la <em>transizione ecologica nelle PMI italiane</em>.',
+    count: '23 documenti',
+    badgeText: 'Vista documenti',
+    badgeBg: 'rgba(1,62,57,0.1)', badgeFg: '#013E39', badgeBorder: 'rgba(1,62,57,0.2)',
+    layoutExplanation: 'Query generica → griglia standard a 3 colonne con card documento. L\'AI genera un abstract personalizzato basato sulla query per aiutare a valutare la pertinenza senza aprire il documento.',
+    items: [
+      { tipo: 'Report', settore: 'Economia circolare', color: '#7B7BE8', titolo: 'Il ruolo dell\'economia circolare nella competitività delle PMI manifatturiere', anno: '2024', excerpt: 'Analisi su 340 PMI italiane mostra che l\'adozione di pratiche circolari riduce i costi operativi del 14-22% nel medio termine.', relevance: 'Pertinente perché: tratta PMI e circolarità con dati 2024' },
+      { tipo: 'Policy brief', settore: 'Green city', color: '#B9284F', titolo: 'Green Public Procurement: guida operativa per comuni e province', anno: '2024', excerpt: 'Strumento pratico per l\'adozione dei Criteri Ambientali Minimi (CAM) negli acquisti pubblici locali. Include 18 schede settoriali.', relevance: 'Pertinente perché: acquisti pubblici + sostenibilità ambientale' },
+      { tipo: 'Paper', settore: 'Energia e clima', color: '#2792B9', titolo: 'Comunità Energetiche Rinnovabili: modelli organizzativi e impatti sociali', anno: '2023', excerpt: 'Studio su 12 CER operative in Italia analizza governance, distribuzione benefici e impatto sul tessuto sociale locale.', relevance: 'Pertinente perché: energia rinnovabili + modelli comunitari' },
+      { tipo: 'Rapporto', settore: 'Agroecologia', color: '#E6A800', titolo: 'Agroecologia e resilienza del sistema alimentare italiano al 2030', anno: '2024', excerpt: 'Scenari al 2030 per il sistema agroalimentare italiano sotto tre pathway di transizione: graduale, accelerata e trasformativa.', relevance: 'Pertinente perché: prospettive lungo termine + sistema alimentare' },
+      { tipo: 'Dataset', settore: 'Ecoinnovazione', color: '#FF7F00', titolo: 'Startup italiane di ecoinnovazione — database aggiornato 2024', anno: '2024', excerpt: '284 startup attive nel settore ecoinnovazione: profilo, tecnologie, finanziamenti ricevuti, stato operativo e contatti.', relevance: 'Pertinente perché: innovazione + imprenditoria sostenibile' },
+      { tipo: 'Policy brief', settore: 'Mobilità sostenibile', color: '#CE9B62', titolo: 'Infrastrutture di ricarica e adozione veicoli elettrici nelle città medie', anno: '2024', excerpt: 'Analisi delle barriere all\'adozione EV nelle città tra 50.000 e 200.000 abitanti. Propone modelli di rollout infrastrutturale.', relevance: 'Pertinente perché: mobilità elettrica + infrastrutture urbane' },
+    ]
+  }
+};
+
+let currentView = 'gen';
+let currentType = 'documenti';
+let currentQuery = '';
+
+// ── Search ─────────────────────────────────────────────────────────────
+
+function doSearch() {
+  const q = document.getElementById('search-input').value.trim();
+  if (!q) return;
+  currentQuery = q;
+  currentType = classifyQuery(q);
+
+  // show thinking
+  const thinking = document.getElementById('thinking');
+  document.getElementById('thinking-query').textContent = '"' + q + '"';
+  thinking.classList.add('active');
+
+  setTimeout(() => {
+    thinking.classList.remove('active');
+    showResults(q, currentType);
+  }, 1400);
+}
+
+function showResults(q, type) {
+  document.getElementById('page-search').classList.remove('active');
+  document.getElementById('page-results').classList.add('active');
+  document.getElementById('nav-back').style.display = 'flex';
+  currentView = 'gen';
+  document.getElementById('vbtn-gen').classList.add('active');
+  document.getElementById('vbtn-list').classList.remove('active');
+
+  const data = resultsData[type];
+  document.getElementById('query-display-text').textContent = q;
+  document.getElementById('results-count').textContent = data.count;
+
+  const badge = document.getElementById('ai-type-badge');
+  badge.textContent = data.badgeText;
+  badge.style.setProperty('--badge-bg', data.badgeBg);
+  badge.style.setProperty('--badge-fg', data.badgeFg);
+  badge.style.setProperty('--badge-border', data.badgeBorder);
+  badge.style.color = data.badgeFg;
+
+  document.getElementById('layout-explanation').textContent = data.layoutExplanation;
+  document.getElementById('ai-summary-text').innerHTML = data.summary;
+
+  renderResultsContent(type, 'gen');
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function setView(v) {
+  currentView = v;
+  document.getElementById('vbtn-gen').classList.toggle('active', v === 'gen');
+  document.getElementById('vbtn-list').classList.toggle('active', v === 'list');
+  renderResultsContent(currentType, v);
+}
+
+function renderResultsContent(type, view) {
+  const content = document.getElementById('results-content');
+  if (view === 'list') {
+    renderListView(content, type);
+    return;
+  }
+  switch(type) {
+    case 'normativa': renderNormativa(content); break;
+    case 'dati': renderDati(content); break;
+    case 'case-study': renderCaseStudy(content); break;
+    case 'formazione': renderFormazione(content); break;
+    default: renderDocumenti(content); break;
+  }
+}
+
+// ── Layout renderers ───────────────────────────────────────────────────
+
+function renderNormativa(el) {
+  const data = resultsData.normativa;
+  el.innerHTML = `<div class="layout-table">
+    <table class="r-table">
+      <thead>
+        <tr>
+          <th>Tipo</th>
+          <th>Titolo</th>
+          <th>Area</th>
+          <th>Data</th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody>
+        ${data.items.map(item => `
+          <tr>
+            <td><span class="tipo-badge tipo-${item.tipo}">${item.tipoLabel}</span></td>
+            <td style="max-width:300px">${item.titolo}</td>
+            <td>
+              <span class="td-settore" style="color:${item.settoreColor}">
+                ${item.settore}
+              </span>
+            </td>
+            <td class="td-data">${item.data}</td>
+            <td><a href="#" class="td-link" onclick="return false">Apri →</a></td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  </div>`;
+}
+
+function renderDati(el) {
+  const data = resultsData.dati;
+  el.innerHTML = `<div class="layout-data">
+    <div class="data-grid">
+      ${data.items.map((item, ci) => `
+        <div class="data-card" style="--chart-color:${item.color}">
+          <div class="data-card-type">${item.tipo}</div>
+          <div class="data-card-title">${item.titolo}</div>
+          <div class="mini-chart">
+            ${item.bars.map((b, bi) => `
+              <div class="mini-chart-bar">
+                <span class="mini-chart-label">${b.label}</span>
+                <div class="mini-chart-track">
+                  <div class="mini-chart-fill" style="width:${b.w*100}%;--delay:${bi*0.08 + ci*0.1}s"></div>
+                </div>
+                <span class="mini-chart-val">${b.val}%</span>
+              </div>
+            `).join('')}
+          </div>
+          <div class="data-card-meta">
+            <span>${item.anno}</span>
+            <span style="color:${item.color}">${item.settore}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+function renderCaseStudy(el) {
+  const data = resultsData['case-study'];
+  el.innerHTML = `<div class="layout-case">
+    <div class="case-list">
+      ${data.items.map(item => `
+        <div class="case-card" style="--strip-color:${item.color}">
+          <div class="case-strip"></div>
+          <div class="case-body">
+            <div class="case-header">
+              <div class="case-title">${item.titolo}</div>
+              <div class="case-year">${item.anno}</div>
+            </div>
+            <div class="case-excerpt">${item.excerpt}</div>
+            <div class="case-tags">
+              <span class="case-tag" style="color:${item.color};background:${item.color}18">${item.settore}</span>
+              ${item.tags.map(t => `<span class="case-tag">${t}</span>`).join('')}
+            </div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+function renderFormazione(el) {
+  const data = resultsData.formazione;
+  el.innerHTML = `<div class="layout-form">
+    <div class="form-grid">
+      ${data.items.map(item => `
+        <div class="form-card" style="${!item.disponibile ? 'opacity:0.65' : ''}">
+          <div class="form-card-top" style="--top-color:${item.color}">
+            <div class="form-date-chip">${item.data}</div>
+            <div class="form-card-title">${item.titolo}</div>
+          </div>
+          <div class="form-card-body">
+            <div class="form-org">${item.org}</div>
+            <div class="form-desc">${item.desc}</div>
+            <div class="form-cta">${item.disponibile ? 'Scopri e iscriviti →' : 'Lista d\'attesa'}</div>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+function renderDocumenti(el) {
+  const data = resultsData.documenti;
+  el.innerHTML = `<div class="layout-default">
+    <div class="doc-grid">
+      ${data.items.map(item => `
+        <div class="doc-card">
+          <div class="doc-type" style="--dot-color:${item.color};color:${item.color}">${item.tipo} · ${item.settore}</div>
+          <div class="doc-title">${item.titolo}</div>
+          <div class="doc-excerpt">${item.excerpt}</div>
+          <div class="relevance-note"><strong>AI →</strong> ${item.relevance}</div>
+          <div class="doc-meta" style="margin-top:12px">
+            <span>${item.anno}</span>
+          </div>
+        </div>
+      `).join('')}
+    </div>
+  </div>`;
+}
+
+// ── List view fallback ─────────────────────────────────────────────────
+
+function renderListView(el, type) {
+  const data = resultsData[type];
+  const items = data.items;
+  el.innerHTML = `<div class="layout-default" style="animation:fadeIn 0.2s ease both;">
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      ${items.map((item, i) => `
+        <div style="padding:16px 20px;background:white;border:1px solid var(--ui-03);border-radius:8px;display:flex;align-items:center;gap:16px;cursor:pointer;transition:background 0.12s;" onmouseover="this.style.background='var(--ui-02)'" onmouseout="this.style.background='white'">
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-03);width:20px;flex-shrink:0;">${String(i+1).padStart(2,'0')}</span>
+          <span style="flex:1;font-size:14px;color:var(--text-01);">${item.titolo || item.name || JSON.stringify(item)}</span>
+          <span style="font-family:var(--font-mono);font-size:11px;color:var(--text-03);">→</span>
+        </div>
+      `).join('')}
+    </div>
+    <div style="margin-top:16px;padding:12px 16px;background:var(--ui-02);border-radius:6px;font-size:13px;color:var(--text-02);">
+      Vista lista: layout adattivo disabilitato. L'AI ha classificato questa query come <strong>${type}</strong>.
+    </div>
+  </div>`;
+}
+
+// ── Go back ────────────────────────────────────────────────────────────
+
+function goSearch() {
+  document.getElementById('page-results').classList.remove('active');
+  document.getElementById('page-search').classList.add('active');
+  document.getElementById('nav-back').style.display = 'none';
+  document.getElementById('search-input').value = '';
+}
+
+// ── Init ───────────────────────────────────────────────────────────────
+
+renderSearch();
+initRotating();
+</script>
+</body>
+</html>
