@@ -210,11 +210,11 @@
     <div class="hero-meta">
       <div class="meta-row">
         <span class="meta-label">Versione</span>
-        <span class="meta-value">v0.2.0</span>
+        <span class="meta-value">v0.3.2</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Ultimo aggiornamento</span>
-        <span class="meta-value">8 marzo 2026</span>
+        <span class="meta-value">10 marzo 2026</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Deploy Storybook</span>
@@ -246,11 +246,11 @@
         <div class="metric-profile">Profilo A</div>
         <div class="metric-name">Vetrina</div>
         <div class="metric-desc">1 sito, brand forte, pagine statiche. Zero contenuto dinamico, zero login.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:40%"></div></div>
-        <div class="progress-pct">40%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+        <div class="progress-pct">80%</div>
         <div class="metric-detail">
           <div class="metric-row"><span>Atomi (Button, Badge, Input…)</span><span class="dot-done">✓ 3/8</span></div>
-          <div class="metric-row"><span>Organismi (Header, Footer, Hero)</span><span class="dot-todo">— 0/4</span></div>
+          <div class="metric-row"><span>Organismi (Header, Footer, Hero, Filter)</span><span class="dot-done">✓ 4/4</span></div>
           <div class="metric-row"><span>Template (Home, About, Contatti)</span><span class="dot-todo">— 0/3</span></div>
           <div class="metric-row"><span>Token stories</span><span class="dot-done">✓ 5/5</span></div>
         </div>
@@ -261,12 +261,12 @@
         <div class="metric-profile">Profilo B</div>
         <div class="metric-name">Vetrina + Commerce</div>
         <div class="metric-desc">Profilo A + e-commerce. Catalogo, scheda prodotto, carrello, checkout.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:65%"></div></div>
-        <div class="progress-pct">65%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:80%"></div></div>
+        <div class="progress-pct">80%</div>
         <div class="metric-detail">
           <div class="metric-row"><span>Template shop (4 pagine)</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>Storybook stories shop</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Organismi condivisi con A</span><span class="dot-todo">— mancanti</span></div>
+          <div class="metric-row"><span>Organismi condivisi con A</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>ProductCard molecule</span><span class="dot-todo">— mancante</span></div>
         </div>
       </div>
@@ -276,13 +276,13 @@
         <div class="metric-profile">Profilo C — Focus attuale</div>
         <div class="metric-name">Hub editoriale</div>
         <div class="metric-desc">Profilo A + contenuto organizzato + ricerca + filtri. Susdef, EPOS, reti tematiche.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:50%"></div></div>
-        <div class="progress-pct">50%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
+        <div class="progress-pct">68%</div>
         <div class="metric-detail">
           <div class="metric-row"><span>Molecole (DocCard, SectorCard…)</span><span class="dot-done">✓ 4/6</span></div>
           <div class="metric-row"><span>Template Susdef (Home + Hub)</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>Template EPOS</span><span class="dot-todo">— mancante</span></div>
-          <div class="metric-row"><span>Organismi (HubHeader, FilterBar)</span><span class="dot-todo">— mancanti</span></div>
+          <div class="metric-row"><span>Organismi (HubHeader, FilterBar)</span><span class="dot-done">✓ fatto</span></div>
         </div>
       </div>
 
@@ -322,7 +322,8 @@
           <div class="brand-check-row"><span>Brand switcher Storybook</span><span class="tag tag-done">✓ fatto 10/03</span></div>
           <div class="brand-check-row"><span>Template Home landing</span><span class="tag tag-done">✓ fatto 10/03</span></div>
           <div class="brand-check-row"><span>Shop (catalogo, prodotto, carrello, checkout)</span><span class="tag tag-done">✓ rebrandato 10/03</span></div>
-          <div class="brand-check-row"><span>GreenMeter — ex Pianeta.Meter</span><span class="tag tag-partial">~ token, vedi pivot #2</span></div>
+          <div class="brand-check-row"><span>Area Clienti dashboard (05)</span><span class="tag tag-done">✓ fatto 10/03</span></div>
+          <div class="brand-check-row"><span>GreenMeter — ex Pianeta.Meter</span><span class="tag tag-done">✓ token + template 10/03</span></div>
           <div class="brand-check-row"><span>Template pagine vendita</span><span class="tag tag-todo">— in arrivo</span></div>
           <div class="brand-check-row"><span>Token JSON / Tailwind config</span><span class="tag tag-todo">— da fare</span></div>
         </div>
@@ -453,6 +454,39 @@
 
       <div class="log-entry">
         <div class="log-date">10 mar 2026</div>
+        <div class="log-dot active"></div>
+        <div class="log-body">
+          <div class="log-type type-fix">FIX</div>
+          <div class="log-heading">Audit Pianeta.green — uniformazione stili e token · v0.3.2</div>
+          <div class="log-detail">Bug font critico nei 4 template shop: caricavano IBM Plex Serif/Sans invece di Plus Jakarta Sans + Inter (font dichiarati nei token ma non disponibili). Typo <code>--color-greenmeeter-primary</code> corretto. Token <code>--color-border-default</code> allineato (0.15→0.18). DS meta-nav uniformata: font-size, gap, colori, tag pill brand-green. Logo shop allineato alla canonical: 22px/500→20px/700 + dot accento + "Pianeta.green". Testo pill "GENERIC"→"PIANETA.GREEN".</div>
+          <div class="log-tags"><span class="log-tag">fix</span><span class="log-tag">audit</span><span class="log-tag">pianeta.green</span><span class="log-tag">font</span><span class="log-tag">token</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Organisms layer completo — Header, Footer, HeroSection, FilterBar</div>
+          <div class="log-detail">Livello organisms completato con 4 componenti, 21 varianti totali, 1.720 righe, token-driven. <strong>Header</strong> 6 var. (Default, Scrolled, Utente+dropdown, Mega-menu 4-col, Hub sub-bar, Mobile 390). <strong>Footer</strong> 4 var. (4-col, newsletter in-footer, slim app-shell, certificazioni). <strong>HeroSection</strong> 5 var. (Default, Stats bar, Split+media, Centrato dot-pattern, Hub editoriale). <strong>FilterBar</strong> 6 var. (chips, ricerca, sort, filtri attivi, dark, compatta inline). Tutti usano <code>var(--token)</code> → adattamento automatico al brand switcher.</div>
+          <div class="log-tags"><span class="log-tag">organisms</span><span class="log-tag">storybook</span><span class="log-tag">multi-brand</span><span class="log-tag">profilo A</span><span class="log-tag">profilo C</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Area Clienti dashboard — template 05 Pianeta.green</div>
+          <div class="log-detail">App shell completa per il portale clienti Pianeta.green. Sidebar 232px con navigazione full, stats row, quick actions, griglia siti con GreenMeter score reale (dati da pianeta.green/rarafactory.com: A+, 0.018g CO₂/pagina, 95% meglio della media), Matomo analytics widget, GreenMeter aggregate per sito, activity log. Rating reali: Carbon ★★★★★ · Performance ★★★★☆ · Green Hosting ★★★★★.</div>
+          <div class="log-tags"><span class="log-tag">pianeta.green</span><span class="log-tag">area clienti</span><span class="log-tag">dashboard</span><span class="log-tag">greenmeter</span><span class="log-tag">matomo</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
         <div class="log-dot pivot"></div>
         <div class="log-body">
           <div class="log-type type-pivot">PIVOT</div>
@@ -568,41 +602,57 @@
 
     <div class="sprint-box">
       <div class="sprint-title">
-        Profilo A → completare organismi
+        Profilo A → organismi ✓ · templates Rara
         <span class="sprint-badge">Focus immediato</span>
       </div>
       <div class="task-list">
         <div class="task">
-          <span class="task-prio prio-crit">Critico</span>
+          <span class="task-prio" style="color:var(--green-text);">✓ Fatto</span>
           <div>
             <div class="task-name">Header / Navbar — organismo</div>
-            <div class="task-desc">Logo + nav principale + search + variante dark/light. Base condivisa per tutti i profili.</div>
+            <div class="task-desc">6 varianti: Default, Scrolled, Utente loggato, Mega-menu 4-col, Hub sub-bar, Mobile 390. Commit ff572f5.</div>
           </div>
           <span class="task-profile">A B C D</span>
         </div>
         <div class="task">
-          <span class="task-prio prio-crit">Critico</span>
+          <span class="task-prio" style="color:var(--green-text);">✓ Fatto</span>
           <div>
             <div class="task-name">Footer — organismo</div>
-            <div class="task-desc">Footer a colonne con link, social, brand info. Variante minimal (vetrina) e completo (hub).</div>
+            <div class="task-desc">4 varianti: 4-col default, con newsletter, slim app-shell, certificazioni Pianeta.green. Commit ff572f5.</div>
           </div>
           <span class="task-profile">A B C D</span>
         </div>
         <div class="task">
-          <span class="task-prio prio-high">Alto</span>
+          <span class="task-prio" style="color:var(--green-text);">✓ Fatto</span>
           <div>
             <div class="task-name">Hero Section — organismo</div>
-            <div class="task-desc">Hero con titolo + sottotitolo + CTA. Varianti: dark, light, con stats, con immagine.</div>
+            <div class="task-desc">5 varianti: Default, Stats bar, Split+media, Centrato dot-pattern, Hub editoriale + topic chips. Commit ff572f5.</div>
           </div>
           <span class="task-profile">A C</span>
         </div>
         <div class="task">
-          <span class="task-prio prio-high">Alto</span>
+          <span class="task-prio" style="color:var(--green-text);">✓ Fatto</span>
           <div>
             <div class="task-name">FilterBar — organismo</div>
-            <div class="task-desc">Barra filtri completa: search inline + selects + tag chips. Usata in hub e search results.</div>
+            <div class="task-desc">6 varianti: chips, con ricerca, con sort, filtri attivi, dark, compatta inline. Commit ff572f5.</div>
           </div>
           <span class="task-profile">C</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-high">Alto</span>
+          <div>
+            <div class="task-name">Template vetrina Rara — Profilo A</div>
+            <div class="task-desc">Home + About + Contatti con token Rara. Organismi ora disponibili — si può partire.</div>
+          </div>
+          <span class="task-profile">A</span>
+        </div>
+        <div class="task">
+          <span class="task-prio prio-high">Alto</span>
+          <div>
+            <div class="task-name">ProductCard — molecola shop</div>
+            <div class="task-desc">Card prodotto con immagine, prezzo, badge, CTA. Usata in catalogo e correlati scheda prodotto.</div>
+          </div>
+          <span class="task-profile">B</span>
         </div>
       </div>
     </div>
@@ -735,7 +785,7 @@
 
 <footer class="page-footer">
   <span><strong>Hederae DS</strong> — Pianeta Studio S.r.l. Società Benefit — Documento interno</span>
-  <span>v0.3.0 · 10 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
+  <span>v0.3.2 · 10 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
 </footer>
 
 </body>
