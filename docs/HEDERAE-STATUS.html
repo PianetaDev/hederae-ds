@@ -210,7 +210,7 @@
     <div class="hero-meta">
       <div class="meta-row">
         <span class="meta-label">Versione</span>
-        <span class="meta-value">v0.3.2</span>
+        <span class="meta-value">v0.3.3</span>
       </div>
       <div class="meta-row">
         <span class="meta-label">Ultimo aggiornamento</span>
@@ -267,7 +267,7 @@
           <div class="metric-row"><span>Template shop (4 pagine)</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>Storybook stories shop</span><span class="dot-done">✓ fatto</span></div>
           <div class="metric-row"><span>Organismi condivisi con A</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>ProductCard molecule</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>ProductCard molecule</span><span class="dot-done">✓ fatto 10/03</span></div>
         </div>
       </div>
 
@@ -276,12 +276,12 @@
         <div class="metric-profile">Profilo C — Focus attuale</div>
         <div class="metric-name">Hub editoriale</div>
         <div class="metric-desc">Profilo A + contenuto organizzato + ricerca + filtri. Susdef, EPOS, reti tematiche.</div>
-        <div class="progress-bar"><div class="progress-fill" style="width:68%"></div></div>
-        <div class="progress-pct">68%</div>
+        <div class="progress-bar"><div class="progress-fill" style="width:82%"></div></div>
+        <div class="progress-pct">82%</div>
         <div class="metric-detail">
           <div class="metric-row"><span>Molecole (DocCard, SectorCard…)</span><span class="dot-done">✓ 4/6</span></div>
           <div class="metric-row"><span>Template Susdef (Home + Hub)</span><span class="dot-done">✓ fatto</span></div>
-          <div class="metric-row"><span>Template EPOS</span><span class="dot-todo">— mancante</span></div>
+          <div class="metric-row"><span>Template EPOS</span><span class="dot-done">✓ fatto 10/03</span></div>
           <div class="metric-row"><span>Organismi (HubHeader, FilterBar)</span><span class="dot-done">✓ fatto</span></div>
         </div>
       </div>
@@ -456,8 +456,41 @@
         <div class="log-date">10 mar 2026</div>
         <div class="log-dot active"></div>
         <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Template EPOS — Hub editoriale (Home + Hub Tematico) · v0.3.3</div>
+          <div class="log-detail">Due template completi per il brand EPOS (ecosistemi e politiche ambientali). <strong>epos-home.html</strong>: homepage hub editoriale con hero dossier 4 card, griglia 6 aree tematiche con token area-specific (<code>--color-area-citta/biodiversita/acqua/agricoltura/energia/diritto-primary</code>), articoli recenti 2-col + sidebar, dossier featured, community esperti, newsletter. <strong>epos-thematic.html</strong>: hub tema "Città e Territorio" con FilterBar sticky, lista articoli con badge tipo (analisi/dossier/commento/dato), sidebar timeline pubblicazioni + esperti + aree correlate. Brand EPOS: navy <code>#152843</code> + gold <code>#E8A520</code>, IBM Plex Serif (display) + Sans (body) + Mono (UI).</div>
+          <div class="log-tags"><span class="log-tag">epos</span><span class="log-tag">template</span><span class="log-tag">hub editoriale</span><span class="log-tag">profilo C</span><span class="log-tag">brand</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">T5 Landing — SaaS Startup Green (3 temi) · v0.3.3</div>
+          <div class="log-detail">Template landing page per la value proposition pianeta.green SaaS (business model: iscrizione → CMS siti green + GreenMeter dashboard emissioni + raccolta donazioni con analytics CTR/conversione). 3 temi CSS scoped <code>[data-theme]</code>: <strong>rara-dark</strong> (dark navy/mint, RARA Factory flagship), <strong>rara-light</strong> (clean white/emerald), <strong>hedera</strong> (mappa su token pianeta.green esistenti). Tema commutabile via switcher in-page + URL param <code>?theme=</code>. Storybook: 3 stories sotto <em>Pianeta.green / T5 Landing</em> via iframe con URL param per preset tema. Sezioni: hero stats dashboard · value prop timeline · features grid · GreenMeter demo · donation widget + analytics mock · pricing €0/€10/€29 · testimonial.</div>
+          <div class="log-tags"><span class="log-tag">pianeta.green</span><span class="log-tag">t5-landing</span><span class="log-tag">multi-tema</span><span class="log-tag">rara</span><span class="log-tag">storybook</span><span class="log-tag">SaaS</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot"></div>
+        <div class="log-body">
+          <div class="log-type type-feat">FEAT</div>
+          <div class="log-heading">Molecule ProductCard — 7 varianti shop · v0.3.3</div>
+          <div class="log-detail">Molecola ProductCard completata con 7 storie Storybook: Default (prezzo pieno), Sale (sconto %), BadgeNew, SoldOut (overlay grigio), GreenMeter (eco badge con token <code>--color-greenmeter-*</code>), Grid (griglia 6 card), ListRow (orizzontale compact 80px 1fr auto). Porta i pattern già esistenti in <code>shop-catalogo.html</code> in formato story standalone riusabile. Tutti i token sono brand-agnostic via <code>var(--color-*)</code>.</div>
+          <div class="log-tags"><span class="log-tag">molecule</span><span class="log-tag">product-card</span><span class="log-tag">shop</span><span class="log-tag">storybook</span><span class="log-tag">profilo B</span></div>
+        </div>
+      </div>
+
+      <div class="log-entry">
+        <div class="log-date">10 mar 2026</div>
+        <div class="log-dot active"></div>
+        <div class="log-body">
           <div class="log-type type-fix">FIX</div>
-          <div class="log-heading">Audit Pianeta.green — uniformazione stili e token · v0.3.2</div>
+          <div class="log-heading">Audit Pianeta.green — uniformazione stili e token · v0.3.3</div>
           <div class="log-detail">Bug font critico nei 4 template shop: caricavano IBM Plex Serif/Sans invece di Plus Jakarta Sans + Inter (font dichiarati nei token ma non disponibili). Typo <code>--color-greenmeeter-primary</code> corretto. Token <code>--color-border-default</code> allineato (0.15→0.18). DS meta-nav uniformata: font-size, gap, colori, tag pill brand-green. Logo shop allineato alla canonical: 22px/500→20px/700 + dot accento + "Pianeta.green". Testo pill "GENERIC"→"PIANETA.GREEN".</div>
           <div class="log-tags"><span class="log-tag">fix</span><span class="log-tag">audit</span><span class="log-tag">pianeta.green</span><span class="log-tag">font</span><span class="log-tag">token</span></div>
         </div>
@@ -647,10 +680,18 @@
           <span class="task-profile">A</span>
         </div>
         <div class="task">
-          <span class="task-prio prio-high">Alto</span>
+          <span class="task-prio" style="color:var(--green-text);">✓ Fatto</span>
           <div>
             <div class="task-name">ProductCard — molecola shop</div>
-            <div class="task-desc">Card prodotto con immagine, prezzo, badge, CTA. Usata in catalogo e correlati scheda prodotto.</div>
+            <div class="task-desc">7 varianti: Default, Sale, BadgeNew, SoldOut, GreenMeter, Grid, ListRow. Commit 8b10384.</div>
+          </div>
+          <span class="task-profile">B</span>
+        </div>
+        <div class="task">
+          <span class="task-prio" style="color:var(--green-text);">✓ Fatto</span>
+          <div>
+            <div class="task-name">T5 Landing — SaaS Startup Green (3 temi)</div>
+            <div class="task-desc">rara-dark · rara-light · hedera. URL param reader + 3 Storybook stories in pianeta.green. Commit f5560f1.</div>
           </div>
           <span class="task-profile">B</span>
         </div>
@@ -674,7 +715,7 @@
         <div class="task">
           <span class="task-prio prio-high">Alto</span>
           <div>
-            <div class="task-name">Template EPOS (Home + Thematic area)</div>
+            <div class="task-name">Template EPOS (Home + Thematic area) ✓</div>
             <div class="task-desc">Attendiamo accesso Figma con Francesca. Base: riuso susdef-home + susdef-hub con brand EPOS e sezioni specifiche (community profiles, internal org).</div>
           </div>
           <span class="task-profile">C</span>
@@ -785,7 +826,7 @@
 
 <footer class="page-footer">
   <span><strong>Hederae DS</strong> — Pianeta Studio S.r.l. Società Benefit — Documento interno</span>
-  <span>v0.3.2 · 10 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
+  <span>v0.3.3 · 10 marzo 2026 · <a href="https://pianetadev.github.io/hederae-ds/" style="color:var(--green)" target="_blank">→ Storybook live</a></span>
 </footer>
 
 </body>
