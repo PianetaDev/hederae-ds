@@ -1,0 +1,1190 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Documentale Aziendale - SISAL Digital Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            --color-surface-page: #FFFFFF;
+            --color-surface-raised: #F7F8FA;
+            --color-surface-card: #FFFFFF;
+            --color-surface-inverse: #1A1A2E;
+            --color-content-primary: #212121;
+            --color-content-secondary: #757575;
+            --color-content-brand: #0D47A1;
+            --color-border-default: #E0E0E0;
+            --color-border-subtle: #F0F0F0;
+            --color-interactive-primary-bg: #1976D2;
+            --color-interactive-primary-label: #FFFFFF;
+            --color-feedback-success-text: #2E7D32;
+            --color-feedback-warning-text: #F57F17;
+            --color-feedback-success-bg: #E8F5E9;
+            --color-feedback-warning-bg: #FFF8E1;
+            --color-area-documentale-primary: #37474F;
+            --color-area-documentale-muted: #ECEFF1;
+            --color-brand-primary: #1976D2;
+            --spacing-xs: 4px;
+            --spacing-sm: 8px;
+            --spacing-md: 16px;
+            --spacing-lg: 24px;
+            --spacing-xl: 32px;
+            --spacing-2xl: 48px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.16);
+            --font-size-xs: 12px;
+            --font-size-sm: 14px;
+            --font-size-md: 16px;
+            --font-size-lg: 18px;
+            --font-size-xl: 24px;
+            --font-size-2xl: 32px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background-color: var(--color-surface-page);
+            color: var(--color-content-primary);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            height: 64px;
+            background-color: var(--color-surface-inverse);
+            color: var(--color-interactive-primary-label);
+            display: flex;
+            align-items: center;
+            padding: 0 var(--spacing-lg);
+            gap: var(--spacing-lg);
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-hamburger {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            border: none;
+            background: none;
+            padding: 8px;
+        }
+
+        .header-hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: currentColor;
+            border-radius: 1px;
+            transition: all 0.3s ease;
+        }
+
+        .header-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            flex: 1;
+        }
+
+        .header-search {
+            width: 200px;
+            padding: 8px 12px;
+            border-radius: var(--radius-md);
+            border: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: currentColor;
+            font-size: var(--font-size-sm);
+        }
+
+        .header-search::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .header-icons {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-md);
+        }
+
+        .header-icon-btn {
+            width: 40px;
+            height: 40px;
+            border: none;
+            background: none;
+            color: currentColor;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            position: relative;
+            border-radius: var(--radius-sm);
+            transition: background-color 0.2s;
+        }
+
+        .header-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 20px;
+            height: 20px;
+            background-color: #EF5350;
+            color: white;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .header-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            color: white;
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            padding: var(--spacing-md) var(--spacing-lg);
+            background-color: var(--color-surface-raised);
+            border-bottom: 1px solid var(--color-border-subtle);
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+        }
+
+        .breadcrumb a {
+            color: var(--color-content-brand);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--color-area-documentale-primary) 0%, #455A64 100%);
+            color: white;
+            padding: var(--spacing-2xl) var(--spacing-lg);
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: var(--font-size-2xl);
+            font-weight: 700;
+            margin-bottom: var(--spacing-sm);
+        }
+
+        .hero-subtitle {
+            font-size: var(--font-size-lg);
+            opacity: 0.9;
+            margin-bottom: var(--spacing-md);
+        }
+
+        .hero-count {
+            font-size: var(--font-size-md);
+            opacity: 0.85;
+            font-weight: 500;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: var(--spacing-lg);
+        }
+
+        /* Search Bar Section */
+        .search-section {
+            background-color: var(--color-surface-card);
+            border-radius: var(--radius-lg);
+            padding: var(--spacing-lg);
+            margin-bottom: var(--spacing-xl);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .search-input-wrapper {
+            position: relative;
+            margin-bottom: var(--spacing-lg);
+        }
+
+        .search-input {
+            width: 100%;
+            padding: 12px 16px 12px 40px;
+            font-size: var(--font-size-md);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            background-color: var(--color-surface-page);
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.2s;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: var(--color-interactive-primary-bg);
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .search-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--color-content-secondary);
+            font-size: 18px;
+        }
+
+        /* Filters Row */
+        .filters-row {
+            display: flex;
+            gap: var(--spacing-md);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+        }
+
+        .filter-group {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-xs);
+        }
+
+        .filter-label {
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--color-content-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .filter-select {
+            padding: 8px 12px;
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            background-color: var(--color-surface-page);
+            color: var(--color-content-primary);
+            font-family: 'Inter', sans-serif;
+            cursor: pointer;
+            min-width: 140px;
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        /* Active Filters Chips */
+        .active-filters {
+            display: flex;
+            gap: var(--spacing-sm);
+            margin-bottom: var(--spacing-md);
+            flex-wrap: wrap;
+            min-height: 24px;
+        }
+
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            background-color: var(--color-area-documentale-muted);
+            color: var(--color-area-documentale-primary);
+            border-radius: 16px;
+            font-size: var(--font-size-xs);
+            font-weight: 500;
+        }
+
+        .filter-chip-remove {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 700;
+            color: currentColor;
+            padding: 0;
+            line-height: 1;
+        }
+
+        /* View Toggle */
+        .view-toggle {
+            display: flex;
+            gap: var(--spacing-sm);
+            justify-content: flex-end;
+        }
+
+        .view-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--color-border-default);
+            background-color: var(--color-surface-page);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            font-family: 'Inter', sans-serif;
+            color: var(--color-content-primary);
+            transition: all 0.2s;
+        }
+
+        .view-btn.active {
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        .view-btn:hover {
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        /* Bulk Actions Bar */
+        .bulk-actions {
+            display: none;
+            align-items: center;
+            gap: var(--spacing-md);
+            background-color: var(--color-surface-raised);
+            padding: var(--spacing-md);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-lg);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .bulk-actions.visible {
+            display: flex;
+        }
+
+        .bulk-actions-label {
+            font-size: var(--font-size-sm);
+            font-weight: 600;
+            color: var(--color-content-primary);
+            flex: 1;
+        }
+
+        .bulk-action-btn {
+            padding: 8px 16px;
+            border: 1px solid var(--color-border-default);
+            background-color: var(--color-surface-card);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            font-family: 'Inter', sans-serif;
+            color: var(--color-content-primary);
+            transition: all 0.2s;
+        }
+
+        .bulk-action-btn:hover {
+            background-color: var(--color-surface-raised);
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        /* Results Section */
+        .results-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        /* Table View */
+        .table-wrapper {
+            overflow-x: auto;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--color-border-default);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: var(--color-surface-card);
+        }
+
+        .results-table thead {
+            background-color: var(--color-surface-raised);
+            border-bottom: 2px solid var(--color-border-default);
+        }
+
+        .results-table th {
+            padding: var(--spacing-md);
+            text-align: left;
+            font-weight: 600;
+            font-size: var(--font-size-sm);
+            color: var(--color-content-primary);
+            white-space: nowrap;
+            user-select: none;
+            cursor: pointer;
+        }
+
+        .results-table th.sortable:hover {
+            background-color: #F0F0F0;
+        }
+
+        .sort-indicator {
+            margin-left: 4px;
+            font-size: 12px;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+        .results-table th.sortable:hover .sort-indicator,
+        .results-table th.sorted .sort-indicator {
+            opacity: 1;
+        }
+
+        .results-table td {
+            padding: var(--spacing-md);
+            border-bottom: 1px solid var(--color-border-subtle);
+            font-size: var(--font-size-sm);
+            color: var(--color-content-primary);
+        }
+
+        .results-table tbody tr {
+            transition: background-color 0.2s;
+        }
+
+        .results-table tbody tr:hover {
+            background-color: var(--color-surface-raised);
+        }
+
+        .doc-type-icon {
+            font-size: 18px;
+            width: 24px;
+            display: inline-block;
+            text-align: center;
+        }
+
+        .doc-name {
+            font-weight: 500;
+            color: var(--color-content-brand);
+        }
+
+        .doc-direction {
+            font-size: var(--font-size-xs);
+            color: var(--color-content-secondary);
+            font-weight: 500;
+        }
+
+        .doc-date {
+            font-size: var(--font-size-sm);
+            color: var(--color-content-secondary);
+        }
+
+        .doc-version {
+            font-weight: 500;
+            font-size: var(--font-size-xs);
+            color: var(--color-content-primary);
+        }
+
+        /* Status Badges */
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: var(--font-size-xs);
+            font-weight: 600;
+        }
+
+        .status-vigente {
+            background-color: var(--color-feedback-success-bg);
+            color: var(--color-feedback-success-text);
+        }
+
+        .status-revisione {
+            background-color: var(--color-feedback-warning-bg);
+            color: var(--color-feedback-warning-text);
+        }
+
+        .status-obsoleto {
+            background-color: #FAFAFA;
+            color: #9E9E9E;
+        }
+
+        /* Actions Menu */
+        .actions-menu {
+            position: relative;
+            display: inline-block;
+        }
+
+        .actions-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 20px;
+            color: var(--color-content-secondary);
+            padding: 4px;
+            border-radius: var(--radius-sm);
+            transition: all 0.2s;
+        }
+
+        .actions-btn:hover {
+            color: var(--color-content-primary);
+            background-color: var(--color-surface-raised);
+        }
+
+        .dropdown-menu {
+            display: none;
+            position: absolute;
+            right: 0;
+            top: 100%;
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            min-width: 160px;
+            z-index: 1000;
+            overflow: hidden;
+        }
+
+        .dropdown-menu.visible {
+            display: block;
+        }
+
+        .dropdown-item {
+            display: block;
+            width: 100%;
+            padding: 10px 16px;
+            border: none;
+            background: none;
+            text-align: left;
+            font-size: var(--font-size-sm);
+            color: var(--color-content-primary);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .dropdown-item:hover {
+            background-color: var(--color-surface-raised);
+        }
+
+        .dropdown-item:first-child {
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        /* Checkbox */
+        .doc-checkbox {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        /* Pagination */
+        .pagination-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-lg);
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            font-size: var(--font-size-sm);
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .pagination-info {
+            color: var(--color-content-secondary);
+        }
+
+        .pagination-buttons {
+            display: flex;
+            gap: var(--spacing-sm);
+        }
+
+        .pagination-btn {
+            padding: 8px 12px;
+            border: 1px solid var(--color-border-default);
+            background-color: var(--color-surface-card);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            font-size: var(--font-size-sm);
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            border-color: var(--color-interactive-primary-bg);
+            background-color: var(--color-surface-raised);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pagination-btn.active {
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        /* Quick Categories */
+        .categories-section {
+            margin-bottom: var(--spacing-xl);
+        }
+
+        .categories-title {
+            font-size: var(--font-size-lg);
+            font-weight: 600;
+            margin-bottom: var(--spacing-lg);
+            color: var(--color-content-primary);
+        }
+
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: var(--spacing-lg);
+        }
+
+        .category-card {
+            padding: var(--spacing-lg);
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            gap: var(--spacing-md);
+        }
+
+        .category-card:hover {
+            border-color: var(--color-interactive-primary-bg);
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            font-size: 32px;
+        }
+
+        .category-name {
+            font-weight: 600;
+            font-size: var(--font-size-md);
+            color: var(--color-content-primary);
+        }
+
+        .category-count {
+            font-size: var(--font-size-xs);
+            color: var(--color-content-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: var(--color-surface-raised);
+            border-top: 1px solid var(--color-border-subtle);
+            padding: var(--spacing-lg);
+            text-align: center;
+            font-size: var(--font-size-xs);
+            color: var(--color-content-secondary);
+            margin-top: var(--spacing-2xl);
+        }
+
+        /* Utility */
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="header-hamburger" title="Menu">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <h1 class="header-title">S DIGITAL WORKSPACE</h1>
+        <input type="text" class="header-search" placeholder="Ricerca veloce...">
+        <div class="header-icons">
+            <button class="header-icon-btn" title="Notifiche">
+                🔔
+                <span class="notification-badge">3</span>
+            </button>
+            <div class="header-avatar">MP</div>
+        </div>
+    </header>
+
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb">
+        <a href="#">Home</a> > <strong>Documentale</strong>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2 class="hero-title">Documentale Aziendale</h2>
+        <p class="hero-subtitle">Cerca, consulta e scarica documenti aziendali</p>
+        <p class="hero-count">1.247 documenti disponibili</p>
+    </section>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Search Section -->
+        <section class="search-section">
+            <div class="search-input-wrapper">
+                <span class="search-icon">🔍</span>
+                <input type="text" class="search-input" placeholder="Cerca per nome documento, parola chiave..." id="mainSearch">
+            </div>
+
+            <!-- Filters Row -->
+            <div class="filters-row">
+                <div class="filter-group">
+                    <label class="filter-label">Tipo</label>
+                    <select class="filter-select" id="filterType">
+                        <option>Tutti</option>
+                        <option>Regolamento</option>
+                        <option>Procedura</option>
+                        <option>Modulo</option>
+                        <option>Rapporto</option>
+                        <option>Circolare</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Direzione</label>
+                    <select class="filter-select" id="filterDirection">
+                        <option>Tutte</option>
+                        <option>IT</option>
+                        <option>HR</option>
+                        <option>Finance</option>
+                        <option>Marketing</option>
+                        <option>Operations</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Stato</label>
+                    <select class="filter-select" id="filterStatus">
+                        <option>Tutti</option>
+                        <option>Vigente</option>
+                        <option>In revisione</option>
+                        <option>Obsoleto</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label class="filter-label">Anno</label>
+                    <select class="filter-select" id="filterYear">
+                        <option>2026</option>
+                        <option>2025</option>
+                        <option>2024</option>
+                        <option>2023</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Active Filters -->
+            <div class="active-filters" id="activeFilters"></div>
+
+            <!-- View Toggle -->
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+                <div></div>
+                <div class="view-toggle">
+                    <button class="view-btn active" data-view="table" title="Vista Tabella">📊 Tabella</button>
+                    <button class="view-btn" data-view="grid" title="Vista Griglia">⊞ Griglia</button>
+                    <button class="view-btn" data-view="list" title="Vista Lista">≡ Lista</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bulk Actions Bar -->
+        <div class="bulk-actions" id="bulkActions">
+            <span class="bulk-actions-label"><span id="bulkCount">0</span> selezionati</span>
+            <button class="bulk-action-btn">📥 Scarica</button>
+            <button class="bulk-action-btn">🔀 Confronta</button>
+            <button class="bulk-action-btn">⭐ Aggiungi ai preferiti</button>
+        </div>
+
+        <!-- Results Section -->
+        <section class="results-section">
+            <!-- Table View (Default) -->
+            <div class="table-wrapper" id="tableView">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 40px;">
+                                <input type="checkbox" class="doc-checkbox" id="selectAll">
+                            </th>
+                            <th class="sortable" data-sort="type">
+                                Tipo
+                                <span class="sort-indicator">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="name">
+                                Nome Documento
+                                <span class="sort-indicator">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="direction">
+                                Direzione
+                                <span class="sort-indicator">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="date">
+                                Data Pubblicazione
+                                <span class="sort-indicator">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="version">
+                                Versione
+                                <span class="sort-indicator">▲</span>
+                            </th>
+                            <th class="sortable" data-sort="status">
+                                Stato
+                                <span class="sort-indicator">▲</span>
+                            </th>
+                            <th style="width: 60px; text-align: center;">Azioni</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📄</span></td>
+                            <td><span class="doc-name">Regolamento Smart Working v3.2</span></td>
+                            <td><span class="doc-direction">HR</span></td>
+                            <td><span class="doc-date">05/03/2026</span></td>
+                            <td><span class="doc-version">v3.2</span></td>
+                            <td><span class="status-badge status-vigente">Vigente</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📋</span></td>
+                            <td><span class="doc-name">Procedura Onboarding Nuovi Assunti</span></td>
+                            <td><span class="doc-direction">HR</span></td>
+                            <td><span class="doc-date">28/02/2026</span></td>
+                            <td><span class="doc-version">v2.0</span></td>
+                            <td><span class="status-badge status-vigente">Vigente</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📊</span></td>
+                            <td><span class="doc-name">Report KPI Q1 2026</span></td>
+                            <td><span class="doc-direction">Finance</span></td>
+                            <td><span class="doc-date">01/03/2026</span></td>
+                            <td><span class="doc-version">v1.0</span></td>
+                            <td><span class="status-badge status-revisione">In revisione</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📝</span></td>
+                            <td><span class="doc-name">Modulo Richiesta Ferie</span></td>
+                            <td><span class="doc-direction">HR</span></td>
+                            <td><span class="doc-date">15/02/2026</span></td>
+                            <td><span class="doc-version">v1.1</span></td>
+                            <td><span class="status-badge status-vigente">Vigente</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📢</span></td>
+                            <td><span class="doc-name">Circolare Aggiornamenti Benefit</span></td>
+                            <td><span class="doc-direction">HR</span></td>
+                            <td><span class="doc-date">10/03/2026</span></td>
+                            <td><span class="doc-version">v1.0</span></td>
+                            <td><span class="status-badge status-vigente">Vigente</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">🛠️</span></td>
+                            <td><span class="doc-name">Procedura Gestione Incidenti IT</span></td>
+                            <td><span class="doc-direction">IT</span></td>
+                            <td><span class="doc-date">22/01/2026</span></td>
+                            <td><span class="doc-version">v2.3</span></td>
+                            <td><span class="status-badge status-vigente">Vigente</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📄</span></td>
+                            <td><span class="doc-name">Regolamento Codice Etico</span></td>
+                            <td><span class="doc-direction">Finance</span></td>
+                            <td><span class="doc-date">15/12/2025</span></td>
+                            <td><span class="doc-version">v4.0</span></td>
+                            <td><span class="status-badge status-obsoleto">Obsoleto</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="doc-checkbox doc-select"></td>
+                            <td><span class="doc-type-icon">📑</span></td>
+                            <td><span class="doc-name">Piano Strategico 2026</span></td>
+                            <td><span class="doc-direction">Operations</span></td>
+                            <td><span class="doc-date">20/01/2026</span></td>
+                            <td><span class="doc-version">v1.5</span></td>
+                            <td><span class="status-badge status-revisione">In revisione</span></td>
+                            <td>
+                                <div class="actions-menu">
+                                    <button class="actions-btn">⋯</button>
+                                    <div class="dropdown-menu">
+                                        <button class="dropdown-item">Visualizza</button>
+                                        <button class="dropdown-item">Scarica</button>
+                                        <button class="dropdown-item">Condividi</button>
+                                        <button class="dropdown-item">Aggiungi ai preferiti</button>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Pagination -->
+        <div class="pagination-section">
+            <span class="pagination-info">Mostra 1-8 di 1.247</span>
+            <div class="pagination-buttons">
+                <button class="pagination-btn" id="prevBtn">← Precedente</button>
+                <button class="pagination-btn active">1</button>
+                <button class="pagination-btn">2</button>
+                <button class="pagination-btn">3</button>
+                <button class="pagination-btn">...</button>
+                <button class="pagination-btn">Successivo →</button>
+            </div>
+        </div>
+
+        <!-- Quick Categories -->
+        <section class="categories-section">
+            <h3 class="categories-title">Esplora per Categoria</h3>
+            <div class="categories-grid">
+                <a href="#" class="category-card">
+                    <div class="category-icon">📋</div>
+                    <div class="category-name">Regolamenti</div>
+                    <div class="category-count">124 documenti</div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">📋</div>
+                    <div class="category-name">Procedure</div>
+                    <div class="category-count">87 documenti</div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">📝</div>
+                    <div class="category-name">Modulistica</div>
+                    <div class="category-count">42 documenti</div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">📢</div>
+                    <div class="category-name">Circolari</div>
+                    <div class="category-count">156 documenti</div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">📊</div>
+                    <div class="category-name">Report</div>
+                    <div class="category-count">203 documenti</div>
+                </a>
+                <a href="#" class="category-card">
+                    <div class="category-icon">📖</div>
+                    <div class="category-name">Manuali</div>
+                    <div class="category-count">35 documenti</div>
+                </a>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 SISAL Digital Workspace. All rights reserved. | Privacy Policy | Termini d'uso</p>
+    </footer>
+
+    <script>
+        // Dropdown Menu Toggle
+        document.querySelectorAll('.actions-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const menu = btn.nextElementSibling;
+                document.querySelectorAll('.dropdown-menu.visible').forEach(m => {
+                    if (m !== menu) m.classList.remove('visible');
+                });
+                menu.classList.toggle('visible');
+            });
+        });
+
+        document.addEventListener('click', () => {
+            document.querySelectorAll('.dropdown-menu').forEach(m => {
+                m.classList.remove('visible');
+            });
+        });
+
+        // Checkbox Selection
+        const selectAllCheckbox = document.getElementById('selectAll');
+        const docCheckboxes = document.querySelectorAll('.doc-select');
+        const bulkActionsBar = document.getElementById('bulkActions');
+        const bulkCountSpan = document.getElementById('bulkCount');
+
+        function updateBulkActionsBar() {
+            const checkedCount = document.querySelectorAll('.doc-select:checked').length;
+            if (checkedCount > 0) {
+                bulkActionsBar.classList.add('visible');
+                bulkCountSpan.textContent = checkedCount;
+            } else {
+                bulkActionsBar.classList.remove('visible');
+            }
+        }
+
+        selectAllCheckbox.addEventListener('change', (e) => {
+            docCheckboxes.forEach(cb => cb.checked = e.target.checked);
+            updateBulkActionsBar();
+        });
+
+        docCheckboxes.forEach(cb => {
+            cb.addEventListener('change', () => {
+                const allChecked = Array.from(docCheckboxes).every(c => c.checked);
+                const someChecked = Array.from(docCheckboxes).some(c => c.checked);
+                selectAllCheckbox.checked = allChecked;
+                selectAllCheckbox.indeterminate = someChecked && !allChecked;
+                updateBulkActionsBar();
+            });
+        });
+
+        // Table Sorting
+        let sortState = {};
+
+        document.querySelectorAll('.sortable').forEach(header => {
+            header.addEventListener('click', () => {
+                const sortKey = header.dataset.sort;
+                const currentSort = sortState[sortKey];
+
+                document.querySelectorAll('.sortable').forEach(h => {
+                    if (h !== header) {
+                        h.classList.remove('sorted');
+                    }
+                });
+
+                if (currentSort === 'asc') {
+                    sortState[sortKey] = 'desc';
+                } else {
+                    sortState[sortKey] = 'asc';
+                }
+
+                header.classList.add('sorted');
+                document.querySelectorAll('.sort-indicator').forEach(ind => {
+                    ind.textContent = sortState[header.dataset.sort] === 'asc' ? '▲' : '▼';
+                });
+            });
+        });
+
+        // View Toggle
+        document.querySelectorAll('.view-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+                e.target.classList.add('active');
+                const view = e.target.dataset.view;
+                console.log('View switched to:', view);
+            });
+        });
+
+        // Filter Chips
+        document.querySelectorAll('.filter-select').forEach(select => {
+            select.addEventListener('change', () => {
+                updateActiveFilters();
+            });
+        });
+
+        function updateActiveFilters() {
+            const filters = [];
+            document.querySelectorAll('.filter-select').forEach(select => {
+                const value = select.value;
+                const label = select.previousElementSibling.textContent.trim().replace(':', '');
+                if (value && value !== 'Tutti' && value !== 'Tutte') {
+                    filters.push({ label, value });
+                }
+            });
+
+            const activeFiltersDiv = document.getElementById('activeFilters');
+            activeFiltersDiv.innerHTML = '';
+            filters.forEach(filter => {
+                const chip = document.createElement('div');
+                chip.className = 'filter-chip';
+                chip.innerHTML = `${filter.value} <button class="filter-chip-remove">×</button>`;
+                activeFiltersDiv.appendChild(chip);
+            });
+        }
+    </script>
+</body>
+</html>

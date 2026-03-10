@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Acconto — Pianeta.Green</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Reset & Base */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: #2e2e2e;
+            background-color: #f3ecda;
+            line-height: 1.6;
+        }
+
+        /* Header */
+        header {
+            background-color: #fff;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 24px 112px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-logo {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #059669;
+            font-style: italic;
+        }
+
+        .header-nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .header-nav a {
+            text-decoration: none;
+            color: #2e2e2e;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .header-nav a:hover {
+            color: #059669;
+        }
+
+        .header-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            background-color: #d1fae5;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .header-user-name {
+            font-size: 14px;
+            color: #2e2e2e;
+        }
+
+        .btn-exit {
+            background-color: #f3ecda;
+            border: 1px solid rgba(46, 46, 46, 0.15);
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #2e2e2e;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-exit:hover {
+            background-color: #e8dfc6;
+        }
+
+        /* Main Container */
+        .main-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 80px 112px;
+        }
+
+        .page-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 80px;
+            color: #2e2e2e;
+        }
+
+        /* Two Column Layout */
+        .payment-layout {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: 48px;
+            align-items: flex-start;
+        }
+
+        /* LEFT COLUMN - Order Summary */
+        .order-summary {
+            display: flex;
+            flex-direction: column;
+            gap: 32px;
+        }
+
+        .summary-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .summary-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 28px;
+            font-weight: 600;
+            color: #2e2e2e;
+        }
+
+        .summary-subtitle {
+            font-size: 14px;
+            color: #565656;
+        }
+
+        /* Project Card */
+        .project-card {
+            background-color: #fff;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .project-card-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin-bottom: 12px;
+        }
+
+        .project-card-description {
+            font-size: 14px;
+            color: #565656;
+            margin-bottom: 28px;
+            line-height: 1.6;
+        }
+
+        .line-items-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 16px;
+            font-size: 14px;
+        }
+
+        .line-items-table tr {
+            border-bottom: 1px solid rgba(46, 46, 46, 0.08);
+        }
+
+        .line-items-table td {
+            padding: 12px 0;
+            vertical-align: middle;
+        }
+
+        .line-items-table td:first-child {
+            color: #2e2e2e;
+            font-weight: 500;
+        }
+
+        .line-items-table td:last-child {
+            text-align: right;
+            color: #565656;
+        }
+
+        .line-items-table tr.total-row td {
+            font-weight: 600;
+            color: #2e2e2e;
+            padding: 16px 0;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+        }
+
+        .line-items-table tr.deposit-row td {
+            font-weight: 700;
+            color: #233c36;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .deposit-note {
+            font-size: 12px;
+            color: #565656;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(46, 46, 46, 0.08);
+        }
+
+        /* What's Included Section */
+        .whats-included {
+            background-color: #fff;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .section-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin-bottom: 24px;
+        }
+
+        .included-list {
+            list-style: none;
+        }
+
+        .included-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #2e2e2e;
+        }
+
+        .checkmark {
+            color: #059669;
+            font-weight: 700;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        /* Documents Section */
+        .documents-section {
+            background-color: #fff;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            padding: 32px;
+        }
+
+        .documents-list {
+            list-style: none;
+            margin-bottom: 20px;
+        }
+
+        .documents-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 0;
+            font-size: 14px;
+            color: #2e2e2e;
+        }
+
+        .doc-badge {
+            width: 20px;
+            height: 20px;
+            background-color: #d1fae5;
+            border: 1px solid #059669;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #065f46;
+            font-size: 12px;
+            font-weight: 700;
+            flex-shrink: 0;
+        }
+
+        .documents-link {
+            font-size: 13px;
+            color: #059669;
+            text-decoration: none;
+            cursor: pointer;
+            border-bottom: 1px dotted #059669;
+            transition: color 0.3s ease;
+        }
+
+        .documents-link:hover {
+            color: #047857;
+        }
+
+        /* RIGHT COLUMN - Payment Panel */
+        .payment-panel {
+            position: sticky;
+            top: 120px;
+        }
+
+        .payment-card {
+            background-color: #fff;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-top: 4px solid #059669;
+            border-radius: 8px;
+            padding: 32px;
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+        }
+
+        .payment-header {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .payment-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: #2e2e2e;
+        }
+
+        .amount-display {
+            font-size: 28px;
+            font-weight: 700;
+            color: #233c36;
+        }
+
+        .amount-note {
+            font-size: 12px;
+            color: #565656;
+        }
+
+        .divider {
+            height: 1px;
+            background-color: rgba(46, 46, 46, 0.1);
+        }
+
+        /* Payment Method Section */
+        .payment-method-section {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .payment-method-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e2e2e;
+        }
+
+        .card-element-mock {
+            background-color: #f9f7f4;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 6px;
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .card-icon {
+            font-size: 24px;
+        }
+
+        .card-details {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin: 0 16px;
+        }
+
+        .card-number {
+            font-size: 14px;
+            font-weight: 500;
+            color: #2e2e2e;
+            letter-spacing: 2px;
+        }
+
+        .card-meta {
+            font-size: 12px;
+            color: #565656;
+        }
+
+        .card-cvc {
+            font-size: 12px;
+            color: #2e2e2e;
+            font-weight: 500;
+        }
+
+        .payment-security-text {
+            font-size: 12px;
+            color: #565656;
+            line-height: 1.5;
+        }
+
+        .payment-badges {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            font-size: 11px;
+            color: #565656;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Billing Info Section */
+        .billing-info-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .billing-info-label {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e2e2e;
+        }
+
+        .billing-field {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .billing-field-label {
+            font-size: 12px;
+            font-weight: 500;
+            color: #565656;
+        }
+
+        .billing-field-value {
+            font-size: 13px;
+            color: #2e2e2e;
+            background-color: #f9f7f4;
+            padding: 8px 12px;
+            border-radius: 4px;
+            border: 1px solid rgba(46, 46, 46, 0.08);
+        }
+
+        .billing-note {
+            font-size: 11px;
+            color: #565656;
+            margin-top: 8px;
+        }
+
+        /* Checkbox & Button */
+        .consent-checkbox {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            font-size: 13px;
+            color: #2e2e2e;
+        }
+
+        .consent-checkbox input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            margin-top: 2px;
+            cursor: pointer;
+            accent-color: #059669;
+        }
+
+        .consent-checkbox label {
+            cursor: pointer;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .pay-button {
+            background-color: #233c36;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 16px 24px;
+            font-size: 16px;
+            font-weight: 600;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            disabled_opacity: 0.5;
+        }
+
+        .pay-button:hover:not(:disabled) {
+            background-color: #1a2622;
+        }
+
+        .pay-button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .pay-button.loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .security-footer {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #565656;
+            margin-top: 16px;
+            padding-top: 16px;
+            border-top: 1px solid rgba(46, 46, 46, 0.08);
+        }
+
+        .lock-icon {
+            font-size: 14px;
+        }
+
+        /* Success State */
+        .success-state {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            gap: 24px;
+            text-align: center;
+        }
+
+        .success-state.show {
+            display: flex;
+        }
+
+        .success-checkmark {
+            width: 64px;
+            height: 64px;
+            background-color: #d1fae5;
+            border: 3px solid #059669;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 40px;
+            color: #059669;
+            animation: scaleIn 0.5s ease;
+        }
+
+        @keyframes scaleIn {
+            from {
+                transform: scale(0.8);
+                opacity: 0;
+            }
+            to {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+
+        .success-title {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: #2e2e2e;
+        }
+
+        .success-message {
+            font-size: 14px;
+            color: #565656;
+        }
+
+        .receipt-summary {
+            background-color: #f9f7f4;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 6px;
+            padding: 20px;
+            width: 100%;
+            text-align: left;
+            font-size: 13px;
+        }
+
+        .receipt-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.08);
+        }
+
+        .receipt-row:last-child {
+            border-bottom: none;
+        }
+
+        .receipt-label {
+            color: #565656;
+        }
+
+        .receipt-value {
+            color: #2e2e2e;
+            font-weight: 600;
+        }
+
+        .next-steps {
+            width: 100%;
+            text-align: left;
+        }
+
+        .next-steps-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2e2e2e;
+            margin-bottom: 12px;
+        }
+
+        .next-steps-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .next-steps-list li {
+            font-size: 13px;
+            color: #2e2e2e;
+            display: flex;
+            gap: 8px;
+        }
+
+        .step-number {
+            background-color: #d1fae5;
+            color: #065f46;
+            font-weight: 600;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            font-size: 12px;
+        }
+
+        .success-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            width: 100%;
+        }
+
+        .btn-success-primary {
+            background-color: #233c36;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-success-primary:hover {
+            background-color: #1a2622;
+        }
+
+        .btn-success-secondary {
+            background-color: #fff;
+            color: #233c36;
+            border: 1px solid #233c36;
+            border-radius: 8px;
+            padding: 12px 24px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-success-secondary:hover {
+            background-color: #f9f7f4;
+        }
+
+        /* Trust Bar */
+        .trust-bar {
+            background-color: #d1fae5;
+            border-top: 1px solid rgba(46, 46, 46, 0.1);
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 32px 112px;
+            margin-top: 80px;
+        }
+
+        .trust-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 32px;
+        }
+
+        .trust-text {
+            font-size: 14px;
+            color: #065f46;
+            font-weight: 500;
+            flex: 1;
+        }
+
+        .trust-badges-row {
+            display: flex;
+            gap: 24px;
+        }
+
+        .trust-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 12px;
+            color: #065f46;
+            font-weight: 600;
+        }
+
+        .trust-badge-icon {
+            font-size: 16px;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #fff;
+            border-top: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 40px 112px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 24px;
+        }
+
+        .footer-copyright {
+            font-size: 12px;
+            color: #565656;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 24px;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            font-size: 12px;
+            color: #565656;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #2e2e2e;
+        }
+
+        /* Placeholder styling */
+        .placeholder {
+            color: #d1364f;
+            font-weight: 700;
+            background-color: rgba(209, 51, 79, 0.1);
+            padding: 2px 4px;
+            border-radius: 3px;
+            font-style: italic;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 16px 24px;
+                flex-wrap: wrap;
+                gap: 16px;
+            }
+
+            .main-container {
+                padding: 48px 24px;
+            }
+
+            .page-title {
+                font-size: 24px;
+                margin-bottom: 48px;
+            }
+
+            .payment-layout {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+
+            .payment-panel {
+                position: static;
+            }
+
+            .project-card,
+            .whats-included,
+            .documents-section {
+                padding: 24px;
+            }
+
+            .payment-card {
+                padding: 24px;
+            }
+
+            .trust-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .trust-bar {
+                padding: 24px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .header-nav {
+                gap: 20px;
+                width: 100%;
+                order: 3;
+                margin-top: 16px;
+            }
+
+            .summary-title {
+                font-size: 22px;
+            }
+
+            .payment-title {
+                font-size: 18px;
+            }
+
+            .amount-display {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-logo">Pianeta.Green</div>
+        <nav class="header-nav">
+            <a href="#dashboard">Dashboard</a>
+            <a href="#projects">Progetti</a>
+            <a href="#support">Supporto</a>
+        </nav>
+        <div class="header-user">
+            <div class="user-avatar">SC</div>
+            <div class="header-user-name">Studio Clienti</div>
+        </div>
+        <button class="btn-exit">Esci</button>
+    </header>
+
+    <!-- Main Content -->
+    <div class="main-container">
+        <h1 class="page-title">Pagamento Acconto</h1>
+
+        <div class="payment-layout">
+            <!-- LEFT COLUMN: Order Summary -->
+            <div class="order-summary">
+                <!-- Summary Header -->
+                <div class="summary-header">
+                    <h2 class="summary-title">Riepilogo Ordine</h2>
+                    <p class="summary-subtitle">Acconto 50% — Sito Web Tier 4 + Green Hosting</p>
+                </div>
+
+                <!-- Project Card -->
+                <div class="project-card">
+                    <h3 class="project-card-title">Sito Web Tier 4 + Green Hosting</h3>
+                    <p class="project-card-description">
+                        Sito chiavi in mano con CMS headless, design responsive, hosting su energia rinnovabile.
+                    </p>
+
+                    <table class="line-items-table">
+                        <tbody>
+                            <tr>
+                                <td>Setup Sito T4 (Profilo A)</td>
+                                <td><span class="placeholder">[IMPORTO]</span></td>
+                            </tr>
+                            <tr>
+                                <td>Green Hosting — primo anno incluso</td>
+                                <td>Incluso</td>
+                            </tr>
+                            <tr class="total-row">
+                                <td>Totale progetto</td>
+                                <td><span class="placeholder">[IMPORTO TOTALE]</span></td>
+                            </tr>
+                            <tr class="deposit-row">
+                                <td>Acconto 50% (dovuto ora)</td>
+                                <td><span class="placeholder">[50% IMPORTO]</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <p class="deposit-note">
+                        Il saldo (50%) sarà fatturato alla messa online del sito.
+                    </p>
+                </div>
+
+                <!-- What's Included Section -->
+                <div class="whats-included">
+                    <h3 class="section-title">Cosa è incluso</h3>
+                    <ul class="included-list">
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Design responsive mobile + desktop</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>CMS headless per gestione contenuti</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>CDN Cloudflare + SSL/TLS</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Hosting primo anno incluso</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>Monitoring CO₂ + carbon report</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>1 ciclo di revisione incluso</span>
+                        </li>
+                        <li>
+                            <span class="checkmark">✓</span>
+                            <span>30 giorni assistenza post-consegna</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Documents Section -->
+                <div class="documents-section">
+                    <h3 class="section-title">Documenti accettati</h3>
+                    <ul class="documents-list">
+                        <li>
+                            <div class="doc-badge">✓</div>
+                            <span>Metodo di Lavoro — letto e accettato</span>
+                        </li>
+                        <li>
+                            <div class="doc-badge">✓</div>
+                            <span>Contratto di Licenza — sottoscritto</span>
+                        </li>
+                        <li>
+                            <div class="doc-badge">✓</div>
+                            <span>Guida DNS Handover — letto e compreso</span>
+                        </li>
+                    </ul>
+                    <a href="#documents" class="documents-link">Rivedi i documenti nell'Area Clienti</a>
+                </div>
+            </div>
+
+            <!-- RIGHT COLUMN: Payment Panel -->
+            <aside class="payment-panel">
+                <div class="payment-card">
+                    <!-- Payment Form (hidden when success) -->
+                    <div id="payment-form">
+                        <!-- Header -->
+                        <div class="payment-header">
+                            <h3 class="payment-title">Pagamento Acconto</h3>
+                            <div class="amount-display"><span class="placeholder">[50% IMPORTO]</span> + IVA</div>
+                            <p class="amount-note">IVA 22% calcolata in fattura</p>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <!-- Payment Method Section -->
+                        <div class="payment-method-section">
+                            <label class="payment-method-label">Metodo di pagamento</label>
+
+                            <div class="card-element-mock">
+                                <div class="card-icon">💳</div>
+                                <div class="card-details">
+                                    <div class="card-number">•••• •••• •••• ••••</div>
+                                    <div class="card-meta">MM/YY: ••/•• CVC: •••</div>
+                                </div>
+                            </div>
+
+                            <p class="payment-security-text">
+                                Pagamento sicuro tramite Stripe. I dati della carta non passano dai nostri server.
+                            </p>
+
+                            <div class="payment-badges">
+                                <span class="badge">🔒 Stripe</span>
+                                <span class="badge">💳 Visa</span>
+                                <span class="badge">💳 Mastercard</span>
+                            </div>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <!-- Billing Info Section -->
+                        <div class="billing-info-section">
+                            <div class="billing-info-label">Dati di fatturazione</div>
+
+                            <div class="billing-field">
+                                <span class="billing-field-label">Ragione Sociale</span>
+                                <div class="billing-field-value"><span class="placeholder">[Ragione Sociale]</span></div>
+                            </div>
+
+                            <div class="billing-field">
+                                <span class="billing-field-label">P.IVA</span>
+                                <div class="billing-field-value"><span class="placeholder">[P.IVA]</span></div>
+                            </div>
+
+                            <div class="billing-field">
+                                <span class="billing-field-label">Email fatturazione</span>
+                                <div class="billing-field-value"><span class="placeholder">[Email]</span></div>
+                            </div>
+
+                            <div class="billing-field">
+                                <span class="billing-field-label">PEC</span>
+                                <div class="billing-field-value"><span class="placeholder">[PEC]</span></div>
+                            </div>
+
+                            <p class="billing-note">
+                                I dati di fatturazione provengono dalla registrazione. Modifica nell'Area Clienti.
+                            </p>
+                        </div>
+
+                        <div class="divider"></div>
+
+                        <!-- Consent Checkbox -->
+                        <div class="consent-checkbox">
+                            <input type="checkbox" id="consent-check">
+                            <label for="consent-check">
+                                Autorizzo il pagamento di <span class="placeholder">[50% IMPORTO]</span> + IVA a Pianeta.Studio S.r.l. tramite Stripe
+                            </label>
+                        </div>
+
+                        <!-- Pay Button -->
+                        <button id="pay-button" class="pay-button" disabled>
+                            Paga <span class="placeholder">[IMPORTO]</span> + IVA
+                        </button>
+
+                        <div class="security-footer">
+                            <span class="lock-icon">🔒</span>
+                            <span>Transazione crittografata SSL — Stripe PCI DSS Level 1</span>
+                        </div>
+                    </div>
+
+                    <!-- Success State (hidden by default) -->
+                    <div id="success-state" class="success-state">
+                        <div class="success-checkmark">✓</div>
+                        <h3 class="success-title">Pagamento ricevuto!</h3>
+                        <p class="success-message">Riceverai la fattura via PEC entro 24 ore.</p>
+
+                        <div class="receipt-summary">
+                            <div class="receipt-row">
+                                <span class="receipt-label">Importo pagato</span>
+                                <span class="receipt-value"><span class="placeholder">[IMPORTO + IVA]</span></span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Data transazione</span>
+                                <span class="receipt-value" id="receipt-date">10 mar 2026, 14:32</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Metodo pagamento</span>
+                                <span class="receipt-value">Stripe Card Charge</span>
+                            </div>
+                            <div class="receipt-row">
+                                <span class="receipt-label">Riferimento</span>
+                                <span class="receipt-value" id="receipt-ref">ch_1ABC...</span>
+                            </div>
+                        </div>
+
+                        <div class="next-steps">
+                            <div class="next-steps-title">Prossimi passi:</div>
+                            <ul class="next-steps-list">
+                                <li>
+                                    <span class="step-number">1</span>
+                                    <span>Riceverai un'email con il brief di progetto</span>
+                                </li>
+                                <li>
+                                    <span class="step-number">2</span>
+                                    <span>Pianificheremo la call di kick-off</span>
+                                </li>
+                                <li>
+                                    <span class="step-number">3</span>
+                                    <span>Il progetto inizia entro 5 giorni lavorativi</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <div class="success-buttons">
+                            <button class="btn-success-primary" onclick="window.location.href='#dashboard'">
+                                Vai alla Dashboard
+                            </button>
+                            <button class="btn-success-secondary" onclick="downloadReceipt()">
+                                Scarica Ricevuta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <!-- Trust Bar -->
+    <div class="trust-bar">
+        <div class="trust-content">
+            <div class="trust-text">
+                ✓ Pianeta.Studio è un fornitore certificato green hosting
+            </div>
+            <div class="trust-badges-row">
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">🔐</span>
+                    <span>PCI DSS</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">🔒</span>
+                    <span>SSL Encrypted</span>
+                </div>
+                <div class="trust-badge">
+                    <span class="trust-badge-icon">♻️</span>
+                    <span>100% Green Energy</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-copyright">
+                © 2026 Pianeta.Studio S.r.l. — Sostenibilità digitale
+            </div>
+            <nav class="footer-links">
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Termini di Servizio</a>
+                <a href="#contact">Contatti</a>
+            </nav>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Get DOM elements
+        const consentCheckbox = document.getElementById('consent-check');
+        const payButton = document.getElementById('pay-button');
+        const paymentForm = document.getElementById('payment-form');
+        const successState = document.getElementById('success-state');
+
+        // Enable/disable pay button based on checkbox
+        consentCheckbox.addEventListener('change', () => {
+            payButton.disabled = !consentCheckbox.checked;
+        });
+
+        // Handle payment button click
+        payButton.addEventListener('click', () => {
+            // Add loading state
+            payButton.classList.add('loading');
+            payButton.disabled = true;
+            const originalText = payButton.innerHTML;
+            payButton.innerHTML = '<span class="spinner"></span> Elaborazione...';
+
+            // Simulate payment processing (2 seconds)
+            setTimeout(() => {
+                // Hide form, show success
+                paymentForm.style.display = 'none';
+                successState.classList.add('show');
+
+                // Generate mock receipt data
+                const now = new Date();
+                const dateStr = now.toLocaleDateString('it-IT', {
+                    year: 'numeric',
+                    month: 'short',
+                    day: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+                document.getElementById('receipt-date').textContent = dateStr;
+                document.getElementById('receipt-ref').textContent = 'ch_' + Math.random().toString(36).substr(2, 9).toUpperCase();
+            }, 2000);
+        });
+
+        // Download receipt function
+        function downloadReceipt() {
+            alert('Ricevuta scaricata:\nPianeta.Studio_Ricevuta_' + new Date().toISOString().split('T')[0] + '.pdf');
+        }
+
+        // Exit button
+        document.querySelector('.btn-exit').addEventListener('click', () => {
+            if (confirm('Sei sicuro di voler uscire dall\'Area Clienti?')) {
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>

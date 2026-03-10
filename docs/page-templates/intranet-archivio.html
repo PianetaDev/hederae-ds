@@ -1,0 +1,1326 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Archivio News - Sisal Digital Workspace</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Reset & Variables */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-surface-page: #FFFFFF;
+            --color-surface-raised: #F7F8FA;
+            --color-surface-card: #FFFFFF;
+            --color-surface-inverse: #1A1A2E;
+            --color-content-primary: #212121;
+            --color-content-secondary: #757575;
+            --color-content-brand: #0D47A1;
+            --color-border-default: #E0E0E0;
+            --color-border-subtle: #F0F0F0;
+            --color-interactive-primary-bg: #1976D2;
+            --color-interactive-primary-label: #FFFFFF;
+            --color-interactive-secondary-bg: transparent;
+            --color-interactive-secondary-border: #1976D2;
+            --color-interactive-secondary-label: #1976D2;
+            --color-brand-primary: #1976D2;
+            --color-category-azienda: #E65100;
+            --color-category-innovazione: #1976D2;
+            --color-category-persone: #7B1FA2;
+            --color-category-sostenibilita: #2E7D32;
+            --space-2: 2px;
+            --space-3: 4px;
+            --space-4: 8px;
+            --space-6: 12px;
+            --space-8: 16px;
+            --space-12: 24px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.15);
+            --font-family: 'Inter', sans-serif;
+            --header-height: 64px;
+            --content-max-width: 1200px;
+        }
+
+        html, body {
+            font-family: var(--font-family);
+            color: var(--color-content-primary);
+            background-color: var(--color-surface-page);
+            line-height: 1.5;
+        }
+
+        /* Header */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--header-height);
+            background-color: var(--color-surface-inverse);
+            display: flex;
+            align-items: center;
+            padding: 0 var(--space-8);
+            gap: var(--space-8);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-hamburger {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            gap: 6px;
+        }
+
+        .header-hamburger span {
+            display: block;
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-interactive-primary-label);
+            border-radius: var(--radius-sm);
+            transition: all 0.3s ease;
+        }
+
+        .header-brand {
+            color: var(--color-interactive-primary-label);
+            font-size: 16px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            flex: 1;
+        }
+
+        .header-brand::before {
+            content: 'S';
+            width: 28px;
+            height: 28px;
+            background-color: var(--color-interactive-primary-bg);
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+        }
+
+        .header-search {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            padding: var(--space-4) var(--space-6);
+            width: 240px;
+            gap: var(--space-4);
+        }
+
+        .header-search input {
+            flex: 1;
+            background: none;
+            border: none;
+            color: var(--color-interactive-primary-label);
+            font-family: inherit;
+            font-size: 14px;
+            outline: none;
+        }
+
+        .header-search input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .header-search svg {
+            width: 16px;
+            height: 16px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .header-bell {
+            position: relative;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-interactive-primary-label);
+        }
+
+        .header-bell svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        .header-badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background-color: #FF5252;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+        }
+
+        .header-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-interactive-primary-bg) 0%, var(--color-brand-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        .container {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--space-12);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 13px;
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-12);
+        }
+
+        .breadcrumb a {
+            color: var(--color-content-brand);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--color-content-secondary);
+        }
+
+        /* Page Title Section */
+        .page-header {
+            margin-bottom: var(--space-12);
+        }
+
+        .page-title {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-3);
+        }
+
+        .page-subtitle {
+            font-size: 14px;
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-8);
+        }
+
+        .page-meta {
+            font-size: 13px;
+            color: var(--color-content-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .page-meta::before {
+            content: '';
+            width: 4px;
+            height: 4px;
+            background-color: var(--color-content-secondary);
+            border-radius: 50%;
+        }
+
+        /* Filter Bar */
+        .filter-bar {
+            background-color: var(--color-surface-raised);
+            border: 1px solid var(--color-border-subtle);
+            border-radius: var(--radius-md);
+            padding: var(--space-8) var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .filter-bar-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+            margin-bottom: var(--space-8);
+        }
+
+        .filter-bar-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .filter-label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--color-content-secondary);
+            min-width: fit-content;
+        }
+
+        .filter-select {
+            padding: var(--space-4) var(--space-6);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-sm);
+            background-color: var(--color-surface-card);
+            color: var(--color-content-primary);
+            font-family: inherit;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-select:hover {
+            border-color: var(--color-content-brand);
+        }
+
+        .filter-select:focus {
+            outline: none;
+            border-color: var(--color-interactive-primary-bg);
+            box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+        }
+
+        .filter-spacer {
+            flex: 1;
+        }
+
+        .filter-sort {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 13px;
+            color: var(--color-content-secondary);
+        }
+
+        .filter-view-toggle {
+            display: flex;
+            gap: 0;
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-sm);
+            background-color: var(--color-surface-card);
+        }
+
+        .filter-view-btn {
+            padding: var(--space-4) var(--space-6);
+            border: none;
+            background: none;
+            cursor: pointer;
+            font-size: 13px;
+            color: var(--color-content-secondary);
+            transition: all 0.2s ease;
+            border-right: 1px solid var(--color-border-default);
+        }
+
+        .filter-view-btn:last-child {
+            border-right: none;
+        }
+
+        .filter-view-btn.active {
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+        }
+
+        .filter-view-btn:hover:not(.active) {
+            background-color: var(--color-surface-raised);
+        }
+
+        /* Active Filters */
+        .active-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-4);
+            padding-top: var(--space-8);
+            border-top: 1px solid var(--color-border-subtle);
+            margin-top: var(--space-8);
+        }
+
+        .filter-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-4);
+            padding: var(--space-3) var(--space-6);
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: var(--color-content-primary);
+        }
+
+        .filter-chip-remove {
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--color-content-secondary);
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 16px;
+            height: 16px;
+            transition: color 0.2s ease;
+        }
+
+        .filter-chip-remove:hover {
+            color: var(--color-content-primary);
+        }
+
+        /* News Grid */
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .news-card {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-card:hover {
+            box-shadow: var(--shadow-lg);
+            border-color: var(--color-border-default);
+            transform: translateY(-2px);
+        }
+
+        .news-image {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, #F0F0F0 0%, #E8E8E8 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-content-secondary);
+            font-size: 12px;
+        }
+
+        .news-content {
+            padding: var(--space-8);
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .news-category {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: fit-content;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: var(--space-4);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .category-azienda {
+            background-color: rgba(230, 81, 0, 0.1);
+            color: var(--color-category-azienda);
+        }
+
+        .category-innovazione {
+            background-color: rgba(25, 118, 210, 0.1);
+            color: var(--color-category-innovazione);
+        }
+
+        .category-persone {
+            background-color: rgba(123, 31, 162, 0.1);
+            color: var(--color-category-persone);
+        }
+
+        .category-sostenibilita {
+            background-color: rgba(46, 125, 50, 0.1);
+            color: var(--color-category-sostenibilita);
+        }
+
+        .news-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-4);
+            line-height: 1.4;
+        }
+
+        .news-excerpt {
+            font-size: 13px;
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-6);
+            line-height: 1.4;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            flex: 1;
+        }
+
+        .news-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-top: var(--space-6);
+            border-top: 1px solid var(--color-border-subtle);
+        }
+
+        .news-date {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+        }
+
+        .news-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            font-size: 12px;
+            color: var(--color-content-secondary);
+        }
+
+        .news-author-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-interactive-primary-bg) 0%, var(--color-brand-primary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 10px;
+            font-weight: 600;
+        }
+
+        /* News List (hidden by default) */
+        .news-list {
+            display: none;
+            flex-direction: column;
+            gap: var(--space-8);
+            margin-bottom: var(--space-12);
+        }
+
+        .news-list.active {
+            display: flex;
+        }
+
+        .news-list-item {
+            display: flex;
+            gap: var(--space-8);
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--space-8);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .news-list-item:hover {
+            box-shadow: var(--shadow-md);
+            border-color: var(--color-border-default);
+        }
+
+        .news-list-image {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, #F0F0F0 0%, #E8E8E8 100%);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-content-secondary);
+            font-size: 11px;
+            flex-shrink: 0;
+        }
+
+        .news-list-content {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            justify-content: space-between;
+        }
+
+        .news-list-header {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+        }
+
+        .news-list-category {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-sm);
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .news-list-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .news-list-excerpt {
+            font-size: 13px;
+            color: var(--color-content-secondary);
+            line-height: 1.4;
+            margin-bottom: var(--space-6);
+        }
+
+        .news-list-footer {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 12px;
+            color: var(--color-content-secondary);
+        }
+
+        .news-list-meta {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .news-list-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-4);
+            margin-top: var(--space-12);
+            padding-top: var(--space-12);
+            border-top: 1px solid var(--color-border-subtle);
+        }
+
+        .pagination-btn {
+            padding: var(--space-4) var(--space-6);
+            border: 1px solid var(--color-border-default);
+            background-color: var(--color-surface-card);
+            color: var(--color-content-primary);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            min-width: 32px;
+            text-align: center;
+        }
+
+        .pagination-btn:hover:not(:disabled) {
+            background-color: var(--color-surface-raised);
+            border-color: var(--color-content-brand);
+        }
+
+        .pagination-btn.active {
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border-color: var(--color-interactive-primary-bg);
+        }
+
+        .pagination-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Footer */
+        .footer {
+            margin-top: var(--space-12);
+            padding-top: var(--space-12);
+            border-top: 1px solid var(--color-border-subtle);
+            text-align: center;
+            color: var(--color-content-secondary);
+            font-size: 12px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .news-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 640px) {
+            .news-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .header-search {
+                display: none;
+            }
+
+            .page-title {
+                font-size: 24px;
+            }
+
+            .filter-bar-row {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .filter-select {
+                width: 100%;
+            }
+
+            .filter-spacer {
+                display: none;
+            }
+
+            .news-list-item {
+                flex-direction: column;
+            }
+
+            .news-list-image {
+                width: 100%;
+                height: 150px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <button class="header-hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <div class="header-brand">DIGITAL WORKSPACE</div>
+        <div class="header-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="11" cy="11" r="8"></circle>
+                <path d="m21 21-4.35-4.35"></path>
+            </svg>
+            <input type="text" placeholder="Cerca notizie...">
+        </div>
+        <div class="header-actions">
+            <button class="header-bell">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+                    <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+                </svg>
+                <div class="header-badge">3</div>
+            </button>
+            <div class="header-avatar">MC</div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="#">Home</a>
+            <span>/</span>
+            <a href="#">News ed Eventi</a>
+            <span>/</span>
+            <span>Archivio News</span>
+        </nav>
+
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title">Archivio News</h1>
+            <p class="page-subtitle">Tutte le notizie aziendali</p>
+            <p class="page-meta">128 risultati</p>
+        </div>
+
+        <!-- Filter Bar -->
+        <div class="filter-bar">
+            <div class="filter-bar-row">
+                <span class="filter-label">Periodo</span>
+                <select class="filter-select" id="filterPeriodo">
+                    <option value="">Tutti</option>
+                    <option value="month">Ultimo mese</option>
+                    <option value="quarter">Ultimo trimestre</option>
+                    <option value="year">Ultimo anno</option>
+                </select>
+
+                <span class="filter-label">Categoria</span>
+                <select class="filter-select" id="filterCategoria">
+                    <option value="">Tutte</option>
+                    <option value="azienda">Azienda</option>
+                    <option value="innovazione">Innovazione</option>
+                    <option value="persone">Persone</option>
+                    <option value="sostenibilita">Sostenibilità</option>
+                </select>
+
+                <span class="filter-label">Direzione</span>
+                <select class="filter-select" id="filterDirezione">
+                    <option value="">Tutte</option>
+                    <option value="it">IT</option>
+                    <option value="hr">HR</option>
+                    <option value="marketing">Marketing</option>
+                    <option value="sales">Sales</option>
+                </select>
+
+                <div class="filter-spacer"></div>
+
+                <div class="filter-sort">
+                    <span>Ordina per:</span>
+                    <select class="filter-select">
+                        <option value="recent">Più recenti</option>
+                        <option value="oldest">Meno recenti</option>
+                        <option value="popular">Più letti</option>
+                    </select>
+                </div>
+
+                <div class="filter-sort">
+                    <span>Vista:</span>
+                    <div class="filter-view-toggle">
+                        <button class="filter-view-btn active" data-view="grid" title="Vista Griglia">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/>
+                            </svg>
+                        </button>
+                        <button class="filter-view-btn" data-view="list" title="Vista Lista">
+                            <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
+                                <line x1="8" y1="6" x2="21" y2="6" stroke="currentColor" stroke-width="2"/><line x1="8" y1="12" x2="21" y2="12" stroke="currentColor" stroke-width="2"/><line x1="8" y1="18" x2="21" y2="18" stroke="currentColor" stroke-width="2"/><circle cx="3.5" cy="6" r="1.5" fill="currentColor"/><circle cx="3.5" cy="12" r="1.5" fill="currentColor"/><circle cx="3.5" cy="18" r="1.5" fill="currentColor"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Active Filters -->
+            <div class="active-filters" id="activeFilters" style="display: none;">
+            </div>
+        </div>
+
+        <!-- News Grid View -->
+        <div class="news-grid" id="newsGrid">
+            <!-- Card 1 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-innovazione">Innovazione</span>
+                    <h3 class="news-title">Nuovo sistema di gestione documentale</h3>
+                    <p class="news-excerpt">Scopri come la nostra nuova piattaforma documentale migliorerà la collaborazione e la produttività dell'intero team.</p>
+                    <div class="news-footer">
+                        <span class="news-date">8 marzo 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">GR</div>
+                            <span>G. Rossi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-azienda">Azienda</span>
+                    <h3 class="news-title">Bilancio 2025: risultati straordinari</h3>
+                    <p class="news-excerpt">L'azienda chiude l'anno con una crescita del 15% rispetto al 2024, grazie al contributo di tutti i dipartimenti.</p>
+                    <div class="news-footer">
+                        <span class="news-date">6 marzo 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">MB</div>
+                            <span>M. Bianchi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-persone">Persone</span>
+                    <h3 class="news-title">Programma di welfare aziendale 2026</h3>
+                    <p class="news-excerpt">Sono aperte le iscrizioni per i nuovi benefit e servizi dedicati al benessere dei nostri collaboratori.</p>
+                    <div class="news-footer">
+                        <span class="news-date">4 marzo 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">LC</div>
+                            <span>L. Conti</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-sostenibilita">Sostenibilità</span>
+                    <h3 class="news-title">Raggiunto obiettivo net-zero emissions</h3>
+                    <p class="news-excerpt">La nostra azienda ha ufficialmente raggiunto la neutralità carbonica attraverso investimenti in energie rinnovabili.</p>
+                    <div class="news-footer">
+                        <span class="news-date">2 marzo 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">PM</div>
+                            <span>P. Moretti</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-innovazione">Innovazione</span>
+                    <h3 class="news-title">AI Integration in Core Systems</h3>
+                    <p class="news-excerpt">L'intelligenza artificiale è ora disponibile in tutti i principali sistemi aziendali per aumentare l'efficienza operativa.</p>
+                    <div class="news-footer">
+                        <span class="news-date">28 febbraio 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">AF</div>
+                            <span>A. Ferrari</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-persone">Persone</span>
+                    <h3 class="news-title">Nuove opportunità di formazione interna</h3>
+                    <p class="news-excerpt">Accedi al catalogo di corsi di aggiornamento professionale progettati per sviluppare le tue competenze.</p>
+                    <div class="news-footer">
+                        <span class="news-date">25 febbraio 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">SR</div>
+                            <span>S. Russo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 7 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-azienda">Azienda</span>
+                    <h3 class="news-title">Espansione in tre nuovi mercati europei</h3>
+                    <p class="news-excerpt">L'azienda annuncia l'apertura di sedi operative in Francia, Germania e Spagna entro il prossimo trimestre.</p>
+                    <div class="news-footer">
+                        <span class="news-date">22 febbraio 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">FC</div>
+                            <span>F. Costa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 8 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-sostenibilita">Sostenibilità</span>
+                    <h3 class="news-title">Progetto di riduzione plastica nei packaging</h3>
+                    <p class="news-excerpt">Eliminazione della plastica monouso dai nostri prodotti: scopri l'impatto positivo sull'ambiente.</p>
+                    <div class="news-footer">
+                        <span class="news-date">20 febbraio 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">EP</div>
+                            <span>E. Pagani</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 9 -->
+            <div class="news-card">
+                <div class="news-image">Immagine</div>
+                <div class="news-content">
+                    <span class="news-category category-innovazione">Innovazione</span>
+                    <h3 class="news-title">Hackathon aziendale 2026 iscrizioni aperte</h3>
+                    <p class="news-excerpt">Unisciti a noi per una giornata di innovazione: crea soluzioni alle sfide aziendali insieme ai tuoi colleghi.</p>
+                    <div class="news-footer">
+                        <span class="news-date">18 febbraio 2026</span>
+                        <div class="news-author">
+                            <div class="news-author-avatar">GV</div>
+                            <span>G. Vitale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- News List View -->
+        <div class="news-list" id="newsList">
+            <!-- List Item 1 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-innovazione">Innovazione</span>
+                        <span class="news-date">8 marzo 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Nuovo sistema di gestione documentale</h3>
+                    <p class="news-list-excerpt">Scopri come la nostra nuova piattaforma documentale migliorerà la collaborazione e la produttività dell'intero team.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>5 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">GR</div>
+                            <span>G. Rossi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 2 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-azienda">Azienda</span>
+                        <span class="news-date">6 marzo 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Bilancio 2025: risultati straordinari</h3>
+                    <p class="news-list-excerpt">L'azienda chiude l'anno con una crescita del 15% rispetto al 2024, grazie al contributo di tutti i dipartimenti.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>7 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">MB</div>
+                            <span>M. Bianchi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 3 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-persone">Persone</span>
+                        <span class="news-date">4 marzo 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Programma di welfare aziendale 2026</h3>
+                    <p class="news-list-excerpt">Sono aperte le iscrizioni per i nuovi benefit e servizi dedicati al benessere dei nostri collaboratori.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>3 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">LC</div>
+                            <span>L. Conti</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 4 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-sostenibilita">Sostenibilità</span>
+                        <span class="news-date">2 marzo 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Raggiunto obiettivo net-zero emissions</h3>
+                    <p class="news-list-excerpt">La nostra azienda ha ufficialmente raggiunto la neutralità carbonica attraverso investimenti in energie rinnovabili.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>6 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">PM</div>
+                            <span>P. Moretti</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 5 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-innovazione">Innovazione</span>
+                        <span class="news-date">28 febbraio 2026</span>
+                    </div>
+                    <h3 class="news-list-title">AI Integration in Core Systems</h3>
+                    <p class="news-list-excerpt">L'intelligenza artificiale è ora disponibile in tutti i principali sistemi aziendali per aumentare l'efficienza operativa.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>8 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">AF</div>
+                            <span>A. Ferrari</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 6 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-persone">Persone</span>
+                        <span class="news-date">25 febbraio 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Nuove opportunità di formazione interna</h3>
+                    <p class="news-list-excerpt">Accedi al catalogo di corsi di aggiornamento professionale progettati per sviluppare le tue competenze.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>4 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">SR</div>
+                            <span>S. Russo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 7 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-azienda">Azienda</span>
+                        <span class="news-date">22 febbraio 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Espansione in tre nuovi mercati europei</h3>
+                    <p class="news-list-excerpt">L'azienda annuncia l'apertura di sedi operative in Francia, Germania e Spagna entro il prossimo trimestre.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>6 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">FC</div>
+                            <span>F. Costa</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 8 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-sostenibilita">Sostenibilità</span>
+                        <span class="news-date">20 febbraio 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Progetto di riduzione plastica nei packaging</h3>
+                    <p class="news-list-excerpt">Eliminazione della plastica monouso dai nostri prodotti: scopri l'impatto positivo sull'ambiente.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>5 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">EP</div>
+                            <span>E. Pagani</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- List Item 9 -->
+            <div class="news-list-item">
+                <div class="news-list-image">Immagine</div>
+                <div class="news-list-content">
+                    <div class="news-list-header">
+                        <span class="news-list-category category-innovazione">Innovazione</span>
+                        <span class="news-date">18 febbraio 2026</span>
+                    </div>
+                    <h3 class="news-list-title">Hackathon aziendale 2026 iscrizioni aperte</h3>
+                    <p class="news-list-excerpt">Unisciti a noi per una giornata di innovazione: crea soluzioni alle sfide aziendali insieme ai tuoi colleghi.</p>
+                    <div class="news-list-footer">
+                        <div class="news-list-meta">
+                            <span>4 min di lettura</span>
+                        </div>
+                        <div class="news-list-author">
+                            <div class="news-author-avatar">GV</div>
+                            <span>G. Vitale</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <button class="pagination-btn" id="prevBtn" disabled>← Precedente</button>
+            <button class="pagination-btn active">1</button>
+            <button class="pagination-btn">2</button>
+            <button class="pagination-btn">3</button>
+            <span style="color: var(--color-content-secondary); font-size: 13px;">...</span>
+            <button class="pagination-btn">14</button>
+            <button class="pagination-btn" id="nextBtn">Successiva →</button>
+        </div>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>Sisal Digital Workspace © 2026. Tutti i diritti riservati.</p>
+        </footer>
+    </div>
+
+    <script>
+        // View Toggle Functionality
+        const viewBtns = document.querySelectorAll('.filter-view-btn');
+        const newsGrid = document.getElementById('newsGrid');
+        const newsList = document.getElementById('newsList');
+
+        viewBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const view = btn.dataset.view;
+
+                // Update active button
+                viewBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Toggle visibility
+                if (view === 'grid') {
+                    newsGrid.style.display = 'grid';
+                    newsList.classList.remove('active');
+                } else {
+                    newsGrid.style.display = 'none';
+                    newsList.classList.add('active');
+                }
+            });
+        });
+
+        // Filter Management
+        const filterPeriodo = document.getElementById('filterPeriodo');
+        const filterCategoria = document.getElementById('filterCategoria');
+        const filterDirezione = document.getElementById('filterDirezione');
+        const activeFiltersContainer = document.getElementById('activeFilters');
+
+        function updateActiveFilters() {
+            const filters = [];
+
+            if (filterPeriodo.value) {
+                filters.push({ name: 'Periodo', value: filterPeriodo.value, id: 'periodo' });
+            }
+            if (filterCategoria.value) {
+                filters.push({ name: 'Categoria', value: filterCategoria.value, id: 'categoria' });
+            }
+            if (filterDirezione.value) {
+                filters.push({ name: 'Direzione', value: filterDirezione.value, id: 'direzione' });
+            }
+
+            if (filters.length === 0) {
+                activeFiltersContainer.style.display = 'none';
+                return;
+            }
+
+            activeFiltersContainer.style.display = 'flex';
+            activeFiltersContainer.innerHTML = filters.map(filter => `
+                <div class="filter-chip">
+                    <span>${filter.name}: ${filter.value}</span>
+                    <button class="filter-chip-remove" data-filter-id="${filter.id}">
+                        <svg viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+            `).join('');
+
+            // Add remove button listeners
+            document.querySelectorAll('.filter-chip-remove').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const filterId = btn.dataset.filterId;
+                    if (filterId === 'periodo') filterPeriodo.value = '';
+                    if (filterId === 'categoria') filterCategoria.value = '';
+                    if (filterId === 'direzione') filterDirezione.value = '';
+                    updateActiveFilters();
+                });
+            });
+        }
+
+        filterPeriodo.addEventListener('change', updateActiveFilters);
+        filterCategoria.addEventListener('change', updateActiveFilters);
+        filterDirezione.addEventListener('change', updateActiveFilters);
+
+        // Pagination
+        const paginationBtns = document.querySelectorAll('.pagination-btn:not(#prevBtn):not(#nextBtn)');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+
+        paginationBtns.forEach((btn, index) => {
+            btn.addEventListener('click', () => {
+                paginationBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+
+                // Enable/disable nav buttons
+                prevBtn.disabled = index === 0;
+                nextBtn.disabled = false;
+            });
+        });
+
+        nextBtn.addEventListener('click', () => {
+            const active = document.querySelector('.pagination-btn.active');
+            if (active && active.nextElementSibling && active.nextElementSibling.classList.contains('pagination-btn')) {
+                active.nextElementSibling.click();
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            const active = document.querySelector('.pagination-btn.active');
+            if (active && active.previousElementSibling && active.previousElementSibling.classList.contains('pagination-btn')) {
+                active.previousElementSibling.click();
+            }
+        });
+    </script>
+</body>
+</html>

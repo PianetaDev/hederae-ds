@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Area Clienti — Pianeta.Green</title>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html, body {
+            height: 100%;
+        }
+
+        body {
+            font-family: 'IBM Plex Sans', sans-serif;
+            color: #2e2e2e;
+            background-color: #f3ecda;
+            line-height: 1.6;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background-color: #ffffff;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 24px 112px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 24px;
+            font-weight: 700;
+            color: #2e2e2e;
+        }
+
+        .logo span {
+            color: #059669;
+            font-style: italic;
+        }
+
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        nav a {
+            text-decoration: none;
+            color: #2e2e2e;
+            font-size: 14px;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        nav a:hover {
+            color: #059669;
+        }
+
+        .cta-button {
+            background-color: #233c36;
+            color: #ffffff;
+            padding: 12px 24px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #1a2c28;
+        }
+
+        /* Main Content */
+        main {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+            padding: 80px 112px;
+            max-width: 1440px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        /* Login Card */
+        .login-card {
+            background-color: #ffffff;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            padding: 60px 48px;
+            width: 100%;
+            max-width: 480px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .login-card h1 {
+            font-family: 'IBM Plex Serif', serif;
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2e2e2e;
+        }
+
+        .login-card .subtitle {
+            font-size: 14px;
+            color: #565656;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 0;
+            margin-bottom: 32px;
+            border-bottom: 1px solid rgba(46, 46, 46, 0.1);
+        }
+
+        .tab-button {
+            flex: 1;
+            padding: 16px 0;
+            border: none;
+            background: none;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            color: #565656;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab-button.active {
+            color: #2e2e2e;
+            border-bottom-color: #233c36;
+        }
+
+        .tab-button:hover {
+            color: #2e2e2e;
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        label {
+            display: block;
+            font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            color: #2e2e2e;
+        }
+
+        input[type="email"],
+        input[type="password"],
+        input[type="text"] {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid rgba(46, 46, 46, 0.1);
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            color: #2e2e2e;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="email"]:focus,
+        input[type="password"]:focus,
+        input[type="text"]:focus {
+            outline: none;
+            border-color: #059669;
+        }
+
+        /* Checkbox */
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 24px;
+        }
+
+        input[type="checkbox"] {
+            margin-top: 4px;
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+            accent-color: #233c36;
+        }
+
+        .checkbox-group label {
+            margin-bottom: 0;
+            font-size: 13px;
+            color: #565656;
+            font-weight: 400;
+        }
+
+        /* Links */
+        .forgot-password {
+            text-align: right;
+            margin-bottom: 24px;
+        }
+
+        .forgot-password a {
+            font-size: 13px;
+            color: #059669;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .forgot-password a:hover {
+            color: #047857;
+        }
+
+        /* Login/Register Button */
+        .submit-button {
+            width: 100%;
+            padding: 14px 24px;
+            background-color: #233c36;
+            color: #ffffff;
+            border: none;
+            border-radius: 8px;
+            font-family: 'IBM Plex Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .submit-button:hover {
+            background-color: #1a2c28;
+        }
+
+        /* Help Text */
+        .help-text {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 13px;
+            color: #565656;
+        }
+
+        .help-text a {
+            color: #059669;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .help-text a:hover {
+            color: #047857;
+        }
+
+        /* Footer */
+        footer {
+            background-color: #ffffff;
+            border-top: 1px solid rgba(46, 46, 46, 0.1);
+            padding: 32px 112px;
+            font-size: 12px;
+            color: #565656;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        footer a {
+            color: #565656;
+            text-decoration: none;
+            margin-left: 24px;
+            transition: color 0.3s ease;
+        }
+
+        footer a:hover {
+            color: #2e2e2e;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 20px 24px;
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            nav {
+                gap: 20px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            main {
+                padding: 48px 24px;
+            }
+
+            .login-card {
+                padding: 40px 32px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            footer {
+                padding: 24px;
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+
+            footer a {
+                margin-left: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Pianeta<span>.Green</span></div>
+        <nav>
+            <a href="#ecosistema">Ecosistema</a>
+            <a href="#meter">Meter</a>
+            <a href="#prodotti">Prodotti</a>
+            <a href="#approccio">Approccio</a>
+            <a href="#studio">Studio</a>
+            <a href="#contatti" class="cta-button">Contatta</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="login-card">
+            <h1>Area Clienti</h1>
+            <p class="subtitle">Accedi al tuo progetto, documenti e stato avanzamento.</p>
+
+            <div class="tabs">
+                <button class="tab-button active" data-tab="login">Accedi</button>
+                <button class="tab-button" data-tab="register">Registrati</button>
+            </div>
+
+            <!-- Login Tab -->
+            <div id="login" class="tab-content active">
+                <form>
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" placeholder="tua@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="forgot-password">
+                        <a href="#password-reset">Password dimenticata?</a>
+                    </div>
+
+                    <button type="submit" class="submit-button">Accedi</button>
+                </form>
+            </div>
+
+            <!-- Register Tab -->
+            <div id="register" class="tab-content">
+                <form>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="register-nome">Nome</label>
+                            <input type="text" id="register-nome" placeholder="Nome" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="register-cognome">Cognome</label>
+                            <input type="text" id="register-cognome" placeholder="Cognome" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" placeholder="tua@email.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="register-confirm">Conferma Password</label>
+                        <input type="password" id="register-confirm" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="terms" required>
+                        <label for="terms">Ho letto e accetto i <a href="#terms" style="color: #059669; text-decoration: underline;">Termini di Servizio</a></label>
+                    </div>
+
+                    <button type="submit" class="submit-button">Crea Account</button>
+                </form>
+            </div>
+
+            <div class="help-text">
+                Hai bisogno di aiuto? Scrivi a <a href="mailto:dev@pianeta.studio">dev@pianeta.studio</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div>© 2026 Pianeta.Studio S.r.l. — Green Hosting su energia rinnovabile</div>
+        <div>
+            <a href="#privacy">Privacy</a>
+            <a href="#terms">Termini</a>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                document.getElementById(tabName).classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>

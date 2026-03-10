@@ -1,0 +1,198 @@
+/**
+ * Hederae DS — EPOS Theme
+ * Brand: EPOS ERIC (European Plate Observing System)
+ * Theme: Warm Cream / Forest Green + Lime Accent
+ * Tier: 2 — Sito pubblico (hub editoriale / Profilo C)
+ * Source: Figma "Design-System-Library---EPOS" (F8GLffp463VjzsYpYv0v8n)
+ *
+ * ⚠️  Accessibility notes:
+ *   - #D2E900 (accent lime) on white/cream: ~1.5:1 — NEVER use for text.
+ *     On #152C15 dark green: ~8.7:1 — safe for decorative elements.
+ *   - #152C15 (primary green) on #F9F4E6 cream: ~13.8:1 — AAA all sizes.
+ *   - #38781D (secondary green) on cream: ~5.7:1 — AA all sizes.
+ *   - #111B11 (Ui/01) on cream: ~16.4:1 — AAA all sizes.
+ *   - #255211 (link green) on cream: ~8.1:1 — AAA all sizes.
+ *   - Focus ring: 2px solid #D2E900 on dark, #152C15 on light.
+ *
+ * Usage: <html data-brand="epos">
+ *
+ * Extra brand-specific tokens:
+ *   --color-tcs-* for 10 Thematic Core Services
+ *   --radius-pill for EPOS pill-shaped buttons/nav
+ */
+
+[data-brand="epos"],
+.brand-epos {
+
+  /* ─── Primitive Scale (shared — DO NOT CHANGE) ─────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   4px;
+  --radius-md:   8px;   /* Cards, panels */
+  --radius-lg:   16px;
+  --radius-xl:   24px;
+  --radius-full: 9999px;
+  --radius-pill:  40px; /* EPOS-specific: buttons, nav items, tags */
+
+  /* ─── Font Families ────────────────────────────────────────── */
+
+  --font-display: "Rethink Sans", system-ui, sans-serif;
+  --font-heading: "Rethink Sans", system-ui, sans-serif;
+  --font-body:    "Rethink Sans", system-ui, sans-serif;
+  --font-ui:      "Rethink Sans", system-ui, sans-serif;
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+
+  --color-surface-page:    #F9F4E6;             /* Background — warm cream/parchment */
+  --color-surface-raised:  #FFFBF3;             /* Ui/03 — lighter warm off-white */
+  --color-surface-card:    #FFFFFF;             /* Ui/02 — white cards on cream */
+  --color-surface-deep:    #F1F1F1;             /* Ui/04 — neutral light gray */
+  --color-surface-overlay: rgba(17, 27, 17, 0.65);
+  --color-surface-inverse: #111B11;             /* Ui/01 — very dark green-black */
+
+  /* ─── Content (Text & Icons) ───────────────────────────────── */
+
+  --color-content-primary:   #111B11;           /* Text/01 — very dark green */
+  --color-content-secondary: #62675C;           /* Text/03 — muted gray-green */
+  --color-content-disabled:  #9A9D96;           /* derived: ~3:1 on cream */
+  --color-content-inverse:   #FFFFFF;           /* Text/02 — white on dark */
+  --color-content-brand:     #152C15;           /* Primary — deep forest green */
+  --color-content-accent:    #255211;           /* Text/Link — saturated green */
+
+  /* ─── Border ───────────────────────────────────────────────── */
+
+  --color-border-default: rgba(34, 34, 34, 0.10);  /* Border — subtle 10% */
+  --color-border-subtle:  rgba(34, 34, 34, 0.05);  /* very subtle divider */
+  --color-border-brand:   #152C15;
+  --color-border-focus:   #152C15;              /* dark green focus ring on light */
+
+  /* ─── Interactive — Primary (Accent Lime CTA) ────────────── */
+  /* ⚠️  EPOS inverts convention: Primary CTA = Accent (#D2E900) bg */
+
+  --color-interactive-primary-bg:           #D2E900;
+  --color-interactive-primary-bg-hover:     #BDD300;
+  --color-interactive-primary-bg-active:    #A8BD00;
+  --color-interactive-primary-bg-disabled:  rgba(210, 233, 0, 0.35);
+  --color-interactive-primary-label:        #111B11;  /* dark on lime: ~10.9:1 ✅ AAA */
+
+  /* ─── Interactive — Secondary (Green filled) ──────────────── */
+
+  --color-interactive-secondary-bg:          #38781D;
+  --color-interactive-secondary-bg-hover:    #2D6317;
+  --color-interactive-secondary-border:      #38781D;
+  --color-interactive-secondary-label:       #FFFFFF;  /* white on green: ~6.2:1 ✅ AA */
+
+  /* ─── Interactive — Ghost (Tertiary — white with subtle border) ── */
+
+  --color-interactive-ghost-bg-hover: rgba(37, 82, 17, 0.06);
+  --color-interactive-ghost-label:    #255211;
+
+  /* ─── Interactive — Accent (Highlights — bright lime) ─────── */
+  /* ⚠️  WCAG: #D0FA98 on cream = ~1.2:1 — bg highlight only */
+
+  --color-interactive-accent-bg:       #D0FA98;
+  --color-interactive-accent-bg-hover: #BEF07E;
+  --color-interactive-accent-label:    #111B11;
+
+  /* ─── Link ─────────────────────────────────────────────────── */
+
+  --color-link-default: #255211;               /* Text/Link — dark green */
+  --color-link-hover:   #152C15;               /* Primary — deeper green */
+  --color-link-visited: #3D2B60;               /* muted purple — distinction */
+
+  /* ─── Feedback ─────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   #E6F3E1;      /* TCS/Seismology bg — harmonizes */
+  --color-feedback-success-text: #38781D;       /* Status/Completed — Secondary */
+  --color-feedback-warning-bg:   #FFF3E0;
+  --color-feedback-warning-text: #E5910E;       /* Status/Ongoing */
+  --color-feedback-error-bg:     #FFEBEE;
+  --color-feedback-error-text:   #C62828;
+  --color-feedback-info-bg:      #E3F2FD;
+  --color-feedback-info-text:    #1565C0;
+  --color-feedback-notification: #E53935;
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+
+  --color-brand-primary:   #152C15;            /* Primary — deep forest green */
+  --color-brand-secondary: #38781D;            /* Secondary — mid green */
+  --color-brand-accent:    #D2E900;            /* Accent — vivid lime */
+  --color-brand-muted:     rgba(21, 44, 21, 0.06);
+
+  /* ─── TCS Colors (EPOS-specific — 10 Thematic Core Services) ─ */
+  /* Each TCS has icon, colored elements, and background.          */
+  /* Text on tcs-*-bg: use --color-content-primary (#111B11)       */
+
+  --color-tcs-seismology-primary:    #577159;
+  --color-tcs-seismology-bg:         #E6F3E1;
+
+  --color-tcs-near-fault-primary:    #5A7D8A;
+  --color-tcs-near-fault-bg:         #E1EFF4;
+
+  --color-tcs-gnss-primary:          #9D358B;
+  --color-tcs-gnss-bg:               #FFF0FE;
+
+  --color-tcs-volcano-primary:       #B94A1E;
+  --color-tcs-volcano-bg:            #FFF0E8;
+
+  --color-tcs-satellite-primary:     #2B6CB0;
+  --color-tcs-satellite-bg:          #E3F0FF;
+
+  --color-tcs-geomagnetic-primary:   #8B6914;
+  --color-tcs-geomagnetic-bg:        #FFF8E1;
+
+  --color-tcs-anthropogenic-primary: #7B4A8C;
+  --color-tcs-anthropogenic-bg:      #F3E8F9;
+
+  --color-tcs-geological-primary:    #4A7C59;
+  --color-tcs-geological-bg:         #E8F5E9;
+
+  --color-tcs-laboratories-primary:  #6B5B73;
+  --color-tcs-laboratories-bg:       #F0E8F4;
+
+  --color-tcs-tsunami-primary:       #2E6B8A;
+  --color-tcs-tsunami-bg:            #E0F2F7;
+
+  /* ─── Elevation / Shadows ───────────────────────────────────── */
+
+  --shadow-sm:         0 1px 2px 0 rgba(0,0,0,0.04), 0 1px 3px 0 rgba(0,0,0,0.06);
+  --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.06), 0 2px 4px -2px rgba(0,0,0,0.04);
+  --shadow-lg:         0 10px 15px -3px rgba(0,0,0,0.07), 0 4px 6px -4px rgba(0,0,0,0.05);
+  --shadow-glow-brand: 0 0 24px 0 rgba(21, 44, 21, 0.12);
+
+  /* ─── Motion ────────────────────────────────────────────────── */
+
+  --duration-fast:     100ms;
+  --duration-normal:   200ms;
+  --duration-slow:     350ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/**
+ * EPOS — Inverse Surface Override
+ * Per hero scuro, card TCS con immagine, footer su sfondo dark
+ */
+[data-brand="epos"] .surface-inverse {
+  --color-content-primary:   #FFFFFF;
+  --color-content-secondary: rgba(255, 255, 255, 0.70);
+  --color-border-default:    rgba(255, 255, 255, 0.12);
+  --color-border-focus:      #D2E900;           /* lime accent as focus on dark */
+  --color-interactive-ghost-bg-hover: rgba(255, 255, 255, 0.10);
+  --color-interactive-ghost-label:    #FFFFFF;
+  --color-link-default:      #D0FA98;           /* highlights lime on dark: ~6.8:1 ✅ AA */
+  --color-link-hover:        #D2E900;
+}

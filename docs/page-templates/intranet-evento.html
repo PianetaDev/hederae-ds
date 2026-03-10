@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sisal Innovation Day 2026 - Dettaglio Evento | S DIGITAL WORKSPACE</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-surface-page: #FFFFFF;
+            --color-surface-raised: #F7F8FA;
+            --color-surface-card: #FFFFFF;
+            --color-surface-inverse: #1A1A2E;
+            --color-content-primary: #212121;
+            --color-content-secondary: #757575;
+            --color-content-brand: #0D47A1;
+            --color-border-default: #E0E0E0;
+            --color-interactive-primary-bg: #1976D2;
+            --color-interactive-primary-label: #FFFFFF;
+            --color-brand-primary: #1976D2;
+            --color-brand-secondary: #FFD600;
+            --color-area-eventi-primary: #F9A825;
+            --color-area-eventi-muted: #FFFDE7;
+            --space-2: 2px;
+            --space-3: 3px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.08);
+            --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.12);
+            --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.16);
+            --header-height: 64px;
+            --content-max-width: 1200px;
+            --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--color-surface-page);
+            color: var(--color-content-primary);
+            line-height: 1.5;
+        }
+
+        /* ============================================================
+           HEADER
+           ============================================================ */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: var(--header-height);
+            background-color: var(--color-surface-inverse);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 var(--space-12);
+            z-index: 100;
+            box-shadow: var(--shadow-md);
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: var(--space-12);
+        }
+
+        .hamburger {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: var(--space-8);
+            margin: calc(var(--space-8) * -1);
+        }
+
+        .hamburger span {
+            width: 24px;
+            height: 2px;
+            background-color: var(--color-interactive-primary-label);
+            border-radius: 1px;
+        }
+
+        .header-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-interactive-primary-label);
+            letter-spacing: 2px;
+        }
+
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            padding: 0 var(--space-8);
+            width: 200px;
+        }
+
+        .search-box input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            color: var(--color-interactive-primary-label);
+            padding: var(--space-6) 0;
+            font-family: var(--font-family);
+            font-size: 13px;
+        }
+
+        .search-box input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .icon-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: none;
+            background-color: transparent;
+            color: var(--color-interactive-primary-label);
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .icon-button:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background-color: var(--color-area-eventi-primary);
+            color: var(--color-content-primary);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            font-size: 11px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-content-primary);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        /* ============================================================
+           MAIN CONTENT
+           ============================================================ */
+        main {
+            margin-top: var(--header-height);
+            background-color: var(--color-surface-page);
+        }
+
+        /* Breadcrumb */
+        .breadcrumb {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            padding: var(--space-12) var(--space-12);
+            display: flex;
+            gap: var(--space-6);
+            font-size: 13px;
+            color: var(--color-content-secondary);
+        }
+
+        .breadcrumb a {
+            color: var(--color-content-brand);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            color: var(--color-content-secondary);
+        }
+
+        /* Hero Section */
+        .hero {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+            position: relative;
+            height: 280px;
+            background: linear-gradient(135deg, #FF9A56, #FFB84D);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin: 0 var(--space-12);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .hero-content {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: flex-end;
+            padding: var(--space-12);
+        }
+
+        .date-badge {
+            position: absolute;
+            top: var(--space-12);
+            right: var(--space-12);
+            background-color: var(--color-surface-card);
+            border-radius: var(--radius-md);
+            padding: var(--space-8);
+            text-align: center;
+            min-width: 70px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .date-badge-day {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--color-area-eventi-primary);
+            line-height: 1;
+        }
+
+        .date-badge-month {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-content-secondary);
+            text-transform: uppercase;
+        }
+
+        .date-badge-year {
+            font-size: 11px;
+            color: var(--color-content-secondary);
+        }
+
+        .hero-info {
+            display: flex;
+            gap: var(--space-8);
+            align-items: center;
+        }
+
+        .category-chip {
+            background-color: var(--color-area-eventi-muted);
+            color: var(--color-area-eventi-primary);
+            padding: var(--space-6) var(--space-8);
+            border-radius: var(--radius-sm);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        /* Event Info Bar */
+        .event-info-bar {
+            max-width: var(--content-max-width);
+            margin: var(--space-12) auto 0;
+            padding: var(--space-12);
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            display: flex;
+            gap: var(--space-12);
+            flex-wrap: wrap;
+            margin-left: var(--space-12);
+            margin-right: var(--space-12);
+            border: 1px solid var(--color-border-default);
+        }
+
+        .info-item {
+            display: flex;
+            gap: var(--space-8);
+            align-items: center;
+            flex: 1;
+            min-width: 240px;
+        }
+
+        .info-icon {
+            font-size: 20px;
+            color: var(--color-area-eventi-primary);
+        }
+
+        .info-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .info-label {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+            font-weight: 500;
+        }
+
+        .info-value {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+        }
+
+        /* ============================================================
+           TWO-COLUMN LAYOUT
+           ============================================================ */
+        .content-wrapper {
+            max-width: var(--content-max-width);
+            margin: var(--space-12) auto 0;
+            display: grid;
+            grid-template-columns: 1fr 320px;
+            gap: var(--space-12);
+            padding: 0 var(--space-12);
+        }
+
+        /* Left Column */
+        .content-main {}
+
+        .section {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-8);
+        }
+
+        .section-description {
+            font-size: 14px;
+            color: var(--color-content-secondary);
+            line-height: 1.6;
+            margin-bottom: var(--space-6);
+        }
+
+        .section-description p {
+            margin-bottom: var(--space-6);
+        }
+
+        /* Programma / Agenda */
+        .agenda-item {
+            display: grid;
+            grid-template-columns: 80px 1fr;
+            gap: var(--space-12);
+            padding: var(--space-12) 0;
+            border-bottom: 1px solid var(--color-border-default);
+        }
+
+        .agenda-item:last-child {
+            border-bottom: none;
+        }
+
+        .agenda-time {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--color-content-brand);
+        }
+
+        .agenda-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .agenda-speaker {
+            font-size: 13px;
+            color: var(--color-content-secondary);
+        }
+
+        /* Relatori / Speakers */
+        .speakers-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: var(--space-12);
+        }
+
+        .speaker-card {
+            text-align: center;
+            padding: var(--space-12);
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--color-border-default);
+        }
+
+        .speaker-avatar {
+            width: 72px;
+            height: 72px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--color-brand-primary), var(--color-brand-secondary));
+            margin: 0 auto var(--space-8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-content-primary);
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .speaker-name {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .speaker-role {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .speaker-company {
+            font-size: 11px;
+            color: var(--color-content-brand);
+            font-weight: 500;
+        }
+
+        /* Galleria / Gallery */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-8);
+        }
+
+        .gallery-item {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, #E8E8FF, #F0F0FF);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--color-border-default);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.02);
+            box-shadow: var(--shadow-md);
+        }
+
+        .gallery-item-content {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+        }
+
+        /* Right Sidebar */
+        .sidebar {}
+
+        .sidebar-card {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .sidebar-title {
+            font-size: 14px;
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-8);
+        }
+
+        /* CTA Card */
+        .cta-button {
+            width: 100%;
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: var(--space-12);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-bottom: var(--space-8);
+            transition: background-color 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background-color: #1565C0;
+        }
+
+        .seats-info {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+            text-align: center;
+            padding: var(--space-8);
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-sm);
+        }
+
+        .seats-remaining {
+            font-weight: 600;
+            color: var(--color-area-eventi-primary);
+        }
+
+        /* Details Card */
+        .detail-row {
+            padding: var(--space-8) 0;
+            border-bottom: 1px solid var(--color-border-default);
+        }
+
+        .detail-row:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-content-secondary);
+            text-transform: uppercase;
+            margin-bottom: var(--space-2);
+        }
+
+        .detail-value {
+            font-size: 13px;
+            color: var(--color-content-primary);
+        }
+
+        /* Related Events */
+        .related-event {
+            padding: var(--space-8);
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-sm);
+            border-left: 3px solid var(--color-area-eventi-primary);
+            margin-bottom: var(--space-8);
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .related-event:hover {
+            background-color: var(--color-area-eventi-muted);
+        }
+
+        .related-event-title {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-2);
+        }
+
+        .related-event-date {
+            font-size: 11px;
+            color: var(--color-content-secondary);
+        }
+
+        /* ============================================================
+           COMMENTS SECTION
+           ============================================================ */
+        .comments-section {
+            max-width: var(--content-max-width);
+            margin: var(--space-12) auto 0;
+            padding: var(--space-12);
+        }
+
+        .comments-container {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--space-12);
+        }
+
+        .comments-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-12);
+        }
+
+        .comment {
+            display: grid;
+            grid-template-columns: 40px 1fr;
+            gap: var(--space-8);
+            padding: var(--space-12) 0;
+            border-bottom: 1px solid var(--color-border-default);
+        }
+
+        .comment:last-child {
+            border-bottom: none;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #8B5FBF, #D946A6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .comment-content {}
+
+        .comment-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+            margin-bottom: var(--space-4);
+        }
+
+        .comment-author {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+        }
+
+        .comment-date {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+        }
+
+        .comment-text {
+            font-size: 13px;
+            color: var(--color-content-secondary);
+            line-height: 1.5;
+            margin-bottom: var(--space-6);
+        }
+
+        .comment-reply {
+            font-size: 12px;
+            color: var(--color-content-brand);
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .comment-reply:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================================
+           FOOTER
+           ============================================================ */
+        footer {
+            background-color: var(--color-surface-raised);
+            border-top: 1px solid var(--color-border-default);
+            padding: var(--space-12);
+            text-align: center;
+            color: var(--color-content-secondary);
+            font-size: 12px;
+            margin-top: var(--space-12);
+        }
+
+        footer a {
+            color: var(--color-content-brand);
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* ============================================================
+           RESPONSIVE
+           ============================================================ */
+        @media (max-width: 768px) {
+            .content-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+            .search-box {
+                display: none;
+            }
+
+            .header-logo {
+                font-size: 14px;
+                letter-spacing: 1px;
+            }
+
+            .event-info-bar {
+                flex-direction: column;
+                gap: var(--space-8);
+            }
+
+            .info-item {
+                min-width: 100%;
+            }
+
+            .speakers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .hero {
+                height: 200px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header {
+                padding: 0 var(--space-8);
+            }
+
+            .breadcrumb {
+                padding: var(--space-8);
+                flex-wrap: wrap;
+                font-size: 12px;
+            }
+
+            .hero-info {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .speakers-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .date-badge {
+                top: var(--space-8);
+                right: var(--space-8);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header-left">
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <div class="header-logo">S DIGITAL WORKSPACE</div>
+        </div>
+
+        <div class="header-right">
+            <div class="search-box">
+                <input type="text" placeholder="Cerca...">
+            </div>
+            <button class="icon-button">
+                🔔
+                <span class="notification-badge">3</span>
+            </button>
+            <button class="icon-button">⚙️</button>
+            <div class="avatar">MA</div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main>
+        <!-- BREADCRUMB -->
+        <nav class="breadcrumb">
+            <a href="#home">Home</a>
+            <span>/</span>
+            <a href="#events">Eventi</a>
+            <span>/</span>
+            <span>Sisal Innovation Day 2026</span>
+        </nav>
+
+        <!-- HERO SECTION -->
+        <section class="hero">
+            <div class="date-badge">
+                <div class="date-badge-day">15</div>
+                <div class="date-badge-month">MAR</div>
+                <div class="date-badge-year">2026</div>
+            </div>
+            <div class="hero-content">
+                <div class="hero-info">
+                    <div class="category-chip">Innovazione</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EVENT INFO BAR -->
+        <div class="event-info-bar">
+            <div class="info-item">
+                <span class="info-icon">📅</span>
+                <div class="info-text">
+                    <span class="info-label">DATA E ORA</span>
+                    <span class="info-value">15 Marzo 2026 • 09:00–17:30</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">📍</span>
+                <div class="info-text">
+                    <span class="info-label">LUOGO</span>
+                    <span class="info-value">Auditorium Sisal, Milano</span>
+                </div>
+            </div>
+            <div class="info-item">
+                <span class="info-icon">👥</span>
+                <div class="info-text">
+                    <span class="info-label">CAPACITÀ</span>
+                    <span class="info-value">250 posti • 187 iscritti</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- TWO-COLUMN LAYOUT -->
+        <div class="content-wrapper">
+            <!-- LEFT COLUMN: MAIN CONTENT -->
+            <div class="content-main">
+                <!-- DESCRIZIONE EVENTO -->
+                <section class="section">
+                    <h2 class="section-title">Descrizione Evento</h2>
+                    <div class="section-description">
+                        <p>Scopri le ultime innovazioni nel campo della tecnologia digitale e della trasformazione aziendale. L'edizione 2026 di Sisal Innovation Day riunisce esperti, leader di settore e innovatori per condividere insights, best practices e visioni future.</p>
+                        <p>Durante questa giornata intensiva, potrai partecipare a sessioni plenarie, workshop interattivi e tavole rotonde su tematiche strategiche come l'intelligenza artificiale, la cybersecurity, la sostenibilità digitale e l'employee experience.</p>
+                        <p>Un'occasione unica per networking, apprendimento continuo e ispirazioni che trasformeranno il modo di lavorare in Sisal.</p>
+                    </div>
+                </section>
+
+                <!-- PROGRAMMA -->
+                <section class="section">
+                    <h2 class="section-title">Programma</h2>
+                    <div class="agenda-item">
+                        <div class="agenda-time">09:00</div>
+                        <div class="agenda-content">
+                            <h4>Registrazione e Welcome Coffee</h4>
+                            <p class="agenda-speaker">Lounge Principale</p>
+                        </div>
+                    </div>
+                    <div class="agenda-item">
+                        <div class="agenda-time">09:45</div>
+                        <div class="agenda-content">
+                            <h4>Apertura Evento - Vision 2026</h4>
+                            <p class="agenda-speaker">Alessia Rossi, CEO Sisal</p>
+                        </div>
+                    </div>
+                    <div class="agenda-item">
+                        <div class="agenda-time">10:30</div>
+                        <div class="agenda-content">
+                            <h4>AI & Automation: Il Futuro del Lavoro</h4>
+                            <p class="agenda-speaker">Marco Bianchi, Head of Innovation</p>
+                        </div>
+                    </div>
+                    <div class="agenda-item">
+                        <div class="agenda-time">11:30</div>
+                        <div class="agenda-content">
+                            <h4>Coffee Break & Networking</h4>
+                            <p class="agenda-speaker">Lounge Principale</p>
+                        </div>
+                    </div>
+                    <div class="agenda-item">
+                        <div class="agenda-time">14:00</div>
+                        <div class="agenda-content">
+                            <h4>Tavola Rotonda: Digital Transformation</h4>
+                            <p class="agenda-speaker">Panel di esperti, Auditorium</p>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- RELATORI -->
+                <section class="section">
+                    <h2 class="section-title">Relatori</h2>
+                    <div class="speakers-grid">
+                        <div class="speaker-card">
+                            <div class="speaker-avatar">AR</div>
+                            <div class="speaker-name">Alessia Rossi</div>
+                            <div class="speaker-role">CEO</div>
+                            <div class="speaker-company">Sisal Group</div>
+                        </div>
+                        <div class="speaker-card">
+                            <div class="speaker-avatar">MB</div>
+                            <div class="speaker-name">Marco Bianchi</div>
+                            <div class="speaker-role">Head of Innovation</div>
+                            <div class="speaker-company">Sisal Group</div>
+                        </div>
+                        <div class="speaker-card">
+                            <div class="speaker-avatar">LC</div>
+                            <div class="speaker-name">Laura Colombo</div>
+                            <div class="speaker-role">Tech Director</div>
+                            <div class="speaker-company">Digital Hub</div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- GALLERIA -->
+                <section class="section">
+                    <h2 class="section-title">Galleria</h2>
+                    <div class="gallery-grid">
+                        <div class="gallery-item">
+                            <div class="gallery-item-content">📸</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-item-content">🎤</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-item-content">👥</div>
+                        </div>
+                        <div class="gallery-item">
+                            <div class="gallery-item-content">🎯</div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- RIGHT SIDEBAR -->
+            <aside class="sidebar">
+                <!-- ISCRIZIONE CTA -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Iscriviti</h3>
+                    <button class="cta-button">Iscriviti Ora</button>
+                    <div class="seats-info">
+                        <span class="seats-remaining">63 posti</span> disponibili
+                    </div>
+                </div>
+
+                <!-- DETTAGLI EVENTO -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Dettagli</h3>
+                    <div class="detail-row">
+                        <div class="detail-label">Organizzatore</div>
+                        <div class="detail-value">Sisal Group - People & Culture</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Contatto</div>
+                        <div class="detail-value">events@sisal.it</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Dress Code</div>
+                        <div class="detail-value">Business Casual</div>
+                    </div>
+                    <div class="detail-row">
+                        <div class="detail-label">Lingue</div>
+                        <div class="detail-value">Italiano, Inglese</div>
+                    </div>
+                </div>
+
+                <!-- EVENTI CORRELATI -->
+                <div class="sidebar-card">
+                    <h3 class="sidebar-title">Eventi Correlati</h3>
+                    <div class="related-event">
+                        <div class="related-event-title">Workshop: Advanced AI</div>
+                        <div class="related-event-date">22 Marzo 2026</div>
+                    </div>
+                    <div class="related-event">
+                        <div class="related-event-title">Webinar: Cybersecurity</div>
+                        <div class="related-event-date">29 Marzo 2026</div>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- COMMENTS SECTION -->
+        <section class="comments-section">
+            <div class="comments-container">
+                <h2 class="comments-title">Commenti (2)</h2>
+
+                <div class="comment">
+                    <div class="comment-avatar">FG</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">Francesca Gallo</span>
+                            <span class="comment-date">2 giorni fa</span>
+                        </div>
+                        <p class="comment-text">Questo evento promette di essere incredibile! Non vedo l'ora di ascoltare i relatori e scoprire le ultime innovazioni nel settore. Grazie al team per l'organizzazione!</p>
+                        <div class="comment-reply">Rispondi</div>
+                    </div>
+                </div>
+
+                <div class="comment">
+                    <div class="comment-avatar">DP</div>
+                    <div class="comment-content">
+                        <div class="comment-header">
+                            <span class="comment-author">Davide Petrini</span>
+                            <span class="comment-date">1 giorno fa</span>
+                        </div>
+                        <p class="comment-text">Perfetto! Sono entusiasta di partecipare. Mi interessa particolarmente il panel su Digital Transformation. Qualcuno sa se verranno forniti materiali didattici?</p>
+                        <div class="comment-reply">Rispondi</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>© 2026 Sisal Group. Tutti i diritti riservati. | <a href="#privacy">Privacy Policy</a> | <a href="#terms">Termini di Servizio</a></p>
+    </footer>
+</body>
+</html>

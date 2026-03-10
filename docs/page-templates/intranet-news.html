@@ -1,0 +1,889 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sisal Digital Workspace — News Dettaglio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SISAL BRAND TOKENS ─── */
+    [data-brand="sisal"] {
+      --space-0:  0px;
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-30: 120px;
+
+      --radius-none: 0px;
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   20px;
+      --radius-full: 9999px;
+
+      --font-display: "Inter", system-ui, sans-serif;
+      --font-heading: "Inter", system-ui, sans-serif;
+      --font-body:    "Inter", system-ui, sans-serif;
+      --font-ui:      "Inter", system-ui, sans-serif;
+
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F7F8FA;
+      --color-surface-card:    #FFFFFF;
+      --color-surface-deep:    #EEF0F4;
+      --color-surface-overlay: rgba(0, 0, 0, 0.55);
+      --color-surface-inverse: #1A1A2E;
+
+      --color-content-primary:   #212121;
+      --color-content-secondary: #757575;
+      --color-content-disabled:  #BDBDBD;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #0D47A1;
+      --color-content-accent:    #1976D2;
+
+      --color-border-default: #E0E0E0;
+      --color-border-subtle:  #F0F0F0;
+      --color-border-brand:   #1976D2;
+      --color-border-focus:   #1976D2;
+
+      --color-interactive-primary-bg:           #1976D2;
+      --color-interactive-primary-bg-hover:     #1565C0;
+      --color-interactive-primary-bg-active:    #0D47A1;
+      --color-interactive-primary-bg-disabled:  rgba(25, 118, 210, 0.30);
+      --color-interactive-primary-label:        #FFFFFF;
+
+      --color-interactive-secondary-bg:          transparent;
+      --color-interactive-secondary-bg-hover:    rgba(25, 118, 210, 0.06);
+      --color-interactive-secondary-border:      #1976D2;
+      --color-interactive-secondary-label:       #1976D2;
+
+      --color-interactive-ghost-bg-hover: rgba(25, 118, 210, 0.06);
+      --color-interactive-ghost-label:    #1976D2;
+
+      --color-interactive-accent-bg:       #43A047;
+      --color-interactive-accent-bg-hover: #388E3C;
+      --color-interactive-accent-label:    #FFFFFF;
+
+      --color-link-default: #1976D2;
+      --color-link-hover:   #0D47A1;
+      --color-link-visited: #6A1B9A;
+
+      --color-feedback-success-bg:   #E8F5E9;
+      --color-feedback-success-text: #2E7D32;
+      --color-feedback-warning-bg:   #FFF8E1;
+      --color-feedback-warning-text: #F57F17;
+      --color-feedback-error-bg:     #FFEBEE;
+      --color-feedback-error-text:   #C62828;
+      --color-feedback-info-bg:      #E3F2FD;
+      --color-feedback-info-text:    #1565C0;
+      --color-feedback-notification: #FF1744;
+
+      --color-brand-primary:   #1976D2;
+      --color-brand-secondary: #FFD600;
+      --color-brand-accent:    #0D47A1;
+      --color-brand-muted:     rgba(25, 118, 210, 0.06);
+
+      --header-height:    64px;
+      --sidebar-width:    320px;
+      --sidebar-collapsed: 64px;
+      --content-max-width: 1200px;
+
+      --shadow-sm:         0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.06);
+      --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg:         0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
+      --shadow-glow-brand: 0 0 24px 0 rgba(25, 118, 210, 0.15);
+
+      --duration-fast:     100ms;
+      --duration-normal:   200ms;
+      --duration-slow:     350ms;
+      --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+      --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+      --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+
+    [data-brand="sisal"] .surface-inverse {
+      --color-content-primary:   #FFFFFF;
+      --color-content-secondary: rgba(255, 255, 255, 0.65);
+      --color-border-default:    rgba(255, 255, 255, 0.12);
+      --color-border-focus:      #FFD600;
+      --color-interactive-ghost-bg-hover: rgba(255, 255, 255, 0.08);
+      --color-interactive-ghost-label:    #FFFFFF;
+      --color-link-default:      #90CAF9;
+      --color-link-hover:        #FFFFFF;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 0; z-index: 100;
+      height: var(--header-height);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 100%;
+      gap: var(--space-4);
+    }
+    .header-left {
+      display: flex; align-items: center; gap: var(--space-6);
+      flex: 0 0 auto;
+    }
+    .hamburger-btn {
+      background: transparent; border: none;
+      color: var(--color-content-inverse);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 20px;
+      transition: opacity 0.15s;
+    }
+    .hamburger-btn:hover { opacity: 0.8; }
+    .site-logo {
+      font-family: var(--font-ui);
+      font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-content-inverse);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+      white-space: nowrap;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-content-primary);
+    }
+    .header-center {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      max-width: 400px;
+    }
+    .search-bar-header {
+      width: 100%;
+      display: flex; align-items: center; gap: var(--space-2);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: border-color 0.15s;
+    }
+    .search-bar-header:focus-within { border-color: var(--color-brand-secondary); }
+    .search-icon { font-size: 16px; color: rgba(255, 255, 255, 0.5); }
+    .search-input-header {
+      flex: 1; background: transparent;
+      border: none; outline: none;
+      color: var(--color-content-inverse);
+      font-family: var(--font-body); font-size: 14px;
+    }
+    .search-input-header::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .header-right {
+      display: flex; align-items: center; gap: var(--space-4);
+      flex: 0 0 auto;
+    }
+    .icon-btn {
+      background: transparent; border: none;
+      color: var(--color-content-inverse);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px;
+      position: relative;
+      transition: opacity 0.15s;
+    }
+    .icon-btn:hover { opacity: 0.8; }
+    .notification-badge {
+      position: absolute; top: 8px; right: 8px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-feedback-notification);
+    }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600;
+      color: var(--color-content-inverse);
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--color-border-default);
+      font-size: 13px;
+    }
+    .breadcrumb-nav {
+      display: flex; gap: var(--space-2); align-items: center;
+      flex-wrap: wrap;
+    }
+    .breadcrumb-link {
+      color: var(--color-link-default);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .breadcrumb-link:hover { color: var(--color-link-hover); }
+    .breadcrumb-separator { color: var(--color-content-secondary); }
+    .breadcrumb-current { color: var(--color-content-secondary); }
+
+    /* ─── HERO IMAGE ─── */
+    .article-hero {
+      width: 100%; height: 400px;
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.25) 0%, rgba(13, 71, 161, 0.15) 100%),
+                  url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400"><rect fill="%23f7f8fa" width="1200" height="400"/></svg>');
+      background-size: cover;
+      background-position: center;
+      position: relative; overflow: hidden;
+      display: flex; align-items: center; justify-content: center;
+      margin: var(--space-8) 0;
+    }
+    .article-hero-overlay {
+      position: absolute; inset: 0;
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.25) 0%, rgba(13, 71, 161, 0.15) 100%);
+    }
+    .article-hero::after {
+      content: "📸"; position: relative; z-index: 1;
+      font-size: 64px; opacity: 0.3;
+    }
+
+    /* ─── ARTICLE LAYOUT ─── */
+    .article-wrapper {
+      display: grid;
+      grid-template-columns: 70% 1fr;
+      gap: var(--space-8);
+      margin: var(--space-8) 0;
+    }
+    @media (max-width: 900px) {
+      .article-wrapper { grid-template-columns: 1fr; }
+    }
+
+    /* ─── ARTICLE MAIN ─── */
+    .article-main { }
+    .article-title {
+      font-family: var(--font-display);
+      font-size: clamp(28px, 5vw, 36px);
+      font-weight: 700;
+      color: var(--color-content-brand);
+      line-height: 1.2;
+      margin-bottom: var(--space-6);
+    }
+    .article-meta {
+      display: flex; align-items: center; gap: var(--space-4);
+      font-size: 14px; color: var(--color-content-secondary);
+      margin-bottom: var(--space-4);
+      flex-wrap: wrap;
+    }
+    .article-meta-item {
+      display: flex; align-items: center; gap: var(--space-2);
+    }
+    .author-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(25, 118, 210, 0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-weight: 600;
+      color: var(--color-content-brand);
+    }
+
+    /* ─── TAGS ─── */
+    .article-tags {
+      display: flex; gap: var(--space-3);
+      margin-bottom: var(--space-6);
+      flex-wrap: wrap;
+    }
+    .tag {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.05em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      background: var(--color-surface-raised);
+      color: var(--color-content-secondary);
+      border: 1px solid var(--color-border-subtle);
+      border-radius: var(--radius-sm);
+    }
+
+    /* ─── SOCIAL SHARE ─── */
+    .article-share {
+      display: flex; gap: var(--space-3);
+      margin-bottom: var(--space-8);
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .share-btn {
+      width: 32px; height: 32px;
+      border-radius: 50%;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 14px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .share-btn:hover {
+      background: var(--color-brand-muted);
+      border-color: var(--color-border-brand);
+    }
+
+    /* ─── ARTICLE BODY ─── */
+    .article-body {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-8);
+    }
+    .article-body p {
+      margin-bottom: var(--space-6);
+    }
+    .article-body a {
+      color: var(--color-link-default);
+      text-decoration: underline;
+    }
+    .article-body a:hover { color: var(--color-link-hover); }
+    .inline-image {
+      width: 100%;
+      height: 280px;
+      background: linear-gradient(135deg, rgba(25, 118, 210, 0.15) 0%, rgba(25, 118, 210, 0.05) 100%);
+      border-radius: var(--radius-lg);
+      margin: var(--space-8) 0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 48px; color: rgba(25, 118, 210, 0.2);
+    }
+
+    /* ─── SIDEBAR ─── */
+    .article-sidebar { }
+    .sidebar-box {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .sidebar-title {
+      font-family: var(--font-heading);
+      font-size: 14px; font-weight: 600;
+      color: var(--color-content-primary);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: var(--space-4);
+      padding-bottom: var(--space-3);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    /* ─── AUTHOR BOX ─── */
+    .author-box {
+      display: flex; flex-direction: column; align-items: center;
+      text-align: center;
+    }
+    .author-box-avatar {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: rgba(25, 118, 210, 0.15);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; font-weight: 600;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-3);
+    }
+    .author-box-name {
+      font-family: var(--font-heading);
+      font-size: 14px; font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-1);
+    }
+    .author-box-role {
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── RELATED NEWS ─── */
+    .related-news-list {
+      list-style: none;
+    }
+    .related-news-item {
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .related-news-item:last-child { border-bottom: none; }
+    .related-news-link {
+      font-size: 13px;
+      color: var(--color-link-default);
+      text-decoration: none;
+      line-height: 1.4;
+      transition: color 0.15s;
+    }
+    .related-news-link:hover { color: var(--color-link-hover); }
+    .related-news-date {
+      font-size: 11px;
+      color: var(--color-content-secondary);
+      margin-top: var(--space-1);
+    }
+
+    /* ─── MOST READ ─── */
+    .most-read-list {
+      list-style: none;
+    }
+    .most-read-item {
+      display: flex; gap: var(--space-3);
+      padding: var(--space-3) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      align-items: flex-start;
+    }
+    .most-read-item:last-child { border-bottom: none; }
+    .most-read-num {
+      flex-shrink: 0;
+      width: 24px; height: 24px;
+      border-radius: 50%;
+      background: var(--color-brand-muted);
+      color: var(--color-content-brand);
+      font-weight: 700; font-size: 12px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .most-read-link {
+      flex: 1;
+      font-size: 13px;
+      color: var(--color-link-default);
+      text-decoration: none;
+      line-height: 1.4;
+      transition: color 0.15s;
+    }
+    .most-read-link:hover { color: var(--color-link-hover); }
+
+    /* ─── COMMENTS SECTION ─── */
+    .comments-section {
+      margin: var(--space-12) 0;
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--color-border-default);
+    }
+    .comments-header {
+      display: flex; align-items: center; gap: var(--space-3);
+      margin-bottom: var(--space-6);
+    }
+    .comments-title {
+      font-family: var(--font-heading);
+      font-size: 20px; font-weight: 600;
+      color: var(--color-content-primary);
+    }
+    .comments-badge {
+      display: flex; align-items: center; justify-content: center;
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--color-brand-muted);
+      color: var(--color-content-brand);
+      font-size: 12px; font-weight: 600;
+    }
+
+    /* ─── COMMENT ITEMS ─── */
+    .comment-item {
+      display: flex; gap: var(--space-4);
+      padding: var(--space-6) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+    .comment-item:last-child { border-bottom: none; }
+    .comment-avatar {
+      flex-shrink: 0;
+      width: 40px; height: 40px;
+      border-radius: 50%;
+      background: rgba(25, 118, 210, 0.1);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600;
+      color: var(--color-content-brand);
+    }
+    .comment-body { flex: 1; }
+    .comment-header {
+      display: flex; align-items: center; gap: var(--space-3);
+      margin-bottom: var(--space-2);
+    }
+    .comment-author {
+      font-weight: 600;
+      color: var(--color-content-primary);
+      font-size: 14px;
+    }
+    .comment-date {
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+    .comment-text {
+      font-size: 14px;
+      color: var(--color-content-primary);
+      line-height: 1.6;
+      margin-bottom: var(--space-3);
+    }
+    .comment-reply-link {
+      font-size: 12px;
+      color: var(--color-link-default);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.15s;
+    }
+    .comment-reply-link:hover { color: var(--color-link-hover); }
+
+    /* ─── COMMENT FORM ─── */
+    .comment-form {
+      margin-top: var(--space-8);
+      padding: var(--space-6);
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-lg);
+    }
+    .comment-textarea {
+      width: 100%;
+      min-height: 100px;
+      padding: var(--space-4);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-content-primary);
+      resize: vertical;
+      transition: border-color 0.15s;
+    }
+    .comment-textarea:focus {
+      outline: none;
+      border-color: var(--color-border-brand);
+      box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
+    }
+    .comment-textarea::placeholder {
+      color: var(--color-content-secondary);
+    }
+    .comment-submit {
+      margin-top: var(--space-4);
+      padding: var(--space-3) var(--space-6);
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none;
+      border-radius: var(--radius-md);
+      font-family: var(--font-ui);
+      font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+    .comment-submit:hover {
+      background: var(--color-interactive-primary-bg-hover);
+    }
+
+    /* ─── FEEDBACK BANNER ─── */
+    .feedback-banner {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      margin: var(--space-12) 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+    .feedback-text {
+      font-size: 14px;
+      color: var(--color-content-primary);
+      font-weight: 500;
+    }
+    .feedback-actions {
+      display: flex; gap: var(--space-2);
+    }
+    .feedback-btn {
+      width: 36px; height: 36px;
+      border-radius: var(--radius-md);
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .feedback-btn:hover {
+      background: var(--color-brand-muted);
+      border-color: var(--color-border-brand);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--space-8) 0;
+    }
+    .footer-inner {
+      text-align: center;
+    }
+    .footer-copy {
+      font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary);
+    }
+
+    /* ─── TEMPLATE NOTICE ─── */
+    .template-notice {
+      background: var(--color-surface-deep);
+      border-bottom: 2px solid var(--color-brand-secondary);
+      padding: 8px 0;
+      text-align: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── TEMPLATE NOTICE ─── -->
+  <div class="template-notice">⬡ HEDERAE DS · Template — Sisal Intranet News Dettaglio · v0.1.0</div>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header surface-inverse" role="banner">
+    <div class="container">
+      <div class="header-left">
+        <button class="hamburger-btn" aria-label="Menu" aria-expanded="false">☰</button>
+        <a href="#" class="site-logo">
+          <span class="site-logo-mark">S</span>
+          Digital Workspace
+        </a>
+      </div>
+
+      <div class="header-center">
+        <div class="search-bar-header">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            class="search-input-header"
+            placeholder="Cerca documenti, persone…"
+            aria-label="Ricerca principale"
+          >
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="icon-btn" aria-label="Lingua">🌐</button>
+        <button class="icon-btn" aria-label="Notifiche">
+          🔔
+          <span class="notification-badge"></span>
+        </button>
+        <div class="user-avatar" title="Profilo">M</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── BREADCRUMB ─── -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <div class="breadcrumb-nav">
+        <a href="#" class="breadcrumb-link">Home</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="#" class="breadcrumb-link">Azienda e News</a>
+        <span class="breadcrumb-separator">/</span>
+        <a href="#" class="breadcrumb-link">News</a>
+        <span class="breadcrumb-separator">/</span>
+        <span class="breadcrumb-current">Sisal Play Cup</span>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container">
+
+    <!-- ─── HERO IMAGE ─── -->
+    <article class="article-hero" aria-hidden="true"></article>
+
+    <!-- ─── ARTICLE LAYOUT ─── -->
+    <div class="article-wrapper">
+
+      <!-- ─── MAIN CONTENT ─── -->
+      <main class="article-main" role="main">
+
+        <h1 class="article-title">Sisal Play Cup</h1>
+
+        <div class="article-meta">
+          <div class="article-meta-item">
+            <span>09 Mar 2026</span>
+          </div>
+          <div class="article-meta-item">
+            <span>Lettura: 5 min</span>
+          </div>
+          <div class="article-meta-item">
+            <span class="author-avatar">MP</span>
+            <span>Marco Pellegrini</span>
+          </div>
+        </div>
+
+        <!-- TAGS -->
+        <div class="article-tags">
+          <span class="tag">Sport</span>
+          <span class="tag">Eventi</span>
+          <span class="tag">Torneo</span>
+        </div>
+
+        <!-- SOCIAL SHARE -->
+        <div class="article-share">
+          <button class="share-btn" title="Condividi su LinkedIn">in</button>
+          <button class="share-btn" title="Condividi su Facebook">f</button>
+          <button class="share-btn" title="Condividi via Email">✉</button>
+          <button class="share-btn" title="Copia link">🔗</button>
+        </div>
+
+        <!-- ARTICLE BODY -->
+        <div class="article-body">
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+          </p>
+
+          <p>
+            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.
+          </p>
+
+          <div class="inline-image"></div>
+
+          <p>
+            Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem.
+          </p>
+
+          <p>
+            Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut quid ex ea commodi consequatur. Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur.
+          </p>
+        </div>
+
+      </main>
+
+      <!-- ─── SIDEBAR ─── -->
+      <aside class="article-sidebar" role="complementary">
+
+        <!-- AUTHOR BOX -->
+        <div class="sidebar-box">
+          <div class="sidebar-title">Autori</div>
+          <div class="author-box">
+            <div class="author-box-avatar">MP</div>
+            <div class="author-box-name">Marco Pellegrini</div>
+            <div class="author-box-role">Sport Manager</div>
+          </div>
+        </div>
+
+        <!-- RELATED NEWS -->
+        <div class="sidebar-box">
+          <div class="sidebar-title">Notizie correlate</div>
+          <ul class="related-news-list">
+            <li class="related-news-item">
+              <a href="#" class="related-news-link">Tornei calcio aziendali 2026</a>
+              <div class="related-news-date">07 Mar 2026</div>
+            </li>
+            <li class="related-news-item">
+              <a href="#" class="related-news-link">Iscrizioni team building aprile</a>
+              <div class="related-news-date">05 Mar 2026</div>
+            </li>
+            <li class="related-news-item">
+              <a href="#" class="related-news-link">Campionato tennis in corso</a>
+              <div class="related-news-date">02 Mar 2026</div>
+            </li>
+          </ul>
+        </div>
+
+        <!-- MOST READ -->
+        <div class="sidebar-box">
+          <div class="sidebar-title">Più letti</div>
+          <ul class="most-read-list">
+            <li class="most-read-item">
+              <div class="most-read-num">1</div>
+              <a href="#" class="most-read-link">Convenzioni aziendali fitness</a>
+            </li>
+            <li class="most-read-item">
+              <div class="most-read-num">2</div>
+              <a href="#" class="most-read-link">Nuove sedi uffici Sisal</a>
+            </li>
+            <li class="most-read-item">
+              <div class="most-read-num">3</div>
+              <a href="#" class="most-read-link">Piano welfare 2026</a>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+
+    </div>
+
+    <!-- ─── COMMENTS SECTION ─── -->
+    <section class="comments-section" aria-labelledby="comments-title">
+      <div class="comments-header">
+        <h2 class="comments-title" id="comments-title">Commenti</h2>
+        <div class="comments-badge">3</div>
+      </div>
+
+      <!-- COMMENT 1 -->
+      <div class="comment-item">
+        <div class="comment-avatar">LC</div>
+        <div class="comment-body">
+          <div class="comment-header">
+            <span class="comment-author">Lucia Cormanni</span>
+            <span class="comment-date">8 ore fa</span>
+          </div>
+          <p class="comment-text">
+            Ottima iniziativa! Non vedo l'ora di partecipare. È sempre bello quando l'azienda organizza questi momenti per condividere passioni comuni.
+          </p>
+          <a href="#" class="comment-reply-link">Rispondi</a>
+        </div>
+      </div>
+
+      <!-- COMMENT 2 -->
+      <div class="comment-item">
+        <div class="comment-avatar">FB</div>
+        <div class="comment-body">
+          <div class="comment-header">
+            <span class="comment-author">Fabio Bianchi</span>
+            <span class="comment-date">6 ore fa</span>
+          </div>
+          <p class="comment-text">
+            Bellissima notizia! Spero di poter portare la mia squadra, abbiamo parecchi appassionati di calcio in reparto.
+          </p>
+          <a href="#" class="comment-reply-link">Rispondi</a>
+        </div>
+      </div>
+
+      <!-- COMMENT 3 -->
+      <div class="comment-item">
+        <div class="comment-avatar">SG</div>
+        <div class="comment-body">
+          <div class="comment-header">
+            <span class="comment-author">Silvia Grozzi</span>
+            <span class="comment-date">3 ore fa</span>
+          </div>
+          <p class="comment-text">
+            Perfetto, finalmente un torneo che coinvolge tutta l'azienda. Mi piacerebbe sapere se ci sono categorie diverse.
+          </p>
+          <a href="#" class="comment-reply-link">Rispondi</a>
+        </div>
+      </div>
+
+      <!-- COMMENT FORM -->
+      <form class="comment-form" aria-label="Aggiungi un commento">
+        <textarea
+          class="comment-textarea"
+          placeholder="Scrivi il tuo commento…"
+          aria-label="Testo del commento"
+        ></textarea>
+        <button type="submit" class="comment-submit">Pubblica commento</button>
+      </form>
+    </section>
+
+    <!-- ─── FEEDBACK BANNER ─── -->
+    <div class="feedback-banner">
+      <span class="feedback-text">Miglioriamo questa pagina!</span>
+      <div class="feedback-actions">
+        <button class="feedback-btn" title="Mi piace">👍</button>
+        <button class="feedback-btn" title="Non mi piace">👎</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p class="footer-copy">© 2026 Sisal — Digital Workspace</p>
+    </div>
+  </footer>
+
+</body>
+</html>

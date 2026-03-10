@@ -1,0 +1,718 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sisal Digital Workspace — Pagina Snodo (Info Pratiche)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SISAL BRAND TOKENS ─── */
+    [data-brand="sisal"] {
+      --space-0:  0px;
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-12: 48px;
+      --space-16: 64px;
+
+      --radius-none: 0px;
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   12px;
+      --radius-xl:   20px;
+      --radius-full: 9999px;
+
+      --font-display: "Inter", system-ui, sans-serif;
+      --font-heading: "Inter", system-ui, sans-serif;
+      --font-body:    "Inter", system-ui, sans-serif;
+      --font-ui:      "Inter", system-ui, sans-serif;
+
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F7F8FA;
+      --color-surface-card:    #FFFFFF;
+      --color-surface-deep:    #EEF0F4;
+      --color-surface-overlay: rgba(0, 0, 0, 0.55);
+      --color-surface-inverse: #1A1A2E;
+
+      --color-content-primary:   #212121;
+      --color-content-secondary: #757575;
+      --color-content-disabled:  #BDBDBD;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #0D47A1;
+      --color-content-accent:    #1976D2;
+
+      --color-border-default: #E0E0E0;
+      --color-border-subtle:  #F0F0F0;
+      --color-border-brand:   #1976D2;
+      --color-border-focus:   #1976D2;
+
+      --color-interactive-primary-bg:           #1976D2;
+      --color-interactive-primary-bg-hover:     #1565C0;
+      --color-interactive-primary-bg-active:    #0D47A1;
+      --color-interactive-primary-label:        #FFFFFF;
+
+      --color-link-default: #1976D2;
+      --color-link-hover:   #0D47A1;
+
+      --color-feedback-success-text: #2E7D32;
+      --color-feedback-notification: #FF1744;
+
+      --color-brand-primary:   #1976D2;
+      --color-brand-secondary: #FFD600;
+      --color-brand-accent:    #0D47A1;
+      --color-brand-muted:     rgba(25, 118, 210, 0.06);
+
+      /* Area Colors */
+      --color-area-info-pratiche-primary: #00897B;
+      --color-area-info-pratiche-muted:   #E0F2F1;
+
+      --shadow-sm:         0 1px 3px 0 rgba(0,0,0,0.06), 0 1px 2px -1px rgba(0,0,0,0.06);
+      --shadow-md:         0 4px 6px -1px rgba(0,0,0,0.07), 0 2px 4px -2px rgba(0,0,0,0.05);
+      --shadow-lg:         0 10px 15px -3px rgba(0,0,0,0.08), 0 4px 6px -4px rgba(0,0,0,0.06);
+
+      --duration-normal:   200ms;
+      --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    [data-brand="sisal"] .surface-inverse {
+      --color-content-primary:   #FFFFFF;
+      --color-content-secondary: rgba(255, 255, 255, 0.65);
+      --color-border-default:    rgba(255, 255, 255, 0.12);
+      --color-border-focus:      #FFD600;
+      --color-link-default:      #90CAF9;
+      --color-link-hover:        #FFFFFF;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 0; z-index: 100;
+      height: 64px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 100%;
+      gap: var(--space-4);
+    }
+    .header-left {
+      display: flex; align-items: center; gap: var(--space-6);
+      flex: 0 0 auto;
+    }
+    .hamburger-btn {
+      background: transparent; border: none;
+      color: var(--color-content-inverse);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 20px;
+      transition: opacity 0.15s;
+    }
+    .hamburger-btn:hover { opacity: 0.8; }
+    .site-logo {
+      font-family: var(--font-ui);
+      font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-content-inverse);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+      white-space: nowrap;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-secondary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-content-primary);
+    }
+    .header-center {
+      flex: 1; display: flex; align-items: center; justify-content: center;
+      max-width: 400px;
+    }
+    .search-bar-header {
+      width: 100%;
+      display: flex; align-items: center; gap: var(--space-2);
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: var(--radius-md);
+      padding: 6px 12px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      transition: border-color 0.15s;
+    }
+    .search-bar-header:focus-within { border-color: var(--color-brand-secondary); }
+    .search-icon { font-size: 16px; color: rgba(255, 255, 255, 0.5); }
+    .search-input-header {
+      flex: 1; background: transparent;
+      border: none; outline: none;
+      color: var(--color-content-inverse);
+      font-family: var(--font-body); font-size: 14px;
+    }
+    .search-input-header::placeholder { color: rgba(255, 255, 255, 0.4); }
+    .header-right {
+      display: flex; align-items: center; gap: var(--space-4);
+      flex: 0 0 auto;
+    }
+    .icon-btn {
+      background: transparent; border: none;
+      color: var(--color-content-inverse);
+      width: 40px; height: 40px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 18px;
+      position: relative;
+      transition: opacity 0.15s;
+    }
+    .icon-btn:hover { opacity: 0.8; }
+    .notification-badge {
+      position: absolute; top: 8px; right: 8px;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--color-feedback-notification);
+    }
+    .user-avatar {
+      width: 32px; height: 32px; border-radius: 50%;
+      background: rgba(255, 255, 255, 0.15);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 600;
+      color: var(--color-content-inverse);
+    }
+
+    /* ─── BREADCRUMB ─── */
+    .breadcrumb {
+      padding: var(--space-3) 0;
+      background: var(--color-surface-page);
+      border-bottom: 1px solid var(--color-border-default);
+      font-family: var(--font-ui);
+      font-size: 12px;
+      color: var(--color-content-secondary);
+    }
+    .breadcrumb a { color: var(--color-link-default); text-decoration: none; }
+    .breadcrumb a:hover { color: var(--color-link-hover); }
+
+    /* ─── SECTION HERO ─── */
+    .section-hero {
+      background: var(--color-surface-page);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: var(--space-8) 0;
+    }
+    .hero-header-top {
+      display: flex; align-items: flex-start; gap: var(--space-6);
+      margin-bottom: var(--space-6);
+    }
+    .hero-icon-box {
+      width: 56px; height: 56px; border-radius: var(--radius-lg);
+      background: var(--color-area-info-pratiche-muted);
+      border: 2px solid var(--color-area-info-pratiche-primary);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px; flex-shrink: 0;
+    }
+    .hero-content { flex: 1; }
+    .area-badge {
+      display: inline-flex; align-items: center; gap: var(--space-2);
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: var(--color-area-info-pratiche-muted);
+      color: var(--color-area-info-pratiche-primary);
+      padding: 4px 10px; border-radius: var(--radius-sm);
+      margin-bottom: var(--space-3);
+      font-weight: 600;
+    }
+    .hero-title {
+      font-family: var(--font-heading);
+      font-size: clamp(24px, 4vw, 32px); font-weight: 600;
+      color: var(--color-content-primary);
+      line-height: 1.25; margin-bottom: var(--space-3);
+    }
+    .hero-subtitle {
+      font-size: 16px; color: var(--color-content-secondary);
+      line-height: 1.65; max-width: 600px;
+    }
+
+    /* ─── QUICK ACCESS GRID ─── */
+    .quick-access {
+      padding: var(--space-12) 0;
+      background: var(--color-surface-raised);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .quick-access-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: var(--space-6);
+    }
+    @media (max-width: 1000px) { .quick-access-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .quick-access-grid { grid-template-columns: 1fr; } }
+
+    .quick-access-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      display: flex; flex-direction: column; gap: var(--space-4);
+      transition: box-shadow var(--duration-normal), transform var(--duration-normal);
+      cursor: pointer;
+    }
+    .quick-access-card:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-2px);
+    }
+    .card-icon {
+      font-size: 32px; line-height: 1;
+    }
+    .card-title {
+      font-family: var(--font-heading);
+      font-size: 15px; font-weight: 600;
+      color: var(--color-content-primary);
+    }
+    .card-description {
+      font-size: 14px; color: var(--color-content-secondary);
+      line-height: 1.5;
+    }
+
+    /* ─── DOCUMENTS SECTION ─── */
+    .section { padding: var(--space-12) 0; }
+    .section + .section { border-top: 1px solid var(--color-border-default); }
+    .section-header { margin-bottom: var(--space-8); }
+    .section-header-row {
+      display: flex; align-items: flex-end; justify-content: space-between;
+      gap: var(--space-4); flex-wrap: wrap;
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: 22px; font-weight: 600;
+      color: var(--color-content-primary);
+    }
+    .section-link {
+      font-size: 14px; color: var(--color-content-brand);
+      text-decoration: none; font-weight: 500;
+      transition: color var(--duration-normal);
+    }
+    .section-link:hover { color: var(--color-link-hover); }
+
+    /* ─── DOC LIST ─── */
+    .doc-list { display: flex; flex-direction: column; gap: var(--space-4); }
+    .doc-row {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-4) var(--space-6);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: var(--space-4);
+      align-items: center;
+      text-decoration: none;
+      transition: border-color var(--duration-normal), box-shadow var(--duration-normal);
+    }
+    .doc-row:hover {
+      border-color: var(--color-border-brand);
+      box-shadow: var(--shadow-sm);
+    }
+    .doc-row-main {
+      display: flex; gap: var(--space-4); align-items: center;
+      flex: 1;
+    }
+    .doc-icon {
+      font-size: 24px; flex-shrink: 0;
+    }
+    .doc-info { flex: 1; }
+    .doc-title {
+      font-family: var(--font-heading);
+      font-size: 15px; font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-1);
+    }
+    .doc-meta {
+      font-family: var(--font-ui); font-size: 12px;
+      color: var(--color-content-secondary);
+      display: flex; gap: var(--space-3); flex-wrap: wrap;
+    }
+    .doc-row-aside {
+      display: flex; align-items: center; gap: var(--space-3);
+    }
+    .doc-category-badge {
+      display: inline-flex; align-items: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em;
+      text-transform: uppercase;
+      background: var(--color-surface-raised);
+      color: var(--color-content-secondary);
+      padding: 2px 8px; border-radius: var(--radius-sm);
+      font-weight: 600;
+    }
+
+    /* ─── AVVISI SECTION ─── */
+    .avvisi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: var(--space-6);
+    }
+    @media (max-width: 900px) { .avvisi-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 600px) { .avvisi-grid { grid-template-columns: 1fr; } }
+
+    .avviso-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--space-6);
+      text-decoration: none;
+      display: flex; gap: var(--space-4);
+      transition: box-shadow var(--duration-normal), border-color var(--duration-normal);
+    }
+    .avviso-card:hover {
+      border-color: var(--color-border-brand);
+      box-shadow: var(--shadow-sm);
+    }
+    .avviso-badge {
+      width: 4px; border-radius: 2px;
+      flex-shrink: 0;
+    }
+    .avviso-content { flex: 1; }
+    .avviso-title {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 600;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-2);
+    }
+    .avviso-meta {
+      font-size: 12px; color: var(--color-content-secondary);
+      display: flex; gap: var(--space-3); flex-wrap: wrap;
+    }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      background: var(--color-brand-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--space-8) var(--space-6);
+      margin: var(--space-12) 0;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: var(--space-6);
+      flex-wrap: wrap;
+    }
+    @media (max-width: 600px) { .cta-banner { flex-direction: column; text-align: center; } }
+    .cta-content {
+      display: flex; align-items: center; gap: var(--space-4);
+      color: var(--color-content-inverse);
+      flex: 1;
+    }
+    .cta-icon {
+      font-size: 32px; flex-shrink: 0;
+    }
+    .cta-text {
+      font-size: 16px; font-weight: 500; line-height: 1.4;
+    }
+    .cta-button {
+      background: var(--color-content-inverse);
+      color: var(--color-brand-primary);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: var(--space-3) var(--space-6);
+      font-family: var(--font-ui); font-size: 14px; font-weight: 600;
+      cursor: pointer;
+      transition: box-shadow var(--duration-normal), transform var(--duration-normal);
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .cta-button:hover {
+      box-shadow: var(--shadow-md);
+      transform: translateY(-1px);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--space-8) 0;
+      margin-top: var(--space-12);
+    }
+    .footer-inner {
+      text-align: center;
+    }
+    .footer-copy {
+      font-family: var(--font-ui); font-size: 12px; color: var(--color-content-secondary);
+    }
+
+    /* ─── TEMPLATE NOTICE ─── */
+    .template-notice {
+      background: var(--color-surface-deep);
+      border-bottom: 2px solid var(--color-brand-secondary);
+      padding: 8px 0;
+      text-align: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── TEMPLATE NOTICE ─── -->
+  <div class="template-notice">⬡ HEDERAE DS · Template — Sisal Intranet Hub (Pagina Snodo) · v0.1.0</div>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header surface-inverse" role="banner">
+    <div class="container">
+      <div class="header-left">
+        <button class="hamburger-btn" aria-label="Menu" aria-expanded="false">☰</button>
+        <a href="#" class="site-logo">
+          <span class="site-logo-mark">S</span>
+          Digital Workspace
+        </a>
+      </div>
+
+      <div class="header-center">
+        <div class="search-bar-header">
+          <span class="search-icon">🔍</span>
+          <input
+            type="search"
+            class="search-input-header"
+            placeholder="Cerca documenti, persone…"
+            aria-label="Ricerca principale"
+          >
+        </div>
+      </div>
+
+      <div class="header-right">
+        <button class="icon-btn" aria-label="Lingua">🌐</button>
+        <button class="icon-btn" aria-label="Notifiche">
+          🔔
+          <span class="notification-badge"></span>
+        </button>
+        <div class="user-avatar" title="Profilo">M</div>
+      </div>
+    </div>
+  </header>
+
+  <!-- ─── BREADCRUMB ─── -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      Home / Info Pratiche
+    </div>
+  </nav>
+
+  <!-- ─── SECTION HERO ─── -->
+  <section class="section-hero" aria-labelledby="hero-title">
+    <div class="container">
+      <div class="hero-header-top">
+        <div class="hero-icon-box">📋</div>
+        <div class="hero-content">
+          <div class="area-badge">
+            <span>●</span>
+            Info Pratiche
+          </div>
+          <h1 class="hero-title" id="hero-title">Info Pratiche</h1>
+          <p class="hero-subtitle">
+            Tutto quello che ti serve sapere per la vita in azienda
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── QUICK ACCESS GRID ─── -->
+  <section class="quick-access" aria-labelledby="quick-access-title">
+    <div class="container">
+      <h2 id="quick-access-title" style="display:none;">Accessi rapidi</h2>
+      <div class="quick-access-grid">
+        <a href="#" class="quick-access-card">
+          <div class="card-icon">📝</div>
+          <h3 class="card-title">Come fare per…</h3>
+          <p class="card-description">Guide e procedure su processi aziendali comuni</p>
+        </a>
+        <a href="#" class="quick-access-card">
+          <div class="card-icon">📄</div>
+          <h3 class="card-title">Moduli e documenti</h3>
+          <p class="card-description">Scarica i moduli necessari e la modulistica ufficiale</p>
+        </a>
+        <a href="#" class="quick-access-card">
+          <div class="card-icon">📞</div>
+          <h3 class="card-title">Contatti utili</h3>
+          <p class="card-description">Numeri e indirizzi delle funzioni aziendali</p>
+        </a>
+        <a href="#" class="quick-access-card">
+          <div class="card-icon">❓</div>
+          <h3 class="card-title">FAQ</h3>
+          <p class="card-description">Risposte alle domande più frequenti</p>
+        </a>
+        <a href="#" class="quick-access-card">
+          <div class="card-icon">🆘</div>
+          <h3 class="card-title">Assistenza IT</h3>
+          <p class="card-description">Supporto tecnico e segnalazione problemi</p>
+        </a>
+        <a href="#" class="quick-access-card">
+          <div class="card-icon">🪑</div>
+          <h3 class="card-title">Prenotazioni</h3>
+          <p class="card-description">Desk, sale riunioni e risorse condivise</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── DOCUMENTI PIÙ CONSULTATI ─── -->
+  <section class="section" aria-labelledby="docs-title">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <h2 class="section-title" id="docs-title">Documenti più consultati</h2>
+        <a href="#" class="section-link">Vedi tutti →</a>
+      </div>
+
+      <div class="doc-list">
+        <a href="#" class="doc-row">
+          <div class="doc-row-main">
+            <div class="doc-icon">📋</div>
+            <div class="doc-info">
+              <div class="doc-title">Politica aziendale smart working 2026</div>
+              <div class="doc-meta">
+                <span>08 Mar 2026</span>
+                <span>Direzione Organizzazione</span>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row-aside">
+            <div class="doc-category-badge">Policy</div>
+          </div>
+        </a>
+
+        <a href="#" class="doc-row">
+          <div class="doc-row-main">
+            <div class="doc-icon">📄</div>
+            <div class="doc-info">
+              <div class="doc-title">Modulo richiesta ferie e permessi</div>
+              <div class="doc-meta">
+                <span>05 Mar 2026</span>
+                <span>HR Operations</span>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row-aside">
+            <div class="doc-category-badge">Modulo</div>
+          </div>
+        </a>
+
+        <a href="#" class="doc-row">
+          <div class="doc-row-main">
+            <div class="doc-icon">📖</div>
+            <div class="doc-info">
+              <div class="doc-title">Regolamento benefit e agevolazioni dipendenti</div>
+              <div class="doc-meta">
+                <span>01 Mar 2026</span>
+                <span>HR Operations</span>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row-aside">
+            <div class="doc-category-badge">Regolamento</div>
+          </div>
+        </a>
+
+        <a href="#" class="doc-row">
+          <div class="doc-row-main">
+            <div class="doc-icon">📋</div>
+            <div class="doc-info">
+              <div class="doc-title">Procedura rimborso trasferte e spese</div>
+              <div class="doc-meta">
+                <span>28 Feb 2026</span>
+                <span>Finance</span>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row-aside">
+            <div class="doc-category-badge">Procedura</div>
+          </div>
+        </a>
+
+        <a href="#" class="doc-row">
+          <div class="doc-row-main">
+            <div class="doc-icon">📄</div>
+            <div class="doc-info">
+              <div class="doc-title">Dichiarazione conflitto di interessi</div>
+              <div class="doc-meta">
+                <span>25 Feb 2026</span>
+                <span>Compliance</span>
+              </div>
+            </div>
+          </div>
+          <div class="doc-row-aside">
+            <div class="doc-category-badge">Modulo</div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── AVVISI DELLA SEZIONE ─── -->
+  <section class="section" style="background: var(--color-surface-raised);" aria-labelledby="avvisi-title">
+    <div class="container">
+      <div class="section-header section-header-row">
+        <h2 class="section-title" id="avvisi-title">Avvisi della sezione</h2>
+        <a href="#" class="section-link">Vedi tutti →</a>
+      </div>
+
+      <div class="avvisi-grid">
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #00897B;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Aggiornamento orari apertura sportello HR</p>
+            <div class="avviso-meta">
+              <span>07 Mar 2026</span>
+              <span>HR Operations</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #1976D2;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Nuova piattaforma per la gestione degli straordinari</p>
+            <div class="avviso-meta">
+              <span>05 Mar 2026</span>
+              <span>IT Service</span>
+            </div>
+          </div>
+        </a>
+
+        <a href="#" class="avviso-card">
+          <div class="avviso-badge" style="background: #F57F17;"></div>
+          <div class="avviso-content">
+            <p class="avviso-title">Scadenza dichiarazione redditi per benefit aziendali</p>
+            <div class="avviso-meta">
+              <span>01 Mar 2026</span>
+              <span>Finance</span>
+            </div>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA BANNER ─── -->
+  <div class="container">
+    <div class="cta-banner">
+      <div class="cta-content">
+        <div class="cta-icon">💬</div>
+        <p class="cta-text">Non trovi quello che cerchi? Chiedi al nostro assistente</p>
+      </div>
+      <button class="cta-button">Apri assistente</button>
+    </div>
+  </div>
+
+  <!-- ─── FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <p class="footer-copy">© 2026 Sisal — Digital Workspace</p>
+    </div>
+  </footer>
+
+</body>
+</html>

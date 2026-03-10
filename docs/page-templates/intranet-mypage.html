@@ -1,0 +1,1074 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Il Mio Profilo - S Digital Workspace</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --color-surface-page: #FFFFFF;
+            --color-surface-raised: #F7F8FA;
+            --color-surface-card: #FFFFFF;
+            --color-surface-inverse: #1A1A2E;
+            --color-content-primary: #212121;
+            --color-content-secondary: #757575;
+            --color-content-brand: #0D47A1;
+            --color-border-default: #E0E0E0;
+            --color-border-subtle: #F0F0F0;
+            --color-interactive-primary-bg: #1976D2;
+            --color-interactive-primary-label: #FFFFFF;
+            --color-interactive-secondary-border: #1976D2;
+            --color-interactive-secondary-label: #1976D2;
+            --color-brand-primary: #1976D2;
+            --color-brand-secondary: #FFD600;
+            --space-2: 2px;
+            --space-3: 3px;
+            --space-4: 4px;
+            --space-6: 6px;
+            --space-8: 8px;
+            --space-12: 12px;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.12);
+            --shadow-md: 0 2px 8px rgba(0, 0, 0, 0.15);
+            --shadow-lg: 0 4px 16px rgba(0, 0, 0, 0.18);
+            --header-height: 64px;
+            --content-max-width: 1200px;
+            --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+        }
+
+        html {
+            font-family: var(--font-family);
+            color: var(--color-content-primary);
+            background-color: var(--color-surface-page);
+        }
+
+        body {
+            background-color: var(--color-surface-page);
+            line-height: 1.5;
+        }
+
+        /* ============================================ */
+        /* HEADER */
+        /* ============================================ */
+        .hederae-header {
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            height: var(--header-height);
+            background-color: var(--color-surface-inverse);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            padding: 0 var(--space-12);
+            gap: var(--space-12);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .header-hamburger {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: var(--radius-md);
+            background-color: rgba(255, 255, 255, 0.1);
+            transition: background-color 0.2s;
+        }
+
+        .header-hamburger:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .hamburger-line {
+            width: 24px;
+            height: 2px;
+            background-color: #FFFFFF;
+            position: relative;
+            display: block;
+        }
+
+        .hamburger-line::before,
+        .hamburger-line::after {
+            content: '';
+            position: absolute;
+            width: 24px;
+            height: 2px;
+            background-color: #FFFFFF;
+            left: 0;
+        }
+
+        .hamburger-line::before {
+            top: -8px;
+        }
+
+        .hamburger-line::after {
+            top: 8px;
+        }
+
+        .header-logo {
+            font-size: 18px;
+            font-weight: 700;
+            color: #FFFFFF;
+            letter-spacing: 1px;
+            flex: 1;
+        }
+
+        .header-search-container {
+            flex: 1;
+            max-width: 400px;
+        }
+
+        .header-search {
+            width: 100%;
+            padding: var(--space-8) var(--space-12);
+            background-color: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: var(--radius-md);
+            color: #FFFFFF;
+            font-family: var(--font-family);
+            font-size: 14px;
+        }
+
+        .header-search::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .header-icon-btn {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            border-radius: var(--radius-md);
+            background-color: rgba(255, 255, 255, 0.1);
+            color: #FFFFFF;
+            font-size: 20px;
+            transition: background-color 0.2s;
+            position: relative;
+        }
+
+        .header-icon-btn:hover {
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .header-badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--color-brand-secondary);
+            color: var(--color-surface-inverse);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid var(--color-surface-inverse);
+        }
+
+        .header-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        /* ============================================ */
+        /* MAIN CONTENT */
+        /* ============================================ */
+        .main-content {
+            margin-top: var(--header-height);
+            padding: var(--space-12) var(--space-12);
+            background-color: var(--color-surface-page);
+        }
+
+        .content-wrapper {
+            max-width: var(--content-max-width);
+            margin: 0 auto;
+        }
+
+        /* ============================================ */
+        /* PROFILE HERO SECTION */
+        /* ============================================ */
+        .profile-hero {
+            background-color: var(--color-surface-raised);
+            border-radius: var(--radius-lg);
+            padding: var(--space-12);
+            margin-bottom: var(--space-12);
+            display: flex;
+            gap: var(--space-12);
+            align-items: flex-start;
+        }
+
+        .profile-avatar-large {
+            width: 96px;
+            height: 96px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 40px;
+            font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: var(--shadow-md);
+        }
+
+        .profile-info {
+            flex: 1;
+        }
+
+        .profile-name {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-4);
+        }
+
+        .profile-role {
+            font-size: 18px;
+            font-weight: 500;
+            color: var(--color-content-brand);
+            margin-bottom: var(--space-2);
+        }
+
+        .profile-department {
+            font-size: 14px;
+            color: var(--color-content-secondary);
+            margin-bottom: var(--space-12);
+        }
+
+        .profile-contact {
+            display: flex;
+            gap: var(--space-12);
+            font-size: 14px;
+            margin-bottom: var(--space-12);
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+            color: var(--color-content-secondary);
+        }
+
+        .contact-icon {
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .profile-stats {
+            display: flex;
+            gap: var(--space-12);
+            margin-bottom: var(--space-12);
+        }
+
+        .stat-badge {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-md);
+            padding: var(--space-6) var(--space-8);
+            text-align: center;
+            font-size: 13px;
+        }
+
+        .stat-value {
+            font-weight: 700;
+            color: var(--color-content-primary);
+            display: block;
+            font-size: 16px;
+        }
+
+        .stat-label {
+            color: var(--color-content-secondary);
+            font-size: 12px;
+            margin-top: var(--space-2);
+        }
+
+        .profile-actions {
+            display: flex;
+            gap: var(--space-8);
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            padding: var(--space-8) var(--space-12);
+            border: 2px solid var(--color-interactive-secondary-border);
+            background-color: transparent;
+            color: var(--color-interactive-secondary-label);
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background-color: rgba(25, 118, 210, 0.05);
+        }
+
+        /* ============================================ */
+        /* TAB NAVIGATION */
+        /* ============================================ */
+        .tab-navigation {
+            display: flex;
+            border-bottom: 2px solid var(--color-border-default);
+            margin-bottom: var(--space-12);
+            gap: var(--space-12);
+        }
+
+        .tab-button {
+            padding: var(--space-12) 0;
+            background: none;
+            border: none;
+            border-bottom: 2px solid transparent;
+            color: var(--color-content-secondary);
+            font-family: var(--font-family);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+            margin-bottom: -2px;
+        }
+
+        .tab-button:hover {
+            color: var(--color-content-primary);
+        }
+
+        .tab-button.active {
+            color: var(--color-content-brand);
+            border-bottom-color: var(--color-content-brand);
+        }
+
+        /* ============================================ */
+        /* TAB CONTENT */
+        /* ============================================ */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-layout-2col {
+            display: grid;
+            grid-template-columns: 60% 40%;
+            gap: var(--space-12);
+        }
+
+        @media (max-width: 1000px) {
+            .tab-layout-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-column {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-12);
+        }
+
+        /* ============================================ */
+        /* CARD COMPONENT */
+        /* ============================================ */
+        .card {
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            padding: var(--space-12);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--color-content-primary);
+            margin-bottom: var(--space-8);
+        }
+
+        /* ============================================ */
+        /* INFORMAZIONI PERSONALI CARD */
+        /* ============================================ */
+        .info-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            padding: var(--space-8) 0;
+            border-bottom: 1px solid var(--color-border-subtle);
+            font-size: 14px;
+        }
+
+        .info-item:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: var(--color-content-secondary);
+            font-weight: 500;
+        }
+
+        .info-value {
+            color: var(--color-content-primary);
+            font-weight: 500;
+        }
+
+        .info-value-with-link {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+
+        .manager-avatar {
+            width: 24px;
+            height: 24px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+
+        /* ============================================ */
+        /* COMPETENZE CARD */
+        /* ============================================ */
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--space-6);
+        }
+
+        .skill-tag {
+            background-color: var(--color-surface-raised);
+            border: 1px solid var(--color-border-default);
+            color: var(--color-content-primary);
+            padding: var(--space-6) var(--space-8);
+            border-radius: var(--radius-full);
+            font-size: 13px;
+            font-weight: 500;
+        }
+
+        /* ============================================ */
+        /* GRUPPI DI LAVORO CARD */
+        /* ============================================ */
+        .group-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-8) 0;
+            border-bottom: 1px solid var(--color-border-subtle);
+        }
+
+        .group-row:last-child {
+            border-bottom: none;
+        }
+
+        .group-info {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            flex: 1;
+        }
+
+        .avatar-stack {
+            display: flex;
+            gap: -8px;
+        }
+
+        .avatar-stack-item {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: 700;
+            border: 2px solid var(--color-surface-card);
+            margin-left: -8px;
+        }
+
+        .avatar-stack-item:first-child {
+            margin-left: 0;
+        }
+
+        .group-details {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .group-name {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+        }
+
+        .group-members {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+        }
+
+        .group-badge {
+            background-color: var(--color-brand-primary);
+            color: var(--color-interactive-primary-label);
+            padding: var(--space-4) var(--space-8);
+            border-radius: var(--radius-md);
+            font-size: 12px;
+            font-weight: 600;
+        }
+
+        /* ============================================ */
+        /* ATTIVITÀ RECENTI CARD */
+        /* ============================================ */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: var(--space-8);
+            align-items: flex-start;
+        }
+
+        .timeline-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-md);
+            background-color: var(--color-surface-raised);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-content-brand);
+            font-size: 16px;
+            flex-shrink: 0;
+        }
+
+        .timeline-content {
+            flex: 1;
+        }
+
+        .timeline-action {
+            font-size: 14px;
+            color: var(--color-content-primary);
+            font-weight: 500;
+            margin-bottom: var(--space-2);
+        }
+
+        .timeline-timestamp {
+            font-size: 12px;
+            color: var(--color-content-secondary);
+        }
+
+        /* ============================================ */
+        /* RICONOSCIMENTI CARD */
+        /* ============================================ */
+        .badges-container {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-8);
+        }
+
+        .badge-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+        }
+
+        .badge-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: linear-gradient(135deg, var(--color-brand-primary) 0%, var(--color-brand-secondary) 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #FFFFFF;
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .badge-text {
+            font-size: 14px;
+            color: var(--color-content-primary);
+            font-weight: 500;
+        }
+
+        /* ============================================ */
+        /* QUICK ACTIONS BAR */
+        /* ============================================ */
+        .quick-actions {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-12);
+            margin: var(--space-12) 0;
+        }
+
+        @media (max-width: 768px) {
+            .quick-actions {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .action-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-6);
+            padding: var(--space-12);
+            background-color: var(--color-surface-card);
+            border: 1px solid var(--color-border-default);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .action-button:hover {
+            border-color: var(--color-interactive-primary-bg);
+            background-color: rgba(25, 118, 210, 0.05);
+        }
+
+        .action-icon {
+            font-size: 28px;
+            color: var(--color-content-brand);
+        }
+
+        .action-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--color-content-primary);
+            text-align: center;
+        }
+
+        /* ============================================ */
+        /* FOOTER */
+        /* ============================================ */
+        .footer {
+            background-color: var(--color-surface-raised);
+            border-top: 1px solid var(--color-border-default);
+            padding: var(--space-12);
+            text-align: center;
+            font-size: 12px;
+            color: var(--color-content-secondary);
+            margin-top: var(--space-12);
+        }
+
+        /* ============================================ */
+        /* UTILITIES */
+        /* ============================================ */
+        .btn-primary {
+            padding: var(--space-8) var(--space-12);
+            background-color: var(--color-interactive-primary-bg);
+            color: var(--color-interactive-primary-label);
+            border: none;
+            border-radius: var(--radius-md);
+            font-family: var(--font-family);
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+
+        .btn-primary:hover {
+            background-color: #1565C0;
+        }
+    </style>
+</head>
+<body>
+    <!-- ============================================ -->
+    <!-- HEADER -->
+    <!-- ============================================ -->
+    <header class="hederae-header">
+        <div class="header-hamburger">
+            <span class="hamburger-line"></span>
+        </div>
+        <div class="header-logo">S DIGITAL WORKSPACE</div>
+        <div class="header-search-container">
+            <input type="text" class="header-search" placeholder="Cerca...">
+        </div>
+        <div class="header-actions">
+            <button class="header-icon-btn">
+                🔔
+                <span class="header-badge">3</span>
+            </button>
+            <div class="header-avatar">MR</div>
+        </div>
+    </header>
+
+    <!-- ============================================ -->
+    <!-- MAIN CONTENT -->
+    <!-- ============================================ -->
+    <main class="main-content">
+        <div class="content-wrapper">
+            <!-- PROFILE HERO SECTION -->
+            <section class="profile-hero">
+                <div class="profile-avatar-large">MR</div>
+                <div class="profile-info">
+                    <h1 class="profile-name">Marco Rossi</h1>
+                    <p class="profile-role">Senior Developer</p>
+                    <p class="profile-department">Direzione IT • Sviluppo Software</p>
+
+                    <div class="profile-contact">
+                        <div class="contact-item">
+                            <div class="contact-icon">✉️</div>
+                            <span>marco.rossi@sisal.it</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📞</div>
+                            <span>+39 06 1234 5678</span>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">📍</div>
+                            <span>Roma - Ufficio A3</span>
+                        </div>
+                    </div>
+
+                    <div class="profile-stats">
+                        <div class="stat-badge">
+                            <span class="stat-value">12</span>
+                            <div class="stat-label">Gruppi</div>
+                        </div>
+                        <div class="stat-badge">
+                            <span class="stat-value">847</span>
+                            <div class="stat-label">Punti</div>
+                        </div>
+                        <div class="stat-badge">
+                            <span class="stat-value">4.8 ★</span>
+                            <div class="stat-label">Valutazione</div>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn-secondary">✏️ Modifica profilo</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB NAVIGATION -->
+            <nav class="tab-navigation">
+                <button class="tab-button active" data-tab="panoramica">Panoramica</button>
+                <button class="tab-button" data-tab="formazione">Formazione</button>
+                <button class="tab-button" data-tab="documenti">Documenti</button>
+                <button class="tab-button" data-tab="team">Team</button>
+                <button class="tab-button" data-tab="timbrature">Timbrature</button>
+            </nav>
+
+            <!-- TAB CONTENT: PANORAMICA -->
+            <div class="tab-content active" id="panoramica">
+                <div class="tab-layout-2col">
+                    <!-- LEFT COLUMN -->
+                    <div class="tab-column">
+                        <!-- INFORMAZIONI PERSONALI -->
+                        <div class="card">
+                            <h2 class="card-title">Informazioni Personali</h2>
+                            <div class="info-item">
+                                <span class="info-label">Matricola</span>
+                                <span class="info-value">SIS-2019-00847</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Data Assunzione</span>
+                                <span class="info-value">15 Giugno 2019</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Contratto</span>
+                                <span class="info-value">Tempo Indeterminato</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Sede</span>
+                                <span class="info-value">Roma</span>
+                            </div>
+                            <div class="info-item">
+                                <span class="info-label">Manager</span>
+                                <span class="info-value-with-link">
+                                    <span>Alessia Conti</span>
+                                    <div class="manager-avatar">AC</div>
+                                </span>
+                            </div>
+                        </div>
+
+                        <!-- COMPETENZE -->
+                        <div class="card">
+                            <h2 class="card-title">Competenze</h2>
+                            <div class="skills-container">
+                                <span class="skill-tag">JavaScript</span>
+                                <span class="skill-tag">React</span>
+                                <span class="skill-tag">Node.js</span>
+                                <span class="skill-tag">AWS</span>
+                                <span class="skill-tag">Docker</span>
+                                <span class="skill-tag">Agile</span>
+                            </div>
+                        </div>
+
+                        <!-- GRUPPI DI LAVORO -->
+                        <div class="card">
+                            <h2 class="card-title">Gruppi di Lavoro</h2>
+                            <div class="group-row">
+                                <div class="group-info">
+                                    <div class="avatar-stack">
+                                        <div class="avatar-stack-item">MR</div>
+                                        <div class="avatar-stack-item">AC</div>
+                                        <div class="avatar-stack-item">LP</div>
+                                    </div>
+                                    <div class="group-details">
+                                        <span class="group-name">Platform Engineering</span>
+                                        <span class="group-members">12 Membri</span>
+                                    </div>
+                                </div>
+                                <div class="group-badge">Moderatore</div>
+                            </div>
+                            <div class="group-row">
+                                <div class="group-info">
+                                    <div class="avatar-stack">
+                                        <div class="avatar-stack-item">MR</div>
+                                        <div class="avatar-stack-item">GB</div>
+                                    </div>
+                                    <div class="group-details">
+                                        <span class="group-name">Frontend Squad</span>
+                                        <span class="group-members">8 Membri</span>
+                                    </div>
+                                </div>
+                                <div class="group-badge">Membro</div>
+                            </div>
+                            <div class="group-row">
+                                <div class="group-info">
+                                    <div class="avatar-stack">
+                                        <div class="avatar-stack-item">MR</div>
+                                        <div class="avatar-stack-item">FS</div>
+                                        <div class="avatar-stack-item">CD</div>
+                                    </div>
+                                    <div class="group-details">
+                                        <span class="group-name">Innovation Lab</span>
+                                        <span class="group-members">15 Membri</span>
+                                    </div>
+                                </div>
+                                <div class="group-badge">Membro</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RIGHT COLUMN -->
+                    <div class="tab-column">
+                        <!-- ATTIVITÀ RECENTI -->
+                        <div class="card">
+                            <h2 class="card-title">Attività Recenti</h2>
+                            <div class="timeline">
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">✅</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-action">Ha completato corso React Advanced</div>
+                                        <div class="timeline-timestamp">Ieri alle 14:30</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">📄</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-action">Ha caricato documento "API Guidelines 2024"</div>
+                                        <div class="timeline-timestamp">3 giorni fa</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">📝</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-action">Si è iscritto a evento "Cloud Architecture Webinar"</div>
+                                        <div class="timeline-timestamp">5 giorni fa</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">💬</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-action">Ha commentato su "Performance Optimization Tips"</div>
+                                        <div class="timeline-timestamp">1 settimana fa</div>
+                                    </div>
+                                </div>
+                                <div class="timeline-item">
+                                    <div class="timeline-icon">🏆</div>
+                                    <div class="timeline-content">
+                                        <div class="timeline-action">Ha ricevuto riconoscimento "Team Player"</div>
+                                        <div class="timeline-timestamp">2 settimane fa</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- RICONOSCIMENTI -->
+                        <div class="card">
+                            <h2 class="card-title">Riconoscimenti</h2>
+                            <div class="badges-container">
+                                <div class="badge-item">
+                                    <div class="badge-icon">💡</div>
+                                    <span class="badge-text">Innovation Award 2023</span>
+                                </div>
+                                <div class="badge-item">
+                                    <div class="badge-icon">🤝</div>
+                                    <span class="badge-text">Team Player Award</span>
+                                </div>
+                                <div class="badge-item">
+                                    <div class="badge-icon">⭐</div>
+                                    <span class="badge-text">5 Anni Sisal</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: FORMAZIONE -->
+            <div class="tab-content" id="formazione">
+                <div class="card">
+                    <h2 class="card-title">Formazione e Certificazioni</h2>
+                    <p style="color: var(--color-content-secondary); font-size: 14px;">
+                        Contenuto della sezione Formazione in sviluppo...
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: DOCUMENTI -->
+            <div class="tab-content" id="documenti">
+                <div class="card">
+                    <h2 class="card-title">Documenti</h2>
+                    <p style="color: var(--color-content-secondary); font-size: 14px;">
+                        Contenuto della sezione Documenti in sviluppo...
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: TEAM -->
+            <div class="tab-content" id="team">
+                <div class="card">
+                    <h2 class="card-title">Team</h2>
+                    <p style="color: var(--color-content-secondary); font-size: 14px;">
+                        Contenuto della sezione Team in sviluppo...
+                    </p>
+                </div>
+            </div>
+
+            <!-- TAB CONTENT: TIMBRATURE -->
+            <div class="tab-content" id="timbrature">
+                <div class="card">
+                    <h2 class="card-title">Timbrature</h2>
+                    <p style="color: var(--color-content-secondary); font-size: 14px;">
+                        Contenuto della sezione Timbrature in sviluppo...
+                    </p>
+                </div>
+            </div>
+
+            <!-- QUICK ACTIONS BAR -->
+            <div class="quick-actions">
+                <button class="action-button">
+                    <span class="action-icon">🏖️</span>
+                    <span class="action-label">Richiedi Ferie</span>
+                </button>
+                <button class="action-button">
+                    <span class="action-icon">📄</span>
+                    <span class="action-label">Cedolino</span>
+                </button>
+                <button class="action-button">
+                    <span class="action-icon">⏰</span>
+                    <span class="action-label">Timbratura</span>
+                </button>
+                <button class="action-button">
+                    <span class="action-icon">💬</span>
+                    <span class="action-label">Assistenza IT</span>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2024 Sisal - S Digital Workspace. Tutti i diritti riservati.</p>
+    </footer>
+
+    <!-- ============================================ -->
+    <!-- JAVASCRIPT -->
+    <!-- ============================================ -->
+    <script>
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabName = this.getAttribute('data-tab');
+
+                // Remove active class from all buttons and contents
+                document.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // Add active class to clicked button and corresponding content
+                this.classList.add('active');
+                const tabContent = document.getElementById(tabName);
+                if (tabContent) {
+                    tabContent.classList.add('active');
+                }
+            });
+        });
+
+        // Handle hamburger menu
+        document.querySelector('.header-hamburger').addEventListener('click', function() {
+            console.log('Menu toggle clicked');
+        });
+
+        // Handle search
+        document.querySelector('.header-search').addEventListener('focus', function() {
+            this.style.backgroundColor = 'rgba(255, 255, 255, 0.15)';
+        });
+
+        document.querySelector('.header-search').addEventListener('blur', function() {
+            this.style.backgroundColor = 'rgba(255, 255, 255, 0.1)';
+        });
+
+        // Handle quick action buttons
+        document.querySelectorAll('.action-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const label = this.querySelector('.action-label').textContent;
+                console.log('Action clicked:', label);
+            });
+        });
+    </script>
+</body>
+</html>

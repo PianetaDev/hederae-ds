@@ -1,0 +1,1126 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="sisal">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sviluppo Carriera - S Digital Workspace</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    /* CSS Variables - Design Tokens */
+    :root {
+      --color-surface-page: #FFFFFF;
+      --color-surface-raised: #F7F8FA;
+      --color-surface-card: #FFFFFF;
+      --color-surface-inverse: #1A1A2E;
+      --color-content-primary: #212121;
+      --color-content-secondary: #757575;
+      --color-content-brand: #0D47A1;
+      --color-border-default: #E0E0E0;
+      --color-border-subtle: #F0F0F0;
+      --color-interactive-primary-bg: #1976D2;
+      --color-interactive-primary-label: #FFFFFF;
+      --color-interactive-secondary-border: #1976D2;
+      --color-interactive-secondary-label: #1976D2;
+      --color-area-sviluppo-primary: #7B1FA2;
+      --color-area-sviluppo-muted: #F3E5F5;
+      --color-brand-primary: #1976D2;
+
+      /* Spacing */
+      --spacing-2xs: 4px;
+      --spacing-xs: 8px;
+      --spacing-sm: 12px;
+      --spacing-md: 16px;
+      --spacing-lg: 24px;
+      --spacing-xl: 32px;
+      --spacing-2xl: 48px;
+
+      /* Radius */
+      --radius-sm: 4px;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+
+      /* Shadow */
+      --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.07);
+      --shadow-lg: 0 10px 15px rgba(0, 0, 0, 0.1);
+
+      /* Typography */
+      --font-family-base: 'Inter', sans-serif;
+      --font-size-xs: 12px;
+      --font-size-sm: 14px;
+      --font-size-base: 16px;
+      --font-size-lg: 18px;
+      --font-size-xl: 20px;
+      --font-size-2xl: 24px;
+      --font-size-3xl: 32px;
+
+      --font-weight-regular: 400;
+      --font-weight-medium: 500;
+      --font-weight-semibold: 600;
+      --font-weight-bold: 700;
+
+      --line-height-tight: 1.4;
+      --line-height-normal: 1.6;
+      --line-height-relaxed: 1.8;
+    }
+
+    /* Reset & Base Styles */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html, body {
+      font-family: var(--font-family-base);
+      color: var(--color-content-primary);
+      background-color: var(--color-surface-page);
+      line-height: var(--line-height-normal);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    /* Header */
+    .header {
+      background-color: var(--color-surface-inverse);
+      color: var(--color-interactive-primary-label);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      padding: 0 var(--spacing-md);
+      gap: var(--spacing-lg);
+      box-shadow: var(--shadow-sm);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .header-menu-trigger {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 24px;
+      padding: var(--spacing-sm);
+      margin: calc(-1 * var(--spacing-sm));
+    }
+
+    .header-brand {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      margin-right: auto;
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-sm);
+    }
+
+    .header-search {
+      background-color: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radius-md);
+      padding: var(--spacing-xs) var(--spacing-md);
+      color: inherit;
+      font-size: var(--font-size-sm);
+      width: 200px;
+    }
+
+    .header-search::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .header-icons {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .header-icon-btn {
+      background: none;
+      border: none;
+      color: inherit;
+      cursor: pointer;
+      font-size: 20px;
+      position: relative;
+      padding: var(--spacing-xs);
+    }
+
+    .header-notification-badge {
+      position: absolute;
+      top: 0;
+      right: 0;
+      background-color: #FF6B6B;
+      color: white;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      font-size: 11px;
+      font-weight: var(--font-weight-bold);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #667EEA 0%, #764BA2 100%);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: var(--font-weight-bold);
+    }
+
+    /* Breadcrumb */
+    .breadcrumb {
+      background-color: var(--color-surface-raised);
+      padding: var(--spacing-md) var(--spacing-lg);
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+      border-bottom: 1px solid var(--color-border-subtle);
+    }
+
+    .breadcrumb a {
+      color: var(--color-content-brand);
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
+    }
+
+    /* Main Container */
+    .main-container {
+      display: flex;
+      flex: 1;
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+    }
+
+    /* Sidebar - Table of Contents */
+    .sidebar-toc {
+      width: 25%;
+      padding: var(--spacing-xl) var(--spacing-lg);
+      background-color: var(--color-surface-raised);
+      position: sticky;
+      top: 64px;
+      height: fit-content;
+      border-right: 1px solid var(--color-border-subtle);
+    }
+
+    .sidebar-toc-title {
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-md);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .sidebar-toc-list {
+      list-style: none;
+    }
+
+    .sidebar-toc-item {
+      margin-bottom: var(--spacing-md);
+    }
+
+    .sidebar-toc-link {
+      color: var(--color-content-secondary);
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      display: block;
+      padding: var(--spacing-xs) var(--spacing-sm);
+      border-left: 3px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .sidebar-toc-link:hover {
+      color: var(--color-content-primary);
+      border-left-color: var(--color-area-sviluppo-primary);
+    }
+
+    .sidebar-toc-link.active {
+      color: var(--color-area-sviluppo-primary);
+      font-weight: var(--font-weight-semibold);
+      border-left-color: var(--color-area-sviluppo-primary);
+    }
+
+    /* Content Area */
+    .content {
+      flex: 1;
+      padding: var(--spacing-2xl) var(--spacing-lg);
+      width: 75%;
+    }
+
+    /* Page Title Section */
+    .page-title-section {
+      margin-bottom: var(--spacing-2xl);
+      padding-bottom: var(--spacing-xl);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .page-title {
+      font-size: var(--font-size-3xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .page-subtitle {
+      font-size: var(--font-size-lg);
+      color: var(--color-content-secondary);
+      margin-bottom: var(--spacing-lg);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .page-meta {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .page-meta-icon {
+      width: 16px;
+      height: 16px;
+    }
+
+    /* Section */
+    .section {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .section-title {
+      font-size: var(--font-size-xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-lg);
+      scroll-margin-top: 80px;
+      position: relative;
+      padding-bottom: var(--spacing-md);
+      border-bottom: 2px solid var(--color-area-sviluppo-muted);
+    }
+
+    .section-content {
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .section-content p {
+      line-height: var(--line-height-relaxed);
+      margin-bottom: var(--spacing-md);
+      color: var(--color-content-secondary);
+    }
+
+    /* Career Path Cards */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      transition: all 0.3s ease;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-4px);
+      border-color: var(--color-area-sviluppo-primary);
+    }
+
+    .card-icon {
+      width: 48px;
+      height: 48px;
+      background-color: var(--color-area-sviluppo-muted);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .card-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-sm);
+    }
+
+    .card-description {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+      margin-bottom: var(--spacing-md);
+      line-height: var(--line-height-relaxed);
+    }
+
+    .card-levels {
+      display: flex;
+      gap: var(--spacing-xs);
+      flex-wrap: wrap;
+    }
+
+    .card-level-badge {
+      background-color: var(--color-area-sviluppo-muted);
+      color: var(--color-area-sviluppo-primary);
+      font-size: var(--font-size-xs);
+      padding: var(--spacing-2xs) var(--spacing-sm);
+      border-radius: var(--radius-sm);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    /* Info Card */
+    .info-card {
+      background: linear-gradient(135deg, var(--color-area-sviluppo-muted) 0%, rgba(123, 31, 162, 0.05) 100%);
+      border: 1px solid var(--color-area-sviluppo-primary);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .info-card-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-md);
+    }
+
+    .info-card-steps {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .info-card-step {
+      text-align: center;
+    }
+
+    .info-card-step-num {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background-color: var(--color-area-sviluppo-primary);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: var(--font-weight-bold);
+      margin: 0 auto var(--spacing-md);
+    }
+
+    .info-card-step-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-primary);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .info-card-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--spacing-lg);
+      margin-bottom: var(--spacing-lg);
+      padding: var(--spacing-lg) 0;
+      border-top: 1px solid var(--color-border-default);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .info-card-stat {
+      text-align: center;
+    }
+
+    .info-card-stat-number {
+      font-size: var(--font-size-2xl);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-area-sviluppo-primary);
+    }
+
+    .info-card-stat-label {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+      margin-top: var(--spacing-xs);
+    }
+
+    /* Job Listings */
+    .job-listings {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .job-listing-row {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr auto auto;
+      gap: var(--spacing-lg);
+      align-items: center;
+      padding: var(--spacing-lg);
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+      transition: all 0.2s ease;
+    }
+
+    .job-listing-row:hover {
+      border-color: var(--color-area-sviluppo-primary);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .job-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+    }
+
+    .job-department {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+    }
+
+    .job-location {
+      font-size: var(--font-size-sm);
+      color: var(--color-content-secondary);
+    }
+
+    .job-type-badge {
+      background-color: var(--color-area-sviluppo-muted);
+      color: var(--color-area-sviluppo-primary);
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-sm);
+      font-size: var(--font-size-xs);
+      font-weight: var(--font-weight-semibold);
+      text-align: center;
+    }
+
+    /* Buttons */
+    .btn {
+      padding: var(--spacing-sm) var(--spacing-md);
+      border-radius: var(--radius-md);
+      border: none;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      font-family: var(--font-family-base);
+    }
+
+    .btn-primary {
+      background-color: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+    }
+
+    .btn-primary:hover {
+      background-color: #1565C0;
+      box-shadow: var(--shadow-md);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: var(--color-interactive-secondary-label);
+      border: 1px solid var(--color-interactive-secondary-border);
+    }
+
+    .btn-secondary:hover {
+      background-color: var(--color-interactive-secondary-border);
+      color: white;
+    }
+
+    .btn-sm {
+      padding: var(--spacing-xs) var(--spacing-sm);
+      font-size: var(--font-size-xs);
+    }
+
+    /* Accordion */
+    .accordion {
+      margin-bottom: var(--spacing-xl);
+    }
+
+    .accordion-item {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      margin-bottom: var(--spacing-md);
+      overflow: hidden;
+    }
+
+    .accordion-header {
+      padding: var(--spacing-lg);
+      background-color: var(--color-surface-card);
+      border: none;
+      cursor: pointer;
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+      transition: all 0.2s ease;
+    }
+
+    .accordion-header:hover {
+      background-color: var(--color-surface-raised);
+    }
+
+    .accordion-header.active {
+      background-color: var(--color-area-sviluppo-muted);
+      color: var(--color-area-sviluppo-primary);
+    }
+
+    .accordion-toggle {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 24px;
+      height: 24px;
+      transition: transform 0.2s ease;
+    }
+
+    .accordion-header.active .accordion-toggle {
+      transform: rotate(180deg);
+    }
+
+    .accordion-content {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+
+    .accordion-content.active {
+      max-height: 500px;
+    }
+
+    .accordion-body {
+      padding: var(--spacing-lg);
+      color: var(--color-content-secondary);
+      line-height: var(--line-height-relaxed);
+    }
+
+    /* Feedback Banner */
+    .feedback-banner {
+      background-color: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      margin-bottom: var(--spacing-2xl);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: var(--spacing-lg);
+    }
+
+    .feedback-question {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+    }
+
+    .feedback-actions {
+      display: flex;
+      align-items: center;
+      gap: var(--spacing-md);
+    }
+
+    .feedback-thumb {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      opacity: 0.6;
+      transition: opacity 0.2s ease;
+    }
+
+    .feedback-thumb:hover {
+      opacity: 1;
+    }
+
+    .feedback-thumb.active {
+      opacity: 1;
+    }
+
+    .feedback-link {
+      color: var(--color-content-brand);
+      text-decoration: none;
+      font-size: var(--font-size-sm);
+      font-weight: var(--font-weight-semibold);
+    }
+
+    .feedback-link:hover {
+      text-decoration: underline;
+    }
+
+    /* Related Pages */
+    .related-pages {
+      margin-bottom: var(--spacing-2xl);
+    }
+
+    .related-pages-title {
+      font-size: var(--font-size-lg);
+      font-weight: var(--font-weight-bold);
+      color: var(--color-content-primary);
+      margin-bottom: var(--spacing-lg);
+    }
+
+    .related-pages-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--spacing-lg);
+    }
+
+    .related-page-card {
+      background-color: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg);
+      padding: var(--spacing-lg);
+      text-decoration: none;
+      color: inherit;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+
+    .related-page-card:hover {
+      box-shadow: var(--shadow-md);
+      border-color: var(--color-area-sviluppo-primary);
+    }
+
+    .related-page-card-icon {
+      font-size: 32px;
+      margin-bottom: var(--spacing-md);
+    }
+
+    .related-page-card-title {
+      font-size: var(--font-size-base);
+      font-weight: var(--font-weight-semibold);
+      color: var(--color-content-primary);
+    }
+
+    /* Footer */
+    .footer {
+      background-color: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--spacing-xl) var(--spacing-lg);
+      text-align: center;
+      color: var(--color-content-secondary);
+      font-size: var(--font-size-sm);
+    }
+
+    /* Responsive */
+    @media (max-width: 1024px) {
+      .main-container {
+        flex-direction: column;
+      }
+
+      .sidebar-toc {
+        width: 100%;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--color-border-subtle);
+        padding: var(--spacing-lg);
+      }
+
+      .content {
+        width: 100%;
+        padding: var(--spacing-lg);
+      }
+
+      .info-card-steps {
+        grid-template-columns: 1fr;
+      }
+
+      .job-listing-row {
+        grid-template-columns: 1fr;
+      }
+
+      .related-pages-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <header class="header">
+    <button class="header-menu-trigger">☰</button>
+    <div class="header-brand">
+      <span>S</span>
+      <span>DIGITAL WORKSPACE</span>
+    </div>
+    <input type="text" class="header-search" placeholder="Cerca...">
+    <div class="header-icons">
+      <button class="header-icon-btn">
+        🔔
+        <span class="header-notification-badge">3</span>
+      </button>
+      <div class="header-avatar">M</div>
+    </div>
+  </header>
+
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb">
+    <a href="#home">Home</a> > <a href="#sviluppo">Sviluppo</a> > <span>Carriera</span>
+  </nav>
+
+  <!-- Main Container -->
+  <div class="main-container">
+    <!-- Sidebar - Table of Contents -->
+    <aside class="sidebar-toc">
+      <div class="sidebar-toc-title">In questa pagina:</div>
+      <ul class="sidebar-toc-list">
+        <li class="sidebar-toc-item">
+          <a href="#percorsi-crescita" class="sidebar-toc-link active" data-section="percorsi-crescita">Percorsi di Crescita</a>
+        </li>
+        <li class="sidebar-toc-item">
+          <a href="#programmi-mentoring" class="sidebar-toc-link" data-section="programmi-mentoring">Programmi Mentoring</a>
+        </li>
+        <li class="sidebar-toc-item">
+          <a href="#formazione" class="sidebar-toc-link" data-section="formazione">Formazione</a>
+        </li>
+        <li class="sidebar-toc-item">
+          <a href="#posizioni-aperte" class="sidebar-toc-link" data-section="posizioni-aperte">Posizioni Aperte</a>
+        </li>
+        <li class="sidebar-toc-item">
+          <a href="#faq" class="sidebar-toc-link" data-section="faq">FAQ</a>
+        </li>
+      </ul>
+    </aside>
+
+    <!-- Content Area -->
+    <main class="content">
+      <!-- Page Title Section -->
+      <section class="page-title-section">
+        <h1 class="page-title">Sviluppo Carriera</h1>
+        <p class="page-subtitle">Scopri le opportunità di crescita in Sisal</p>
+        <div class="page-meta">
+          <span>📅</span>
+          <span>Aggiornato il 5 marzo 2026</span>
+        </div>
+      </section>
+
+      <!-- Section: Percorsi di Crescita -->
+      <section class="section" id="percorsi-crescita">
+        <h2 class="section-title">Percorsi di Crescita</h2>
+        <div class="section-content">
+          <p>In Sisal crediamo nello sviluppo professionale continuo dei nostri collaboratori. Offriamo tre principali percorsi di carriera che ti permettono di crescere secondo le tue inclinazioni e ambizioni. Che tu preferisca specializzarti tecnicamente, assumere responsabilità di leadership o approfondire competenze specialistiche, abbiamo il percorso giusto per te.</p>
+        </div>
+
+        <div class="cards-grid">
+          <!-- Card 1: Technical Track -->
+          <div class="card">
+            <div class="card-icon">💻</div>
+            <h3 class="card-title">Technical Track</h3>
+            <p class="card-description">Approfondisci le tue competenze tecniche e diventa esperto nelle ultime tecnologie. Ideale per chi ama risolvere problemi complessi.</p>
+            <div class="card-levels">
+              <span class="card-level-badge">Junior</span>
+              <span class="card-level-badge">Senior</span>
+              <span class="card-level-badge">Expert</span>
+            </div>
+          </div>
+
+          <!-- Card 2: Management Track -->
+          <div class="card">
+            <div class="card-icon">👥</div>
+            <h3 class="card-title">Management Track</h3>
+            <p class="card-description">Sviluppa competenze di leadership e gestione di team. Perfetto per chi vuole guidare persone e progetti strategici.</p>
+            <div class="card-levels">
+              <span class="card-level-badge">Team Lead</span>
+              <span class="card-level-badge">Manager</span>
+              <span class="card-level-badge">Director</span>
+            </div>
+          </div>
+
+          <!-- Card 3: Specialist Track -->
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3 class="card-title">Specialist Track</h3>
+            <p class="card-description">Diventa riferimento in aree specialistiche critiche. Per chi vuole profondità e riconoscimento settoriale senza responsabilità manageriale.</p>
+            <div class="card-levels">
+              <span class="card-level-badge">Specialist</span>
+              <span class="card-level-badge">Lead Specialist</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: Programmi Mentoring -->
+      <section class="section" id="programmi-mentoring">
+        <h2 class="section-title">Programmi Mentoring</h2>
+        <div class="section-content">
+          <p>Il nostro programma di mentoring connette i tuoi talenti con esperti consolidati. Accelera il tuo apprendimento beneficiando dall'esperienza diretta di mentor dedicati che hanno percorso il cammino che stai iniziando.</p>
+        </div>
+
+        <div class="info-card">
+          <h3 class="info-card-title">Come funziona</h3>
+
+          <div class="info-card-steps">
+            <div class="info-card-step">
+              <div class="info-card-step-num">1</div>
+              <div class="info-card-step-label">Candidatura</div>
+            </div>
+            <div class="info-card-step">
+              <div class="info-card-step-num">2</div>
+              <div class="info-card-step-label">Matching</div>
+            </div>
+            <div class="info-card-step">
+              <div class="info-card-step-num">3</div>
+              <div class="info-card-step-label">Sessioni</div>
+            </div>
+          </div>
+
+          <div class="info-card-stats">
+            <div class="info-card-stat">
+              <div class="info-card-stat-number">45</div>
+              <div class="info-card-stat-label">Mentor attivi</div>
+            </div>
+            <div class="info-card-stat">
+              <div class="info-card-stat-number">120</div>
+              <div class="info-card-stat-label">Mentee</div>
+            </div>
+          </div>
+
+          <button class="btn btn-primary">Candidati come mentee</button>
+        </div>
+      </section>
+
+      <!-- Section: Formazione -->
+      <section class="section" id="formazione">
+        <h2 class="section-title">Formazione</h2>
+        <div class="section-content">
+          <p>Accedi a una vasta gamma di corsi, workshop e risorse educative attraverso la nostra Sisal Academy. Sviluppa nuove competenze nelle aree tecnica, manageriale e personale.</p>
+          <a href="#academy" class="feedback-link">Vai all'Academy →</a>
+        </div>
+      </section>
+
+      <!-- Section: Posizioni Aperte -->
+      <section class="section" id="posizioni-aperte">
+        <h2 class="section-title">Posizioni Aperte</h2>
+        <div class="section-content">
+          <p>Scopri le opportunità di carriera disponibili all'interno di Sisal. Seleziona una posizione che ti interessa e candidati direttamente.</p>
+        </div>
+
+        <div class="job-listings">
+          <!-- Job 1 -->
+          <div class="job-listing-row">
+            <div>
+              <div class="job-title">Senior Backend Developer</div>
+              <div class="job-department">Engineering</div>
+            </div>
+            <div class="job-location">Roma, IT</div>
+            <div class="job-type-badge">Full-time</div>
+            <button class="btn btn-primary btn-sm">Candidati</button>
+          </div>
+
+          <!-- Job 2 -->
+          <div class="job-listing-row">
+            <div>
+              <div class="job-title">Product Manager</div>
+              <div class="job-department">Product</div>
+            </div>
+            <div class="job-location">Milano, IT</div>
+            <div class="job-type-badge">Full-time</div>
+            <button class="btn btn-primary btn-sm">Candidati</button>
+          </div>
+
+          <!-- Job 3 -->
+          <div class="job-listing-row">
+            <div>
+              <div class="job-title">UX/UI Designer</div>
+              <div class="job-department">Design</div>
+            </div>
+            <div class="job-location">Torino, IT</div>
+            <div class="job-type-badge">Full-time</div>
+            <button class="btn btn-primary btn-sm">Candidati</button>
+          </div>
+
+          <!-- Job 4 -->
+          <div class="job-listing-row">
+            <div>
+              <div class="job-title">Data Analyst</div>
+              <div class="job-department">Analytics</div>
+            </div>
+            <div class="job-location">Remoto</div>
+            <div class="job-type-badge">Part-time</div>
+            <button class="btn btn-primary btn-sm">Candidati</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- Section: FAQ -->
+      <section class="section" id="faq">
+        <h2 class="section-title">FAQ</h2>
+
+        <div class="accordion">
+          <!-- FAQ Item 1 -->
+          <div class="accordion-item">
+            <button class="accordion-header active">
+              <span>Come posso candidarmi?</span>
+              <span class="accordion-toggle">▼</span>
+            </button>
+            <div class="accordion-content active">
+              <div class="accordion-body">
+                Puoi candidarti direttamente attraverso la sezione "Posizioni Aperte" selezionando la posizione di tuo interesse. Completa il modulo di candidatura con il tuo CV e una breve lettera di presentazione. Il nostro team di recruitment analizzerà la tua candidatura e ti contatterà entro 5-7 giorni lavorativi.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 2 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span>Quali sono i requisiti?</span>
+              <span class="accordion-toggle">▼</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                I requisiti variano a seconda della posizione e del percorso di carriera. Generalmente, cerchiamo candidati motivati con una solida base nelle loro aree di specializzazione. Valutiamo sia le competenze tecniche che le soft skills come comunicazione, teamwork e capacità di apprendimento.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 3 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span>Come funziona la valutazione?</span>
+              <span class="accordion-toggle">▼</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                La valutazione è un processo strutturato che include screening del CV, colloqui tecnici o behavior-based, e valutazione con il team. Vogliamo garantire un match ottimale tra le tue ambizioni, le tue competenze e le necessità del ruolo. Ti forniremo feedback costruttivo a ogni fase.
+              </div>
+            </div>
+          </div>
+
+          <!-- FAQ Item 4 -->
+          <div class="accordion-item">
+            <button class="accordion-header">
+              <span>Posso cambiare direzione?</span>
+              <span class="accordion-toggle">▼</span>
+            </button>
+            <div class="accordion-content">
+              <div class="accordion-body">
+                Assolutamente sì! Sisal crede nella mobilità interna e nello sviluppo professionale fluido. Se desideri cambiare percorso (da Technical a Management, per esempio), parla con il tuo manager e il team HR. Offriamo formazione e supporto per rendere possibile la transizione con successo.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Feedback Banner -->
+      <div class="feedback-banner">
+        <span class="feedback-question">Questa pagina ti è stata utile?</span>
+        <div class="feedback-actions">
+          <button class="feedback-thumb" data-feedback="helpful">👍</button>
+          <button class="feedback-thumb" data-feedback="unhelpful">👎</button>
+          <a href="#improve" class="feedback-link">Suggerisci un miglioramento</a>
+        </div>
+      </div>
+
+      <!-- Related Pages -->
+      <section class="related-pages">
+        <h2 class="related-pages-title">Pagine Correlate</h2>
+        <div class="related-pages-grid">
+          <a href="#academy" class="related-page-card">
+            <div class="related-page-card-icon">🎓</div>
+            <div class="related-page-card-title">Academy Online</div>
+          </a>
+          <a href="#performance" class="related-page-card">
+            <div class="related-page-card-icon">📊</div>
+            <div class="related-page-card-title">Valutazione Performance</div>
+          </a>
+          <a href="#welfare" class="related-page-card">
+            <div class="related-page-card-icon">🎁</div>
+            <div class="related-page-card-title">Welfare Aziendale</div>
+          </a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <p>&copy; 2026 Sisal. Tutti i diritti riservati. | Privacy Policy | Termini di Servizio</p>
+  </footer>
+
+  <script>
+    // Accordion Toggle Functionality
+    document.querySelectorAll('.accordion-header').forEach(header => {
+      header.addEventListener('click', () => {
+        const item = header.parentElement;
+        const content = item.querySelector('.accordion-content');
+        const isActive = header.classList.contains('active');
+
+        // Close all other items
+        document.querySelectorAll('.accordion-header').forEach(h => {
+          if (h !== header) {
+            h.classList.remove('active');
+            h.parentElement.querySelector('.accordion-content').classList.remove('active');
+          }
+        });
+
+        // Toggle current item
+        header.classList.toggle('active');
+        content.classList.toggle('active');
+      });
+    });
+
+    // Table of Contents Scroll Highlighting
+    const sections = document.querySelectorAll('[id^="percorsi"], [id^="programmi"], [id^="formazione"], [id^="posizioni"], [id^="faq"]');
+    const tocLinks = document.querySelectorAll('.sidebar-toc-link');
+
+    window.addEventListener('scroll', () => {
+      let currentSection = '';
+
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop;
+        const sectionHeight = section.clientHeight;
+
+        if (window.pageYOffset >= sectionTop - 100) {
+          currentSection = section.getAttribute('id');
+        }
+      });
+
+      tocLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('data-section') === currentSection) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Smooth Scroll for TOC Links
+    tocLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href');
+        const targetSection = document.querySelector(targetId);
+
+        if (targetSection) {
+          targetSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // Feedback Button Toggle
+    document.querySelectorAll('.feedback-thumb').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.feedback-thumb').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

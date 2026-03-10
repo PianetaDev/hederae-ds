@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="pianeta-green">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CMS + Sito — Dettaglio — Pianeta.Green</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Serif:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/themes/pianeta-green.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      line-height: 1.6;
+    }
+
+    /* ─── WIP Status Bar ─── */
+    .wip-status-bar {
+      position: sticky; top: 0; z-index: 100;
+      display: flex; align-items: center; gap: 16px;
+      padding: 10px 24px;
+      background: #FF6B4A; color: #fff;
+      font-family: var(--font-ui); font-size: 12px;
+      letter-spacing: 0.05em;
+    }
+    .wip-status-label {
+      font-weight: 500; text-transform: uppercase; letter-spacing: 0.1em;
+    }
+    .wip-flow-tag {
+      padding: 2px 10px; border-radius: 99px;
+      background: rgba(255,255,255,0.2);
+      font-size: 11px;
+    }
+    .wip-approval-actions {
+      margin-left: auto; display: flex; gap: 8px;
+    }
+    .wip-btn {
+      padding: 4px 14px; border-radius: 6px; border: 1px solid rgba(255,255,255,0.4);
+      background: transparent; color: #fff; cursor: pointer;
+      font-family: var(--font-ui); font-size: 11px; font-weight: 500;
+    }
+    .wip-btn:hover { background: rgba(255,255,255,0.15); }
+    .wip-btn-approve { background: rgba(255,255,255,0.25); border-color: #fff; }
+
+    /* ─── Page Header ─── */
+    .pg-header {
+      background: var(--color-surface-inverse); color: var(--color-content-inverse);
+      padding: 16px 32px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .pg-logo { font-family: var(--font-heading); font-size: 18px; font-weight: 600; }
+    .pg-logo span { color: var(--color-brand-accent); }
+    .pg-nav { display: flex; gap: 24px; }
+    .pg-nav a {
+      color: rgba(255,255,255,0.7); text-decoration: none;
+      font-family: var(--font-ui); font-size: 13px;
+    }
+    .pg-nav a:hover { color: #fff; }
+
+    /* ─── WIP Content ─── */
+    .wip-container { max-width: 1200px; margin: 0 auto; padding: 40px 32px; }
+
+    .wip-page-title {
+      font-family: var(--font-display); font-size: 36px; font-weight: 600;
+      margin-bottom: 8px; color: var(--color-content-brand);
+    }
+    .wip-page-meta {
+      font-family: var(--font-ui); font-size: 13px; color: var(--color-content-secondary);
+      margin-bottom: 32px; display: flex; gap: 16px;
+    }
+
+    /* ─── Section Nav ─── */
+    .wip-section-nav {
+      display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 40px;
+      padding: 16px 0; border-bottom: 1px solid var(--color-border-default);
+    }
+    .wip-nav-link {
+      padding: 4px 12px; border-radius: 99px;
+      background: var(--color-brand-muted); color: var(--color-content-brand);
+      text-decoration: none; font-size: 13px; font-family: var(--font-ui);
+    }
+    .wip-nav-link:hover { background: var(--color-interactive-primary-bg); color: #fff; }
+
+    /* ─── Sections ─── */
+    .wip-section {
+      margin-bottom: 48px; padding: 28px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      border-left: 4px solid #FF6B4A;
+    }
+    .wip-section-header { display: flex; align-items: baseline; gap: 12px; margin-bottom: 12px; }
+    .wip-section-num {
+      font-family: var(--font-ui); font-size: 12px; font-weight: 500;
+      color: #FF6B4A; opacity: 0.7;
+    }
+    .wip-section-title {
+      font-family: var(--font-heading); font-size: 20px; font-weight: 600;
+    }
+    .wip-section-desc {
+      font-size: 15px; line-height: 1.7; color: var(--color-content-secondary);
+      margin-bottom: 20px;
+    }
+    .wip-placeholder-box {
+      background: repeating-linear-gradient(
+        45deg, transparent, transparent 10px,
+        rgba(0,0,0,0.02) 10px, rgba(0,0,0,0.02) 20px
+      );
+      border: 2px dashed var(--color-border-default);
+      border-radius: var(--radius-sm);
+      padding: 48px; text-align: center;
+    }
+    .wip-placeholder-label {
+      font-family: var(--font-ui); font-size: 12px;
+      color: var(--color-content-disabled);
+      text-transform: uppercase; letter-spacing: 0.1em;
+    }
+
+    /* ─── Footer ─── */
+    .pg-footer {
+      background: var(--color-surface-inverse); color: var(--color-content-inverse);
+      padding: 24px 32px; text-align: center;
+      font-family: var(--font-ui); font-size: 12px;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+
+<div class="wip-status-bar">
+  <span class="wip-status-label">WIP — In lavorazione</span>
+  <span class="wip-flow-tag">Flusso: Vendita</span>
+  <span style="opacity:0.5;">·</span>
+  <span>pg-pdp-cms-sito.html</span>
+  <div class="wip-approval-actions">
+    <button class="wip-btn" onclick="alert('Commento aggiunto — funzione in sviluppo')">💬 Commenta</button>
+    <button class="wip-btn" onclick="alert('Richiesta modifiche inviata — funzione in sviluppo')">↩ Richiedi modifiche</button>
+    <button class="wip-btn wip-btn-approve" onclick="this.closest('.wip-status-bar').style.background='#38781D';this.closest('.wip-status-bar').querySelector('.wip-status-label').textContent='APPROVED — Approvato'">✓ Approva</button>
+  </div>
+</div>
+
+<header class="pg-header">
+  <div class="pg-logo">Pianeta<span>.</span>Green</div>
+  <nav class="pg-nav">
+    <a href="#">Home</a>
+    <a href="#">Il Meter</a>
+    <a href="#">Piani</a>
+    <a href="#">Blog</a>
+    <a href="#">Chi siamo</a>
+    <a href="#">Contatti</a>
+  </nav>
+</header>
+
+<div class="wip-container">
+  <h1 class="wip-page-title">CMS + Sito — Dettaglio</h1>
+  <div class="wip-page-meta">
+    <span>Flusso: Vendita</span>
+    <span>Sezioni: 7</span>
+    <span>Stato: WIP</span>
+  </div>
+
+  <nav class="wip-section-nav"><a href="#hero" class="wip-nav-link">CMS + Sito</a><a href="#cosa-ottieni" class="wip-nav-link">Cosa ottieni</a><a href="#template" class="wip-nav-link">Template disponibili</a><a href="#cms" class="wip-nav-link">Il CMS</a><a href="#processo" class="wip-nav-link">Come funziona</a><a href="#portfolio" class="wip-nav-link">Siti realizzati</a><a href="#cta-bottom" class="wip-nav-link">Inizia il tuo progetto</a></nav>
+
+    <div class="wip-section" id="hero">
+      <div class="wip-section-header">
+        <span class="wip-section-num">01</span>
+        <h2 class="wip-section-title">CMS + Sito — Il tuo sito chiavi in mano</h2>
+      </div>
+      <div class="wip-section-desc">Prezzo: €1.000 (una tantum) + €12/mese hosting. CTA 'Richiedi il tuo sito'. Sottotitolo: 'Un sito bello, veloce e sostenibile in 2 settimane.'</div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+    <div class="wip-section" id="cosa-ottieni">
+      <div class="wip-section-header">
+        <span class="wip-section-num">02</span>
+        <h2 class="wip-section-title">Cosa ottieni</h2>
+      </div>
+      <div class="wip-section-desc">Lista dettagliata: Sito responsive (Profilo A Vetrina), T4 CMS per gestire contenuti, Template Hederae DS, Hosting green 1° anno incluso, Formazione uso CMS, Meter + badge green.</div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+    <div class="wip-section" id="template">
+      <div class="wip-section-header">
+        <span class="wip-section-num">03</span>
+        <h2 class="wip-section-title">Template disponibili</h2>
+      </div>
+      <div class="wip-section-desc">Preview 3-4 template dal catalogo Hederae Profilo A. Screenshot con link demo. 'Oppure partiamo dal tuo design.'</div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+    <div class="wip-section" id="cms">
+      <div class="wip-section-header">
+        <span class="wip-section-num">04</span>
+        <h2 class="wip-section-title">Il CMS — T4 Termini</h2>
+      </div>
+      <div class="wip-section-desc">Presentazione del CMS: editor visuale, gestione media, SEO, multilingua. Screenshot interfaccia.</div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+    <div class="wip-section" id="processo">
+      <div class="wip-section-header">
+        <span class="wip-section-num">05</span>
+        <h2 class="wip-section-title">Come funziona</h2>
+      </div>
+      <div class="wip-section-desc">Timeline: 1. Briefing (giorno 1) → 2. Design proposta (giorno 5) → 3. Sviluppo (giorno 10) → 4. Go live (giorno 14). </div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+    <div class="wip-section" id="portfolio">
+      <div class="wip-section-header">
+        <span class="wip-section-num">06</span>
+        <h2 class="wip-section-title">Siti realizzati</h2>
+      </div>
+      <div class="wip-section-desc">3 card con siti esempio realizzati con il pacchetto. Meter score, screenshot, link.</div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+    <div class="wip-section" id="cta-bottom">
+      <div class="wip-section-header">
+        <span class="wip-section-num">07</span>
+        <h2 class="wip-section-title">Inizia il tuo progetto</h2>
+      </div>
+      <div class="wip-section-desc">CTA: 'Prenota una call gratuita' + 'Richiedi preventivo'. Contatti diretti.</div>
+      <div class="wip-section-placeholder">
+        <div class="wip-placeholder-box">
+          <span class="wip-placeholder-label">Contenuto in sviluppo</span>
+        </div>
+      </div>
+    </div>
+</div>
+
+<footer class="pg-footer">
+  © 2026 Pianeta.Green Hosting · pianeta.studio · Società Benefit · Milano / Sicilia
+</footer>
+
+</body>
+</html>
