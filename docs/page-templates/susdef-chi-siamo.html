@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi siamo — Fondazione Sviluppo Sostenibile</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 18px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .site-logo {
+      font-family: var(--font-ui);
+      font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-content-inverse);
+      text-decoration: none;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-brand-primary);
+    }
+    .site-nav { display: flex; gap: 28px; align-items: center; }
+    .site-nav a {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav a:hover { color: var(--color-brand-accent); }
+    .site-nav a.active { color: var(--color-content-inverse); }
+    .btn-nav {
+      background: var(--color-brand-accent);
+      color: var(--color-brand-primary) !important;
+      padding: 8px 16px; border-radius: 4px;
+      font-weight: 600 !important;
+    }
+    .btn-nav:hover { opacity: 0.88; }
+
+    /* ─── HERO ─── */
+    .hero {
+      background: var(--color-surface-inverse);
+      padding: 72px 0 64px;
+      position: relative; overflow: hidden;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--color-brand-accent);
+    }
+    .hero-inner { position: relative; z-index: 1; max-width: 700px; }
+    .hero-eyebrow {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-brand-accent);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: clamp(36px, 5vw, 52px); font-weight: 500;
+      color: var(--color-content-inverse);
+      line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero-title em { color: var(--color-brand-accent); font-style: normal; }
+    .hero-sub {
+      font-size: 18px; line-height: 1.65;
+      color: rgba(255,255,255,0.72);
+      max-width: 560px;
+    }
+    .hero-stats {
+      margin-top: 48px;
+      display: flex; gap: 40px; flex-wrap: wrap;
+      padding-top: 32px;
+      border-top: 1px solid rgba(255,255,255,0.12);
+    }
+    .hero-stat-value {
+      font-family: var(--font-display); font-size: 32px; font-weight: 500;
+      color: var(--color-brand-accent); line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 13px; color: rgba(255,255,255,0.55);
+      margin-top: 4px; font-family: var(--font-ui); letter-spacing: 0.05em;
+    }
+
+    /* ─── PAGE NAV (anchored section tabs) ─── */
+    .page-nav {
+      background: var(--color-surface-page);
+      border-bottom: 1px solid var(--color-border-default);
+      position: sticky; top: 64px; z-index: 90;
+    }
+    .page-nav-inner {
+      display: flex; gap: 0; overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .page-nav-inner::-webkit-scrollbar { display: none; }
+    .page-nav-link {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.08em;
+      text-transform: uppercase; font-weight: 500;
+      color: var(--color-content-secondary);
+      text-decoration: none; white-space: nowrap;
+      padding: 14px 18px;
+      border-bottom: 2px solid transparent;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .page-nav-link:hover { color: var(--color-content-brand); }
+    .page-nav-link.active {
+      color: var(--color-content-brand);
+      border-bottom-color: var(--color-brand-accent);
+    }
+
+    /* ─── SECTION LAYOUT ─── */
+    .section { padding: 72px 0; scroll-margin-top: 120px; }
+    .section + .section { border-top: 1px solid var(--color-border-default); }
+    .section-eyebrow {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.14em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-bottom: 8px;
+    }
+    .section-title {
+      font-family: var(--font-heading); font-size: 28px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.25;
+      margin-bottom: 24px;
+    }
+    .section-body {
+      font-size: 17px; line-height: 1.75;
+      color: var(--color-content-primary);
+    }
+    .section-body p + p { margin-top: 16px; }
+
+    /* ─── MISSION ─── */
+    .mission-layout {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px;
+      align-items: start;
+    }
+    @media (max-width: 840px) { .mission-layout { grid-template-columns: 1fr; gap: 40px; } }
+    .mission-values { display: flex; flex-direction: column; gap: 24px; }
+    .mission-value {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .mission-value-icon {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px;
+    }
+    .mission-value-title {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .mission-value-text {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.6;
+    }
+
+    /* ─── PULL QUOTE ─── */
+    .pull-quote {
+      background: var(--color-surface-inverse);
+      padding: 56px 0; text-align: center;
+      border-top: 4px solid var(--color-brand-accent);
+    }
+    .pull-quote blockquote {
+      font-family: var(--font-display); font-size: clamp(20px, 3vw, 28px);
+      font-weight: 400; font-style: italic;
+      color: var(--color-content-inverse);
+      line-height: 1.5; max-width: 760px; margin: 0 auto 16px;
+    }
+    .pull-quote cite {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-brand-accent);
+      font-style: normal;
+    }
+
+    /* ─── PERSON CARD (presidente, direttore) ─── */
+    .person-featured {
+      display: grid; grid-template-columns: 280px 1fr; gap: 48px;
+      align-items: start;
+    }
+    @media (max-width: 840px) { .person-featured { grid-template-columns: 1fr; } }
+    .person-avatar-wrap { position: relative; }
+    .person-avatar {
+      width: 100%; aspect-ratio: 3/4;
+      background: var(--color-surface-deep);
+      border-radius: 12px;
+      display: flex; align-items: flex-end; justify-content: center;
+      overflow: hidden;
+      border: 1px solid var(--color-border-default);
+    }
+    .person-avatar svg { opacity: 0.35; }
+    .person-avatar-badge {
+      position: absolute; bottom: 12px; left: 12px; right: 12px;
+      background: rgba(1,62,57,0.88);
+      backdrop-filter: blur(8px);
+      border-radius: 8px; padding: 10px 14px;
+      border: 1px solid rgba(216,236,40,0.2);
+    }
+    .person-avatar-name {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 500;
+      color: #fff; margin-bottom: 2px;
+    }
+    .person-avatar-role {
+      font-family: var(--font-ui); font-size: 10px;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--color-brand-accent);
+    }
+    .person-bio-title {
+      font-family: var(--font-heading); font-size: 22px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .person-bio-role {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-brand-primary);
+      margin-bottom: 20px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .person-bio-role::after {
+      content: '';
+      display: block; height: 1px; flex: 1;
+      background: var(--color-border-default);
+    }
+    .person-bio-text {
+      font-size: 16px; line-height: 1.75;
+      color: var(--color-content-primary);
+    }
+    .person-bio-text p + p { margin-top: 14px; }
+    .person-links { margin-top: 20px; display: flex; gap: 12px; flex-wrap: wrap; }
+    .person-link {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase;
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: 4px;
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      color: var(--color-content-brand);
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .person-link:hover { border-color: var(--color-border-strong); }
+
+    /* ─── PEOPLE GRID (comitato, team) ─── */
+    .people-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 900px) { .people-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .people-grid { grid-template-columns: 1fr; } }
+    .people-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px;
+      overflow: hidden;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .people-card:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: 0 4px 20px rgba(1,62,57,0.08);
+    }
+    .people-card-img {
+      width: 100%; aspect-ratio: 1;
+      background: var(--color-surface-deep);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .people-card-img svg { opacity: 0.3; }
+    .people-card-body { padding: 16px; }
+    .people-card-name {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .people-card-role {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      line-height: 1.4;
+    }
+    .people-card-expertise {
+      margin-top: 10px; display: flex; gap: 6px; flex-wrap: wrap;
+    }
+    .expertise-tag {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 3px 8px; border-radius: 3px;
+      background: var(--color-surface-card);
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── PEOPLE LIST (consiglio) ─── */
+    .people-list { display: flex; flex-direction: column; gap: 0; }
+    .people-list-item {
+      display: flex; align-items: center; gap: 20px;
+      padding: 18px 0;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .people-list-item:first-child { border-top: 1px solid var(--color-border-default); }
+    .people-list-avatar {
+      width: 44px; height: 44px; flex-shrink: 0;
+      background: var(--color-surface-deep);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading); font-size: 17px; font-weight: 500;
+      color: var(--color-content-brand);
+      border: 1px solid var(--color-border-default);
+    }
+    .people-list-info { flex: 1; }
+    .people-list-name {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 500;
+      color: var(--color-content-primary);
+    }
+    .people-list-role {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-top: 2px;
+    }
+    .people-list-tag {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 4px 10px; border-radius: 99px;
+      background: var(--color-surface-card);
+      color: var(--color-content-secondary);
+      white-space: nowrap;
+    }
+
+    /* ─── SOCI IMPRESE (logo grid) ─── */
+    .soci-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 900px) { .soci-grid { grid-template-columns: repeat(3, 1fr); } }
+    @media (max-width: 540px) { .soci-grid { grid-template-columns: repeat(2, 1fr); } }
+    .socio-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px;
+      padding: 20px 16px;
+      display: flex; flex-direction: column; align-items: center; gap: 10px;
+      text-decoration: none;
+      transition: border-color 0.15s;
+      min-height: 100px; justify-content: center;
+    }
+    .socio-card:hover { border-color: var(--color-border-strong); }
+    .socio-logo {
+      width: 100%; height: 40px;
+      background: var(--color-surface-deep);
+      border-radius: 4px;
+      display: flex; align-items: center; justify-content: center;
+    }
+    .socio-name {
+      font-family: var(--font-ui); font-size: 9px; letter-spacing: 0.1em;
+      text-transform: uppercase; text-align: center;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── COMITATO SCIENTIFICO ─── */
+    .comitato-intro {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 12px; padding: 40px;
+      margin-bottom: 32px;
+    }
+    .comitato-intro-title {
+      font-family: var(--font-heading); font-size: 20px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 12px;
+    }
+    .comitato-intro-text {
+      font-size: 16px; line-height: 1.7;
+      color: var(--color-content-secondary);
+    }
+    .experts-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    @media (max-width: 900px) { .experts-grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .experts-grid { grid-template-columns: 1fr; } }
+    .expert-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px; padding: 20px;
+      display: flex; gap: 14px; align-items: flex-start;
+    }
+    .expert-initials {
+      width: 40px; height: 40px; flex-shrink: 0;
+      background: var(--color-surface-deep);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-heading); font-size: 14px; font-weight: 500;
+      color: var(--color-content-brand);
+    }
+    .expert-name {
+      font-family: var(--font-heading); font-size: 14px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 3px;
+    }
+    .expert-affiliation {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      color: var(--color-content-secondary); line-height: 1.4;
+    }
+
+    /* ─── PARTNERSHIP ─── */
+    .partnership-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    @media (max-width: 840px) { .partnership-grid { grid-template-columns: 1fr; } }
+    .partnership-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px; padding: 28px;
+      text-decoration: none;
+    }
+    .partnership-card-flag {
+      width: 48px; height: 48px; border-radius: 10px;
+      margin-bottom: 16px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 24px;
+      background: var(--color-surface-card);
+    }
+    .partnership-card-title {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 8px;
+    }
+    .partnership-card-text {
+      font-size: 14px; line-height: 1.6;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── DOCUMENTI (statuto, bilancio) ─── */
+    .docs-download-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px;
+    }
+    @media (max-width: 640px) { .docs-download-grid { grid-template-columns: 1fr; } }
+    .doc-download-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px; padding: 28px;
+      display: flex; align-items: center; gap: 20px;
+      text-decoration: none;
+      transition: border-color 0.15s;
+    }
+    .doc-download-card:hover { border-color: var(--color-border-strong); }
+    .doc-download-icon {
+      width: 48px; height: 48px; flex-shrink: 0;
+      background: var(--color-surface-inverse);
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 22px;
+    }
+    .doc-download-info { flex: 1; }
+    .doc-download-title {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 500;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .doc-download-meta {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.06em;
+      color: var(--color-content-secondary);
+    }
+    .doc-download-arrow {
+      font-size: 18px; color: var(--color-content-secondary);
+      flex-shrink: 0;
+    }
+
+    /* ─── CTA BAND ─── */
+    .cta-band {
+      background: var(--color-surface-inverse);
+      padding: 64px 0; text-align: center;
+    }
+    .cta-band-title {
+      font-family: var(--font-display); font-size: clamp(24px, 3vw, 34px);
+      font-weight: 500; color: var(--color-content-inverse);
+      margin-bottom: 12px;
+    }
+    .cta-band-sub {
+      font-size: 16px; color: rgba(255,255,255,0.65);
+      margin-bottom: 32px; max-width: 500px; margin-left: auto; margin-right: auto;
+    }
+    .cta-band-actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--color-brand-accent);
+      color: var(--color-brand-primary);
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      padding: 13px 24px; border-radius: 4px;
+      text-decoration: none; border: none; cursor: pointer;
+      transition: opacity 0.15s;
+    }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: transparent;
+      color: rgba(255,255,255,0.85);
+      font-family: var(--font-body); font-size: 15px; font-weight: 500;
+      padding: 13px 20px; border-radius: 4px;
+      text-decoration: none; border: 1px solid rgba(255,255,255,0.25);
+      transition: border-color 0.15s, color 0.15s;
+    }
+    .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
+
+    /* ─── SECTION BG VARIANTS ─── */
+    .section-raised { background: var(--color-surface-raised); }
+    .section-card { background: var(--color-surface-card); }
+
+    /* ─── DIVIDER ACCENT ─── */
+    .accent-divider {
+      height: 4px; background: var(--color-brand-accent);
+      border: none; margin: 0;
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-inverse);
+      padding: 24px 0;
+    }
+    .footer-inner {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 16px; flex-wrap: wrap;
+    }
+    .footer-logo { font-family: var(--font-ui); font-size: 12px; font-weight: 600; color: var(--color-brand-accent); }
+    .footer-copy { font-family: var(--font-ui); font-size: 11px; color: var(--color-content-secondary); }
+
+    /* ─── HELPERS ─── */
+    .text-secondary { color: var(--color-content-secondary); }
+    .mt-8 { margin-top: 8px; }
+    .mt-16 { margin-top: 16px; }
+    .mt-24 { margin-top: 24px; }
+    .mt-32 { margin-top: 32px; }
+    .mt-40 { margin-top: 40px; }
+
+  </style>
+</head>
+<body>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="susdef-home.html" class="site-logo">
+        <span class="site-logo-mark">F</span>
+        Fondazione Sviluppo Sostenibile
+      </a>
+      <nav class="site-nav" aria-label="Menu principale">
+        <a href="search.html">Biblioteca</a>
+        <a href="susdef-hub.html">Settori</a>
+        <a href="#">Strumenti</a>
+        <a href="#">Formazione</a>
+        <a href="susdef-chi-siamo.html" class="active">Chi siamo</a>
+        <a href="#" class="btn-nav">Accedi</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ─── HERO ─── -->
+  <section class="hero" aria-labelledby="hero-heading">
+    <div class="container">
+      <div class="hero-inner">
+        <p class="hero-eyebrow">Fondazione Sviluppo Sostenibile · Dal 2008</p>
+        <h1 class="hero-title" id="hero-heading">
+          Un punto di riferimento<br>
+          per la <em>green economy</em>
+        </h1>
+        <p class="hero-sub">
+          Autorevole centro di conoscenza, ricerca e proposta a servizio di imprese,
+          istituzioni e società civile impegnate nella transizione ecologica.
+        </p>
+        <div class="hero-stats">
+          <div>
+            <div class="hero-stat-value">+15</div>
+            <div class="hero-stat-label">anni di attività</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">200+</div>
+            <div class="hero-stat-label">soci imprese</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">8</div>
+            <div class="hero-stat-label">settori tematici</div>
+          </div>
+          <div>
+            <div class="hero-stat-value">50+</div>
+            <div class="hero-stat-label">esperti nel comitato scientifico</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PAGE NAV ─── -->
+  <nav class="page-nav" aria-label="Sezioni della pagina">
+    <div class="container">
+      <div class="page-nav-inner">
+        <a href="#missione"   class="page-nav-link active">La Mission</a>
+        <a href="#presidente" class="page-nav-link">Il Presidente</a>
+        <a href="#comitato"   class="page-nav-link">Comitato di Presidenza</a>
+        <a href="#consiglio"  class="page-nav-link">Il Consiglio</a>
+        <a href="#direttore"  class="page-nav-link">Il Direttore</a>
+        <a href="#team"       class="page-nav-link">Il Team</a>
+        <a href="#scientifico" class="page-nav-link">Comitato Scientifico</a>
+        <a href="#soci-imprese" class="page-nav-link">Soci Imprese</a>
+        <a href="#soci-esperti" class="page-nav-link">Soci Esperti</a>
+        <a href="#partnership" class="page-nav-link">Partnership</a>
+        <a href="#documenti"  class="page-nav-link">Statuto &amp; Bilancio</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: LA MISSION -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section" id="missione" aria-labelledby="missione-title">
+    <div class="container">
+      <p class="section-eyebrow">La Mission</p>
+      <div class="mission-layout">
+        <div>
+          <h2 class="section-title" id="missione-title">
+            Promuovere una green economy quale pilastro del futuro
+          </h2>
+          <div class="section-body">
+            <p>
+              La Fondazione per lo sviluppo sostenibile è un autorevole punto di
+              riferimento per i principali settori e protagonisti della green economy:
+              l'economia di uno sviluppo sostenibile.
+            </p>
+            <p>
+              Dispone di un patrimonio di esperienze, conoscenza e credibilità,
+              acquisito con anni di serio lavoro, messo al servizio di un impegno
+              civile e ambientale, in particolare a supporto di imprese e organizzazioni
+              che condividono un comune percorso di transizione ecologica.
+            </p>
+            <p>
+              Lo scopo della Fondazione è la promozione di una green economy quale
+              pilastro fondamentale di uno sviluppo sostenibile. Promuove soluzioni
+              congiunte alla crisi climatica e a quella economica, puntando su un
+              benessere di migliore qualità e più inclusivo, tutelando il capitale
+              naturale e i servizi eco-sistemici.
+            </p>
+            <p>
+              Fin dalla propria nascita, la Fondazione è entrata a far parte di
+              network europei e internazionali di enti e collabora con enti e
+              istituzioni attive nella promozione dello sviluppo sostenibile.
+            </p>
+          </div>
+        </div>
+        <div class="mission-values">
+          <div class="mission-value">
+            <div class="mission-value-icon">🌱</div>
+            <div>
+              <div class="mission-value-title">Transizione ecologica</div>
+              <div class="mission-value-text">Supportiamo imprese e organizzazioni nel loro percorso verso la sostenibilità, con strumenti concreti e ricerche applicabili.</div>
+            </div>
+          </div>
+          <div class="mission-value">
+            <div class="mission-value-icon">🔬</div>
+            <div>
+              <div class="mission-value-title">Conoscenza scientifica</div>
+              <div class="mission-value-text">Il nostro Comitato Tecnico Scientifico assicura rigore metodologico e aggiornamento costante su tutti i temi della sostenibilità.</div>
+            </div>
+          </div>
+          <div class="mission-value">
+            <div class="mission-value-icon">🤝</div>
+            <div>
+              <div class="mission-value-title">Rete e advocacy</div>
+              <div class="mission-value-text">Facciamo parte di network europei e internazionali e promuoviamo il dialogo tra settore privato, istituzioni e società civile.</div>
+            </div>
+          </div>
+          <div class="mission-value">
+            <div class="mission-value-icon">📊</div>
+            <div>
+              <div class="mission-value-title">Dati e reporting</div>
+              <div class="mission-value-text">Produciamo rapporti, analisi e indicatori per monitorare lo stato dell'economia verde in Italia e in Europa.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PULL QUOTE -->
+  <div class="pull-quote" role="complementary">
+    <div class="container">
+      <blockquote>
+        "La sfida del nostro tempo è dimostrare che sostenibilità e prosperità
+        economica non solo sono compatibili, ma si rafforzano a vicenda."
+      </blockquote>
+      <cite>Fondazione Sviluppo Sostenibile — Manifesto</cite>
+    </div>
+  </div>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: IL PRESIDENTE -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section" id="presidente" aria-labelledby="presidente-title">
+    <div class="container">
+      <p class="section-eyebrow">Leadership</p>
+      <h2 class="section-title" id="presidente-title">Il Presidente</h2>
+      <div class="person-featured">
+        <div class="person-avatar-wrap">
+          <div class="person-avatar">
+            <svg width="160" height="200" viewBox="0 0 160 200" fill="none">
+              <circle cx="80" cy="72" r="44" fill="#013E39"/>
+              <ellipse cx="80" cy="180" rx="72" ry="56" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="person-avatar-badge">
+            <div class="person-avatar-name">Edo Ronchi</div>
+            <div class="person-avatar-role">Presidente</div>
+          </div>
+        </div>
+        <div>
+          <div class="person-bio-title">Edo Ronchi</div>
+          <div class="person-bio-role">Presidente della Fondazione</div>
+          <div class="person-bio-text">
+            <p>
+              Edo Ronchi è stato Ministro dell'Ambiente dal 1996 al 2000, durante il quale
+              ha promosso importanti riforme legislative in materia ambientale, tra cui il
+              decreto Ronchi sulla gestione dei rifiuti, ancora oggi alla base della
+              normativa italiana sul settore.
+            </p>
+            <p>
+              Ha fondato la Fondazione per lo sviluppo sostenibile nel 2008, con l'obiettivo
+              di creare un centro di eccellenza capace di produrre ricerca di qualità e
+              proporre soluzioni concrete alle sfide della transizione ecologica.
+            </p>
+            <p>
+              È autore di numerosi libri e pubblicazioni sulla green economy, sull'energia
+              rinnovabile e sullo sviluppo sostenibile. Interviene regolarmente in convegni
+              nazionali e internazionali sui temi dell'ambiente e del clima.
+            </p>
+          </div>
+          <div class="person-links">
+            <a href="#" class="person-link">↗ Profilo completo</a>
+            <a href="#" class="person-link">✉ Contatto</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: COMITATO DI PRESIDENZA -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section section-raised" id="comitato" aria-labelledby="comitato-title">
+    <div class="container">
+      <p class="section-eyebrow">Governance</p>
+      <h2 class="section-title" id="comitato-title">Il Comitato di Presidenza</h2>
+      <div class="people-grid">
+        <!-- Person 1 -->
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Enrico Giovannini</div>
+            <div class="people-card-role">Vice Presidente<br>Ex Ministro MITE</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Politiche ambientali</span>
+              <span class="expertise-tag">Statistica</span>
+            </div>
+          </div>
+        </div>
+        <!-- Person 2 -->
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Rossella Muroni</div>
+            <div class="people-card-role">Membro del Comitato<br>Ambientalista, deputata</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Energia</span>
+              <span class="expertise-tag">Tutela ambientale</span>
+            </div>
+          </div>
+        </div>
+        <!-- Person 3 -->
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Catia Bastioli</div>
+            <div class="people-card-role">Membro del Comitato<br>CEO Novamont</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Bioeconomia</span>
+              <span class="expertise-tag">Chimica verde</span>
+            </div>
+          </div>
+        </div>
+        <!-- Person 4 -->
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Federico Testa</div>
+            <div class="people-card-role">Membro del Comitato<br>Ex Presidente ENEA</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Energia</span>
+              <span class="expertise-tag">Ricerca</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: IL CONSIGLIO DIRETTIVO -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section" id="consiglio" aria-labelledby="consiglio-title">
+    <div class="container">
+      <p class="section-eyebrow">Governance</p>
+      <h2 class="section-title" id="consiglio-title">Il Consiglio Direttivo</h2>
+      <div class="people-list" role="list">
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">ER</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Edo Ronchi</div>
+            <div class="people-list-role">Presidente</div>
+          </div>
+          <span class="people-list-tag">Presidente</span>
+        </div>
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">EG</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Enrico Giovannini</div>
+            <div class="people-list-role">Vice Presidente</div>
+          </div>
+          <span class="people-list-tag">Vice Presidente</span>
+        </div>
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">CB</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Catia Bastioli</div>
+            <div class="people-list-role">Consigliera — Novamont</div>
+          </div>
+          <span class="people-list-tag">Consigliera</span>
+        </div>
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">RM</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Rossella Muroni</div>
+            <div class="people-list-role">Consigliera</div>
+          </div>
+          <span class="people-list-tag">Consigliera</span>
+        </div>
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">FT</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Federico Testa</div>
+            <div class="people-list-role">Consigliere — Ex ENEA</div>
+          </div>
+          <span class="people-list-tag">Consigliere</span>
+        </div>
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">LC</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Laura Cima</div>
+            <div class="people-list-role">Consigliera</div>
+          </div>
+          <span class="people-list-tag">Consigliera</span>
+        </div>
+        <div class="people-list-item" role="listitem">
+          <div class="people-list-avatar">GP</div>
+          <div class="people-list-info">
+            <div class="people-list-name">Giorgio Palmucci</div>
+            <div class="people-list-role">Consigliere</div>
+          </div>
+          <span class="people-list-tag">Consigliere</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: IL DIRETTORE -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section section-raised" id="direttore" aria-labelledby="direttore-title">
+    <div class="container">
+      <p class="section-eyebrow">Management</p>
+      <h2 class="section-title" id="direttore-title">Il Direttore</h2>
+      <div class="person-featured">
+        <div class="person-avatar-wrap">
+          <div class="person-avatar">
+            <svg width="160" height="200" viewBox="0 0 160 200" fill="none">
+              <circle cx="80" cy="72" r="44" fill="#013E39"/>
+              <ellipse cx="80" cy="180" rx="72" ry="56" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="person-avatar-badge">
+            <div class="person-avatar-name">Francesco Ferrante</div>
+            <div class="person-avatar-role">Direttore — dal Nov. 2008</div>
+          </div>
+        </div>
+        <div>
+          <div class="person-bio-title">Francesco Ferrante</div>
+          <div class="person-bio-role">Direttore della Fondazione</div>
+          <div class="person-bio-text">
+            <p>
+              Francesco Ferrante è Direttore della Fondazione per lo sviluppo sostenibile
+              dal novembre 2008. È relatore in varie conferenze internazionali e autore
+              di numerosi articoli e pubblicazioni in materia di sostenibilità.
+            </p>
+            <p>
+              Docente in vari contesti sui temi ambientali e sulla transizione green,
+              coordina le attività di ricerca della Fondazione e supervisiona la
+              produzione di rapporti e analisi sui principali temi della green economy.
+            </p>
+            <p>
+              Ha costruito una rete di relazioni con le principali istituzioni europee
+              e internazionali attive nella promozione dello sviluppo sostenibile,
+              posizionando la Fondazione come interlocutore privilegiato nel dialogo
+              tra imprese, policy maker e società civile.
+            </p>
+          </div>
+          <div class="person-links">
+            <a href="#" class="person-link">↗ Profilo completo</a>
+            <a href="#" class="person-link">📄 Pubblicazioni</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: IL TEAM -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section" id="team" aria-labelledby="team-title">
+    <div class="container">
+      <p class="section-eyebrow">Organizzazione</p>
+      <h2 class="section-title" id="team-title">Il Team</h2>
+      <div class="people-grid">
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Anna Donati</div>
+            <div class="people-card-role">Responsabile Mobilità Sostenibile</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Trasporti</span>
+              <span class="expertise-tag">Urbanistica</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Katiuscia Eroe</div>
+            <div class="people-card-role">Responsabile Energia &amp; Clima</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Rinnovabili</span>
+              <span class="expertise-tag">Efficienza</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Luca Talluri</div>
+            <div class="people-card-role">Responsabile Economia Circolare</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Rifiuti</span>
+              <span class="expertise-tag">Simbiosi industriale</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Sara Biagiotti</div>
+            <div class="people-card-role">Ricercatrice — Green City</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Urbanistica</span>
+              <span class="expertise-tag">Resilienza</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Marco Mancini</div>
+            <div class="people-card-role">Ricercatore — Agroecologia</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Agricoltura</span>
+              <span class="expertise-tag">Biodiversità</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Giulia Ferroni</div>
+            <div class="people-card-role">Comunicazione &amp; Media</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Advocacy</span>
+              <span class="expertise-tag">Digital</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Pietro Salini</div>
+            <div class="people-card-role">Responsabile Formazione</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Didattica</span>
+              <span class="expertise-tag">Capacity building</span>
+            </div>
+          </div>
+        </div>
+        <div class="people-card">
+          <div class="people-card-img">
+            <svg width="60" height="80" viewBox="0 0 60 80" fill="none">
+              <circle cx="30" cy="28" r="18" fill="#013E39"/>
+              <ellipse cx="30" cy="72" rx="28" ry="22" fill="#013E39"/>
+            </svg>
+          </div>
+          <div class="people-card-body">
+            <div class="people-card-name">Laura Savorani</div>
+            <div class="people-card-role">Segreteria &amp; Soci</div>
+            <div class="people-card-expertise">
+              <span class="expertise-tag">Membership</span>
+              <span class="expertise-tag">Relazioni</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: COMITATO TECNICO SCIENTIFICO -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section section-raised" id="scientifico" aria-labelledby="scientifico-title">
+    <div class="container">
+      <p class="section-eyebrow">Expertise scientifica</p>
+      <h2 class="section-title" id="scientifico-title">Il Comitato Tecnico Scientifico</h2>
+      <div class="comitato-intro">
+        <div class="comitato-intro-title">Una rete di eccellenze italiane</div>
+        <div class="comitato-intro-text">
+          Il Comitato scientifico è composto da tutti gli esperti che aderiscono alla Fondazione.
+          Dispone di competenze in grado di assicurare tutta la conoscenza scientifica e tecnica
+          necessaria per le sue attività. Il Comitato pubblica un sito dedicato agli approfondimenti
+          in materia di sviluppo sostenibile, di clima e delle principali tematiche operative.
+        </div>
+      </div>
+      <div class="experts-grid">
+        <div class="expert-card">
+          <div class="expert-initials">GC</div>
+          <div>
+            <div class="expert-name">Giorgio Cesari</div>
+            <div class="expert-affiliation">ISPRA — Qualità dell'aria e clima</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">MC</div>
+          <div>
+            <div class="expert-name">Mario Catizzone</div>
+            <div class="expert-affiliation">ENEA — Energia e ambiente</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">FB</div>
+          <div>
+            <div class="expert-name">Fabrizio Borghini</div>
+            <div class="expert-affiliation">Politecnico Milano — Economia circolare</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">AL</div>
+          <div>
+            <div class="expert-name">Anna Livio</div>
+            <div class="expert-affiliation">Università Sapienza — Agroecologia</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">SC</div>
+          <div>
+            <div class="expert-name">Stefano Casini Benvenuti</div>
+            <div class="expert-affiliation">IRPET — Economia regionale</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">MR</div>
+          <div>
+            <div class="expert-name">Maria Rosaria Boni</div>
+            <div class="expert-affiliation">Sapienza — Ingegneria ambientale</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">DC</div>
+          <div>
+            <div class="expert-name">Domenico Caselli</div>
+            <div class="expert-affiliation">CNR — Cambiamento climatico</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">LM</div>
+          <div>
+            <div class="expert-name">Lorenzo Matteoli</div>
+            <div class="expert-affiliation">Politecnico Torino — Architettura sostenibile</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">CF</div>
+          <div>
+            <div class="expert-name">Cristiana Fiandra</div>
+            <div class="expert-affiliation">Università Bologna — Diritto ambientale</div>
+          </div>
+        </div>
+      </div>
+      <div class="mt-32" style="text-align:center;">
+        <a href="#" style="font-family:var(--font-ui);font-size:12px;letter-spacing:0.1em;text-transform:uppercase;color:var(--color-content-brand);text-decoration:none;border-bottom:1px solid var(--color-border-strong);padding-bottom:2px;">
+          Vedi tutti gli esperti →
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: SOCI IMPRESE -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section" id="soci-imprese" aria-labelledby="soci-imprese-title">
+    <div class="container">
+      <p class="section-eyebrow">La rete</p>
+      <h2 class="section-title" id="soci-imprese-title">Soci Imprese</h2>
+      <p style="font-size:16px;color:var(--color-content-secondary);margin-bottom:32px;max-width:600px;">
+        Oltre 200 imprese condividono il percorso della Fondazione, contribuendo con
+        risorse, competenze ed esperienza alla costruzione di un'economia più sostenibile.
+      </p>
+      <div class="soci-grid">
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Enel</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">ENI</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Novamont</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Terna</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Hera Group</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">A2A</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Iren</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Snam</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Italgas</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Corepla</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Legambiente</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Kyoto Club</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">FISE ASSOAMBIENTE</div></div>
+        <div class="socio-card"><div class="socio-logo"></div><div class="socio-name">Althesys</div></div>
+        <div class="socio-card" style="border-style:dashed;justify-content:center;">
+          <div style="font-family:var(--font-ui);font-size:10px;letter-spacing:0.08em;text-transform:uppercase;color:var(--color-content-secondary);text-align:center;">
+            + 190 soci →
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: SOCI ESPERTI -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section section-raised" id="soci-esperti" aria-labelledby="soci-esperti-title">
+    <div class="container">
+      <p class="section-eyebrow">La rete</p>
+      <h2 class="section-title" id="soci-esperti-title">Soci Esperti</h2>
+      <p style="font-size:16px;color:var(--color-content-secondary);margin-bottom:32px;max-width:600px;">
+        Professionisti, ricercatori e consulenti che mettono la loro competenza al
+        servizio della missione della Fondazione, contribuendo con analisi e proposte.
+      </p>
+      <div class="experts-grid">
+        <div class="expert-card">
+          <div class="expert-initials">GT</div>
+          <div>
+            <div class="expert-name">Giuseppe Tomassetti</div>
+            <div class="expert-affiliation">Energia — consulente indipendente</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">FL</div>
+          <div>
+            <div class="expert-name">Fiorenza Lipparini</div>
+            <div class="expert-affiliation">Sostenibilità d'impresa — ESG</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">RP</div>
+          <div>
+            <div class="expert-name">Roberto Passini</div>
+            <div class="expert-affiliation">Economia circolare — rifiuti</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">ML</div>
+          <div>
+            <div class="expert-name">Monica Linares</div>
+            <div class="expert-affiliation">Mobilità elettrica — infrastrutture</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">TV</div>
+          <div>
+            <div class="expert-name">Tobia Venier</div>
+            <div class="expert-affiliation">Green finance — impact investing</div>
+          </div>
+        </div>
+        <div class="expert-card">
+          <div class="expert-initials">CC</div>
+          <div>
+            <div class="expert-name">Chiara Compri</div>
+            <div class="expert-affiliation">Agroecologia — filiere corte</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: PARTNERSHIP & MEMBERSHIP -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section" id="partnership" aria-labelledby="partnership-title">
+    <div class="container">
+      <p class="section-eyebrow">Reti internazionali</p>
+      <h2 class="section-title" id="partnership-title">Partnership e Membership</h2>
+      <p style="font-size:16px;color:var(--color-content-secondary);margin-bottom:40px;max-width:640px;">
+        Fin dalla propria nascita, la Fondazione è entrata a far parte di network
+        europei e internazionali, collaborando con enti e istituzioni attive nella
+        promozione dello sviluppo sostenibile.
+      </p>
+      <div class="partnership-grid">
+        <div class="partnership-card">
+          <div class="partnership-card-flag">🇪🇺</div>
+          <div class="partnership-card-title">Green Economy Coalition</div>
+          <div class="partnership-card-text">
+            Network internazionale che riunisce organizzazioni della società civile,
+            imprese e istituzioni attorno all'agenda della green economy.
+          </div>
+        </div>
+        <div class="partnership-card">
+          <div class="partnership-card-flag">🌍</div>
+          <div class="partnership-card-title">ICLEI — Local Governments for Sustainability</div>
+          <div class="partnership-card-text">
+            Rete globale di governi locali e regionali impegnati nello sviluppo
+            sostenibile. La Fondazione collabora alle iniziative per le città verdi.
+          </div>
+        </div>
+        <div class="partnership-card">
+          <div class="partnership-card-flag">🌱</div>
+          <div class="partnership-card-title">Forum Ambiente &amp; Sviluppo</div>
+          <div class="partnership-card-text">
+            Piattaforma italiana per il coordinamento tra soggetti pubblici e privati
+            impegnati nella transizione verso un'economia sostenibile e circolare.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ──────────────────────────────────── -->
+  <!-- SEZIONE: STATUTO & BILANCIO -->
+  <!-- ──────────────────────────────────── -->
+  <section class="section section-card" id="documenti" aria-labelledby="documenti-title">
+    <div class="container">
+      <p class="section-eyebrow">Trasparenza</p>
+      <h2 class="section-title" id="documenti-title">Statuto e Bilancio</h2>
+      <p style="font-size:16px;color:var(--color-content-secondary);margin-bottom:32px;max-width:600px;">
+        La Fondazione garantisce piena trasparenza sulle proprie attività.
+        Di seguito i principali documenti istituzionali disponibili per la consultazione.
+      </p>
+      <div class="docs-download-grid">
+        <a href="#" class="doc-download-card">
+          <div class="doc-download-icon">📋</div>
+          <div class="doc-download-info">
+            <div class="doc-download-title">Statuto della Fondazione</div>
+            <div class="doc-download-meta">PDF · Ultima revisione 2022</div>
+          </div>
+          <span class="doc-download-arrow">↓</span>
+        </a>
+        <a href="#" class="doc-download-card">
+          <div class="doc-download-icon">📊</div>
+          <div class="doc-download-info">
+            <div class="doc-download-title">Bilancio 2023</div>
+            <div class="doc-download-meta">PDF · Approvato dal Consiglio</div>
+          </div>
+          <span class="doc-download-arrow">↓</span>
+        </a>
+        <a href="#" class="doc-download-card">
+          <div class="doc-download-icon">📊</div>
+          <div class="doc-download-info">
+            <div class="doc-download-title">Bilancio 2022</div>
+            <div class="doc-download-meta">PDF · Archivio</div>
+          </div>
+          <span class="doc-download-arrow">↓</span>
+        </a>
+        <a href="#" class="doc-download-card">
+          <div class="doc-download-icon">📋</div>
+          <div class="doc-download-info">
+            <div class="doc-download-title">Relazione di attività 2023</div>
+            <div class="doc-download-meta">PDF · Annual Report</div>
+          </div>
+          <span class="doc-download-arrow">↓</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── CTA FINALE ─── -->
+  <div class="cta-band">
+    <div class="container">
+      <div class="cta-band-title">Vuoi far parte della rete?</div>
+      <div class="cta-band-sub">
+        Scopri come diventare socio impresa o socio esperto e contribuire
+        alla missione della Fondazione.
+      </div>
+      <div class="cta-band-actions">
+        <a href="#" class="btn-primary">Diventa socio →</a>
+        <a href="#" class="btn-ghost">Contattaci</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ─── SITE FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container footer-inner">
+      <span class="footer-logo">Fondazione Sviluppo Sostenibile</span>
+      <span class="footer-copy">© 2025 · Template Hederae DS v0.2.0 · Brand: Susdef</span>
+    </div>
+  </footer>
+
+  <script>
+    // ─── Page nav active state on scroll ───
+    (function () {
+      const links  = document.querySelectorAll('.page-nav-link');
+      const sections = Array.from(links).map(l => document.querySelector(l.getAttribute('href')));
+      const offset = 140;
+
+      function setActive () {
+        let current = sections[0];
+        sections.forEach(s => {
+          if (s && s.getBoundingClientRect().top <= offset) current = s;
+        });
+        links.forEach(l => {
+          l.classList.toggle('active', l.getAttribute('href') === '#' + current.id);
+        });
+      }
+
+      window.addEventListener('scroll', setActive, { passive: true });
+      setActive();
+    })();
+  </script>
+
+</body>
+</html>
