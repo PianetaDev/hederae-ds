@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="pianeta-green">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="robots" content="noindex">
+  <title>Cercatori di Semi — Contatti · Hederae DS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+
+    [data-brand="pianeta-green"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #F2FAF7;
+      --color-surface-card:    #E6F5ED;
+      --color-surface-deep:    #CEEADB;
+      --color-surface-warm:    #FBF7F0;
+      --color-surface-inverse: #0D3D26;
+      --color-content-primary:   #0F2218;
+      --color-content-secondary: #4D7060;
+      --color-content-disabled:  #9BB9A9;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #1F8A5C;
+      --color-border-default:    rgba(31,138,92,0.18);
+      --color-border-subtle:     rgba(31,138,92,0.08);
+      --color-interactive-primary-bg:       #1F8A5C;
+      --color-interactive-primary-bg-hover: #197A50;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-accent-bg:        #5BD48A;
+      --color-interactive-accent-label:     #0D3D26;
+      --color-brand-primary:   #1F8A5C;
+      --color-brand-accent:    #5BD48A;
+      --color-brand-dark:      #0D3D26;
+      --font-display: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-heading: 'Plus Jakarta Sans', system-ui, sans-serif;
+      --font-body:    'Inter', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+      --radius-sm:    6px;
+      --radius-md:    12px;
+      --radius-lg:    20px;
+      --radius-full:  9999px;
+      --shadow-sm:    0 1px 2px rgba(0,0,0,0.05), 0 1px 3px rgba(0,0,0,0.07);
+      --shadow-md:    0 4px 6px -1px rgba(15,34,24,0.08), 0 2px 4px -2px rgba(15,34,24,0.06);
+      --shadow-lg:    0 10px 15px -3px rgba(15,34,24,0.09);
+      --shadow-glow:  0 0 24px rgba(31,138,92,0.22);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px; line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { max-width: 100%; display: block; }
+
+    /* ─── Site Header ─────────────────────────────────────────── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      padding: 0 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 72px; position: sticky; top: 0; z-index: 100;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .header-logo {
+      font-family: var(--font-display); font-size: 18px; font-weight: 700;
+      color: #FFFFFF; text-decoration: none; display: flex; align-items: center; gap: 10px;
+    }
+    .header-logo-icon {
+      width: 40px; height: 40px; border-radius: 50%;
+      background: rgba(91,212,138,0.15); display: flex; align-items: center;
+      justify-content: center; font-size: 20px;
+    }
+    .header-nav { display: flex; align-items: center; gap: 28px; }
+    .header-nav a {
+      font-family: var(--font-body); font-size: 14px;
+      color: rgba(255,255,255,0.70); text-decoration: none;
+      padding: 4px 0; border-bottom: 2px solid transparent;
+      transition: color .15s, border-color .15s;
+    }
+    .header-nav a:hover, .header-nav a.active {
+      color: #FFFFFF; border-bottom-color: var(--color-brand-accent);
+    }
+    .header-actions { display: flex; gap: 12px; align-items: center; }
+    .header-search {
+      font-family: var(--font-body); font-size: 13px;
+      color: rgba(255,255,255,0.5); text-decoration: none;
+      display: flex; align-items: center; gap: 6px;
+    }
+
+    /* ─── Page Hero ───────────────────────────────────────────── */
+    .page-hero {
+      background: var(--color-surface-inverse);
+      padding: 64px 64px 56px;
+      position: relative; overflow: hidden;
+    }
+    .page-hero .hero-bg-circle {
+      position: absolute; border-radius: 50%;
+      background: rgba(91,212,138,0.06); pointer-events: none;
+    }
+    .page-hero-content { position: relative; z-index: 1; max-width: 720px; }
+    .page-hero-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      background: rgba(91,212,138,0.15); border: 1px solid rgba(91,212,138,0.3);
+      border-radius: var(--radius-full); padding: 6px 14px;
+      font-family: var(--font-ui); font-size: 11px; color: #5BD48A;
+      letter-spacing: 0.06em; margin-bottom: 20px;
+    }
+    .page-hero-label-dot { width: 6px; height: 6px; border-radius: 50%; background: #5BD48A; }
+    .page-hero h1 {
+      font-family: var(--font-display); font-size: 48px; font-weight: 700;
+      line-height: 1.1; color: #FFFFFF; margin-bottom: 16px;
+    }
+    .page-hero h1 .accent { color: #5BD48A; }
+    .page-hero-sub {
+      font-size: 18px; line-height: 1.65; color: rgba(255,255,255,0.72); max-width: 600px;
+    }
+
+    /* ─── Section ─────────────────────────────────────────────── */
+    .section { padding: 80px 64px; }
+    .section-label {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-content-brand); margin-bottom: 12px;
+    }
+    .section-title {
+      font-family: var(--font-display); font-size: 40px; font-weight: 700; line-height: 1.15;
+      color: var(--color-content-primary); margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 17px; color: var(--color-content-secondary); line-height: 1.65; max-width: 620px;
+    }
+
+    /* ─── Contact Layout ─────────────────────────────────────── */
+    .contact-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 48px;
+    }
+
+    /* ─── Contact Info Cards ─────────────────────────────────── */
+    .info-cards { display: flex; flex-direction: column; gap: 20px; }
+    .info-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg); padding: 24px;
+      display: flex; align-items: flex-start; gap: 16px;
+    }
+    .info-card-icon {
+      width: 44px; height: 44px; border-radius: var(--radius-md);
+      background: var(--color-surface-raised);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 20px; flex-shrink: 0;
+    }
+    .info-card-title {
+      font-family: var(--font-display); font-size: 15px; font-weight: 700;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .info-card-value {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.5;
+    }
+    .info-card-value a {
+      color: var(--color-content-brand); text-decoration: none; font-weight: 500;
+    }
+
+    /* ─── Contact Form ───────────────────────────────────────── */
+    .contact-form {
+      background: var(--color-surface-page);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-lg); padding: 32px;
+    }
+    .form-title {
+      font-family: var(--font-display); font-size: 22px; font-weight: 700;
+      color: var(--color-content-primary); margin-bottom: 24px;
+    }
+    .form-row {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px;
+    }
+    .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
+    .form-group.full { grid-column: 1 / -1; }
+    .form-label {
+      font-family: var(--font-body); font-size: 13px; font-weight: 500;
+      color: var(--color-content-primary);
+    }
+    .form-input, .form-textarea, .form-select {
+      padding: 12px 16px;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      font-family: var(--font-body); font-size: 14px;
+      color: var(--color-content-primary);
+      outline: none; transition: border-color .15s;
+    }
+    .form-input:focus, .form-textarea:focus, .form-select:focus {
+      border-color: var(--color-brand-primary);
+    }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      padding: 12px 28px;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      border: none; border-radius: var(--radius-full);
+      cursor: pointer; transition: filter .15s;
+    }
+    .form-submit:hover { filter: brightness(1.08); }
+    .form-note {
+      font-size: 12px; color: var(--color-content-disabled); margin-top: 12px; line-height: 1.5;
+    }
+
+    /* ─── Map Placeholder ────────────────────────────────────── */
+    .map-section {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .map-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+    }
+    .map-placeholder {
+      aspect-ratio: 16/9; background: var(--color-surface-deep);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 64px; min-height: 360px;
+    }
+    .map-info {
+      padding: 48px; display: flex; flex-direction: column; justify-content: center;
+    }
+    .location-group { margin-bottom: 32px; }
+    .location-group:last-child { margin-bottom: 0; }
+    .location-tag {
+      font-family: var(--font-ui); font-size: 10px; letter-spacing: 0.06em;
+      text-transform: uppercase; color: var(--color-content-brand);
+      margin-bottom: 8px;
+    }
+    .location-name {
+      font-family: var(--font-display); font-size: 18px; font-weight: 700;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .location-address {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.5;
+    }
+
+    /* ─── Footer ──────────────────────────────────────────────── */
+    .footer {
+      background: #060F0A; padding: 48px 64px 32px;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .footer-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; margin-bottom: 48px;
+    }
+    .footer-logo {
+      font-family: var(--font-display); font-size: 18px; font-weight: 700;
+      color: #FFFFFF; display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+    }
+    .footer-logo-icon { font-size: 24px; }
+    .footer-tagline { font-size: 13px; color: rgba(255,255,255,0.5); line-height: 1.6; max-width: 280px; }
+    .footer-col-title {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 16px;
+    }
+    .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+    .footer-col a { font-size: 13px; color: rgba(255,255,255,0.6); text-decoration: none; }
+    .footer-col a:hover { color: #FFFFFF; }
+    .footer-bottom {
+      border-top: 1px solid rgba(255,255,255,0.08);
+      padding-top: 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .footer-copy { font-family: var(--font-ui); font-size: 11px; color: rgba(255,255,255,0.3); }
+    .footer-social { display: flex; gap: 16px; }
+    .footer-social a { color: rgba(255,255,255,0.4); text-decoration: none; font-size: 16px; }
+    .footer-social a:hover { color: #FFFFFF; }
+
+    /* ─── Responsive ──────────────────────────────────────────── */
+    @media (max-width: 1024px) {
+      .contact-grid { grid-template-columns: 1fr; gap: 32px; }
+      .map-grid { grid-template-columns: 1fr; }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .site-header { padding: 0 24px; height: 60px; }
+      .header-nav { display: none; }
+      .page-hero { padding: 48px 24px 40px; }
+      .page-hero h1 { font-size: 32px; }
+      .section { padding: 48px 24px; }
+      .section-title { font-size: 28px; }
+      .form-row { grid-template-columns: 1fr; }
+      .map-info { padding: 24px; }
+      .footer { padding: 32px 24px 24px; }
+      .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; gap: 12px; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Site Header -->
+  <header class="site-header">
+    <a class="header-logo" href="cercatoridisemi-home.html">
+      <span class="header-logo-icon">🌱</span>
+      Cercatori di Semi
+    </a>
+    <nav class="header-nav">
+      <a href="cercatoridisemi-home.html">Home</a>
+      <a href="cercatoridisemi-cosa-facciamo.html">Cosa facciamo</a>
+      <a href="cercatoridisemi-guide.html">Guide gratuite</a>
+      <a href="cercatoridisemi-shop.html">Shop</a>
+      <a href="cercatoridisemi-dicono-di-noi.html">Dicono di noi</a>
+      <a href="cercatoridisemi-contatti.html" class="active">Contatti</a>
+    </nav>
+    <div class="header-actions">
+      <a class="header-search" href="#">🔍 Cerca</a>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="hero-bg-circle" style="width:400px;height:400px;top:-120px;right:-60px;"></div>
+    <div class="page-hero-content">
+      <div class="page-hero-label">
+        <span class="page-hero-label-dot"></span>
+        Parliamo
+      </div>
+      <h1><span class="accent">Contatti</span>.</h1>
+      <p class="page-hero-sub">Vuoi richiedere semi gratuiti, informazioni sullo shop, o collaborare con noi? Scrivici, siamo felici di ascoltarti.</p>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section class="section">
+    <div class="contact-grid">
+      <!-- Info Cards -->
+      <div class="info-cards">
+        <div class="section-label">Come trovarci</div>
+        <h2 class="section-title" style="font-size:32px;">Tutti i modi<br>per contattarci.</h2>
+
+        <div class="info-card">
+          <div class="info-card-icon">📞</div>
+          <div>
+            <div class="info-card-title">Telefono</div>
+            <div class="info-card-value"><a href="tel:06633910">06 633910</a></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">✉️</div>
+          <div>
+            <div class="info-card-title">Email ordini</div>
+            <div class="info-card-value"><a href="mailto:ordini@agricolasantateresa.it">ordini@agricolasantateresa.it</a></div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">🏠</div>
+          <div>
+            <div class="info-card-title">Sede legale</div>
+            <div class="info-card-value">Via delle Mandorle 11<br>00071 Pomezia (RM)</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">🌱</div>
+          <div>
+            <div class="info-card-title">Coltivazioni</div>
+            <div class="info-card-value">Via della Muratella<br>00040 Ardea (RM)</div>
+          </div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-icon">⏰</div>
+          <div>
+            <div class="info-card-title">Orari</div>
+            <div class="info-card-value">Lun — Ven: 9:00 – 17:00<br>Visite su appuntamento</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Contact Form -->
+      <div class="contact-form">
+        <div class="form-title">Inviaci un messaggio</div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Nome *</label>
+            <input type="text" class="form-input" placeholder="Mario">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Cognome *</label>
+            <input type="text" class="form-input" placeholder="Rossi">
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email *</label>
+          <input type="email" class="form-input" placeholder="mario@esempio.it">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Argomento</label>
+          <select class="form-select">
+            <option>Richiesta semi gratuiti</option>
+            <option>Informazioni sullo shop</option>
+            <option>Collaborazione / Scuole</option>
+            <option>Progetto Melissa</option>
+            <option>Altro</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Messaggio *</label>
+          <textarea class="form-textarea" placeholder="Scrivi il tuo messaggio..."></textarea>
+        </div>
+        <button type="submit" class="form-submit">Invia messaggio →</button>
+        <p class="form-note">Rispondiamo generalmente entro 2 giorni lavorativi. Per ordini urgenti, chiamare direttamente al telefono.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Map Section -->
+  <section class="map-section">
+    <div class="map-grid">
+      <div class="map-placeholder">📍</div>
+      <div class="map-info">
+        <div class="location-group">
+          <div class="location-tag">Sede legale</div>
+          <div class="location-name">Ufficio e spedizioni</div>
+          <div class="location-address">Via delle Mandorle 11<br>00071 Pomezia (RM)<br>Tel. 06 633910</div>
+        </div>
+        <div class="location-group">
+          <div class="location-tag">Coltivazioni</div>
+          <div class="location-name">Campo sperimentale</div>
+          <div class="location-address">Via della Muratella<br>00040 Ardea (RM)<br>Visite su appuntamento</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo">
+          <span class="footer-logo-icon">🌱</span>
+          Cercatori di Semi
+        </div>
+        <p class="footer-tagline">Associazione culturale non profit a difesa dell'agrobiodiversità. Coltiviamo, conserviamo e distribuiamo le sementi delle varietà locali antiche.</p>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Attività</div>
+        <ul>
+          <li><a href="cercatoridisemi-cosa-facciamo.html">Cosa facciamo</a></li>
+          <li><a href="cercatoridisemi-guide.html">Guide gratuite</a></li>
+          <li><a href="#">Progetto Melissa</a></li>
+          <li><a href="#">Banca dei semi</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Shop</div>
+        <ul>
+          <li><a href="cercatoridisemi-shop.html">Catalogo semi</a></li>
+          <li><a href="#">Sovesci</a></li>
+          <li><a href="#">Semine di stagione</a></li>
+          <li><a href="#">Kit scuole</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <div class="footer-col-title">Contatti</div>
+        <ul>
+          <li><a href="cercatoridisemi-contatti.html">Scrivici</a></li>
+          <li><a href="#">Tel: 06633910</a></li>
+          <li><a href="cercatoridisemi-dicono-di-noi.html">Dicono di noi</a></li>
+          <li><a href="#">Newsletter</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="footer-copy">© 2026 Cercatori di Semi Terranatura — Associazione culturale non profit — Via delle Mandorle 11, 00071 Pomezia (RM)</div>
+      <div class="footer-social">
+        <a href="#">FB</a>
+        <a href="#">IG</a>
+        <a href="#">YT</a>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
