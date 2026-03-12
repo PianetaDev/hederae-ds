@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Evento dettaglio — SUSDEF · Page Template</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── SUSDEF BRAND TOKENS ─── */
+    [data-brand="susdef"] {
+      --color-surface-page:    #FFFFFF;
+      --color-surface-raised:  #FBF9F7;
+      --color-surface-card:    #F4F1EB;
+      --color-surface-deep:    #E9E3D7;
+      --color-surface-inverse: #013E39;
+      --color-content-primary:   #212121;
+      --color-content-secondary: #6D6D69;
+      --color-content-disabled:  #ADADAB;
+      --color-content-inverse:   #FFFFFF;
+      --color-content-brand:     #013E39;
+      --color-border-default:    #D9D4C9;
+      --color-border-strong:     #013E39;
+      --color-border-focus:      #D8EC28;
+      --color-interactive-primary-bg:       #013E39;
+      --color-interactive-primary-label:    #FFFFFF;
+      --color-interactive-primary-bg-hover: #025249;
+      --color-interactive-secondary-border: #013E39;
+      --color-interactive-secondary-label:  #013E39;
+      --color-brand-primary:   #013E39;
+      --color-brand-secondary: #C3C234;
+      --color-brand-accent:    #D8EC28;
+      --color-feedback-success-bg:  #E6F4EA;
+      --color-feedback-success-text:#1B7A3E;
+      --color-sector-ecoinnovazione-primary:    #FF8C01;
+      --color-sector-ecoinnovazione-muted:      #FFF1D9;
+      --color-sector-energia-clima-primary:     #2792B9;
+      --color-sector-energia-clima-muted:       #D9EEF7;
+      --color-sector-economia-circolare-primary:#BEBFF8;
+      --color-sector-economia-circolare-muted:  #EEEEFF;
+      --color-sector-mobilita-sostenibile-primary: #CE9B62;
+      --color-sector-mobilita-sostenibile-muted:   #F5EAD8;
+      --color-sector-green-city-primary:        #B9284F;
+      --color-sector-green-city-muted:          #F7D4DC;
+      --color-sector-agroecologia-primary:      #FFC310;
+      --color-sector-agroecologia-muted:        #FFF7D9;
+      --color-sector-stati-generali-primary:    #9EDFC9;
+      --color-sector-stati-generali-muted:      #E5F7F2;
+      --color-sector-corsi-formazione-primary:  #F993C5;
+      --color-sector-corsi-formazione-muted:    #FEE8F3;
+      --font-display: 'IBM Plex Serif', Georgia, serif;
+      --font-heading: 'IBM Plex Serif', Georgia, serif;
+      --font-body:    'IBM Plex Sans', system-ui, sans-serif;
+      --font-ui:      'IBM Plex Mono', monospace;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--color-surface-page);
+      color: var(--color-content-primary);
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ─── LAYOUT ─── */
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 24px; }
+
+    /* ─── SITE HEADER ─── */
+    .site-header {
+      background: var(--color-surface-inverse);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .site-header .container {
+      display: flex; align-items: center; justify-content: space-between;
+      height: 64px;
+    }
+    .site-logo {
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.1em;
+      text-transform: uppercase; color: var(--color-content-inverse);
+      text-decoration: none; display: flex; align-items: center; gap: 10px;
+    }
+    .site-logo-mark {
+      width: 28px; height: 28px; border-radius: 6px;
+      background: var(--color-brand-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; font-weight: 700; color: var(--color-brand-primary);
+    }
+    .site-nav { display: flex; gap: 28px; align-items: center; }
+    .site-nav a {
+      font-size: 14px; font-weight: 500;
+      color: rgba(255,255,255,0.75); text-decoration: none;
+      transition: color 0.15s;
+    }
+    .site-nav a:hover, .site-nav a.active { color: var(--color-brand-accent); }
+    .btn-nav {
+      background: var(--color-brand-accent); color: var(--color-brand-primary) !important;
+      padding: 8px 16px; border-radius: 4px; font-weight: 600 !important;
+    }
+
+    /* ─── BREADCRUMB + BACK ─── */
+    .top-bar {
+      padding: 16px 0;
+      display: flex; align-items: center; gap: 24px;
+    }
+    .back-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary); text-decoration: none;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      padding: 6px 14px; border-radius: 20px;
+      transition: border-color 0.15s;
+    }
+    .back-btn:hover { border-color: var(--color-border-strong); color: var(--color-content-primary); }
+    .breadcrumb-inline {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary);
+    }
+    .breadcrumb-inline a { color: var(--color-content-secondary); text-decoration: none; }
+    .breadcrumb-inline a:hover { color: var(--color-content-brand); }
+    .breadcrumb-inline strong { color: var(--color-content-primary); font-weight: 600; }
+
+    /* ─── HERO IMAGE ─── */
+    .event-hero {
+      position: relative;
+      margin-bottom: 24px;
+    }
+    .event-hero-image {
+      width: 100%;
+      height: 360px;
+      background: var(--color-surface-deep);
+      border-radius: 12px;
+      object-fit: cover;
+    }
+    .event-hero-dates {
+      position: absolute;
+      bottom: -36px; left: 32px;
+      display: flex; gap: 12px;
+    }
+    .event-date-circle {
+      width: 80px; height: 80px; border-radius: 50%;
+      background: var(--color-surface-page);
+      border: 2px solid var(--color-border-default);
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+    }
+    .event-date-circle-day {
+      font-family: var(--font-display); font-size: 28px; font-weight: 600;
+      color: var(--color-content-primary); line-height: 1;
+    }
+    .event-date-circle-month {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.12em;
+      text-transform: uppercase; color: var(--color-content-secondary);
+      margin-top: 2px;
+    }
+
+    /* ─── EVENT HEADER ─── */
+    .event-header {
+      padding-top: 44px;
+      margin-bottom: 24px;
+    }
+    .event-date-range {
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 8px;
+    }
+    .event-title {
+      font-family: var(--font-display); font-size: 38px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.2;
+      margin-bottom: 6px;
+    }
+    .event-location-label {
+      font-size: 16px; color: var(--color-content-secondary);
+      margin-bottom: 16px;
+    }
+
+    /* ─── DAY TABS ─── */
+    .day-tabs {
+      display: flex; gap: 8px; flex-wrap: wrap;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--color-border-default);
+      margin-bottom: 20px;
+    }
+    .day-tab {
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      padding: 6px 14px; border-radius: 20px;
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      color: var(--color-content-secondary);
+      cursor: pointer; text-decoration: none;
+      transition: all 0.12s;
+    }
+    .day-tab:hover { border-color: var(--color-border-strong); color: var(--color-content-primary); }
+    .day-tab.active {
+      background: var(--color-brand-primary);
+      color: var(--color-content-inverse);
+      border-color: var(--color-brand-primary);
+    }
+
+    /* ─── CONTENT TABS ─── */
+    .content-tabs {
+      display: flex; gap: 0;
+      border-bottom: 2px solid var(--color-border-default);
+      margin-bottom: 32px;
+    }
+    .content-tab {
+      font-family: var(--font-body); font-size: 14px; font-weight: 500;
+      padding: 10px 20px; cursor: pointer;
+      color: var(--color-content-secondary); text-decoration: none;
+      border-bottom: 2px solid transparent;
+      margin-bottom: -2px;
+      transition: color 0.12s, border-color 0.12s;
+    }
+    .content-tab:hover { color: var(--color-content-primary); }
+    .content-tab.active {
+      color: var(--color-content-brand);
+      border-bottom-color: var(--color-brand-primary);
+      font-weight: 600;
+    }
+
+    /* ─── TWO-COLUMN LAYOUT ─── */
+    .event-layout {
+      display: grid;
+      grid-template-columns: 1fr 380px;
+      gap: 40px;
+      align-items: start;
+    }
+    @media (max-width: 960px) {
+      .event-layout { grid-template-columns: 1fr; }
+    }
+
+    /* ─── LEFT COLUMN SECTIONS ─── */
+    .section-block {
+      margin-bottom: 36px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+    .section-block:last-child { border-bottom: none; }
+    .section-title {
+      font-family: var(--font-heading); font-size: 22px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 16px;
+    }
+
+    /* ─── DETTAGLI ─── */
+    .detail-row {
+      display: flex; gap: 8px; margin-bottom: 8px;
+      font-size: 14px; line-height: 1.5;
+    }
+    .detail-label {
+      font-weight: 600; color: var(--color-content-primary);
+      min-width: 140px; flex-shrink: 0;
+    }
+    .detail-value { color: var(--color-content-secondary); }
+    .detail-value a {
+      color: var(--color-content-brand); text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .detail-description {
+      margin-top: 16px; font-size: 15px; color: var(--color-content-secondary);
+      line-height: 1.7;
+    }
+    .detail-description .read-more {
+      color: var(--color-content-brand); font-weight: 600;
+      text-decoration: underline; cursor: pointer;
+    }
+
+    /* ─── PROGRAMMA ─── */
+    .programma-day {
+      font-family: var(--font-heading); font-size: 16px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 4px;
+    }
+    .programma-time {
+      font-family: var(--font-ui); font-size: 13px; letter-spacing: 0.04em;
+      color: var(--color-content-secondary); margin-bottom: 12px;
+    }
+    .programma-activity {
+      font-size: 15px; color: var(--color-content-secondary); line-height: 1.65;
+    }
+
+    /* ─── SPEAKER ─── */
+    .speaker-list { display: flex; flex-direction: column; gap: 20px; }
+    .speaker-card {
+      display: flex; gap: 16px; align-items: flex-start;
+    }
+    .speaker-avatar {
+      width: 52px; height: 52px; border-radius: 50%; flex-shrink: 0;
+      background: var(--color-surface-deep);
+    }
+    .speaker-info { flex: 1; }
+    .speaker-name {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 2px;
+    }
+    .speaker-role {
+      font-size: 13px; color: var(--color-content-secondary); margin-bottom: 4px;
+    }
+    .speaker-bio {
+      font-size: 13px; color: var(--color-content-secondary); line-height: 1.5;
+    }
+    .view-all-link {
+      display: inline-block; margin-top: 16px;
+      font-size: 14px; font-weight: 600; color: var(--color-content-brand);
+      text-decoration: underline; text-underline-offset: 2px;
+    }
+
+    /* ─── FAQ ─── */
+    .faq-item { margin-bottom: 16px; }
+    .faq-question {
+      font-family: var(--font-heading); font-size: 15px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 8px;
+    }
+    .faq-answer {
+      font-size: 14px; color: var(--color-content-secondary); line-height: 1.65;
+    }
+
+    /* ─── CONOSCI L'ORGANIZZATORE ─── */
+    .organizer-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px; padding: 24px;
+      text-align: center;
+    }
+    .organizer-cover {
+      width: 100%; height: 140px; border-radius: 8px;
+      background: var(--color-surface-deep); margin-bottom: 16px;
+    }
+    .organizer-sector {
+      display: inline-flex; align-items: center; gap: 8px;
+      margin-bottom: 8px;
+    }
+    .organizer-sector-label {
+      font-family: var(--font-ui); font-size: 13px; font-weight: 600;
+      color: var(--color-brand-primary);
+    }
+    .organizer-follow-btn {
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.04em;
+      padding: 4px 12px; border-radius: 4px;
+      border: 1px solid var(--color-border-strong);
+      background: var(--color-surface-page);
+      color: var(--color-content-brand);
+      cursor: pointer; transition: background 0.12s;
+    }
+    .organizer-follow-btn:hover { background: var(--color-surface-card); }
+    .organizer-events-count {
+      font-family: var(--font-ui); font-size: 12px;
+      color: var(--color-content-secondary); margin-bottom: 12px;
+    }
+    .organizer-profile-btn {
+      display: block; width: 100%;
+      padding: 10px; border-radius: 6px;
+      border: 1px solid var(--color-border-default);
+      background: var(--color-surface-page);
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      color: var(--color-content-brand);
+      cursor: pointer; text-align: center; text-decoration: none;
+      transition: border-color 0.12s;
+    }
+    .organizer-profile-btn:hover { border-color: var(--color-border-strong); }
+
+    /* ─── RIGHT SIDEBAR ─── */
+    .sidebar-block {
+      margin-bottom: 28px;
+    }
+    .sidebar-title {
+      font-family: var(--font-heading); font-size: 18px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 12px;
+    }
+
+    /* Partecipa */
+    .partecipa-box {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 10px; padding: 24px;
+      text-align: center;
+    }
+    .btn-register {
+      display: block; width: 100%; padding: 14px;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border: none; border-radius: 6px;
+      font-family: var(--font-body); font-size: 15px; font-weight: 600;
+      cursor: pointer; transition: background 0.15s;
+    }
+    .btn-register:hover { background: var(--color-interactive-primary-bg-hover); }
+
+    /* Luogo */
+    .location-map {
+      width: 100%; height: 200px; border-radius: 8px;
+      background: var(--color-surface-deep); margin-bottom: 12px;
+    }
+    .location-name {
+      font-size: 14px; font-weight: 600; color: var(--color-content-primary);
+      margin-bottom: 2px;
+    }
+    .location-name a {
+      color: var(--color-content-brand); text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+    .location-description {
+      font-size: 13px; color: var(--color-content-secondary);
+    }
+
+    /* Altri eventi */
+    .related-event-card {
+      background: var(--color-surface-raised);
+      border: 1px solid var(--color-border-default);
+      border-radius: 8px; overflow: hidden;
+      margin-bottom: 12px;
+      text-decoration: none; display: block;
+      transition: border-color 0.15s, box-shadow 0.15s;
+    }
+    .related-event-card:hover {
+      border-color: var(--color-border-strong);
+      box-shadow: 0 2px 8px rgba(1,62,57,0.06);
+    }
+    .related-event-thumb {
+      width: 100%; height: 120px;
+      background: var(--color-surface-deep);
+    }
+    .related-event-body { padding: 14px 16px; }
+    .related-event-title {
+      font-family: var(--font-heading); font-size: 14px; font-weight: 500;
+      color: var(--color-content-primary); line-height: 1.35;
+    }
+
+    /* ─── CTA BANNER ─── */
+    .cta-banner {
+      background: var(--color-surface-inverse);
+      padding: 56px 0;
+      margin-top: 64px;
+    }
+    .cta-banner-inner {
+      display: flex; align-items: flex-start; justify-content: space-between;
+      gap: 40px; flex-wrap: wrap;
+    }
+    .cta-banner-text {
+      font-family: var(--font-display); font-size: 28px; font-weight: 400;
+      color: var(--color-content-inverse); line-height: 1.4;
+      max-width: 560px;
+    }
+    .cta-banner-text strong { font-weight: 600; }
+    .cta-banner-btn {
+      display: inline-block; margin-top: 20px;
+      padding: 10px 24px; border-radius: 4px;
+      border: 1px solid var(--color-brand-accent);
+      color: var(--color-brand-accent);
+      font-family: var(--font-body); font-size: 14px; font-weight: 600;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .cta-banner-btn:hover { background: rgba(216,236,40,0.1); }
+    .cta-follow { text-align: right; }
+    .cta-follow-label {
+      font-size: 14px; color: rgba(255,255,255,0.6);
+      margin-bottom: 12px;
+    }
+    .cta-social { display: flex; gap: 8px; }
+    .cta-social a {
+      display: inline-flex; align-items: center; justify-content: center;
+      padding: 8px 16px; border-radius: 20px;
+      background: rgba(255,255,255,0.1);
+      color: var(--color-content-inverse);
+      font-family: var(--font-ui); font-size: 12px; letter-spacing: 0.04em;
+      text-decoration: none; transition: background 0.12s;
+    }
+    .cta-social a:hover { background: rgba(255,255,255,0.18); }
+
+    /* ─── SITE FOOTER ─── */
+    .site-footer {
+      background: var(--color-surface-raised);
+      border-top: 1px solid var(--color-border-default);
+      padding: 48px 0 32px;
+    }
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 24px;
+    }
+    .footer-org-name {
+      font-family: var(--font-heading); font-size: 18px; font-weight: 600;
+      color: var(--color-content-primary); margin-bottom: 12px;
+    }
+    .footer-address {
+      font-size: 13px; color: var(--color-content-secondary); line-height: 1.7;
+    }
+    .footer-contacts {
+      margin-top: 12px; font-size: 13px; color: var(--color-content-secondary);
+      line-height: 1.8; list-style: disc; padding-left: 16px;
+    }
+    .footer-contacts a { color: var(--color-content-secondary); text-decoration: none; }
+    .footer-contacts a:hover { color: var(--color-content-brand); }
+    .footer-nav {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 8px 40px;
+    }
+    .footer-nav a {
+      font-size: 14px; color: var(--color-content-secondary);
+      text-decoration: none; transition: color 0.12s;
+    }
+    .footer-nav a:hover { color: var(--color-content-brand); }
+    .footer-copy {
+      font-family: var(--font-ui); font-size: 11px; color: var(--color-content-disabled);
+      padding-top: 20px; border-top: 1px solid var(--color-border-default);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 768px) {
+      .site-nav { display: none; }
+      .event-hero-image { height: 220px; }
+      .event-hero-dates { left: 16px; bottom: -28px; }
+      .event-date-circle { width: 64px; height: 64px; }
+      .event-date-circle-day { font-size: 22px; }
+      .event-title { font-size: 28px; }
+      .event-layout { grid-template-columns: 1fr; gap: 32px; }
+      .cta-banner-inner { flex-direction: column; }
+      .cta-banner-text { font-size: 22px; }
+      .cta-follow { text-align: left; }
+      .footer-grid { grid-template-columns: 1fr; gap: 24px; }
+    }
+
+    /* ─── TEMPLATE NOTICE ─── */
+    .template-notice {
+      background: var(--color-surface-deep);
+      border-bottom: 2px solid var(--color-brand-accent);
+      padding: 8px 0; text-align: center;
+      font-family: var(--font-ui); font-size: 11px; letter-spacing: 0.08em;
+      color: var(--color-content-secondary);
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ─── TEMPLATE NOTICE ─── -->
+  <div class="template-notice">⬡ HEDERAE DS · Template — Susdef Evento Dettaglio · v0.1.0</div>
+
+  <!-- ─── SITE HEADER ─── -->
+  <header class="site-header" role="banner">
+    <div class="container">
+      <a href="susdef-home.html" class="site-logo">
+        <span class="site-logo-mark">F</span>
+        Fondazione Sviluppo Sostenibile
+      </a>
+      <nav class="site-nav" aria-label="Menu principale">
+        <a href="#">Biblioteca</a>
+        <a href="#">Settori</a>
+        <a href="#">Strumenti</a>
+        <a href="#">Formazione</a>
+        <a href="susdef-chi-siamo.html">Chi siamo</a>
+        <a href="#" class="btn-nav">Accedi</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+
+      <!-- ─── TOP BAR ─── -->
+      <div class="top-bar">
+        <a href="susdef-hub.html" class="back-btn">← Go back</a>
+        <span class="breadcrumb-inline">
+          <a href="susdef-home.html">Home</a> |
+          <a href="susdef-hub.html">Hub</a> |
+          <strong>Evento dettaglio</strong>
+        </span>
+      </div>
+
+      <!-- ─── HERO IMAGE ─── -->
+      <div class="event-hero">
+        <div class="event-hero-image" role="img" aria-label="Immagine copertina evento"></div>
+        <div class="event-hero-dates">
+          <div class="event-date-circle">
+            <span class="event-date-circle-day">24</span>
+            <span class="event-date-circle-month">LUG</span>
+          </div>
+          <div class="event-date-circle">
+            <span class="event-date-circle-day">27</span>
+            <span class="event-date-circle-month">LUG</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- ─── EVENT HEADER ─── -->
+      <div class="event-header">
+        <p class="event-date-range">Da domenica 24 luglio a mercoledì 27 luglio 2025 dalle ore 11:00 alle 21:00</p>
+        <h1 class="event-title">Titolo dell'evento</h1>
+        <p class="event-location-label">Luogo dell'evento</p>
+
+        <!-- Day tabs -->
+        <div class="day-tabs" role="tablist" aria-label="Giorni evento">
+          <a href="#" class="day-tab active" role="tab" aria-selected="true">dom 24 lug</a>
+          <a href="#" class="day-tab" role="tab">lun 25 lug</a>
+          <a href="#" class="day-tab" role="tab">mar 26 lug</a>
+          <a href="#" class="day-tab" role="tab">mer 27 lug</a>
+        </div>
+      </div>
+
+      <!-- ─── CONTENT TABS ─── -->
+      <div class="content-tabs" role="tablist" aria-label="Sezioni evento">
+        <a href="#info" class="content-tab active" role="tab" aria-selected="true">Informazioni</a>
+        <a href="#programma" class="content-tab" role="tab">Programma</a>
+        <a href="#speaker" class="content-tab" role="tab">Speaker</a>
+        <a href="#faq" class="content-tab" role="tab">FAQ</a>
+      </div>
+
+      <!-- ─── TWO-COLUMN LAYOUT ─── -->
+      <div class="event-layout">
+
+        <!-- ── LEFT COLUMN ── -->
+        <div class="event-main">
+
+          <!-- Dettagli -->
+          <section class="section-block" id="info">
+            <h2 class="section-title">Dettagli</h2>
+            <div class="detail-row">
+              <span class="detail-label">Persone che parteciperanno:</span>
+              <span class="detail-value">600</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Evento di:</span>
+              <span class="detail-value">Fondazione, Settore, Progetto</span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Luogo:</span>
+              <span class="detail-value"><a href="#">Luogo</a></span>
+            </div>
+            <div class="detail-row">
+              <span class="detail-label">Evento di:</span>
+              <span class="detail-value">Fondazione, Settore, Progetto</span>
+            </div>
+            <div class="detail-description">
+              <strong>Descrizione:</strong><br>
+              Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer psum dolor sot. Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer psum
+              <span class="read-more">Altro…</span>
+            </div>
+          </section>
+
+          <!-- Programma -->
+          <section class="section-block" id="programma">
+            <h2 class="section-title">Programma</h2>
+            <p class="programma-day">Day 1:</p>
+            <p class="programma-time">Orario: 11:00 – 21:00</p>
+            <p class="programma-activity">
+              Attività: Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer psum dolor sot. Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer
+              <span class="read-more" style="color:var(--color-content-brand);font-weight:600;text-decoration:underline;cursor:pointer;">Altro…</span>
+            </p>
+          </section>
+
+          <!-- Speaker -->
+          <section class="section-block" id="speaker">
+            <h2 class="section-title">Speaker</h2>
+            <div class="speaker-list">
+              <div class="speaker-card">
+                <div class="speaker-avatar" role="img" aria-label="Foto speaker"></div>
+                <div class="speaker-info">
+                  <p class="speaker-name">Nome Cognome</p>
+                  <p class="speaker-role">Ruolo</p>
+                  <p class="speaker-bio">Bio</p>
+                </div>
+              </div>
+              <div class="speaker-card">
+                <div class="speaker-avatar" role="img" aria-label="Foto speaker"></div>
+                <div class="speaker-info">
+                  <p class="speaker-name">Nome Cognome</p>
+                  <p class="speaker-role">Ruolo</p>
+                  <p class="speaker-bio">Bio</p>
+                </div>
+              </div>
+            </div>
+            <a href="#" class="view-all-link">Vedi tutti</a>
+          </section>
+
+          <!-- FAQ -->
+          <section class="section-block" id="faq">
+            <h2 class="section-title">FAQ</h2>
+            <div class="faq-item">
+              <p class="faq-question">FAQ 1</p>
+              <p class="faq-answer">
+                Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer psum dolor sot. Lorem ipsum dolor sit amet consectetur. Consectetur suscipit volutpat ornare pharetra integer psum
+                <span class="read-more" style="color:var(--color-content-brand);font-weight:600;text-decoration:underline;cursor:pointer;">Altro…</span>
+              </p>
+            </div>
+          </section>
+
+          <!-- Conosci l'organizzatore -->
+          <section class="section-block">
+            <h2 class="section-title">Conosci l'organizzatore</h2>
+            <div class="organizer-card">
+              <div class="organizer-cover" role="img" aria-label="Immagine organizzatore"></div>
+              <div class="organizer-sector">
+                <span class="organizer-sector-label">Settore</span>
+                <button class="organizer-follow-btn">Segui +</button>
+              </div>
+              <p class="organizer-events-count">1236 eventi passati</p>
+              <a href="#" class="organizer-profile-btn">Vedi profilo</a>
+            </div>
+          </section>
+
+        </div><!-- /event-main -->
+
+        <!-- ── RIGHT SIDEBAR ── -->
+        <aside class="event-sidebar">
+
+          <!-- Partecipa -->
+          <div class="sidebar-block">
+            <div class="partecipa-box">
+              <h3 class="sidebar-title">Partecipa</h3>
+              <button class="btn-register">Registrati</button>
+            </div>
+          </div>
+
+          <!-- Luogo -->
+          <div class="sidebar-block">
+            <h3 class="sidebar-title">Luogo</h3>
+            <div class="location-map" role="img" aria-label="Mappa del luogo"></div>
+            <p class="location-name"><a href="#">Luogo Luogo</a></p>
+            <p class="location-description">Descrizione luogo</p>
+          </div>
+
+          <!-- Altri eventi -->
+          <div class="sidebar-block">
+            <h3 class="sidebar-title">Altri eventi</h3>
+            <a href="#" class="related-event-card">
+              <div class="related-event-thumb" role="img" aria-label="Evento correlato"></div>
+              <div class="related-event-body">
+                <p class="related-event-title">Titolo evento correlato</p>
+              </div>
+            </a>
+            <a href="#" class="related-event-card">
+              <div class="related-event-thumb" role="img" aria-label="Evento correlato"></div>
+              <div class="related-event-body">
+                <p class="related-event-title">Titolo evento correlato</p>
+              </div>
+            </a>
+            <a href="#" class="related-event-card">
+              <div class="related-event-thumb" role="img" aria-label="Evento correlato"></div>
+              <div class="related-event-body">
+                <p class="related-event-title">Titolo evento correlato</p>
+              </div>
+            </a>
+            <a href="#" class="related-event-card">
+              <div class="related-event-thumb" role="img" aria-label="Evento correlato"></div>
+              <div class="related-event-body">
+                <p class="related-event-title">Titolo evento correlato</p>
+              </div>
+            </a>
+          </div>
+
+        </aside>
+
+      </div><!-- /event-layout -->
+
+    </div><!-- /container -->
+  </main>
+
+  <!-- ─── CTA BANNER ─── -->
+  <section class="cta-banner" aria-labelledby="cta-heading">
+    <div class="container">
+      <div class="cta-banner-inner">
+        <div>
+          <p class="cta-banner-text" id="cta-heading">
+            Lorem ipsum dolor sit amet consectetur. <strong>Consectetur</strong> suscipit
+            volutpat ornare pharetra integer psum dolor sot.
+          </p>
+          <a href="#" class="cta-banner-btn">Scarica la brochure</a>
+        </div>
+        <div class="cta-follow">
+          <p class="cta-follow-label">Follow us</p>
+          <div class="cta-social">
+            <a href="#">Facebook</a>
+            <a href="#">X</a>
+            <a href="#">Youtube</a>
+            <a href="#">Linkedin</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SITE FOOTER ─── -->
+  <footer class="site-footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+        <div>
+          <p class="footer-org-name">Fondazione per lo Sviluppo Sostenibile</p>
+          <p class="footer-address">
+            Via Garigliano 61/a – 00198 Roma<br>
+            C.F. 97522280581<br>
+            P.IVA 10226731007
+          </p>
+          <ul class="footer-contacts">
+            <li>Email: <a href="mailto:info@susdef.it">info@susdef.it</a></li>
+            <li>Phone: <a href="tel:+390684148155">+39 06 8414815</a></li>
+          </ul>
+        </div>
+        <div>
+          <nav class="footer-nav" aria-label="Link footer">
+            <a href="#">La Fondazione</a>
+            <a href="#">Feed</a>
+            <a href="#">Network</a>
+            <a href="#">Documentale</a>
+            <a href="#">Progetti EU</a>
+            <a href="#">Come aderire</a>
+          </nav>
+        </div>
+      </div>
+      <p class="footer-copy">© 2024 Fondazione per lo Sviluppo Sostenibile.</p>
+    </div>
+  </footer>
+
+</body>
+</html>
