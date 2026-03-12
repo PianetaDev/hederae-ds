@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="costantini">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lavori — Barbara Costantini Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── COSTANTINI BRAND TOKENS ─── */
+    [data-brand="costantini"] {
+      --color-surface-page: #FAF7F2; --color-surface-raised: #F3EDE4;
+      --color-surface-card: #FFFFFF; --color-surface-overlay: rgba(250,247,242,0.95);
+      --color-surface-inverse: #2C1810; --color-surface-warm: #F3EDE4;
+      --color-content-primary: #2C1810; --color-content-secondary: #6B5B4E;
+      --color-content-disabled: #B5A99B; --color-content-inverse: #FAF7F2;
+      --color-content-brand: #8B4513; --color-content-accent: #C17A3A;
+      --color-border-default: rgba(44,24,16,0.12); --color-border-subtle: rgba(44,24,16,0.06);
+      --color-border-strong: rgba(44,24,16,0.25); --color-border-brand: #8B4513;
+      --color-interactive-primary-bg: #2C1810; --color-interactive-primary-bg-hover: #3D261B;
+      --color-interactive-primary-label: #FAF7F2;
+      --color-brand-primary: #8B4513; --color-brand-secondary: #C17A3A;
+      --color-brand-muted: rgba(139,69,19,0.10); --color-brand-warm: #D4A76A;
+      --color-link-default: #8B4513; --color-link-hover: #6B3410;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+      --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-30: 120px;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(44,24,16,0.08); --shadow-md: 0 4px 12px rgba(44,24,16,0.10);
+      --duration-normal: 250ms; --easing-default: cubic-bezier(0.4,0,0.2,1);
+      --container-max: 1200px; --page-padding: 80px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-content-primary); background: var(--color-surface-page); line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--page-padding); }
+
+    /* ─── HEADER ─── */
+    .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--color-border-default); padding: var(--space-6) var(--page-padding); backdrop-filter: blur(12px); background: rgba(250,247,242,0.92); }
+    .header-inner { max-width: var(--container-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: 0.02em; }
+    .logo span { display: block; font-size: 11px; font-family: var(--font-body); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-content-secondary); margin-top: 2px; }
+    .main-nav { display: flex; gap: var(--space-8); align-items: center; }
+    .main-nav a { font-size: 14px; color: var(--color-content-secondary); transition: color var(--duration-normal); }
+    .main-nav a:hover, .main-nav a.active { color: var(--color-content-primary); }
+    .nav-cta { padding: 10px 24px; background: var(--color-interactive-primary-bg); color: var(--color-interactive-primary-label); border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: none; cursor: pointer; }
+
+    /* ─── PAGE HERO ─── */
+    .page-hero { padding: var(--space-30) 0 var(--space-20); }
+    .page-hero-title { font-family: var(--font-display); font-size: 56px; font-weight: 400; line-height: 1.15; margin-bottom: var(--space-8); }
+    .page-hero-subtitle { font-size: 18px; line-height: 1.75; color: var(--color-content-secondary); max-width: 680px; }
+
+    /* ─── CASE STUDY ─── */
+    .case-study {
+      padding: var(--space-20) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .case-study + .case-study {
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .case-header {
+      margin-bottom: var(--space-12);
+    }
+
+    .case-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-4);
+    }
+
+    .case-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: var(--space-4);
+    }
+
+    .case-location {
+      font-size: 15px;
+      color: var(--color-content-secondary);
+      font-style: italic;
+    }
+
+    /* Before/After images */
+    .case-images {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      margin-bottom: var(--space-12);
+    }
+
+    .case-image-block {
+      position: relative;
+    }
+
+    .case-image {
+      aspect-ratio: 4/3;
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-md);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .case-image-placeholder {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--color-content-disabled);
+    }
+
+    .case-image-label {
+      position: absolute;
+      top: var(--space-4);
+      left: var(--space-4);
+      background: var(--color-surface-inverse);
+      color: var(--color-content-inverse);
+      padding: 4px 12px;
+      border-radius: var(--radius-sm);
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    /* Case body */
+    .case-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      margin-bottom: var(--space-12);
+    }
+
+    .case-section-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-4);
+    }
+
+    .case-section-title {
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 500;
+      margin-bottom: var(--space-4);
+    }
+
+    .case-text {
+      font-size: 15px;
+      line-height: 1.8;
+      color: var(--color-content-secondary);
+    }
+
+    .case-text p + p {
+      margin-top: var(--space-4);
+    }
+
+    /* Technical details */
+    .case-details {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .detail-item {}
+
+    .detail-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-2);
+    }
+
+    .detail-value {
+      font-size: 15px;
+      color: var(--color-content-primary);
+      line-height: 1.5;
+    }
+
+    /* Detail images row */
+    .case-detail-images {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+      margin-top: var(--space-8);
+    }
+
+    .case-detail-image {
+      aspect-ratio: 1;
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .case-detail-image span {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-style: italic;
+      color: var(--color-content-disabled);
+      text-align: center;
+      padding: var(--space-4);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer { border-top: 1px solid var(--color-border-default); padding: var(--space-12) 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-legal { font-size: 13px; color: var(--color-content-secondary); line-height: 1.6; }
+    .footer-legal strong { font-weight: 500; color: var(--color-content-primary); }
+    .footer-links { display: flex; gap: var(--space-6); }
+    .footer-links a { font-size: 13px; color: var(--color-content-secondary); transition: color var(--duration-normal); }
+    .footer-links a:hover { color: var(--color-content-primary); }
+
+    @media (max-width: 900px) {
+      [data-brand="costantini"] { --page-padding: 24px; }
+      .page-hero-title { font-size: 38px; }
+      .case-title { font-size: 32px; }
+      .case-images, .case-body, .detail-grid { grid-template-columns: 1fr; }
+      .case-detail-images { grid-template-columns: 1fr 1fr; }
+      .main-nav { display: none; }
+      .footer-inner { flex-direction: column; gap: var(--space-6); text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="costantini-home.html" class="logo">Barbara Costantini<span>Studio di Restauro</span></a>
+      <nav class="main-nav">
+        <a href="costantini-home.html">Home</a>
+        <a href="costantini-studio.html">Studio</a>
+        <a href="costantini-lavori.html" class="active">Lavori</a>
+        <a href="costantini-approccio.html">Approccio</a>
+        <a href="costantini-contatti.html" class="nav-cta">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Page Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero-title">Lavori</h1>
+      <p class="page-hero-subtitle">
+        Una selezione di interventi conservativi e di restauro su dipinti, affreschi, sculture e superfici architettoniche. Ogni progetto è documentato con il rigore che il mestiere richiede.
+      </p>
+    </div>
+  </section>
+
+  <!-- Case Study 1 -->
+  <section class="case-study" id="case-1">
+    <div class="container">
+      <div class="case-header">
+        <div class="case-tag">Dipinto su tela &middot; XVIII sec.</div>
+        <h2 class="case-title">Madonna con Bambino</h2>
+        <p class="case-location">Chiesa di San Martino, Lucca &middot; 2024</p>
+      </div>
+
+      <div class="case-images">
+        <div class="case-image-block">
+          <div class="case-image">
+            <span class="case-image-placeholder">Stato di conservazione iniziale</span>
+          </div>
+          <span class="case-image-label">Prima</span>
+        </div>
+        <div class="case-image-block">
+          <div class="case-image">
+            <span class="case-image-placeholder">Dopo l'intervento</span>
+          </div>
+          <span class="case-image-label">Dopo</span>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div>
+          <div class="case-section-label">L'opera e il suo stato</div>
+          <div class="case-text">
+            <p>
+              Olio su tela di cm 180 × 120, attribuito a bottega lucchese del XVIII secolo. L'opera presentava estese lacune della pellicola pittorica, deformazioni del supporto tessile e uno strato di vernice ossidata che alterava profondamente la leggibilità cromatica.
+            </p>
+            <p>
+              L'analisi preliminare ha evidenziato precedenti interventi di restauro non documentati, con ridipinture coprenti e stuccature debordanti.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="case-section-label">L'intervento</div>
+          <div class="case-text">
+            <p>
+              Il restauro ha previsto: velinatura protettiva del fronte, rimozione della tela di rifodero deteriorata, nuova foderatura con tela di lino e adesivo sintetico termoplastico, tensionamento su telaio a espansione.
+            </p>
+            <p>
+              Sul fronte: pulitura differenziata per la rimozione delle vernici ossidate e delle ridipinture, stuccatura delle lacune a livello e reintegrazione pittorica a rigatino con colori a vernice, verniciatura finale protettiva.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-details">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Committente</div>
+            <div class="detail-value">Parrocchia di San Martino</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Direzione lavori</div>
+            <div class="detail-value">Soprintendenza ABAP Lucca e Massa Carrara</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Durata</div>
+            <div class="detail-value">6 mesi</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Tecnica</div>
+            <div class="detail-value">Olio su tela</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Dimensioni</div>
+            <div class="detail-value">180 × 120 cm</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Restauratrici</div>
+            <div class="detail-value">B. Costantini, [nome], [nome]</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-detail-images">
+        <div class="case-detail-image"><span>Dettaglio pulitura</span></div>
+        <div class="case-detail-image"><span>Reintegrazione</span></div>
+        <div class="case-detail-image"><span>Dettaglio finale</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study 2 -->
+  <section class="case-study" id="case-2">
+    <div class="container">
+      <div class="case-header">
+        <div class="case-tag">Affresco &middot; XVI sec.</div>
+        <h2 class="case-title">Cappella di San Giorgio</h2>
+        <p class="case-location">Pieve di Santa Maria, Arezzo &middot; 2023</p>
+      </div>
+
+      <div class="case-images">
+        <div class="case-image-block">
+          <div class="case-image"><span class="case-image-placeholder">Parete nord — stato iniziale</span></div>
+          <span class="case-image-label">Prima</span>
+        </div>
+        <div class="case-image-block">
+          <div class="case-image"><span class="case-image-placeholder">Parete nord — dopo il restauro</span></div>
+          <span class="case-image-label">Dopo</span>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div>
+          <div class="case-section-label">L'opera e il suo stato</div>
+          <div class="case-text">
+            <p>
+              Ciclo di affreschi raffiguranti scene della vita di San Giorgio, esteso sulle quattro pareti della cappella laterale. Problematiche gravi di umidità di risalita con efflorescenze saline, distacchi dell'intonaco dipinto e lacune estese nelle zone basse.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="case-section-label">L'intervento</div>
+          <div class="case-text">
+            <p>
+              Consolidamento degli intonaci distaccati mediante iniezioni di malta idraulica, fissaggio della pellicola pittorica, desalinizzazione con impacchi di polpa di cellulosa, pulitura con solventi e supporto meccanico, stuccatura delle lacune e reintegrazione ad acquerello con tecnica a selezione cromatica.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-details">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Committente</div>
+            <div class="detail-value">Diocesi di Arezzo</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Direzione lavori</div>
+            <div class="detail-value">Soprintendenza ABAP Arezzo</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Durata</div>
+            <div class="detail-value">14 mesi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Case Study 3 -->
+  <section class="case-study" id="case-3">
+    <div class="container">
+      <div class="case-header">
+        <div class="case-tag">Scultura lignea &middot; XV sec.</div>
+        <h2 class="case-title">Crocifisso ligneo policromo</h2>
+        <p class="case-location">Museo Diocesano, Siena &middot; 2022</p>
+      </div>
+
+      <div class="case-images">
+        <div class="case-image-block">
+          <div class="case-image"><span class="case-image-placeholder">Vista frontale — prima</span></div>
+          <span class="case-image-label">Prima</span>
+        </div>
+        <div class="case-image-block">
+          <div class="case-image"><span class="case-image-placeholder">Vista frontale — dopo</span></div>
+          <span class="case-image-label">Dopo</span>
+        </div>
+      </div>
+
+      <div class="case-body">
+        <div>
+          <div class="case-section-label">L'opera e il suo stato</div>
+          <div class="case-text">
+            <p>
+              Crocifisso in legno intagliato e policromo, altezza cm 145, con attacco xilofago attivo e ridipinture seicentesche che coprivano la policromia originale quattrocentesca. Fratture strutturali nel braccio destro e nella base.
+            </p>
+          </div>
+        </div>
+        <div>
+          <div class="case-section-label">L'intervento</div>
+          <div class="case-text">
+            <p>
+              Disinfestazione in atmosfera controllata, consolidamento del supporto ligneo con resina acrilica, risanamento delle fratture strutturali, rimozione delle ridipinture con bisturi e solventi per il recupero della policromia originale, reintegrazione delle lacune e protezione finale.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="case-details">
+        <div class="detail-grid">
+          <div class="detail-item">
+            <div class="detail-label">Committente</div>
+            <div class="detail-value">Museo Diocesano di Siena</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Direzione lavori</div>
+            <div class="detail-value">Soprintendenza ABAP Siena</div>
+          </div>
+          <div class="detail-item">
+            <div class="detail-label">Durata</div>
+            <div class="detail-value">8 mesi</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-legal">
+          <strong>Barbara Costantini Studio SRLS</strong><br>
+          &copy; 2026 &middot; P.IVA 00000000000
+        </div>
+        <div class="footer-links">
+          <a href="costantini-studio.html">Studio</a>
+          <a href="costantini-lavori.html">Lavori</a>
+          <a href="costantini-approccio.html">Approccio</a>
+          <a href="costantini-contatti.html">Contatti</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

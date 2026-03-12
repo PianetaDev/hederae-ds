@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="costantini">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Barbara Costantini Studio — Restauro</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* ─── COSTANTINI BRAND TOKENS ─── */
+    [data-brand="costantini"] {
+      /* Surface */
+      --color-surface-page:    #FAF7F2;
+      --color-surface-raised:  #F3EDE4;
+      --color-surface-card:    #FFFFFF;
+      --color-surface-overlay: rgba(250, 247, 242, 0.95);
+      --color-surface-inverse: #2C1810;
+      --color-surface-warm:    #F3EDE4;
+
+      /* Content */
+      --color-content-primary:   #2C1810;
+      --color-content-secondary: #6B5B4E;
+      --color-content-disabled:  #B5A99B;
+      --color-content-inverse:   #FAF7F2;
+      --color-content-brand:     #8B4513;
+      --color-content-accent:    #C17A3A;
+
+      /* Border */
+      --color-border-default: rgba(44, 24, 16, 0.12);
+      --color-border-subtle:  rgba(44, 24, 16, 0.06);
+      --color-border-strong:  rgba(44, 24, 16, 0.25);
+      --color-border-brand:   #8B4513;
+      --color-border-focus:   #C17A3A;
+
+      /* Interactive — Primary */
+      --color-interactive-primary-bg:          #2C1810;
+      --color-interactive-primary-bg-hover:    #3D261B;
+      --color-interactive-primary-bg-active:   #1A0E09;
+      --color-interactive-primary-label:       #FAF7F2;
+
+      /* Interactive — Secondary */
+      --color-interactive-secondary-bg:        transparent;
+      --color-interactive-secondary-bg-hover:  rgba(139, 69, 19, 0.08);
+      --color-interactive-secondary-border:    #2C1810;
+      --color-interactive-secondary-label:     #2C1810;
+
+      /* Interactive — Ghost */
+      --color-interactive-ghost-bg-hover: rgba(44, 24, 16, 0.06);
+      --color-interactive-ghost-label:    #2C1810;
+
+      /* Interactive — Link */
+      --color-link-default: #8B4513;
+      --color-link-hover:   #6B3410;
+      --color-link-visited: rgba(139, 69, 19, 0.70);
+
+      /* Feedback */
+      --color-feedback-success-bg:   rgba(18, 183, 106, 0.10);
+      --color-feedback-success-text: #12b76a;
+      --color-feedback-warning-bg:   rgba(245, 158, 11, 0.10);
+      --color-feedback-warning-text: #d97706;
+      --color-feedback-error-bg:     rgba(220, 38, 38, 0.10);
+      --color-feedback-error-text:   #dc2626;
+      --color-feedback-info-bg:      rgba(59, 130, 246, 0.10);
+      --color-feedback-info-text:    #2563eb;
+
+      /* Brand */
+      --color-brand-primary:   #8B4513;
+      --color-brand-secondary: #C17A3A;
+      --color-brand-muted:     rgba(139, 69, 19, 0.10);
+      --color-brand-warm:      #D4A76A;
+
+      /* Typography */
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body:    'DM Sans', system-ui, sans-serif;
+
+      /* Spacing */
+      --space-0:  0px;
+      --space-1:  4px;
+      --space-2:  8px;
+      --space-3:  12px;
+      --space-4:  16px;
+      --space-6:  24px;
+      --space-8:  32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-20: 80px;
+      --space-30: 120px;
+
+      /* Radius */
+      --radius-none: 0px;
+      --radius-sm:   4px;
+      --radius-md:   8px;
+      --radius-lg:   16px;
+      --radius-xl:   24px;
+      --radius-full: 9999px;
+
+      /* Elevation */
+      --shadow-sm: 0 1px 3px rgba(44, 24, 16, 0.08);
+      --shadow-md: 0 4px 12px rgba(44, 24, 16, 0.10);
+      --shadow-lg: 0 12px 32px rgba(44, 24, 16, 0.12);
+
+      /* Motion */
+      --duration-fast:   100ms;
+      --duration-normal: 250ms;
+      --duration-slow:   400ms;
+      --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+      --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+
+      /* Layout */
+      --container-max: 1200px;
+      --page-padding: 80px;
+    }
+
+    /* ─── RESET ─── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    body {
+      font-family: var(--font-body);
+      color: var(--color-content-primary);
+      background: var(--color-surface-page);
+      line-height: 1.65;
+      font-size: 16px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    /* ─── LAYOUT ─── */
+    .container {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      padding: 0 var(--page-padding);
+    }
+
+    .section {
+      padding: var(--space-30) 0;
+    }
+
+    /* ─── HEADER ─── */
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--color-surface-page);
+      border-bottom: 1px solid var(--color-border-default);
+      padding: var(--space-6) var(--page-padding);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      background: rgba(250, 247, 242, 0.92);
+    }
+
+    .header-inner {
+      max-width: var(--container-max);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--color-content-primary);
+    }
+
+    .logo span {
+      display: block;
+      font-size: 11px;
+      font-family: var(--font-body);
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-content-secondary);
+      margin-top: 2px;
+    }
+
+    .main-nav {
+      display: flex;
+      gap: var(--space-8);
+      align-items: center;
+    }
+
+    .main-nav a {
+      font-size: 14px;
+      font-weight: 400;
+      color: var(--color-content-secondary);
+      transition: color var(--duration-normal) var(--easing-default);
+      letter-spacing: 0.01em;
+    }
+
+    .main-nav a:hover,
+    .main-nav a.active {
+      color: var(--color-content-primary);
+    }
+
+    .nav-cta {
+      padding: 10px 24px;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border-radius: var(--radius-sm);
+      font-size: 13px;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: background var(--duration-normal) var(--easing-default);
+      border: none;
+      cursor: pointer;
+    }
+
+    .nav-cta:hover {
+      background: var(--color-interactive-primary-bg-hover);
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: var(--space-30) 0;
+      min-height: 85vh;
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+      align-items: center;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 64px;
+      font-weight: 400;
+      line-height: 1.1;
+      color: var(--color-content-primary);
+      margin-bottom: var(--space-8);
+    }
+
+    .hero-title em {
+      font-style: italic;
+      color: var(--color-content-brand);
+    }
+
+    .hero-subtitle {
+      font-size: 18px;
+      line-height: 1.7;
+      color: var(--color-content-secondary);
+      margin-bottom: var(--space-12);
+      max-width: 520px;
+    }
+
+    .hero-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-3);
+      padding: 14px 32px;
+      background: var(--color-interactive-primary-bg);
+      color: var(--color-interactive-primary-label);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      font-weight: 500;
+      transition: all var(--duration-normal) var(--easing-default);
+    }
+
+    .hero-cta:hover {
+      background: var(--color-interactive-primary-bg-hover);
+      transform: translateY(-1px);
+    }
+
+    .hero-image {
+      aspect-ratio: 4/5;
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .hero-image-placeholder {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-style: italic;
+      color: var(--color-content-disabled);
+      text-align: center;
+      padding: var(--space-8);
+    }
+
+    /* ─── PROGETTI IN EVIDENZA ─── */
+    .progetti-evidenza {
+      padding: var(--space-30) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: var(--space-16);
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 42px;
+      font-weight: 400;
+      color: var(--color-content-primary);
+    }
+
+    .section-link {
+      font-size: 14px;
+      color: var(--color-content-brand);
+      border-bottom: 1px solid currentColor;
+      padding-bottom: 2px;
+      transition: color var(--duration-normal);
+    }
+
+    .section-link:hover {
+      color: var(--color-link-hover);
+    }
+
+    .progetto-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-12);
+      align-items: center;
+      padding: var(--space-16) 0;
+      border-bottom: 1px solid var(--color-border-default);
+    }
+
+    .progetto-card:first-child {
+      padding-top: 0;
+    }
+
+    .progetto-image {
+      aspect-ratio: 16/10;
+      background: var(--color-surface-raised);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .progetto-image-placeholder {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-style: italic;
+      color: var(--color-content-disabled);
+    }
+
+    .progetto-content {
+      padding: var(--space-8);
+    }
+
+    .progetto-tag {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-4);
+    }
+
+    .progetto-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: var(--space-4);
+      color: var(--color-content-primary);
+    }
+
+    .progetto-desc {
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-content-secondary);
+      margin-bottom: var(--space-6);
+    }
+
+    .progetto-link {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--color-content-primary);
+      border-bottom: 1px solid var(--color-border-strong);
+      padding-bottom: 2px;
+      transition: color var(--duration-normal);
+    }
+
+    .progetto-link:hover {
+      color: var(--color-content-brand);
+      border-color: var(--color-content-brand);
+    }
+
+    /* ─── STATEMENT BAND ─── */
+    .statement-band {
+      background: var(--color-surface-inverse);
+      color: var(--color-content-inverse);
+      padding: var(--space-30) 0;
+    }
+
+    .statement-text {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.4;
+      max-width: 900px;
+    }
+
+    .statement-text em {
+      font-style: italic;
+      color: var(--color-brand-warm);
+    }
+
+    /* ─── FOOTER ─── */
+    .site-footer {
+      border-top: 1px solid var(--color-border-default);
+      padding: var(--space-12) 0;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .footer-legal {
+      font-size: 13px;
+      color: var(--color-content-secondary);
+      line-height: 1.6;
+    }
+
+    .footer-legal strong {
+      font-weight: 500;
+      color: var(--color-content-primary);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: var(--space-6);
+    }
+
+    .footer-links a {
+      font-size: 13px;
+      color: var(--color-content-secondary);
+      transition: color var(--duration-normal);
+    }
+
+    .footer-links a:hover {
+      color: var(--color-content-primary);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      [data-brand="costantini"] {
+        --page-padding: 24px;
+      }
+
+      .hero-grid,
+      .progetto-card {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-title {
+        font-size: 42px;
+      }
+
+      .hero {
+        min-height: auto;
+        padding: var(--space-16) 0;
+      }
+
+      .section-title {
+        font-size: 32px;
+      }
+
+      .statement-text {
+        font-size: 26px;
+      }
+
+      .main-nav {
+        display: none;
+      }
+
+      .footer-inner {
+        flex-direction: column;
+        gap: var(--space-6);
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="costantini-home.html" class="logo">
+        Barbara Costantini
+        <span>Studio di Restauro</span>
+      </a>
+      <nav class="main-nav">
+        <a href="costantini-home.html" class="active">Home</a>
+        <a href="costantini-studio.html">Studio</a>
+        <a href="costantini-lavori.html">Lavori</a>
+        <a href="costantini-approccio.html">Approccio</a>
+        <a href="costantini-contatti.html" class="nav-cta">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <h1 class="hero-title">
+            Conservare la <em>materia</em>,<br>
+            restituire il <em>tempo</em>.
+          </h1>
+          <p class="hero-subtitle">
+            Barbara Costantini Studio si occupa di restauro e conservazione di opere d'arte, superfici architettoniche e beni culturali. Ogni intervento parte dall'ascolto dell'opera.
+          </p>
+          <a href="costantini-lavori.html" class="hero-cta">Scopri i lavori &rarr;</a>
+        </div>
+        <div class="hero-image">
+          <div class="hero-image-placeholder">
+            Fotografia — dettaglio di restauro,<br>mani al lavoro sulla materia
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Progetti in evidenza -->
+  <section class="progetti-evidenza">
+    <div class="container">
+      <div class="section-header">
+        <h2 class="section-title">Lavori recenti</h2>
+        <a href="costantini-lavori.html" class="section-link">Tutti i lavori</a>
+      </div>
+
+      <!-- Progetto 1 -->
+      <article class="progetto-card">
+        <div class="progetto-image">
+          <span class="progetto-image-placeholder">Fotografia prima/dopo</span>
+        </div>
+        <div class="progetto-content">
+          <div class="progetto-tag">Dipinto su tela &middot; XVIII sec.</div>
+          <h3 class="progetto-title">Madonna con Bambino</h3>
+          <p class="progetto-desc">
+            Restauro conservativo di un olio su tela con estese lacune nella pellicola pittorica. Intervento di foderatura, pulitura e reintegrazione pittorica a rigatino.
+          </p>
+          <a href="costantini-lavori.html#case-1" class="progetto-link">Leggi il caso &rarr;</a>
+        </div>
+      </article>
+
+      <!-- Progetto 2 -->
+      <article class="progetto-card">
+        <div class="progetto-image">
+          <span class="progetto-image-placeholder">Fotografia dettaglio</span>
+        </div>
+        <div class="progetto-content">
+          <div class="progetto-tag">Affresco &middot; XVI sec.</div>
+          <h3 class="progetto-title">Cappella di San Giorgio</h3>
+          <p class="progetto-desc">
+            Consolidamento e pulitura di un ciclo di affreschi con problematiche di umidità di risalita e distacchi dell'intonaco. Collaborazione con la Soprintendenza locale.
+          </p>
+          <a href="costantini-lavori.html#case-2" class="progetto-link">Leggi il caso &rarr;</a>
+        </div>
+      </article>
+
+      <!-- Progetto 3 -->
+      <article class="progetto-card">
+        <div class="progetto-image">
+          <span class="progetto-image-placeholder">Fotografia restauro</span>
+        </div>
+        <div class="progetto-content">
+          <div class="progetto-tag">Scultura lignea &middot; XV sec.</div>
+          <h3 class="progetto-title">Crocifisso ligneo policromo</h3>
+          <p class="progetto-desc">
+            Disinfestazione, consolidamento strutturale del supporto ligneo e recupero della policromia originale sotto ridipinture successive.
+          </p>
+          <a href="costantini-lavori.html#case-3" class="progetto-link">Leggi il caso &rarr;</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Statement -->
+  <section class="statement-band">
+    <div class="container">
+      <p class="statement-text">
+        Il restauro non aggiunge: <em>rivela</em>. Ogni intervento è una conversazione tra il tempo che ha segnato l'opera e le mani che la curano.
+      </p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-legal">
+          <strong>Barbara Costantini Studio SRLS</strong><br>
+          &copy; 2026 &middot; P.IVA 00000000000
+        </div>
+        <div class="footer-links">
+          <a href="costantini-studio.html">Studio</a>
+          <a href="costantini-lavori.html">Lavori</a>
+          <a href="costantini-approccio.html">Approccio</a>
+          <a href="costantini-contatti.html">Contatti</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

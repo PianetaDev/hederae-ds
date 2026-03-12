@@ -1,0 +1,138 @@
+/**
+ * Hederae DS — Costantini Theme
+ * Brand: Barbara Costantini Studio SRLS (restauro)
+ * Theme: Light / Warm Earthy
+ * Source: Brand direction 2026-03
+ *
+ * Usage in Nuxt/Vue:
+ *   <html data-brand="costantini"> or import in nuxt.config.ts
+ */
+
+[data-brand="costantini"],
+.brand-costantini {
+
+  /* ─── Primitive Scale ──────────────────────────────────────── */
+
+  --space-0:  0px;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-30: 120px;
+
+  --radius-none: 0px;
+  --radius-sm:   4px;
+  --radius-md:   8px;
+  --radius-lg:   12px;
+  --radius-xl:   16px;
+  --radius-full: 9999px;
+
+  /* ─── Font Families ────────────────────────────────────────── */
+
+  --font-display: "Cormorant Garamond", Georgia, serif;
+  --font-heading: "Cormorant Garamond", Georgia, serif;
+  --font-body:    "DM Sans", system-ui, sans-serif;
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+
+  --color-surface-page:    #FAF7F2;
+  --color-surface-raised:  #F3EDE4;
+  --color-surface-card:    #FFFFFF;
+  --color-surface-overlay: rgba(44, 24, 16, 0.85);
+  --color-surface-inverse: #2C1810;
+
+  /* ─── Content (Text & Icons) ───────────────────────────────── */
+
+  --color-content-primary:        #2C1810;
+  --color-content-secondary:      #6B5B4E;
+  --color-content-disabled:       rgba(44, 24, 16, 0.35);
+  --color-content-inverse:        #FAF7F2;
+  --color-content-inverse-muted:  rgba(250, 247, 242, 0.60);
+  --color-content-brand:          #8B4513;
+  --color-content-accent:         #C17A3A;
+
+  /* ─── Border ───────────────────────────────────────────────── */
+
+  --color-border-default: rgba(44, 24, 16, 0.12);
+  --color-border-subtle:  rgba(44, 24, 16, 0.06);
+  --color-border-strong:  rgba(44, 24, 16, 0.25);
+  --color-border-brand:   #8B4513;
+  --color-border-focus:   #C17A3A;
+
+  /* ─── Interactive — Primary (Dark CTA) ─────────────────────── */
+
+  --color-interactive-primary-bg:          #2C1810;
+  --color-interactive-primary-bg-hover:    #3D261B;
+  --color-interactive-primary-bg-active:   #1A0E09;
+  --color-interactive-primary-bg-disabled: rgba(44, 24, 16, 0.30);
+  --color-interactive-primary-label:       #FAF7F2;
+
+  /* ─── Interactive — Secondary (Outlined) ───────────────────── */
+
+  --color-interactive-secondary-bg:        transparent;
+  --color-interactive-secondary-bg-hover:  rgba(139, 69, 19, 0.08);
+  --color-interactive-secondary-border:    #8B4513;
+  --color-interactive-secondary-label:     #8B4513;
+
+  /* ─── Interactive — Ghost ──────────────────────────────────── */
+
+  --color-interactive-ghost-bg-hover: rgba(44, 24, 16, 0.06);
+  --color-interactive-ghost-label:    #2C1810;
+
+  /* ─── Interactive — Accent CTA (Warm Gold) ─────────────────── */
+
+  --color-interactive-accent-bg:       #C17A3A;
+  --color-interactive-accent-bg-hover: #A86830;
+  --color-interactive-accent-label:    #FAF7F2;
+
+  /* ─── Interactive — Link ───────────────────────────────────── */
+
+  --color-link-default: #8B4513;
+  --color-link-hover:   #C17A3A;
+  --color-link-visited: rgba(139, 69, 19, 0.70);
+
+  /* ─── Feedback ─────────────────────────────────────────────── */
+
+  --color-feedback-success-bg:   rgba(18, 183, 106, 0.12);
+  --color-feedback-success-text: #12b76a;
+  --color-feedback-warning-bg:   rgba(245, 158, 11, 0.12);
+  --color-feedback-warning-text: #f59e0b;
+  --color-feedback-error-bg:     rgba(239, 68, 68, 0.12);
+  --color-feedback-error-text:   #ef4444;
+  --color-feedback-info-bg:      rgba(59, 130, 246, 0.12);
+  --color-feedback-info-text:    #3b82f6;
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+
+  --color-brand-primary:    #8B4513;
+  --color-brand-secondary:  #C17A3A;
+  --color-brand-muted:      rgba(139, 69, 19, 0.15);
+  --color-brand-warm:       #D4A76A;
+  --color-brand-warm-muted: rgba(212, 167, 106, 0.20);
+
+  /* ─── Elevation / Shadows ──────────────────────────────────── */
+
+  --shadow-sm:        0 1px 3px 0 rgba(44, 24, 16, 0.08), 0 1px 2px -1px rgba(44, 24, 16, 0.06);
+  --shadow-md:        0 4px 6px -1px rgba(44, 24, 16, 0.10), 0 2px 4px -2px rgba(44, 24, 16, 0.08);
+  --shadow-lg:        0 10px 15px -3px rgba(44, 24, 16, 0.12), 0 4px 6px -4px rgba(44, 24, 16, 0.10);
+  --shadow-glow-brand: 0 0 24px 0 rgba(139, 69, 19, 0.15);
+
+  /* ─── Motion ───────────────────────────────────────────────── */
+
+  --duration-fast:   100ms;
+  --duration-normal: 200ms;
+  --duration-slow:   400ms;
+  --easing-default:    cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-decelerate: cubic-bezier(0, 0, 0.2, 1);
+  --easing-spring:     cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* ─── Layout ───────────────────────────────────────────────── */
+
+  --container-max: 1200px;
+  --page-padding:  80px;
+}

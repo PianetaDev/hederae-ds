@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="costantini">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Approccio — Barbara Costantini Studio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    [data-brand="costantini"] {
+      --color-surface-page: #FAF7F2; --color-surface-raised: #F3EDE4;
+      --color-surface-card: #FFFFFF; --color-surface-overlay: rgba(250,247,242,0.95);
+      --color-surface-inverse: #2C1810; --color-surface-warm: #F3EDE4;
+      --color-content-primary: #2C1810; --color-content-secondary: #6B5B4E;
+      --color-content-disabled: #B5A99B; --color-content-inverse: #FAF7F2;
+      --color-content-brand: #8B4513; --color-content-accent: #C17A3A;
+      --color-border-default: rgba(44,24,16,0.12); --color-border-subtle: rgba(44,24,16,0.06);
+      --color-border-strong: rgba(44,24,16,0.25); --color-border-brand: #8B4513;
+      --color-interactive-primary-bg: #2C1810; --color-interactive-primary-bg-hover: #3D261B;
+      --color-interactive-primary-label: #FAF7F2;
+      --color-brand-primary: #8B4513; --color-brand-secondary: #C17A3A;
+      --color-brand-muted: rgba(139,69,19,0.10); --color-brand-warm: #D4A76A;
+      --color-link-default: #8B4513; --color-link-hover: #6B3410;
+      --font-display: 'Cormorant Garamond', Georgia, serif;
+      --font-heading: 'Cormorant Garamond', Georgia, serif;
+      --font-body: 'DM Sans', system-ui, sans-serif;
+      --space-2: 8px; --space-3: 12px; --space-4: 16px; --space-6: 24px;
+      --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-20: 80px; --space-30: 120px;
+      --radius-sm: 4px; --radius-md: 8px; --radius-lg: 16px;
+      --shadow-sm: 0 1px 3px rgba(44,24,16,0.08); --shadow-md: 0 4px 12px rgba(44,24,16,0.10);
+      --duration-normal: 250ms; --easing-default: cubic-bezier(0.4,0,0.2,1);
+      --container-max: 1200px; --page-padding: 80px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); color: var(--color-content-primary); background: var(--color-surface-page); line-height: 1.65; font-size: 16px; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; text-decoration: none; }
+    .container { max-width: var(--container-max); margin: 0 auto; padding: 0 var(--page-padding); }
+
+    /* Header */
+    .site-header { position: sticky; top: 0; z-index: 100; border-bottom: 1px solid var(--color-border-default); padding: var(--space-6) var(--page-padding); backdrop-filter: blur(12px); background: rgba(250,247,242,0.92); }
+    .header-inner { max-width: var(--container-max); margin: 0 auto; display: flex; justify-content: space-between; align-items: center; }
+    .logo { font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: 0.02em; }
+    .logo span { display: block; font-size: 11px; font-family: var(--font-body); font-weight: 400; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-content-secondary); margin-top: 2px; }
+    .main-nav { display: flex; gap: var(--space-8); align-items: center; }
+    .main-nav a { font-size: 14px; color: var(--color-content-secondary); transition: color var(--duration-normal); }
+    .main-nav a:hover, .main-nav a.active { color: var(--color-content-primary); }
+    .nav-cta { padding: 10px 24px; background: var(--color-interactive-primary-bg); color: var(--color-interactive-primary-label); border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: none; cursor: pointer; }
+
+    /* Page Hero */
+    .page-hero { padding: var(--space-30) 0 var(--space-20); }
+    .page-hero-title { font-family: var(--font-display); font-size: 56px; font-weight: 400; line-height: 1.15; margin-bottom: var(--space-8); }
+    .page-hero-subtitle { font-size: 18px; line-height: 1.75; color: var(--color-content-secondary); max-width: 680px; }
+
+    /* ─── PRINCIPI ─── */
+    .principi {
+      padding: var(--space-20) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .principio {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-12);
+      padding: var(--space-12) 0;
+      border-bottom: 1px solid var(--color-border-subtle);
+      align-items: start;
+    }
+
+    .principio:last-child {
+      border-bottom: none;
+    }
+
+    .principio-num {
+      font-family: var(--font-display);
+      font-size: 72px;
+      font-weight: 400;
+      color: var(--color-brand-muted);
+      line-height: 1;
+      color: var(--color-content-disabled);
+    }
+
+    .principio-content {}
+
+    .principio-title {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 400;
+      line-height: 1.2;
+      margin-bottom: var(--space-4);
+    }
+
+    .principio-title em {
+      font-style: italic;
+      color: var(--color-content-brand);
+    }
+
+    .principio-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--color-content-secondary);
+      max-width: 640px;
+    }
+
+    .principio-text p + p {
+      margin-top: var(--space-4);
+    }
+
+    /* ─── METODO ─── */
+    .metodo {
+      padding: var(--space-20) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .metodo-header {
+      margin-bottom: var(--space-12);
+    }
+
+    .metodo-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-6);
+    }
+
+    .metodo-title {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.3;
+      max-width: 700px;
+    }
+
+    .fasi-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-6);
+    }
+
+    .fase-card {
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-md);
+      padding: var(--space-8);
+      position: relative;
+    }
+
+    .fase-num {
+      font-family: var(--font-display);
+      font-size: 48px;
+      font-weight: 400;
+      color: var(--color-content-disabled);
+      margin-bottom: var(--space-4);
+      line-height: 1;
+    }
+
+    .fase-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 500;
+      margin-bottom: var(--space-3);
+    }
+
+    .fase-text {
+      font-size: 14px;
+      line-height: 1.7;
+      color: var(--color-content-secondary);
+    }
+
+    /* ─── COMPETENZE ─── */
+    .competenze {
+      background: var(--color-surface-inverse);
+      color: var(--color-content-inverse);
+      padding: var(--space-30) 0;
+    }
+
+    .competenze-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-16);
+    }
+
+    .competenze-intro {
+      font-family: var(--font-display);
+      font-size: 36px;
+      font-weight: 400;
+      line-height: 1.35;
+    }
+
+    .competenze-intro em {
+      font-style: italic;
+      color: var(--color-brand-warm);
+    }
+
+    .competenze-list {
+      display: grid;
+      gap: var(--space-6);
+    }
+
+    .competenza-item {
+      padding-bottom: var(--space-6);
+      border-bottom: 1px solid rgba(250, 247, 242, 0.12);
+    }
+
+    .competenza-item:last-child {
+      border-bottom: none;
+    }
+
+    .competenza-name {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 500;
+      margin-bottom: var(--space-2);
+    }
+
+    .competenza-desc {
+      font-size: 14px;
+      line-height: 1.7;
+      opacity: 0.7;
+    }
+
+    /* ─── COMMITTENTI ─── */
+    .committenti {
+      padding: var(--space-20) 0;
+      border-top: 1px solid var(--color-border-default);
+    }
+
+    .committenti-label {
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--color-content-brand);
+      margin-bottom: var(--space-8);
+    }
+
+    .committenti-text {
+      font-size: 16px;
+      line-height: 1.8;
+      color: var(--color-content-secondary);
+      max-width: 700px;
+      margin-bottom: var(--space-8);
+    }
+
+    .committenti-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-4);
+    }
+
+    .committente-tag {
+      padding: var(--space-4) var(--space-6);
+      background: var(--color-surface-card);
+      border: 1px solid var(--color-border-default);
+      border-radius: var(--radius-sm);
+      font-size: 14px;
+      color: var(--color-content-secondary);
+      text-align: center;
+    }
+
+    /* Footer */
+    .site-footer { border-top: 1px solid var(--color-border-default); padding: var(--space-12) 0; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+    .footer-legal { font-size: 13px; color: var(--color-content-secondary); line-height: 1.6; }
+    .footer-legal strong { font-weight: 500; color: var(--color-content-primary); }
+    .footer-links { display: flex; gap: var(--space-6); }
+    .footer-links a { font-size: 13px; color: var(--color-content-secondary); transition: color var(--duration-normal); }
+    .footer-links a:hover { color: var(--color-content-primary); }
+
+    @media (max-width: 900px) {
+      [data-brand="costantini"] { --page-padding: 24px; }
+      .page-hero-title { font-size: 38px; }
+      .principio { grid-template-columns: 1fr; gap: var(--space-4); }
+      .principio-num { font-size: 48px; }
+      .fasi-grid { grid-template-columns: 1fr; }
+      .competenze-grid { grid-template-columns: 1fr; }
+      .competenze-intro { font-size: 28px; }
+      .committenti-grid { grid-template-columns: 1fr 1fr; }
+      .main-nav { display: none; }
+      .footer-inner { flex-direction: column; gap: var(--space-6); text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="header-inner">
+      <a href="costantini-home.html" class="logo">Barbara Costantini<span>Studio di Restauro</span></a>
+      <nav class="main-nav">
+        <a href="costantini-home.html">Home</a>
+        <a href="costantini-studio.html">Studio</a>
+        <a href="costantini-lavori.html">Lavori</a>
+        <a href="costantini-approccio.html" class="active">Approccio</a>
+        <a href="costantini-contatti.html" class="nav-cta">Contatti</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="page-hero">
+    <div class="container">
+      <h1 class="page-hero-title">Approccio</h1>
+      <p class="page-hero-subtitle">
+        Come lavoriamo: dalla diagnostica iniziale alla consegna dell'opera, ogni fase segue un metodo consolidato che mette al centro la materia originale e il rispetto della storia dell'opera.
+      </p>
+    </div>
+  </section>
+
+  <!-- Principi -->
+  <section class="principi">
+    <div class="container">
+
+      <div class="principio">
+        <div class="principio-num">01</div>
+        <div class="principio-content">
+          <h2 class="principio-title">Il <em>minimo intervento</em></h2>
+          <div class="principio-text">
+            <p>
+              Non si aggiunge mai più di quanto sia necessario. Ogni gesto deve essere giustificato dalla condizione dell'opera e finalizzato alla sua conservazione nel tempo, non alla sua trasformazione. La reversibilità delle operazioni è un vincolo progettuale, non un optional.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="principio">
+        <div class="principio-num">02</div>
+        <div class="principio-content">
+          <h2 class="principio-title">La <em>leggibilità</em> dell'intervento</h2>
+          <div class="principio-text">
+            <p>
+              Un buon restauro si riconosce — se lo si cerca. Le reintegrazioni sono distinguibili a distanza ravvicinata ma non disturbano la lettura dell'opera a distanza naturale. Questo equilibrio è il cuore del mestiere e richiede un confronto continuo tra tecnica e sensibilità.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="principio">
+        <div class="principio-num">03</div>
+        <div class="principio-content">
+          <h2 class="principio-title">La <em>documentazione</em> come dovere</h2>
+          <div class="principio-text">
+            <p>
+              Ogni intervento viene documentato con schede conservative, campagna fotografica sistematica (stato iniziale, fasi intermedie, stato finale) e relazione tecnica completa. La documentazione non è un allegato: è parte integrante del restauro.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="principio">
+        <div class="principio-num">04</div>
+        <div class="principio-content">
+          <h2 class="principio-title">Il <em>dialogo</em> istituzionale</h2>
+          <div class="principio-text">
+            <p>
+              Lavoriamo in costante rapporto con le Soprintendenze e gli enti di tutela. Ogni scelta conservativa viene condivisa e approvata dalla direzione dei lavori. Questa collaborazione non è un vincolo burocratico ma una garanzia di qualità.
+            </p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Metodo -->
+  <section class="metodo">
+    <div class="container">
+      <div class="metodo-header">
+        <div class="metodo-label">Il metodo</div>
+        <h2 class="metodo-title">Quattro fasi, un unico filo: la cura dell'opera.</h2>
+      </div>
+
+      <div class="fasi-grid">
+        <div class="fase-card">
+          <div class="fase-num">I</div>
+          <h3 class="fase-title">Diagnostica</h3>
+          <p class="fase-text">
+            Sopralluogo, rilievo fotografico, analisi dei materiali e dello stato di conservazione. Individuazione delle patologie e delle cause di degrado.
+          </p>
+        </div>
+
+        <div class="fase-card">
+          <div class="fase-num">II</div>
+          <h3 class="fase-title">Progetto</h3>
+          <p class="fase-text">
+            Redazione del progetto di restauro con scelta dei materiali e delle tecniche, cronoprogramma e preventivo. Condivisione con la direzione lavori.
+          </p>
+        </div>
+
+        <div class="fase-card">
+          <div class="fase-num">III</div>
+          <h3 class="fase-title">Intervento</h3>
+          <p class="fase-text">
+            Esecuzione delle operazioni di restauro con documentazione continua. Verifiche intermedie con il direttore dei lavori e aggiustamenti in corso d'opera.
+          </p>
+        </div>
+
+        <div class="fase-card">
+          <div class="fase-num">IV</div>
+          <h3 class="fase-title">Consegna</h3>
+          <p class="fase-text">
+            Relazione finale, consegna della documentazione completa e indicazioni per la conservazione preventiva e la manutenzione programmata.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Competenze -->
+  <section class="competenze">
+    <div class="container">
+      <div class="competenze-grid">
+        <h2 class="competenze-intro">
+          Lo Studio interviene su <em>dipinti, affreschi, sculture</em> e superfici architettoniche decorate.
+        </h2>
+        <div class="competenze-list">
+          <div class="competenza-item">
+            <div class="competenza-name">Dipinti su tela e tavola</div>
+            <div class="competenza-desc">Pulitura, consolidamento, foderatura, reintegrazione pittorica. Interventi su supporti tessili e lignei.</div>
+          </div>
+          <div class="competenza-item">
+            <div class="competenza-name">Affreschi e dipinti murali</div>
+            <div class="competenza-desc">Consolidamento degli intonaci, desalinizzazione, fissaggio della pellicola pittorica, reintegrazione.</div>
+          </div>
+          <div class="competenza-item">
+            <div class="competenza-name">Scultura lignea e policromia</div>
+            <div class="competenza-desc">Disinfestazione, consolidamento strutturale, recupero di policromie originali sotto ridipinture.</div>
+          </div>
+          <div class="competenza-item">
+            <div class="competenza-name">Superfici architettoniche</div>
+            <div class="competenza-desc">Restauro di stucchi, decorazioni a tempera, intonaci storici e finiture d'epoca.</div>
+          </div>
+          <div class="competenza-item">
+            <div class="competenza-name">Conservazione preventiva</div>
+            <div class="competenza-desc">Consulenza per il monitoraggio ambientale, piani di manutenzione programmata e gestione delle condizioni conservative.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Committenti -->
+  <section class="committenti">
+    <div class="container">
+      <div class="committenti-label">Con chi lavoriamo</div>
+      <p class="committenti-text">
+        Lo Studio collabora con enti pubblici e privati, soprintendenze, diocesi, musei, fondazioni e collezionisti. Ogni committente riceve lo stesso rigore metodologico.
+      </p>
+      <div class="committenti-grid">
+        <div class="committente-tag">Soprintendenze ABAP</div>
+        <div class="committente-tag">Diocesi e parrocchie</div>
+        <div class="committente-tag">Musei civici e diocesani</div>
+        <div class="committente-tag">Fondazioni culturali</div>
+        <div class="committente-tag">Collezionisti privati</div>
+        <div class="committente-tag">Enti ecclesiastici</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-inner">
+        <div class="footer-legal">
+          <strong>Barbara Costantini Studio SRLS</strong><br>
+          &copy; 2026 &middot; P.IVA 00000000000
+        </div>
+        <div class="footer-links">
+          <a href="costantini-studio.html">Studio</a>
+          <a href="costantini-lavori.html">Lavori</a>
+          <a href="costantini-approccio.html">Approccio</a>
+          <a href="costantini-contatti.html">Contatti</a>
+          <a href="#">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>

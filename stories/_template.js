@@ -15,6 +15,7 @@ export function templateStory({ src, label, brand = 'susdef', state = '' }) {
     sisal:           { bg: '#1A1A2E', accent: '#FFD600', text: '#FFFFFF' },
     epos:            { bg: '#152843', accent: '#E8A520', text: '#FFFFFF' },
     'pianeta-green': { bg: '#0D3D26', accent: '#5BD48A', text: '#FFFFFF' },
+    costantini:      { bg: '#2C1810', accent: '#C17A3A', text: '#FAF7F2' },
     generic:         { bg: '#111111', accent: '#D8EC28', text: '#FFFFFF' },
   };
   const c = brandColors[brand] || brandColors.generic;

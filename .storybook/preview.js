@@ -3,6 +3,7 @@ import '../css/themes/agesci.css';
 import '../css/themes/rara.css';
 import '../css/themes/corner-table.css';
 import '../css/themes/pianeta-green.css';
+import '../css/themes/costantini.css';
 
 /** @type { import('@storybook/html').Preview } */
 const preview = {
@@ -19,6 +20,7 @@ const preview = {
           { value: 'pianeta-green',   title: 'Pianeta.green — Pianeta Studio' },
           { value: 'rara',            title: 'Rara' },
           { value: 'corner-table',    title: 'Corner Table' },
+          { value: 'costantini',     title: 'Costantini — Studio di Restauro' },
         ],
         dynamicTitle: true,
       },
