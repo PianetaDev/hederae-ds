@@ -208,6 +208,51 @@ export const CMS_Confronto_OldVsNew = {
   },
 };
 
+/* ─── SANITY V3 STYLE ─── */
+
+export const Sanity_Dashboard = {
+  name: '✦ Sanity · Dashboard',
+  render: () => templateStory({ ...base, src: 'hederae-cms-sanity-dashboard.html', label: 'Sanity · Dashboard', state: 'Home' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Dashboard in stile Sanity Studio v3 — approccio light/minimal.**
+
+Opposto al Payload/WordPress-style: niente sfondi scuri, card pesanti o colori forti.
+UI quasi invisibile — la navigazione e il contenuto parlano da soli.
+
+- Nav sinistra: bordo sottile, icone + testo, indicatore attivo = barra verde 3px
+- Stats: bordi 1px, nessun gradiente
+- Lista documenti: righe pulite con status dot, hover actions
+- Quick create: 4 tile con icon colorata + label + descrizione
+- Attività + scorciatoie nella colonna destra
+- Click su un documento → va all'editor articolo (story Sanity · Editor)
+    `.trim() } },
+  },
+};
+
+export const Sanity_Editor = {
+  name: '✦ Sanity · Editor Articolo',
+  render: () => templateStory({ ...base, src: 'hederae-cms-sanity-editor.html', label: 'Sanity · Editor', state: 'Writing' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Editor articolo in stile Sanity v3 / Medium — contenuto centrato, interfaccia invisibile.**
+
+Il documento è centrato a 680px max-width su sfondo bianco. I lati sono vuoti.
+L'interfaccia non compete con il contenuto.
+
+- Titolo grande e editabile inline (32px, bold)
+- Sottotitolo editabile inline
+- Campi strutturati (categoria, tag, cover) come field-row con label a sinistra
+- Portable Text: ogni blocco è editabile direttamente — toolbar floating appare sulla selezione
+- Blocchi supportati: paragrafo, H2, citazione blockquote
+- Rail destra 260px: Documento (slug, data, toggles) / SEO preview / Cronologia
+- Topbar: ← Pagine + status pill (Bozza→Pubblicato) + split button Pubblica
+    `.trim() } },
+  },
+};
+
 /* ─── WYSIWYG BUILDER ─── */
 
 export const CMS_PageBuilder = {

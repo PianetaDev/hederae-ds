@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae CMS · Editor Articolo (Sanity v3 style)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:   #013E39;
+    --accent:  #D8EC28;
+    --nav-w:   220px;
+    --font:    'IBM Plex Sans', system-ui, sans-serif;
+    --mono:    'IBM Plex Mono', monospace;
+    --text:    #101112;
+    --muted:   #6e7176;
+    --border:  #e3e4e7;
+    --hover:   #f4f4f5;
+    --surface: #fafafa;
+  }
+
+  body {
+    font-family: var(--font);
+    background: #fff;
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ─── LEFT NAV (same as dashboard) ─── */
+  .nav {
+    width: var(--nav-w);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background: #fff;
+  }
+  .nav-workspace {
+    padding: 0 12px;
+    height: 52px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .workspace-icon {
+    width: 28px; height: 28px; background: var(--brand); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .workspace-icon svg { width: 14px; height: 14px; color: var(--accent); }
+  .workspace-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .workspace-chevron svg { width: 14px; height: 14px; color: var(--muted); cursor: pointer; }
+
+  .nav-section { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .nav-section:last-child { border-bottom: none; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: .7px; text-transform: uppercase; color: var(--muted); padding: 6px 14px 4px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; font-size: 13px; color: var(--text);
+    cursor: pointer; transition: background .1s; position: relative;
+  }
+  .nav-item:hover { background: var(--hover); }
+  .nav-item.active { background: var(--hover); font-weight: 500; }
+  .nav-item.active::before {
+    content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 3px; background: var(--brand); border-radius: 0 2px 2px 0;
+  }
+  .nav-item svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+  .nav-item.active svg { color: var(--brand); }
+  .nav-count { margin-left: auto; font-size: 11px; color: var(--muted); }
+  .nav-footer {
+    margin-top: auto; padding: 12px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 9px; cursor: pointer;
+  }
+  .nav-footer:hover { background: var(--hover); }
+  .user-avatar {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+  }
+  .user-name { font-size: 12px; font-weight: 500; color: var(--text); }
+  .user-role { font-size: 11px; color: var(--muted); }
+
+  /* ─── EDITOR SHELL ─── */
+  .editor-shell {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* Top bar */
+  .topbar {
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: 6px;
+    border: 1px solid var(--border); background: transparent;
+    font-size: 12px; color: var(--muted); cursor: pointer;
+    transition: all .12s; font-family: var(--font);
+  }
+  .back-btn:hover { background: var(--hover); color: var(--text); }
+  .back-btn svg { width: 13px; height: 13px; }
+
+  .topbar-sep { width: 1px; height: 20px; background: var(--border); }
+
+  .topbar-breadcrumb {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 13px; color: var(--muted);
+  }
+  .topbar-breadcrumb .sep { color: var(--border); }
+  .topbar-breadcrumb .doc-name { color: var(--text); font-weight: 500; }
+
+  .topbar-spacer { flex: 1; }
+
+  /* Document status */
+  .doc-status-pill {
+    display: flex; align-items: center; gap: 5px;
+    padding: 4px 10px; border-radius: 6px;
+    font-size: 11px; font-weight: 500;
+    background: #fef3c7; color: #b45309; border: 1px solid #fde68a;
+    cursor: pointer;
+  }
+  .doc-status-pill .sdot { width: 5px; height: 5px; border-radius: 50%; background: #f59e0b; }
+
+  /* Action group */
+  .action-group { display: flex; align-items: center; gap: 6px; }
+  .btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 13px; border-radius: 7px;
+    font-size: 12px; font-weight: 500; cursor: pointer;
+    border: none; font-family: var(--font); transition: all .12s;
+  }
+  .btn svg { width: 13px; height: 13px; }
+  .btn-ghost { background: transparent; color: var(--muted); border: 1px solid var(--border); }
+  .btn-ghost:hover { background: var(--hover); color: var(--text); }
+  .btn-primary { background: var(--brand); color: #fff; }
+  .btn-primary:hover { background: #025248; }
+
+  /* Publish split button */
+  .publish-split {
+    display: flex; align-items: stretch; border-radius: 7px; overflow: hidden;
+    border: none;
+  }
+  .publish-main {
+    padding: 7px 14px; background: var(--brand); color: #fff;
+    font-size: 12px; font-weight: 600; cursor: pointer; border: none;
+    font-family: var(--font); transition: background .12s;
+  }
+  .publish-main:hover { background: #025248; }
+  .publish-arrow {
+    padding: 7px 9px; background: #025248; color: #fff;
+    border: none; border-left: 1px solid rgba(255,255,255,.15);
+    cursor: pointer; display: flex; align-items: center; transition: background .12s;
+  }
+  .publish-arrow:hover { background: #01312c; }
+  .publish-arrow svg { width: 12px; height: 12px; }
+
+  /* ─── EDITOR BODY ─── */
+  .editor-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* Main writing area */
+  .writing-area {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    justify-content: center;
+    background: #fff;
+    padding: 48px 24px 80px;
+  }
+
+  .document {
+    width: 100%;
+    max-width: 680px;
+  }
+
+  /* Doc type badge */
+  .doc-type-row {
+    display: flex; align-items: center; gap: 8px;
+    margin-bottom: 24px;
+  }
+  .doc-type-badge {
+    display: flex; align-items: center; gap: 6px;
+    padding: 3px 10px; border-radius: 5px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 11px; font-weight: 500; color: var(--muted);
+    cursor: pointer;
+  }
+  .doc-type-badge svg { width: 12px; height: 12px; }
+
+  /* Title field */
+  .doc-title-field {
+    font-size: 32px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.2;
+    outline: none;
+    margin-bottom: 8px;
+    letter-spacing: -.5px;
+    width: 100%;
+    border: none;
+    font-family: var(--font);
+  }
+  .doc-title-field:empty::before {
+    content: 'Titolo del documento…';
+    color: #ccc;
+    pointer-events: none;
+  }
+  .doc-title-field:focus::before { display: none; }
+
+  /* Subtitle / tagline */
+  .doc-subtitle-field {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.5;
+    outline: none;
+    margin-bottom: 28px;
+    width: 100%;
+    border: none;
+    font-family: var(--font);
+  }
+  .doc-subtitle-field:empty::before {
+    content: 'Sottotitolo o descrizione breve…';
+    color: #ddd;
+    pointer-events: none;
+  }
+
+  /* Divider */
+  .doc-divider { height: 1px; background: var(--border); margin: 0 0 28px; }
+
+  /* Field row */
+  .field-row {
+    display: flex;
+    gap: 24px;
+    margin-bottom: 24px;
+    align-items: flex-start;
+  }
+  .field-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--muted);
+    width: 100px;
+    flex-shrink: 0;
+    padding-top: 2px;
+    letter-spacing: -.1px;
+  }
+  .field-value { flex: 1; }
+  .field-input {
+    width: 100%; padding: 6px 0;
+    border: none; border-bottom: 1px solid transparent;
+    font-size: 14px; color: var(--text);
+    font-family: var(--font); outline: none;
+    transition: border-color .15s;
+    background: transparent;
+  }
+  .field-input:hover { border-bottom-color: var(--border); }
+  .field-input:focus { border-bottom-color: var(--brand); }
+
+  /* Tags input */
+  .tags-input {
+    display: flex; flex-wrap: wrap; gap: 6px; align-items: center;
+    padding: 4px 0; border-bottom: 1px solid transparent;
+    transition: border-color .15s; cursor: text;
+  }
+  .tags-input:hover { border-bottom-color: var(--border); }
+  .tag-chip {
+    display: flex; align-items: center; gap: 4px;
+    padding: 2px 8px 2px 10px; border-radius: 99px;
+    background: var(--surface); border: 1px solid var(--border);
+    font-size: 12px; color: var(--text);
+  }
+  .tag-chip button {
+    background: none; border: none; cursor: pointer;
+    color: var(--muted); font-size: 13px; line-height: 1;
+    padding: 0; display: flex; align-items: center;
+  }
+  .tag-chip button:hover { color: var(--text); }
+  .tag-placeholder { font-size: 13px; color: #ccc; }
+
+  /* Cover image */
+  .cover-area {
+    border: 1.5px dashed var(--border);
+    border-radius: 10px;
+    height: 140px;
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all .15s;
+    gap: 10px;
+    flex-direction: column;
+  }
+  .cover-area:hover { border-color: var(--brand); background: #f7fbfb; }
+  .cover-area svg { width: 22px; height: 22px; color: #ccc; }
+  .cover-area span { font-size: 12px; color: var(--muted); }
+
+  /* Body editor */
+  .body-label {
+    font-size: 12px; font-weight: 500; color: var(--muted);
+    margin-bottom: 12px; display: block;
+  }
+
+  /* Portable-text-like editor */
+  .portable-text {
+    outline: none;
+    min-height: 240px;
+    position: relative;
+  }
+
+  /* Block toolbar (floating, shown on selection) */
+  .block-toolbar {
+    display: flex;
+    align-items: center;
+    gap: 1px;
+    padding: 4px 6px;
+    background: #1a1a1a;
+    border-radius: 9px;
+    box-shadow: 0 4px 16px rgba(0,0,0,.25);
+    position: absolute;
+    top: -48px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 50;
+    white-space: nowrap;
+  }
+  .block-toolbar::after {
+    content: '';
+    position: absolute;
+    bottom: -5px; left: 50%; transform: translateX(-50%);
+    border: 5px solid transparent;
+    border-top-color: #1a1a1a;
+    border-bottom: none;
+  }
+  .tb-btn {
+    padding: 4px 8px;
+    background: transparent; border: none; border-radius: 6px;
+    color: rgba(255,255,255,.8); cursor: pointer;
+    font-size: 12px; font-weight: 600; transition: background .1s;
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font);
+  }
+  .tb-btn:hover, .tb-btn.active { background: rgba(255,255,255,.18); color: #fff; }
+  .tb-btn svg { width: 13px; height: 13px; }
+  .tb-sep { width: 1px; height: 16px; background: rgba(255,255,255,.15); margin: 0 3px; }
+
+  /* Editable blocks */
+  .pt-block {
+    position: relative;
+    padding: 2px 0;
+    margin-bottom: 4px;
+    outline: none;
+  }
+  .pt-block:hover .block-add-btn { opacity: 1; }
+
+  .pt-h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--text);
+    line-height: 1.3;
+    letter-spacing: -.3px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+  .pt-p {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #2a2a2a;
+  }
+  .pt-p mark {
+    background: rgba(216,236,40,.35);
+    color: var(--text);
+    border-radius: 2px;
+    padding: 0 2px;
+  }
+  .pt-p a { color: var(--brand); text-decoration: underline; }
+
+  .pt-quote {
+    border-left: 3px solid var(--brand);
+    padding: 8px 16px;
+    margin: 16px 0;
+    font-size: 16px;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  .pt-code {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 13px;
+    font-family: var(--mono);
+    color: #1a1a1a;
+    overflow-x: auto;
+    margin: 8px 0;
+  }
+
+  /* Inline block: add button */
+  .block-add-btn {
+    position: absolute;
+    left: -28px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 22px; height: 22px;
+    background: #fff; border: 1px solid var(--border);
+    border-radius: 50%; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0;
+    transition: opacity .15s;
+  }
+  .block-add-btn svg { width: 12px; height: 12px; color: var(--muted); }
+
+  /* Word count */
+  .word-count {
+    font-size: 11px; color: var(--muted);
+    text-align: right; margin-top: 16px;
+    padding-top: 12px; border-top: 1px solid var(--border);
+  }
+
+  /* ─── RIGHT PANEL ─── */
+  .right-panel {
+    width: 260px;
+    border-left: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .right-panel-tabs {
+    display: flex;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .rp-tab {
+    flex: 1; padding: 12px 8px;
+    font-size: 12px; font-weight: 500; color: var(--muted);
+    text-align: center; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: all .12s;
+  }
+  .rp-tab.active { color: var(--brand); border-bottom-color: var(--brand); }
+
+  .right-panel-body { flex: 1; overflow-y: auto; padding: 16px; }
+
+  /* Meta fields */
+  .meta-field { margin-bottom: 18px; }
+  .meta-label {
+    font-size: 11px; font-weight: 500; color: var(--muted);
+    margin-bottom: 6px; display: flex; align-items: center; gap: 4px;
+  }
+  .meta-label .required { color: #f59e0b; font-size: 10px; }
+  .meta-input {
+    width: 100%; padding: 7px 10px;
+    border: 1px solid var(--border); border-radius: 7px;
+    font-size: 12px; color: var(--text); font-family: var(--font);
+    transition: border-color .12s; background: #fff;
+  }
+  .meta-input:focus { outline: none; border-color: var(--brand); }
+  .meta-input.url { font-family: var(--mono); font-size: 11px; color: var(--muted); }
+
+  /* Date picker styled */
+  .date-display {
+    width: 100%; padding: 7px 10px;
+    border: 1px solid var(--border); border-radius: 7px;
+    font-size: 12px; color: var(--text);
+    display: flex; align-items: center; gap: 6px;
+    cursor: pointer; transition: border-color .12s;
+  }
+  .date-display:hover { border-color: #bbb; }
+  .date-display svg { width: 13px; height: 13px; color: var(--muted); }
+
+  /* Toggle */
+  .toggle-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .toggle-row:last-child { border-bottom: none; }
+  .toggle-label { font-size: 12px; color: var(--text); }
+  .toggle {
+    width: 34px; height: 20px; border-radius: 10px;
+    background: #d1d5db; position: relative; cursor: pointer;
+    transition: background .15s;
+  }
+  .toggle.on { background: var(--brand); }
+  .toggle::after {
+    content: ''; position: absolute;
+    width: 14px; height: 14px; background: #fff;
+    border-radius: 50%; top: 3px; left: 3px;
+    transition: transform .15s;
+    box-shadow: 0 1px 2px rgba(0,0,0,.15);
+  }
+  .toggle.on::after { transform: translateX(14px); }
+
+  /* SEO preview */
+  .seo-preview {
+    border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; background: var(--surface);
+    margin-bottom: 14px;
+  }
+  .seo-url { font-size: 11px; color: #1a73e8; font-family: var(--mono); margin-bottom: 3px; }
+  .seo-title { font-size: 14px; font-weight: 500; color: #1558d6; margin-bottom: 2px; line-height: 1.3; }
+  .seo-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  .meta-divider { height: 1px; background: var(--border); margin: 14px 0; }
+
+  /* Right panel tabs content */
+  .rp-panel { display: none; }
+  .rp-panel.visible { display: block; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LEFT NAV -->
+<nav class="nav">
+  <div class="nav-workspace">
+    <div class="workspace-icon">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M3 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z" stroke="currentColor" stroke-width="1.4"/><path d="M6 8h4M8 6v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <span class="workspace-name">Hederae CMS</span>
+    <span class="workspace-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg></span>
+  </div>
+  <div class="nav-section">
+    <div class="nav-item" onclick="window.location.href='hederae-cms-sanity-dashboard.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8h4M5 11h6M5 5h6"/></svg>
+      Dashboard
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Contenuti</div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>
+      Pagine
+      <span class="nav-count">12</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+      News
+      <span class="nav-count">34</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg>
+      Prodotti
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+      Media
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Impostazioni</div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M11.8 4.2l-.7.7M4.2 11.8l-.7.7"/></svg>
+      Globali
+    </div>
+  </div>
+  <div class="nav-footer">
+    <div class="user-avatar">M</div>
+    <div style="flex:1">
+      <div class="user-name">Max</div>
+      <div class="user-role">Admin</div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#999" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg>
+  </div>
+</nav>
+
+<!-- EDITOR SHELL -->
+<div class="editor-shell">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <button class="back-btn" onclick="window.location.href='hederae-cms-sanity-dashboard.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 12L6 8l4-4"/></svg>
+      Pagine
+    </button>
+    <div class="topbar-sep"></div>
+    <div class="topbar-breadcrumb">
+      <span class="doc-name">Nuovo laboratorio aperto a Bologna</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="doc-status-pill" onclick="toggleStatus(this)">
+      <div class="sdot"></div>
+      Bozza
+    </div>
+    <div class="action-group">
+      <button class="btn btn-ghost">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 8s2.5-5 6-5 6 5 6 5-2.5 5-6 5-6-5-6-5z"/><circle cx="8" cy="8" r="2"/></svg>
+        Anteprima
+      </button>
+      <div class="publish-split">
+        <button class="publish-main" onclick="publish()">Pubblica</button>
+        <button class="publish-arrow">
+          <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5l3 3 3-3"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Editor body -->
+  <div class="editor-body">
+
+    <!-- Writing area -->
+    <div class="writing-area">
+      <div class="document">
+
+        <!-- Type badge -->
+        <div class="doc-type-row">
+          <div class="doc-type-badge">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+            News
+          </div>
+        </div>
+
+        <!-- Title -->
+        <div class="doc-title-field" contenteditable="true" id="doc-title"
+             onblur="syncTitle(this)" oninput="syncTitle(this)">Nuovo laboratorio aperto a Bologna</div>
+
+        <!-- Subtitle -->
+        <div class="doc-subtitle-field" contenteditable="true">Un nuovo spazio di ricerca e innovazione apre le porte nel cuore della città emiliana. Focus su sostenibilità e tecnologie verdi.</div>
+
+        <div class="doc-divider"></div>
+
+        <!-- Cover image -->
+        <div class="field-row">
+          <span class="field-label">Immagine</span>
+          <div class="field-value">
+            <div class="cover-area" onclick="addCover(this)">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>Clicca per aggiungere un'immagine di copertina</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Category -->
+        <div class="field-row">
+          <span class="field-label">Categoria</span>
+          <div class="field-value">
+            <input class="field-input" value="Ricerca" placeholder="Categoria…" />
+          </div>
+        </div>
+
+        <!-- Tags -->
+        <div class="field-row">
+          <span class="field-label">Tag</span>
+          <div class="field-value">
+            <div class="tags-input">
+              <div class="tag-chip">Bologna <button onclick="removeTag(this)">×</button></div>
+              <div class="tag-chip">Laboratorio <button onclick="removeTag(this)">×</button></div>
+              <div class="tag-chip">Sostenibilità <button onclick="removeTag(this)">×</button></div>
+              <span class="tag-placeholder">+ aggiungi</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="doc-divider"></div>
+
+        <!-- Body: Portable text -->
+        <span class="body-label">Contenuto</span>
+        <div class="portable-text" id="pt-editor">
+
+          <div class="pt-block">
+            <div class="block-add-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg></div>
+            <p class="pt-p" contenteditable="true">Il nuovo <strong>Laboratorio di Ricerca Applicata</strong> di Bologna ha ufficialmente aperto le sue porte il 15 marzo 2025. Situato nel quartiere tecnologico della città, il laboratorio ospiterà oltre <mark>40 ricercatori</mark> nei primi mesi di attività.</p>
+          </div>
+
+          <div class="pt-block" style="position:relative">
+            <div class="block-toolbar" id="toolbar">
+              <button class="tb-btn active"><strong>B</strong></button>
+              <button class="tb-btn"><em>I</em></button>
+              <button class="tb-btn"><u>U</u></button>
+              <div class="tb-sep"></div>
+              <button class="tb-btn">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6.5 9.5a3.5 3.5 0 0 0 5 0l2-2a3.5 3.5 0 0 0-5-5L7 4"/><path d="M9.5 6.5a3.5 3.5 0 0 0-5 0l-2 2a3.5 3.5 0 0 0 5 5L9 12"/></svg>
+              </button>
+              <div class="tb-sep"></div>
+              <button class="tb-btn">H2</button>
+              <button class="tb-btn">H3</button>
+              <button class="tb-btn">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 5h1v6H2M5 5h4M5 8h3M5 11h4M13 5v6"/></svg>
+              </button>
+              <div class="tb-sep"></div>
+              <button class="tb-btn" style="color:#ef4444">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h10M6 4V2h4v2M5 4v8a1 1 0 0 0 1 1h4a1 1 0 0 0 1-1V4"/></svg>
+              </button>
+            </div>
+            <div class="block-add-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg></div>
+            <h2 class="pt-h2" contenteditable="true">Focus su innovazione sostenibile</h2>
+          </div>
+
+          <div class="pt-block">
+            <div class="block-add-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg></div>
+            <p class="pt-p" contenteditable="true">Il laboratorio è specializzato nello sviluppo di soluzioni tecnologiche per la transizione ecologica. I principali filoni di ricerca includono <a href="#">energia rinnovabile</a>, economia circolare e mobilità sostenibile. Il progetto è co-finanziato dalla Regione Emilia-Romagna e dalla Camera di Commercio di Bologna.</p>
+          </div>
+
+          <div class="pt-block">
+            <div class="block-add-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg></div>
+            <blockquote class="pt-quote" contenteditable="true">«Questo laboratorio rappresenta un punto di svolta per la ricerca applicata in Emilia-Romagna. Vogliamo creare ponti concreti tra università e imprese.»</blockquote>
+          </div>
+
+          <div class="pt-block">
+            <div class="block-add-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg></div>
+            <p class="pt-p" contenteditable="true">Le iscrizioni per le prime sessioni di ricerca aperta sono disponibili sul sito ufficiale. Il laboratorio è aperto a collaborazioni con enti pubblici, università e aziende private di ogni dimensione.</p>
+          </div>
+
+        </div>
+
+        <div class="word-count">247 parole · lettura ~1 min</div>
+      </div>
+    </div>
+
+    <!-- Right panel -->
+    <div class="right-panel">
+      <div class="right-panel-tabs">
+        <div class="rp-tab active" onclick="rpTab('meta', this)">Documento</div>
+        <div class="rp-tab" onclick="rpTab('seo', this)">SEO</div>
+        <div class="rp-tab" onclick="rpTab('history', this)">Storia</div>
+      </div>
+
+      <div class="right-panel-body">
+
+        <!-- META panel -->
+        <div class="rp-panel visible" id="rp-meta">
+          <div class="meta-field">
+            <div class="meta-label">Slug <span class="required">*</span></div>
+            <input class="meta-input url" value="nuovo-laboratorio-bologna" />
+          </div>
+          <div class="meta-field">
+            <div class="meta-label">Data pubblicazione</div>
+            <div class="date-display">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 2v2M11 2v2M2 7h12"/></svg>
+              24 marzo 2025
+            </div>
+          </div>
+          <div class="meta-field">
+            <div class="meta-label">Autore</div>
+            <input class="meta-input" value="Max" />
+          </div>
+          <div class="meta-divider"></div>
+          <div class="meta-field">
+            <div class="meta-label" style="margin-bottom:8px">Opzioni</div>
+            <div class="toggle-row">
+              <span class="toggle-label">Mostra in home</span>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Featured</span>
+              <div class="toggle" onclick="this.classList.toggle('on')"></div>
+            </div>
+            <div class="toggle-row">
+              <span class="toggle-label">Commenti abilitati</span>
+              <div class="toggle on" onclick="this.classList.toggle('on')"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SEO panel -->
+        <div class="rp-panel" id="rp-seo">
+          <div class="seo-preview">
+            <div class="seo-url">pianeta.studio/news/nuovo-laboratorio-bologna</div>
+            <div class="seo-title">Nuovo laboratorio aperto a Bologna — Hederae</div>
+            <div class="seo-desc">Un nuovo spazio di ricerca e innovazione apre le porte nel cuore della città emiliana. Focus su sostenibilità e tecnologie verdi.</div>
+          </div>
+          <div class="meta-field">
+            <div class="meta-label">Meta title <span style="margin-left:auto;font-size:10px;color:var(--muted)">52/60</span></div>
+            <input class="meta-input" value="Nuovo laboratorio aperto a Bologna — Hederae" />
+          </div>
+          <div class="meta-field">
+            <div class="meta-label">Meta description</div>
+            <textarea class="meta-input" rows="3" style="resize:none;font-size:12px">Un nuovo spazio di ricerca e innovazione apre le porte nel cuore della città emiliana.</textarea>
+          </div>
+          <div class="meta-field">
+            <div class="meta-label">OG Image</div>
+            <div class="cover-area" style="height:80px">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+              <span>1200 × 630 px</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- HISTORY panel -->
+        <div class="rp-panel" id="rp-history">
+          <div style="display:flex;flex-direction:column;gap:0">
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)">
+              <div style="width:7px;height:7px;border-radius:50%;background:var(--brand);flex-shrink:0"></div>
+              <div style="flex:1;font-size:12px;color:var(--text)">Bozza attuale</div>
+              <div style="font-size:11px;color:var(--muted)">ora</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)">
+              <div style="width:7px;height:7px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0"></div>
+              <div style="flex:1;font-size:12px;color:var(--muted)">Aggiunto sottotitolo</div>
+              <div style="font-size:11px;color:var(--muted)">12 min</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 0;border-bottom:1px solid var(--border)">
+              <div style="width:7px;height:7px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0"></div>
+              <div style="flex:1;font-size:12px;color:var(--muted)">Titolo modificato</div>
+              <div style="font-size:11px;color:var(--muted)">1 ora</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;padding:9px 0">
+              <div style="width:7px;height:7px;border-radius:50%;border:1.5px solid var(--border);flex-shrink:0"></div>
+              <div style="flex:1;font-size:12px;color:var(--muted)">Documento creato</div>
+              <div style="font-size:11px;color:var(--muted)">ieri</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div><!-- /editor-body -->
+</div><!-- /editor-shell -->
+
+<script>
+  function publish() {
+    const pill = document.querySelector('.doc-status-pill');
+    pill.innerHTML = '<div class="sdot" style="background:#22c55e"></div> Pubblicato';
+    pill.style.background = '#f0fdf4';
+    pill.style.color = '#15803d';
+    pill.style.borderColor = '#bbf7d0';
+    const toast = document.createElement('div');
+    toast.style.cssText = 'position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#101112;color:#fff;padding:10px 20px;border-radius:8px;font-size:13px;z-index:999;box-shadow:0 4px 16px rgba(0,0,0,.2)';
+    toast.textContent = '✓ Articolo pubblicato';
+    document.body.appendChild(toast);
+    setTimeout(() => toast.remove(), 2000);
+  }
+
+  function toggleStatus(el) {
+    // cycle status for demo
+  }
+
+  function syncTitle(el) {
+    document.querySelector('.doc-name').textContent = el.innerText || 'Senza titolo';
+  }
+
+  function rpTab(tab, btn) {
+    document.querySelectorAll('.rp-tab').forEach(t => t.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.rp-panel').forEach(p => p.classList.remove('visible'));
+    document.getElementById('rp-' + tab).classList.add('visible');
+  }
+
+  function removeTag(btn) {
+    btn.closest('.tag-chip').remove();
+  }
+
+  function addCover(el) {
+    el.innerHTML = `
+      <div style="background:linear-gradient(135deg,#013E39,#025248);width:100%;height:100%;display:flex;align-items:center;justify-content:center;border-radius:8px">
+        <span style="color:rgba(255,255,255,.5);font-size:12px">Immagine copertina</span>
+      </div>`;
+    el.style.border = 'none';
+    el.style.padding = '0';
+  }
+</script>
+</body>
+</html>

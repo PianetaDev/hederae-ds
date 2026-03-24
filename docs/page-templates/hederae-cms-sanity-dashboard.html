@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae CMS · Dashboard (Sanity v3 style)</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:     #013E39;
+    --accent:    #D8EC28;
+    --nav-w:     220px;
+    --font:      'IBM Plex Sans', system-ui, sans-serif;
+    --mono:      'IBM Plex Mono', monospace;
+    --text:      #101112;
+    --muted:     #6e7176;
+    --border:    #e3e4e7;
+    --hover:     #f4f4f5;
+    --surface:   #fafafa;
+  }
+
+  body {
+    font-family: var(--font);
+    background: #fff;
+    color: var(--text);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+  }
+
+  /* ─── LEFT NAV ─── */
+  .nav {
+    width: var(--nav-w);
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    flex-shrink: 0;
+    background: #fff;
+  }
+
+  /* Workspace header */
+  .nav-workspace {
+    padding: 0 12px;
+    height: 52px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .workspace-icon {
+    width: 28px; height: 28px;
+    background: var(--brand);
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .workspace-icon svg { width: 14px; height: 14px; color: var(--accent); }
+  .workspace-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+    flex: 1;
+  }
+  .workspace-chevron {
+    color: var(--muted);
+    cursor: pointer;
+  }
+  .workspace-chevron svg { width: 14px; height: 14px; }
+
+  /* Nav sections */
+  .nav-section { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .nav-section:last-child { border-bottom: none; }
+
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: .7px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 6px 14px 4px;
+  }
+
+  .nav-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    font-size: 13px;
+    color: var(--text);
+    cursor: pointer;
+    border-radius: 0;
+    transition: background .1s;
+    position: relative;
+  }
+  .nav-item:hover { background: var(--hover); }
+  .nav-item.active {
+    background: var(--hover);
+    font-weight: 500;
+  }
+  .nav-item.active::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 4px; bottom: 4px;
+    width: 3px;
+    background: var(--brand);
+    border-radius: 0 2px 2px 0;
+  }
+  .nav-item svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+  .nav-item.active svg { color: var(--brand); }
+  .nav-count {
+    margin-left: auto;
+    font-size: 11px;
+    color: var(--muted);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* User footer */
+  .nav-footer {
+    margin-top: auto;
+    padding: 12px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    cursor: pointer;
+  }
+  .nav-footer:hover { background: var(--hover); }
+  .user-avatar {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--accent);
+    flex-shrink: 0;
+  }
+  .user-info { flex: 1; min-width: 0; }
+  .user-name { font-size: 12px; font-weight: 500; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .user-role { font-size: 11px; color: var(--muted); }
+
+  /* ─── MAIN CONTENT ─── */
+  .main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background: #fff;
+  }
+
+  /* Top bar */
+  .topbar {
+    height: 52px;
+    border-bottom: 1px solid var(--border);
+    padding: 0 28px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-shrink: 0;
+  }
+  .topbar-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .topbar-spacer { flex: 1; }
+  .topbar-search {
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    padding: 6px 12px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    font-size: 12px;
+    color: var(--muted);
+    cursor: pointer;
+    min-width: 180px;
+    transition: all .15s;
+  }
+  .topbar-search:hover { border-color: #c0c0c0; }
+  .topbar-search svg { width: 13px; height: 13px; }
+  .kbd {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    background: #fff;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--muted);
+  }
+
+  .btn-new {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px;
+    background: var(--brand);
+    color: #fff;
+    border: none;
+    border-radius: 7px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background .15s;
+    font-family: var(--font);
+  }
+  .btn-new:hover { background: #025248; }
+  .btn-new svg { width: 14px; height: 14px; }
+
+  /* Content area */
+  .content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 32px 28px;
+  }
+
+  /* Section header */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 16px;
+  }
+  .section-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .section-count {
+    font-size: 12px;
+    color: var(--muted);
+  }
+  .section-action {
+    margin-left: auto;
+    font-size: 12px;
+    color: var(--brand);
+    cursor: pointer;
+    font-weight: 500;
+  }
+  .section-action:hover { text-decoration: underline; }
+
+  /* Document list */
+  .doc-list { border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 32px; }
+
+  .doc-row {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background .1s;
+  }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-row:hover { background: var(--hover); }
+
+  .doc-type-icon {
+    width: 32px; height: 32px;
+    border-radius: 7px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .doc-type-icon svg { width: 15px; height: 15px; }
+  .icon-page   { background: #eff6ff; } .icon-page svg   { color: #3b82f6; }
+  .icon-news   { background: #fef3c7; } .icon-news svg   { color: #d97706; }
+  .icon-product{ background: #f0fdf4; } .icon-product svg{ color: #16a34a; }
+  .icon-event  { background: #fdf4ff; } .icon-event svg  { color: #9333ea; }
+
+  .doc-info { flex: 1; min-width: 0; }
+  .doc-title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .doc-meta {
+    font-size: 11px;
+    color: var(--muted);
+    margin-top: 1px;
+    display: flex;
+    gap: 8px;
+  }
+  .doc-meta-sep { color: var(--border); }
+
+  .doc-status {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 11px;
+    font-weight: 500;
+    flex-shrink: 0;
+  }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; }
+  .status-published .status-dot { background: #22c55e; }
+  .status-published { color: #15803d; }
+  .status-draft .status-dot { background: #f59e0b; }
+  .status-draft { color: #b45309; }
+  .status-review .status-dot { background: #6366f1; }
+  .status-review { color: #4338ca; }
+
+  .doc-time {
+    font-size: 11px;
+    color: var(--muted);
+    flex-shrink: 0;
+    min-width: 80px;
+    text-align: right;
+  }
+
+  .doc-actions {
+    display: none;
+    gap: 4px;
+  }
+  .doc-row:hover .doc-actions { display: flex; }
+  .doc-action-btn {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: transparent;
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    cursor: pointer;
+    transition: all .1s;
+  }
+  .doc-action-btn:hover { background: #fff; border-color: #bbb; }
+  .doc-action-btn svg { width: 13px; height: 13px; color: var(--muted); }
+
+  /* Quick create */
+  .quick-create {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .quick-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px;
+    cursor: pointer;
+    transition: all .15s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .quick-card:hover {
+    border-color: var(--brand);
+    background: #f7fbfb;
+  }
+  .quick-card-icon {
+    width: 36px; height: 36px;
+    border-radius: 9px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .quick-card-icon svg { width: 18px; height: 18px; }
+  .quick-card-name { font-size: 13px; font-weight: 500; color: var(--text); }
+  .quick-card-desc { font-size: 11px; color: var(--muted); line-height: 1.4; }
+
+  /* Stats row */
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin-bottom: 32px;
+  }
+  .stat-card {
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 18px;
+  }
+  .stat-value { font-size: 24px; font-weight: 700; color: var(--text); letter-spacing: -.5px; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .stat-delta {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    font-size: 11px;
+    font-weight: 500;
+    margin-top: 6px;
+  }
+  .stat-delta.up { color: #16a34a; }
+  .stat-delta.neutral { color: var(--muted); }
+  .stat-delta svg { width: 11px; height: 11px; }
+
+  /* Two-col layout */
+  .two-col { display: grid; grid-template-columns: 1fr 320px; gap: 20px; }
+
+  /* Activity feed */
+  .activity-list { display: flex; flex-direction: column; gap: 0; }
+  .activity-item {
+    display: flex;
+    gap: 10px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .activity-item:last-child { border-bottom: none; }
+  .activity-avatar {
+    width: 26px; height: 26px;
+    border-radius: 50%;
+    font-size: 10px; font-weight: 600;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+    color: #fff;
+    margin-top: 1px;
+  }
+  .activity-body { flex: 1; }
+  .activity-text { font-size: 12px; color: var(--text); line-height: 1.5; }
+  .activity-text strong { font-weight: 500; }
+  .activity-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* Shortcut pills */
+  .shortcut-list { display: flex; flex-direction: column; gap: 4px; }
+  .shortcut-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background .1s;
+    font-size: 12px; color: var(--text);
+  }
+  .shortcut-item:hover { background: var(--hover); }
+  .shortcut-item svg { width: 14px; height: 14px; color: var(--muted); }
+  .shortcut-kbd {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 10px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1px 5px;
+    color: var(--muted);
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- LEFT NAV -->
+<nav class="nav">
+  <div class="nav-workspace">
+    <div class="workspace-icon">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M3 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z" stroke="currentColor" stroke-width="1.4"/><path d="M6 8h4M8 6v4" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    </div>
+    <span class="workspace-name">Hederae CMS</span>
+    <span class="workspace-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg></span>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-item active" onclick="nav(this)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 8h4M5 11h6M5 5h6"/></svg>
+      Dashboard
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Contenuti</div>
+    <div class="nav-item" onclick="nav(this)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>
+      Pagine
+      <span class="nav-count">12</span>
+    </div>
+    <div class="nav-item" onclick="nav(this)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+      News
+      <span class="nav-count">34</span>
+    </div>
+    <div class="nav-item" onclick="nav(this)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg>
+      Prodotti
+      <span class="nav-count">8</span>
+    </div>
+    <div class="nav-item" onclick="nav(this)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1M8 9v0M5 9h6"/></svg>
+      Media
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Impostazioni</div>
+    <div class="nav-item" onclick="nav(this)">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M11.8 4.2l-.7.7M4.2 11.8l-.7.7"/></svg>
+      Globali
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <div class="user-avatar">M</div>
+    <div class="user-info">
+      <div class="user-name">Max</div>
+      <div class="user-role">Admin</div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#999" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Top bar -->
+  <div class="topbar">
+    <span class="topbar-title">Dashboard</span>
+    <div class="topbar-spacer"></div>
+    <div class="topbar-search">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4"/><path d="M10.5 10.5l3 3"/></svg>
+      Cerca documenti…
+      <span class="kbd">⌘K</span>
+    </div>
+    <button class="btn-new" onclick="goEditor()">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg>
+      Nuovo documento
+    </button>
+  </div>
+
+  <!-- Content -->
+  <div class="content">
+
+    <!-- Stats -->
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-value">54</div>
+        <div class="stat-label">Documenti totali</div>
+        <div class="stat-delta up">
+          <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 2l4 5H2l4-5z"/></svg>
+          +3 questa settimana
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">41</div>
+        <div class="stat-label">Pubblicati</div>
+        <div class="stat-delta neutral">Nessuna variazione</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">9</div>
+        <div class="stat-label">Bozze in corso</div>
+        <div class="stat-delta up">
+          <svg viewBox="0 0 12 12" fill="currentColor"><path d="M6 2l4 5H2l4-5z"/></svg>
+          +2 da ieri
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">4</div>
+        <div class="stat-label">In revisione</div>
+        <div class="stat-delta neutral">Stabili</div>
+      </div>
+    </div>
+
+    <!-- Crea subito -->
+    <div class="section-header">
+      <span class="section-title">Crea nuovo</span>
+    </div>
+    <div class="quick-create">
+      <div class="quick-card" onclick="goEditor()">
+        <div class="quick-card-icon" style="background:#eff6ff">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#3b82f6" stroke-width="1.4"><rect x="2" y="2" width="14" height="14" rx="2"/><path d="M5 6h8M5 9h8M5 12h5"/></svg>
+        </div>
+        <div class="quick-card-name">Pagina</div>
+        <div class="quick-card-desc">Contenuto statico con page builder</div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-card-icon" style="background:#fef3c7">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#d97706" stroke-width="1.4"><circle cx="9" cy="7" r="3.5"/><path d="M2 16c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg>
+        </div>
+        <div class="quick-card-name">Articolo News</div>
+        <div class="quick-card-desc">Post con editor di testo ricco</div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-card-icon" style="background:#f0fdf4">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#16a34a" stroke-width="1.4"><path d="M2 14V7l7-4 7 4v7l-7 4-7-4z"/></svg>
+        </div>
+        <div class="quick-card-name">Prodotto</div>
+        <div class="quick-card-desc">Scheda prodotto con media</div>
+      </div>
+      <div class="quick-card">
+        <div class="quick-card-icon" style="background:#fdf4ff">
+          <svg viewBox="0 0 18 18" fill="none" stroke="#9333ea" stroke-width="1.4"><rect x="2" y="4" width="14" height="12" rx="2"/><path d="M6 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1M9 10V8M6 10h6"/></svg>
+        </div>
+        <div class="quick-card-name">Evento</div>
+        <div class="quick-card-desc">Con data, luogo e iscrizioni</div>
+      </div>
+    </div>
+
+    <!-- Two col -->
+    <div class="two-col">
+      <div>
+        <div class="section-header">
+          <span class="section-title">Modificati di recente</span>
+          <span class="section-count">54 totali</span>
+          <span class="section-action" onclick="goList()">Vedi tutti →</span>
+        </div>
+        <div class="doc-list">
+          <div class="doc-row" onclick="goEditor()">
+            <div class="doc-type-icon icon-page">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">Homepage</div>
+              <div class="doc-meta">
+                <span>Pagina</span><span class="doc-meta-sep">·</span>
+                <span>Max</span>
+              </div>
+            </div>
+            <div class="doc-status status-published">
+              <div class="status-dot"></div>
+              Pubblicata
+            </div>
+            <div class="doc-time">5 min fa</div>
+            <div class="doc-actions">
+              <div class="doc-action-btn" title="Modifica">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+              </div>
+              <div class="doc-action-btn" title="Duplica">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1 1 0 0 1 1-1h8"/></svg>
+              </div>
+            </div>
+          </div>
+
+          <div class="doc-row" onclick="goEditor()">
+            <div class="doc-type-icon icon-news">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">Nuovo laboratorio aperto a Bologna</div>
+              <div class="doc-meta">
+                <span>News</span><span class="doc-meta-sep">·</span><span>Max</span>
+              </div>
+            </div>
+            <div class="doc-status status-draft">
+              <div class="status-dot"></div>
+              Bozza
+            </div>
+            <div class="doc-time">2 ore fa</div>
+            <div class="doc-actions">
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg></div>
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1 1 0 0 1 1-1h8"/></svg></div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-type-icon icon-page">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">Chi siamo</div>
+              <div class="doc-meta"><span>Pagina</span><span class="doc-meta-sep">·</span><span>Max</span></div>
+            </div>
+            <div class="doc-status status-review">
+              <div class="status-dot"></div>
+              Revisione
+            </div>
+            <div class="doc-time">ieri</div>
+            <div class="doc-actions">
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg></div>
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1 1 0 0 1 1-1h8"/></svg></div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-type-icon icon-product">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">Hederae Design System</div>
+              <div class="doc-meta"><span>Prodotto</span><span class="doc-meta-sep">·</span><span>Max</span></div>
+            </div>
+            <div class="doc-status status-published">
+              <div class="status-dot"></div>
+              Pubblicato
+            </div>
+            <div class="doc-time">2 gg fa</div>
+            <div class="doc-actions">
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg></div>
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1 1 0 0 1 1-1h8"/></svg></div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-type-icon icon-news">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+            </div>
+            <div class="doc-info">
+              <div class="doc-title">Recap evento: Sostenibilità 2025</div>
+              <div class="doc-meta"><span>News</span><span class="doc-meta-sep">·</span><span>Max</span></div>
+            </div>
+            <div class="doc-status status-published">
+              <div class="status-dot"></div>
+              Pubblicato
+            </div>
+            <div class="doc-time">3 gg fa</div>
+            <div class="doc-actions">
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg></div>
+              <div class="doc-action-btn"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="5" width="9" height="9" rx="1.5"/><path d="M2 11V3a1 1 0 0 1 1-1h8"/></svg></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right column -->
+      <div>
+        <div class="section-header" style="margin-bottom:16px">
+          <span class="section-title">Attività</span>
+        </div>
+        <div class="doc-list" style="margin-bottom:24px">
+          <div class="activity-list" style="padding:12px 16px">
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:#013E39">M</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Max</strong> ha pubblicato <strong>Homepage</strong></div>
+                <div class="activity-time">5 minuti fa</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:#6366f1">F</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Fabrizio</strong> ha creato <strong>Nuovo laboratorio…</strong></div>
+                <div class="activity-time">2 ore fa</div>
+              </div>
+            </div>
+            <div class="activity-item">
+              <div class="activity-avatar" style="background:#f59e0b">M</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Max</strong> ha modificato <strong>Chi siamo</strong></div>
+                <div class="activity-time">ieri, 16:40</div>
+              </div>
+            </div>
+            <div class="activity-item" style="border:none">
+              <div class="activity-avatar" style="background:#16a34a">F</div>
+              <div class="activity-body">
+                <div class="activity-text"><strong>Fabrizio</strong> ha caricato 3 immagini nella media library</div>
+                <div class="activity-time">ieri, 11:20</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="section-header" style="margin-bottom:12px">
+          <span class="section-title">Scorciatoie</span>
+        </div>
+        <div class="shortcut-list">
+          <div class="shortcut-item" onclick="goEditor()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg>
+            Nuova pagina
+            <span class="shortcut-kbd">N P</span>
+          </div>
+          <div class="shortcut-item">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4"/><path d="M10.5 10.5l3 3"/></svg>
+            Cerca documenti
+            <span class="shortcut-kbd">⌘K</span>
+          </div>
+          <div class="shortcut-item">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+            Media library
+            <span class="shortcut-kbd">⌘M</span>
+          </div>
+          <div class="shortcut-item">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12M5 8h6M4 12h8"/></svg>
+            Vedi tutto pubblicato
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  function nav(el) {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+  }
+  function goEditor() {
+    window.location.href = 'hederae-cms-sanity-editor.html';
+  }
+  function goList() {
+    // Simula click su Pagine
+    document.querySelectorAll('.nav-item')[1].click();
+  }
+</script>
+</body>
+</html>
