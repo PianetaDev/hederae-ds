@@ -17,10 +17,10 @@ interfaccia che si semplifica scendendo di tier.
 
 | Tier | Cliente tipo | Collezioni | AI | Workflow | Ruoli |
 |---|---|---|---|---|---|
-| **T1** | EPOS ERIC, Enti di ricerca | 7+ (Documenti, Pubblicazioni, News, Eventi, TCS, Org, Pagine) | ✓ Pipeline AI | Bozza → Revisione → Pubblicato | Admin / Content Manager / Editor |
+| **T1** | EPOS ERIC, SUSDEF, Fondazioni complesse | 7+ (Documenti, Pubblicazioni, News, Eventi, Aree, Org, Pagine) | ✓ Pipeline AI | Bozza → Revisione → Pubblicato | Admin / Content Manager / Editor |
 | **T2** | Fondazioni, NGO strutturate | 4–5 (Documenti, News, Settori, Formazione, Pagine) | Opzionale | Bozza → Pubblicato | Admin / Editor |
 | **T3** | Associazioni, PMI | 3 (Pagine, News, Servizi) | — | Bozza → Pubblicato | Admin / Editor |
-| **T4** | Piccole imprese, studi, SUSDEF | 2 (Pagine, News) | — | Bozza → Pubblicato | Unico utente |
+| **T4** | Piccole imprese, studi professionali | 2 (Pagine, News) | — | Bozza → Pubblicato | Unico utente |
 
 ### Viste disponibili (interattive)
 Ogni story mostra un admin interattivo con sidebar nav cliccabile:
@@ -101,7 +101,7 @@ export const T4_Dashboard = {
   render: () => templateStory({ ...base, src: 'hederae-admin-t4.html', label: 'Admin T4 · Dashboard', state: 'Dashboard' }),
   parameters: {
     viewport: { defaultViewport: 'desktop' },
-    docs: { description: { story: 'Dashboard T4 · Susdef: welcome card, widget performance + CO₂, stat contenuti, ultimi aggiornamenti. Stessa base Hederae DS di EPOS, UX semplificata.' } },
+    docs: { description: { story: 'Dashboard T4 · piccola impresa (demo: Studio Moretti): welcome card, widget performance + CO₂, stat contenuti, ultimi aggiornamenti. Stessa base Hederae DS, UX semplificata al massimo.' } },
   },
 };
 
