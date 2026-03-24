@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae CMS — Pattern Editor</title>
+<style>
+  /* ── TOKENS ─────────────────────────────────────────── */
+  :root {
+    --green-dark:   #013E39;
+    --green-mid:    #025E58;
+    --accent:       #D8EC28;
+    --white:        #FFFFFF;
+    --surface:      #F5F6F4;
+    --surface-2:    #EBEBEA;
+    --border:       #E2E4E0;
+    --border-strong:#C4C6C0;
+    --text:         #1A1A1A;
+    --text-2:       #555550;
+    --text-3:       #8A8C86;
+    --radius:       6px;
+    --radius-sm:    4px;
+    --shadow-sm:    0 1px 3px rgba(0,0,0,.07);
+    --shadow-md:    0 4px 20px rgba(0,0,0,.10);
+    --font:         'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono:    'IBM Plex Mono', monospace;
+    --topbar-h:     52px;
+    --fields-w:     300px;
+  }
+  *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+  body {
+    font-family: var(--font);
+    background: var(--surface);
+    color: var(--text);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    font-size: 14px;
+  }
+
+  /* ── TOP BAR ─────────────────────────────────────────── */
+  .topbar {
+    height: var(--topbar-h);
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center;
+    padding: 0 16px;
+    gap: 12px;
+    flex-shrink: 0;
+    z-index: 10;
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 6px;
+    padding: 5px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    background: none; cursor: pointer;
+    font-family: var(--font); font-size: 12px; color: var(--text-2);
+    text-decoration: none;
+    transition: all .15s;
+  }
+  .back-btn:hover { border-color: var(--border-strong); color: var(--text); }
+
+  .topbar-divider { width: 1px; height: 20px; background: var(--border); }
+
+  .pattern-name-input {
+    flex: 1;
+    border: none; background: none; outline: none;
+    font-family: var(--font); font-size: 15px; font-weight: 700;
+    color: var(--text);
+    min-width: 0;
+  }
+  .pattern-name-input::placeholder { color: var(--text-3); font-weight: 400; }
+
+  .ds-badge {
+    padding: 3px 8px;
+    background: rgba(1,62,57,.08);
+    border: 1px solid rgba(1,62,57,.15);
+    border-radius: 100px;
+    font-size: 10px; font-weight: 600; letter-spacing: .5px;
+    color: var(--green-dark); text-transform: uppercase;
+    flex-shrink: 0;
+  }
+
+  .topbar-right {
+    display: flex; align-items: center; gap: 8px;
+    margin-left: auto;
+  }
+  .btn {
+    padding: 6px 14px;
+    border-radius: var(--radius-sm);
+    font-family: var(--font); font-size: 12px; font-weight: 600;
+    cursor: pointer; transition: all .15s;
+  }
+  .btn-ghost {
+    border: 1px solid var(--border-strong);
+    background: none; color: var(--text-2);
+  }
+  .btn-ghost:hover { background: var(--surface); color: var(--text); }
+  .btn-primary {
+    border: none;
+    background: var(--green-dark); color: #fff;
+  }
+  .btn-primary:hover { background: var(--green-mid); }
+
+  .viewport-switcher {
+    display: flex;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+  }
+  .vp-btn {
+    padding: 5px 9px;
+    border: none; background: none; cursor: pointer;
+    color: var(--text-3); font-size: 11px;
+    transition: background .15s, color .15s;
+    display: flex; align-items: center;
+  }
+  .vp-btn.active { background: var(--surface); color: var(--text); }
+  .vp-btn + .vp-btn { border-left: 1px solid var(--border); }
+
+  /* ── BODY ────────────────────────────────────────────── */
+  .editor-body {
+    flex: 1;
+    display: flex;
+    overflow: hidden;
+  }
+
+  /* ── CANVAS AREA ─────────────────────────────────────── */
+  .canvas-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow: hidden;
+    padding: 24px;
+    gap: 16px;
+    position: relative;
+  }
+  .canvas-label {
+    font-size: 11px; font-weight: 600; text-transform: uppercase;
+    letter-spacing: .6px; color: var(--text-3);
+  }
+
+  .canvas-frame {
+    flex: 1;
+    width: 100%;
+    max-width: 1024px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    transition: max-width .3s;
+  }
+  .canvas-frame.viewport-mobile { max-width: 375px; }
+  .canvas-frame.viewport-tablet { max-width: 768px; }
+
+  .canvas-url-bar {
+    height: 32px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; padding: 0 12px; gap: 8px;
+    flex-shrink: 0;
+  }
+  .url-dots { display: flex; gap: 4px; }
+  .url-dot { width: 8px; height: 8px; border-radius: 50%; }
+  .url-dot:nth-child(1) { background: #FF5F56; }
+  .url-dot:nth-child(2) { background: #FFBD2E; }
+  .url-dot:nth-child(3) { background: #27C93F; }
+  .url-text {
+    flex: 1; font-size: 11px; font-family: var(--font-mono);
+    color: var(--text-3); text-align: center;
+  }
+
+  /* ── CANVAS CONTENT (preview of a pattern) ───────────── */
+  .canvas-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0;
+  }
+
+  /* Pattern preview mock */
+  .preview-section {
+    padding: 60px 48px;
+    min-height: 400px;
+    display: grid;
+    gap: 32px;
+    transition: all .3s;
+  }
+  .preview-section.layout-2col { grid-template-columns: 1fr 1fr; }
+  .preview-section.layout-1col { grid-template-columns: 1fr; max-width: 680px; margin: 0 auto; }
+
+  .preview-col { display: flex; flex-direction: column; gap: 16px; }
+
+  .preview-tag {
+    display: inline-block;
+    padding: 3px 8px;
+    background: rgba(216,236,40,.25);
+    border-radius: 3px;
+    font-size: 10px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase;
+    color: var(--green-dark);
+    width: fit-content;
+  }
+  .preview-h1 {
+    font-size: 28px; font-weight: 800; line-height: 1.15;
+    color: var(--text);
+  }
+  .preview-body {
+    font-size: 14px; line-height: 1.6; color: var(--text-2);
+  }
+  .preview-cta {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 10px 20px;
+    background: var(--green-dark); color: #fff;
+    border-radius: var(--radius-sm);
+    font-size: 13px; font-weight: 600;
+    width: fit-content;
+    cursor: pointer;
+  }
+  .preview-img-placeholder {
+    flex: 1;
+    min-height: 220px;
+    background: linear-gradient(135deg, var(--surface-2) 0%, var(--surface) 100%);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    color: var(--text-3); font-size: 12px;
+    flex-direction: column; gap: 8px;
+  }
+  .img-placeholder-icon { font-size: 28px; opacity: .3; }
+
+  /* Hover highlight for editing */
+  .preview-col {
+    border-radius: var(--radius-sm);
+    padding: 12px;
+    margin: -12px;
+    transition: background .15s;
+    cursor: pointer;
+    position: relative;
+  }
+  .preview-col:hover { background: rgba(1,62,57,.04); }
+  .preview-col.selected { background: rgba(1,62,57,.06); outline: 2px solid rgba(1,62,57,.25); outline-offset: 0; border-radius: var(--radius-sm); }
+  .col-edit-badge {
+    position: absolute; top: -8px; right: -8px;
+    display: none;
+    padding: 2px 6px;
+    background: var(--green-dark); color: #fff;
+    border-radius: 3px; font-size: 9px; font-weight: 700; letter-spacing: .4px;
+  }
+  .preview-col.selected .col-edit-badge { display: block; }
+
+  /* ── FIELDS PANEL ────────────────────────────────────── */
+  .fields-panel {
+    width: var(--fields-w);
+    flex-shrink: 0;
+    background: var(--white);
+    border-left: 1px solid var(--border);
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+  .fields-header {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    flex-shrink: 0;
+  }
+  .fields-title { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .6px; color: var(--text-3); }
+  .fields-subtitle { font-size: 13px; font-weight: 600; color: var(--text); margin-top: 2px; }
+
+  .fields-body { flex: 1; overflow-y: auto; padding: 16px; }
+
+  .field-group { margin-bottom: 20px; }
+  .field-label {
+    display: block;
+    font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;
+    color: var(--text-3); margin-bottom: 6px;
+  }
+  .field-input {
+    width: 100%; padding: 8px 10px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    font-family: var(--font); font-size: 13px; color: var(--text);
+    background: var(--white); outline: none;
+    transition: border-color .15s;
+  }
+  .field-input:focus { border-color: var(--green-dark); }
+  textarea.field-input { resize: vertical; min-height: 80px; line-height: 1.5; }
+  .field-hint { font-size: 11px; color: var(--text-3); margin-top: 4px; }
+
+  /* Column selector */
+  .col-selector {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 8px; margin-top: 2px;
+  }
+  .col-option {
+    padding: 10px 8px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    text-align: center;
+    transition: all .15s;
+  }
+  .col-option:hover { border-color: var(--border-strong); }
+  .col-option.selected {
+    border-color: var(--green-dark);
+    background: rgba(1,62,57,.04);
+  }
+  .col-icon {
+    height: 24px; display: flex; align-items: center; justify-content: center;
+    gap: 3px; margin-bottom: 5px;
+  }
+  .col-bar { height: 14px; background: var(--border-strong); border-radius: 2px; }
+  .col-option.selected .col-bar { background: var(--green-dark); }
+  .col-label { font-size: 10px; font-weight: 600; color: var(--text-3); }
+  .col-option.selected .col-label { color: var(--green-dark); }
+
+  /* Block list in fields panel */
+  .blocks-list { display: flex; flex-direction: column; gap: 6px; }
+  .block-row {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 10px;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    background: var(--surface);
+    transition: border-color .15s, background .15s;
+  }
+  .block-row.active { border-color: var(--green-dark); background: rgba(1,62,57,.04); }
+  .block-row:hover:not(.active) { background: var(--surface-2); }
+  .block-row-icon { width: 20px; height: 20px; border-radius: 3px; background: var(--border-strong); flex-shrink: 0; position: relative; }
+  .block-row-icon.type-text::after { content:'T'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color: var(--text-2); }
+  .block-row-icon.type-form { background: rgba(216,236,40,.35); }
+  .block-row-icon.type-form::after { content:'@'; position:absolute; inset:0; display:flex; align-items:center; justify-content:center; font-size:9px; font-weight:800; color: var(--green-dark); }
+  .block-row-label { flex: 1; font-size: 12px; color: var(--text); font-weight: 500; }
+  .block-row-drag { color: var(--text-3); font-size: 11px; }
+
+  .fields-section-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .7px;
+    color: var(--text-3); margin-bottom: 8px; margin-top: 4px;
+  }
+
+  /* Divider */
+  .fields-divider { height: 1px; background: var(--border); margin: 16px -16px; }
+
+  /* Add block row */
+  .add-block-row {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 8px;
+    border: 1px dashed var(--border-strong);
+    border-radius: var(--radius-sm);
+    background: transparent;
+    color: var(--text-3); font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all .15s; width: 100%;
+  }
+  .add-block-row:hover { border-color: var(--green-dark); color: var(--green-dark); background: rgba(1,62,57,.02); }
+
+  /* Metadata section */
+  .metadata-row {
+    display: flex; justify-content: space-between; align-items: center;
+    font-size: 11px; margin-bottom: 6px;
+  }
+  .meta-label { color: var(--text-3); }
+  .meta-val   { color: var(--text-2); font-weight: 500; }
+  .meta-badge {
+    padding: 2px 6px; border-radius: 3px;
+    font-size: 10px; font-weight: 600;
+    background: rgba(1,62,57,.08); color: var(--green-dark);
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════ TOP BAR ═══════════════ -->
+<header class="topbar">
+  <a class="back-btn" href="#">
+    ← CMS
+  </a>
+  <div class="topbar-divider"></div>
+  <input class="pattern-name-input" type="text" value="2 colonne (testo / testo)" placeholder="Nome del pattern...">
+  <span class="ds-badge">Design System</span>
+
+  <div class="topbar-right">
+    <div class="viewport-switcher">
+      <button class="vp-btn" onclick="setViewport('mobile', this)" title="Mobile">
+        <svg width="12" height="14" viewBox="0 0 12 14" fill="none"><rect x="1" y="1" width="10" height="12" rx="1.5" stroke="currentColor" stroke-width="1.3"/><line x1="5" y1="11" x2="7" y2="11" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+      <button class="vp-btn" onclick="setViewport('tablet', this)" title="Tablet">
+        <svg width="14" height="12" viewBox="0 0 14 12" fill="none"><rect x="1" y="1" width="12" height="10" rx="1.5" stroke="currentColor" stroke-width="1.3"/><line x1="11" y1="6" x2="12.5" y2="6" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+      <button class="vp-btn active" onclick="setViewport('desktop', this)" title="Desktop">
+        <svg width="16" height="12" viewBox="0 0 16 12" fill="none"><rect x="1" y="1" width="14" height="9" rx="1.5" stroke="currentColor" stroke-width="1.3"/><path d="M5 11h6M8 10v1" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+    <button class="btn btn-ghost">Anteprima</button>
+    <button class="btn btn-primary">Salva pattern</button>
+  </div>
+</header>
+
+<!-- ═══════════════ BODY ═══════════════ -->
+<div class="editor-body">
+
+  <!-- CANVAS -->
+  <div class="canvas-area">
+    <div class="canvas-label">Anteprima live</div>
+
+    <div class="canvas-frame" id="canvas">
+      <!-- Browser chrome -->
+      <div class="canvas-url-bar">
+        <div class="url-dots">
+          <div class="url-dot"></div>
+          <div class="url-dot"></div>
+          <div class="url-dot"></div>
+        </div>
+        <div class="url-text">cornertable.agency/preview/pattern/1</div>
+      </div>
+
+      <!-- Pattern preview content -->
+      <div class="canvas-content">
+        <div class="preview-section layout-2col" id="preview-layout">
+
+          <!-- Col 1: Text -->
+          <div class="preview-col" id="col-1" onclick="selectCol('col-1')">
+            <div class="col-edit-badge">COLONNA 1</div>
+            <div class="preview-tag">Chi siamo</div>
+            <div class="preview-h1" id="prev-title">Design che parla per te.</div>
+            <div class="preview-body" id="prev-body">Progettiamo esperienze digitali per ristoranti e locali che vogliono distinguersi dalla concorrenza. Dal menu digitale al sito web, ogni touchpoint racconta la tua storia.</div>
+            <div class="preview-cta">Scopri di più →</div>
+          </div>
+
+          <!-- Col 2: Text or placeholder -->
+          <div class="preview-col" id="col-2" onclick="selectCol('col-2')">
+            <div class="col-edit-badge">COLONNA 2</div>
+            <div class="preview-h1" style="font-size:20px; color: var(--text-2);">Il nostro approccio</div>
+            <div class="preview-body">Iniziamo sempre dall'identità del locale. Studiamo il menu, gli spazi, la clientela. Poi costruiamo un sistema visivo che scala: dal biglietto da visita al sito, tutto coerente.</div>
+            <div class="preview-body" style="margin-top:-8px;">Ogni progetto è unico, ogni soluzione è cucita su misura.</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FIELDS PANEL -->
+  <aside class="fields-panel">
+    <div class="fields-header">
+      <div class="fields-title">Pattern</div>
+      <div class="fields-subtitle">2 colonne (testo / testo)</div>
+    </div>
+    <div class="fields-body">
+
+      <!-- Pattern metadata -->
+      <div class="field-group">
+        <label class="field-label">Nome interno</label>
+        <input class="field-input" type="text" value="2 colonne (testo / testo)">
+        <div class="field-hint">Solo visibile in admin</div>
+      </div>
+      <div class="field-group">
+        <label class="field-label">Descrizione</label>
+        <textarea class="field-input" rows="2" placeholder="Note per il team..."></textarea>
+      </div>
+
+      <!-- Layout selector -->
+      <div class="field-group">
+        <label class="field-label">Layout</label>
+        <div class="col-selector">
+          <div class="col-option" onclick="setLayout('1col', this)">
+            <div class="col-icon"><div class="col-bar" style="flex:1;max-width:36px;"></div></div>
+            <div class="col-label">1 colonna</div>
+          </div>
+          <div class="col-option selected" onclick="setLayout('2col', this)">
+            <div class="col-icon">
+              <div class="col-bar" style="flex:1;"></div>
+              <div class="col-bar" style="flex:1;"></div>
+            </div>
+            <div class="col-label">2 colonne</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fields-divider"></div>
+
+      <!-- Blocchi -->
+      <div class="fields-section-label">Blocchi nel pattern</div>
+      <div class="blocks-list">
+        <div class="block-row active" onclick="selectBlock(this)">
+          <div class="block-row-icon type-text">T</div>
+          <div class="block-row-label">Testo + CTA</div>
+          <div class="block-row-drag">⠿</div>
+        </div>
+        <div class="block-row" onclick="selectBlock(this)">
+          <div class="block-row-icon type-text">T</div>
+          <div class="block-row-label">Testo libero</div>
+          <div class="block-row-drag">⠿</div>
+        </div>
+        <button class="add-block-row" style="margin-top:4px;">
+          + Aggiungi blocco
+        </button>
+      </div>
+
+      <div class="fields-divider"></div>
+
+      <!-- Metadata -->
+      <div class="fields-section-label">Info</div>
+      <div class="metadata-row">
+        <span class="meta-label">Usato in</span>
+        <span class="meta-val">2 pagine</span>
+      </div>
+      <div class="metadata-row">
+        <span class="meta-label">Ultima modifica</span>
+        <span class="meta-val">ieri</span>
+      </div>
+      <div class="metadata-row">
+        <span class="meta-label">Tipo</span>
+        <span class="meta-badge">Split Section</span>
+      </div>
+
+    </div>
+  </aside>
+
+</div>
+
+<script>
+  function setViewport(mode, btn) {
+    document.querySelectorAll('.vp-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const canvas = document.getElementById('canvas');
+    canvas.className = 'canvas-frame';
+    if (mode === 'mobile') canvas.classList.add('viewport-mobile');
+    if (mode === 'tablet') canvas.classList.add('viewport-tablet');
+  }
+
+  function selectCol(id) {
+    document.querySelectorAll('.preview-col').forEach(c => c.classList.remove('selected'));
+    document.getElementById(id).classList.add('selected');
+  }
+
+  function selectBlock(el) {
+    document.querySelectorAll('.block-row').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function setLayout(mode, el) {
+    document.querySelectorAll('.col-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+    const layout = document.getElementById('preview-layout');
+    if (mode === '1col') {
+      layout.className = 'preview-section layout-1col';
+      document.getElementById('col-2').style.display = 'none';
+    } else {
+      layout.className = 'preview-section layout-2col';
+      document.getElementById('col-2').style.display = 'flex';
+    }
+  }
+</script>
+</body>
+</html>

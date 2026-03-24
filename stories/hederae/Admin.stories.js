@@ -125,6 +125,89 @@ export const T4_Editor = {
   },
 };
 
+/* ─── CMS FLOW (Cornertable / Fabrizio) ─── */
+
+export const CMS_PageEditor = {
+  name: '✦ CMS · Page Editor',
+  render: () => templateStory({ ...base, src: 'hederae-cms-page-editor.html', label: 'CMS · Page Editor', state: 'Editor' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Redesign del page editor di Fabrizio — problemi risolti:**
+
+- Pattern Blocks con nome + thumbnail al posto di "Senza titolo"
+- Progressive disclosure: SEO/Config in rail laterale, non inline
+- Pattern picker drawer (slide-in) invece di bottoni esposti
+- Status/Pubblica sempre visibili nel rail destro senza scroll
+- Struttura pulita: Title → Layout → Add block
+    `.trim() } },
+  },
+};
+
+export const CMS_PatternEditor = {
+  name: '✦ CMS · Pattern Editor (DS)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-pattern-editor.html', label: 'CMS · Pattern Editor', state: 'Canvas' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Nuovo strumento separato per il Design System — white theme intenzionale:**
+
+- Canvas live preview al centro (browser chrome mockup)
+- Fields panel a destra: layout selector, blocchi, metadata
+- Viewport switcher (mobile/tablet/desktop) nella topbar
+- Torna al CMS con un click — differenza visiva segnala "sei in modalità design"
+- Click su colonna nel canvas = selezione + edit inline
+    `.trim() } },
+  },
+};
+
+export const CMS_GlobalsEditor = {
+  name: '✦ CMS · Globals Editor',
+  render: () => templateStory({ ...base, src: 'hederae-cms-globals-editor.html', label: 'CMS · Globals', state: 'Navigazione' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Globals riorganizzati in 3 categorie semantiche invece di 4 voci flat:**
+
+- **Identità del sito**: Logo (chiaro/scuro), Favicon auto-resize, SEO globale
+- **Navigazione**: Header (nav items drag&drop), Footer (copyright, link)
+- **Comunicazione**: Email settings, Cookie banner, Tracking scripts con toggle
+    `.trim() } },
+  },
+};
+
+export const CMS_Confronto_OldVsNew = {
+  name: '↔ CMS · Prima vs Dopo',
+  render: () => {
+    const container = document.createElement('div');
+    container.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;height:100vh;gap:0;';
+    const labelStyle = 'position:absolute;top:8px;left:50%;transform:translateX(-50%);font-family:monospace;font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;z-index:10;white-space:nowrap;';
+    const items = [
+      { src: 'hederae-admin-t4.html', label: 'T4 · Attuale (Fabrizio)', bg: '#CC3300', color: '#fff' },
+      { src: 'hederae-cms-page-editor.html', label: 'Hederae · Redesign', bg: '#013E39', color: '#D8EC28' },
+    ];
+    items.forEach(({ src, label, bg, color }, i) => {
+      const wrap = document.createElement('div');
+      wrap.style.cssText = 'position:relative;border-right:' + (i===0?'1px solid #ddd':'none');
+      const lbl = document.createElement('div');
+      lbl.style.cssText = labelStyle + `background:${bg};color:${color};`;
+      lbl.textContent = label;
+      const iframe = document.createElement('iframe');
+      iframe.src = src;
+      iframe.style.cssText = 'width:100%;height:100%;border:none;';
+      wrap.appendChild(lbl);
+      wrap.appendChild(iframe);
+      container.appendChild(wrap);
+    });
+    return container;
+  },
+  parameters: {
+    layout: 'fullscreen',
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: 'Side-by-side: T4 attuale (Fabrizio POC) vs Page Editor redesign Hederae. Stessa funzione, UX radicalmente diversa.' } },
+  },
+};
+
 /* ─── CONFRONTO ─── */
 export const Confronto_T1_vs_T4 = {
   name: '↔ Confronto T1 vs T4',

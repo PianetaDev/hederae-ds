@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae CMS — Globals Editor</title>
+<style>
+  :root {
+    --sidebar-bg:    #013E39;
+    --sidebar-w:     220px;
+    --accent:        #D8EC28;
+    --surface:       #F5F6F4;
+    --surface-2:     #EFEFED;
+    --white:         #FFFFFF;
+    --border:        #E2E4E0;
+    --border-strong: #C4C6C0;
+    --text:          #1A1A1A;
+    --text-2:        #555550;
+    --text-3:        #8A8C86;
+    --green-dark:    #013E39;
+    --green-mid:     #025E58;
+    --radius:        6px;
+    --radius-sm:     4px;
+    --shadow-sm:     0 1px 3px rgba(0,0,0,.07);
+    --font:          'IBM Plex Sans', system-ui, sans-serif;
+    --font-mono:     'IBM Plex Mono', monospace;
+  }
+  *, *::before, *::after { box-sizing:border-box; margin:0; padding:0; }
+  body { font-family:var(--font); background:var(--surface); color:var(--text); height:100vh; display:flex; overflow:hidden; font-size:14px; }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w); background: var(--sidebar-bg);
+    display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
+  }
+  .sidebar-logo {
+    padding: 18px 16px 14px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 8px;
+  }
+  .logo-mark {
+    width: 28px; height: 28px; background: var(--accent); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 700; color: var(--green-dark); flex-shrink: 0;
+  }
+  .logo-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); }
+  .logo-sub  { font-size: 10px; color: rgba(255,255,255,.4); margin-top:1px; }
+  .nav-label {
+    padding: 6px 16px 4px;
+    font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .8px;
+    color: rgba(255,255,255,.35);
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px; padding: 7px 16px;
+    font-size: 13px; color: rgba(255,255,255,.65);
+    cursor: pointer; text-decoration: none; position: relative;
+    transition: background .15s, color .15s;
+  }
+  .nav-item:hover  { background: rgba(255,255,255,.06); color: rgba(255,255,255,.9); }
+  .nav-item.active { background: rgba(255,255,255,.10); color:#fff; font-weight:500; }
+  .nav-item.active::before {
+    content:''; position:absolute; left:0; top:6px; bottom:6px;
+    width:3px; background:var(--accent); border-radius:0 2px 2px 0;
+  }
+  .nav-icon { width:16px; height:16px; opacity:.65; flex-shrink:0; }
+  .nav-item.active .nav-icon { opacity:1; }
+  .sidebar-bottom {
+    margin-top:auto; padding:12px 16px;
+    border-top:1px solid rgba(255,255,255,.08);
+    display:flex; align-items:center; gap:8px;
+  }
+  .avatar { width:28px; height:28px; border-radius:50%; background:var(--green-mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; flex-shrink:0; }
+  .sidebar-user-name { font-size:12px; color:rgba(255,255,255,.7); }
+  .sidebar-user-role { font-size:10px; color:rgba(255,255,255,.35); }
+
+  /* MAIN */
+  .editor-wrapper { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
+
+  /* TOP BAR */
+  .topbar {
+    height:48px; background:var(--white); border-bottom:1px solid var(--border);
+    display:flex; align-items:center; padding:0 24px; gap:12px; flex-shrink:0;
+  }
+  .breadcrumb { display:flex; align-items:center; gap:6px; font-size:12px; color:var(--text-3); }
+  .breadcrumb a { color:var(--text-3); text-decoration:none; }
+  .breadcrumb a:hover { color:var(--text-2); }
+  .breadcrumb-current { color:var(--text); font-weight:500; }
+  .breadcrumb-sep { color:var(--border-strong); }
+  .topbar-right { margin-left:auto; display:flex; align-items:center; gap:8px; }
+  .btn { padding:6px 14px; border-radius:var(--radius-sm); font-family:var(--font); font-size:12px; font-weight:600; cursor:pointer; transition:all .15s; }
+  .btn-primary { border:none; background:var(--green-dark); color:#fff; }
+  .btn-primary:hover { background:var(--green-mid); }
+  .btn-ghost { border:1px solid var(--border-strong); background:none; color:var(--text-2); }
+  .btn-ghost:hover { background:var(--surface); color:var(--text); }
+
+  /* GLOBALS CATEGORY TABS */
+  .category-bar {
+    background: var(--white);
+    border-bottom: 1px solid var(--border);
+    padding: 0 24px;
+    display: flex; gap: 0;
+    flex-shrink: 0;
+  }
+  .cat-tab {
+    padding: 12px 16px;
+    font-size: 13px; font-weight: 500; color: var(--text-3);
+    border: none; background: none; cursor: pointer;
+    border-bottom: 2px solid transparent; margin-bottom: -1px;
+    transition: color .15s, border-color .15s;
+    display: flex; align-items: center; gap: 7px;
+  }
+  .cat-tab:hover:not(.active)  { color: var(--text-2); }
+  .cat-tab.active { color: var(--green-dark); border-bottom-color: var(--green-dark); font-weight: 600; }
+  .cat-icon { width: 14px; height: 14px; opacity: .6; }
+  .cat-tab.active .cat-icon { opacity: 1; }
+
+  /* CONTENT AREA */
+  .content-area {
+    flex: 1; overflow-y: auto;
+    padding: 28px 24px 48px;
+    max-width: 720px;
+  }
+
+  .cat-panel { display: none; }
+  .cat-panel.active { display: block; }
+
+  /* PAGE HEADER */
+  .panel-heading {
+    font-size: 18px; font-weight: 700; color: var(--text);
+    margin-bottom: 4px;
+  }
+  .panel-desc { font-size: 13px; color: var(--text-3); margin-bottom: 28px; }
+
+  /* CARD */
+  .settings-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: var(--radius);
+    margin-bottom: 16px; overflow: hidden;
+  }
+  .card-header {
+    padding: 14px 18px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .card-title { font-size: 13px; font-weight: 700; color: var(--text); }
+  .card-desc  { font-size: 11px; color: var(--text-3); margin-top: 2px; }
+  .card-body  { padding: 18px; }
+
+  /* FIELD */
+  .field-group { margin-bottom: 18px; }
+  .field-group:last-child { margin-bottom:0; }
+  .field-label {
+    display:block; font-size:11px; font-weight:600; text-transform:uppercase;
+    letter-spacing:.5px; color:var(--text-3); margin-bottom:5px;
+  }
+  .field-row { display:flex; gap:12px; }
+  .field-row .field-group { flex:1; margin-bottom:0; }
+  .field-input {
+    width:100%; padding:8px 10px;
+    border:1px solid var(--border-strong); border-radius:var(--radius-sm);
+    font-family:var(--font); font-size:13px; color:var(--text);
+    background:var(--white); outline:none; transition:border-color .15s;
+  }
+  .field-input:focus { border-color:var(--green-dark); }
+  textarea.field-input { resize:vertical; min-height:80px; line-height:1.5; }
+  .field-hint { font-size:11px; color:var(--text-3); margin-top:4px; }
+
+  /* Logo upload */
+  .logo-upload-area {
+    display:flex; align-items:center; gap:14px;
+    padding:12px;
+    border:1px solid var(--border);
+    border-radius:var(--radius-sm);
+    background:var(--surface);
+  }
+  .logo-preview {
+    width:80px; height:44px; border-radius:var(--radius-sm);
+    background:var(--white); border:1px solid var(--border);
+    display:flex; align-items:center; justify-content:center;
+    font-size:11px; font-weight:700; color:var(--green-dark);
+    flex-shrink:0;
+  }
+  .logo-info { flex:1; }
+  .logo-filename { font-size:12px; font-weight:600; color:var(--text); }
+  .logo-meta { font-size:11px; color:var(--text-3); margin-top:2px; }
+  .logo-actions { display:flex; gap:6px; }
+  .logo-btn {
+    padding:5px 10px; font-size:11px; font-weight:500;
+    border-radius:var(--radius-sm); cursor:pointer;
+    transition:all .15s;
+  }
+  .logo-btn-replace { border:1px solid var(--border-strong); background:none; color:var(--text-2); }
+  .logo-btn-remove  { border:1px solid #E0B0B0; background:none; color:#C00; }
+  .logo-btn:hover   { opacity:.8; }
+
+  /* Nav items */
+  .nav-items-list { display:flex; flex-direction:column; gap:8px; }
+  .nav-item-row {
+    display:flex; align-items:center; gap:8px;
+    padding:8px 10px;
+    border:1px solid var(--border); border-radius:var(--radius-sm);
+    background:var(--surface);
+  }
+  .nav-item-drag { color:var(--text-3); cursor:grab; flex-shrink:0; }
+  .nav-item-inputs { flex:1; display:flex; gap:8px; }
+  .nav-item-input {
+    flex:1; padding:5px 8px;
+    border:1px solid var(--border); border-radius:var(--radius-sm);
+    font-family:var(--font); font-size:12px; color:var(--text);
+    background:var(--white); outline:none;
+  }
+  .nav-item-input:focus { border-color:var(--green-dark); }
+  .nav-item-remove { width:24px; height:24px; border:none; background:none; cursor:pointer; color:var(--text-3); border-radius:var(--radius-sm); transition:background .15s; display:flex; align-items:center; justify-content:center; font-size:14px; }
+  .nav-item-remove:hover { background:var(--surface-2); color:#C00; }
+
+  .add-item-btn {
+    display:flex; align-items:center; gap:6px;
+    padding:8px 10px;
+    border:1px dashed var(--border-strong);
+    border-radius:var(--radius-sm);
+    background:transparent; color:var(--text-3);
+    font-size:12px; font-weight:500; cursor:pointer;
+    width:100%; transition:all .15s;
+  }
+  .add-item-btn:hover { border-color:var(--green-dark); color:var(--green-dark); }
+
+  /* Toggle */
+  .toggle-row { display:flex; align-items:center; justify-content:space-between; padding:4px 0; }
+  .toggle-label { font-size:13px; color:var(--text); }
+  .toggle-desc  { font-size:11px; color:var(--text-3); margin-top:1px; }
+  .toggle {
+    position:relative; width:36px; height:20px; flex-shrink:0;
+  }
+  .toggle input { opacity:0; width:0; height:0; }
+  .toggle-slider {
+    position:absolute; inset:0;
+    background:var(--border-strong); border-radius:10px;
+    cursor:pointer; transition:background .2s;
+  }
+  .toggle-slider::after {
+    content:''; position:absolute; left:2px; top:2px;
+    width:16px; height:16px; border-radius:50%;
+    background:#fff; transition:transform .2s;
+    box-shadow:0 1px 3px rgba(0,0,0,.2);
+  }
+  .toggle input:checked + .toggle-slider { background:var(--green-dark); }
+  .toggle input:checked + .toggle-slider::after { transform:translateX(16px); }
+
+  /* Email template preview */
+  .email-preview {
+    border:1px solid var(--border); border-radius:var(--radius-sm);
+    overflow:hidden; font-size:12px;
+  }
+  .email-preview-header {
+    padding:10px 14px; background:var(--green-dark); color:#fff;
+    font-weight:600; font-size:11px; letter-spacing:.3px;
+  }
+  .email-preview-body { padding:14px; background:var(--white); color:var(--text-2); line-height:1.5; }
+  .email-preview-footer { padding:8px 14px; background:var(--surface); font-size:10px; color:var(--text-3); }
+
+  /* Tracking script row */
+  .script-row {
+    display:flex; align-items:center; gap:10px;
+    padding:8px 12px;
+    border:1px solid var(--border); border-radius:var(--radius-sm);
+    background:var(--surface); margin-bottom:6px;
+  }
+  .script-badge {
+    padding:2px 6px; border-radius:3px; font-size:10px; font-weight:700;
+    background:rgba(1,62,57,.10); color:var(--green-dark); flex-shrink:0;
+  }
+  .script-name { flex:1; font-size:12px; color:var(--text); font-weight:500; }
+  .script-status { font-size:10px; color:var(--text-3); }
+
+  /* Favicon grid */
+  .favicon-grid { display:flex; gap:10px; flex-wrap:wrap; }
+  .favicon-item {
+    display:flex; flex-direction:column; align-items:center; gap:4px;
+    padding:8px; border:1px solid var(--border); border-radius:var(--radius-sm);
+    background:var(--surface);
+  }
+  .favicon-box {
+    border-radius:3px; background:var(--green-dark);
+    display:flex; align-items:center; justify-content:center;
+    font-size:9px; font-weight:800; color:var(--accent);
+  }
+  .favicon-label { font-size:9px; color:var(--text-3); }
+</style>
+</head>
+<body>
+
+<!-- ═════════════════ SIDEBAR ═════════════════ -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="logo-mark">H</div>
+    <div>
+      <div class="logo-text">Hederae CMS</div>
+      <div class="logo-sub">cornertable.agency</div>
+    </div>
+  </div>
+  <nav>
+    <div class="nav-label">Collection</div>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="5" stroke="currentColor" stroke-width="1.5"/><circle cx="8" cy="8" r="2" fill="currentColor"/></svg>
+      Users
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="4" width="12" height="9" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1" stroke="currentColor" stroke-width="1.5"/></svg>
+      Media
+    </a>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="12" height="12" rx="1.5" stroke="currentColor" stroke-width="1.5"/><path d="M5 6h6M5 9h4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      Pages
+    </a>
+    <div class="nav-label" style="margin-top:8px;">Globali</div>
+    <a class="nav-item active" href="#">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.5"/><path d="M2 8h12M8 2a10 6 0 0 0 0 12M8 2a10 6 0 0 1 0 12" stroke="currentColor" stroke-width="1.5"/></svg>
+      Globali
+    </a>
+    <div class="nav-label" style="margin-top:8px;">Design System</div>
+    <a class="nav-item" href="#">
+      <svg class="nav-icon" viewBox="0 0 16 16" fill="none"><rect x="2" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="2" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="2" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/><rect x="9" y="9" width="5" height="5" rx="1" stroke="currentColor" stroke-width="1.5"/></svg>
+      Patterns
+    </a>
+  </nav>
+  <div class="sidebar-bottom">
+    <div class="avatar">YA</div>
+    <div>
+      <div class="sidebar-user-name">Yas</div>
+      <div class="sidebar-user-role">Admin</div>
+    </div>
+  </div>
+</aside>
+
+<!-- ═════════════════ EDITOR ═════════════════ -->
+<div class="editor-wrapper">
+
+  <!-- TOP BAR -->
+  <header class="topbar">
+    <nav class="breadcrumb">
+      <a href="#">Dashboard</a>
+      <span class="breadcrumb-sep">/</span>
+      <span class="breadcrumb-current">Globali</span>
+    </nav>
+    <div class="topbar-right">
+      <button class="btn btn-ghost">Anteprima</button>
+      <button class="btn btn-primary" id="save-btn">Salva</button>
+    </div>
+  </header>
+
+  <!-- CATEGORY TABS -->
+  <div class="category-bar">
+    <button class="cat-tab" onclick="switchCat('identity', this)">
+      <svg class="cat-icon" viewBox="0 0 14 14" fill="none"><circle cx="7" cy="7" r="5.5" stroke="currentColor" stroke-width="1.3"/><path d="M3 7h8M7 1.5C6 4 6 10 7 12.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Identità del sito
+    </button>
+    <button class="cat-tab active" onclick="switchCat('navigation', this)">
+      <svg class="cat-icon" viewBox="0 0 14 14" fill="none"><path d="M2 4h10M2 7h7M2 10h5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/></svg>
+      Navigazione
+    </button>
+    <button class="cat-tab" onclick="switchCat('communication', this)">
+      <svg class="cat-icon" viewBox="0 0 14 14" fill="none"><rect x="1.5" y="3" width="11" height="8" rx="1.2" stroke="currentColor" stroke-width="1.3"/><path d="M1.5 4.5 7 8l5.5-3.5" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Comunicazione
+    </button>
+  </div>
+
+  <!-- CONTENT PANELS -->
+  <div class="content-area">
+
+    <!-- ═══ IDENTITÀ ═══ -->
+    <div class="cat-panel" id="panel-identity">
+      <div class="panel-heading">Identità del sito</div>
+      <div class="panel-desc">Logo, nome, favicon e metadati globali.</div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Brand</div>
+            <div class="card-desc">Nome del sito e logo ufficiale</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-group">
+            <label class="field-label">Nome del sito</label>
+            <input class="field-input" type="text" value="Cornertable">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Logo (sfondo chiaro)</label>
+            <div class="logo-upload-area">
+              <div class="logo-preview">CORNER<br>TABLE</div>
+              <div class="logo-info">
+                <div class="logo-filename">logo-cornertable.svg</div>
+                <div class="logo-meta">8 KB — 88×50px — SVG</div>
+              </div>
+              <div class="logo-actions">
+                <button class="logo-btn logo-btn-replace">Sostituisci</button>
+                <button class="logo-btn logo-btn-remove">×</button>
+              </div>
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Logo (sfondo scuro)</label>
+            <div class="logo-upload-area" style="border-style:dashed;">
+              <div class="logo-preview" style="background:var(--surface-2); color:var(--text-3); font-size:10px; text-align:center;">Nessun<br>file</div>
+              <div class="logo-info">
+                <div class="logo-filename" style="color:var(--text-3);">Non caricato</div>
+                <div class="logo-meta">Per header/footer scuri</div>
+              </div>
+              <div class="logo-actions">
+                <button class="logo-btn logo-btn-replace" style="border-style:dashed;">Carica</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Favicon</div>
+            <div class="card-desc">Carica l'icona master 180×180 — le altre dimensioni vengono generate automaticamente</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="favicon-grid">
+            <div class="favicon-item">
+              <div class="favicon-box" style="width:32px;height:32px;">H</div>
+              <div class="favicon-label">32×32</div>
+            </div>
+            <div class="favicon-item">
+              <div class="favicon-box" style="width:48px;height:48px;font-size:14px;">H</div>
+              <div class="favicon-label">48×48</div>
+            </div>
+            <div class="favicon-item">
+              <div class="favicon-box" style="width:60px;height:60px;font-size:18px;">H</div>
+              <div class="favicon-label">180×180</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">SEO globale</div>
+            <div class="card-desc">Usati quando la pagina non ha metadati propri</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-group">
+            <label class="field-label">Descrizione di default</label>
+            <textarea class="field-input" rows="3">Progettiamo esperienze digitali per ristoranti e locali che vogliono distinguersi.</textarea>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Immagine social di default</label>
+            <div class="logo-upload-area" style="border-style:dashed;">
+              <div class="logo-preview" style="width:100px;height:56px;background:var(--surface-2);color:var(--text-3);font-size:10px;">1200×630</div>
+              <div class="logo-info">
+                <div class="logo-filename" style="color:var(--text-3);">Non caricata</div>
+                <div class="logo-meta">Immagine Open Graph</div>
+              </div>
+              <div class="logo-actions">
+                <button class="logo-btn logo-btn-replace" style="border-style:dashed;">Carica</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ NAVIGAZIONE ═══ -->
+    <div class="cat-panel active" id="panel-navigation">
+      <div class="panel-heading">Navigazione</div>
+      <div class="panel-desc">Header, footer e struttura di navigazione del sito.</div>
+
+      <!-- Header card -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Header</div>
+            <div class="card-desc">Logo e voci di menu principale</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-group">
+            <label class="field-label">Voci di navigazione</label>
+            <div class="nav-items-list" id="nav-items">
+              <div class="nav-item-row">
+                <span class="nav-item-drag">⠿</span>
+                <div class="nav-item-inputs">
+                  <input class="nav-item-input" type="text" value="Home" placeholder="Etichetta">
+                  <input class="nav-item-input" type="text" value="/home" placeholder="URL" style="font-family:var(--font-mono);font-size:11px;">
+                </div>
+                <button class="nav-item-remove" onclick="removeNavItem(this)">×</button>
+              </div>
+              <div class="nav-item-row">
+                <span class="nav-item-drag">⠿</span>
+                <div class="nav-item-inputs">
+                  <input class="nav-item-input" type="text" value="Progetti" placeholder="Etichetta">
+                  <input class="nav-item-input" type="text" value="/progetti" placeholder="URL" style="font-family:var(--font-mono);font-size:11px;">
+                </div>
+                <button class="nav-item-remove" onclick="removeNavItem(this)">×</button>
+              </div>
+              <div class="nav-item-row">
+                <span class="nav-item-drag">⠿</span>
+                <div class="nav-item-inputs">
+                  <input class="nav-item-input" type="text" value="Contatti" placeholder="Etichetta">
+                  <input class="nav-item-input" type="text" value="/contatti" placeholder="URL" style="font-family:var(--font-mono);font-size:11px;">
+                </div>
+                <button class="nav-item-remove" onclick="removeNavItem(this)">×</button>
+              </div>
+            </div>
+            <button class="add-item-btn" style="margin-top:8px;" onclick="addNavItem()">
+              + Aggiungi voce
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer card -->
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Footer</div>
+            <div class="card-desc">Testo, link e colonne footer</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label">Copyright</label>
+              <input class="field-input" type="text" value="© 2026 Cornertable">
+            </div>
+            <div class="field-group">
+              <label class="field-label">VAT / P.IVA</label>
+              <input class="field-input" type="text" value="IT12345678900" style="font-family:var(--font-mono);font-size:12px;">
+            </div>
+          </div>
+          <div class="field-group">
+            <label class="field-label">Indirizzo</label>
+            <input class="field-input" type="text" value="Via Roma 12, Milano">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Link footer</label>
+            <div class="nav-items-list">
+              <div class="nav-item-row">
+                <span class="nav-item-drag">⠿</span>
+                <div class="nav-item-inputs">
+                  <input class="nav-item-input" type="text" value="Privacy Policy" placeholder="Etichetta">
+                  <input class="nav-item-input" type="text" value="/privacy" placeholder="URL" style="font-family:var(--font-mono);font-size:11px;">
+                </div>
+                <button class="nav-item-remove" onclick="removeNavItem(this)">×</button>
+              </div>
+              <div class="nav-item-row">
+                <span class="nav-item-drag">⠿</span>
+                <div class="nav-item-inputs">
+                  <input class="nav-item-input" type="text" value="Cookie Policy" placeholder="Etichetta">
+                  <input class="nav-item-input" type="text" value="/cookie" placeholder="URL" style="font-family:var(--font-mono);font-size:11px;">
+                </div>
+                <button class="nav-item-remove" onclick="removeNavItem(this)">×</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ═══ COMUNICAZIONE ═══ -->
+    <div class="cat-panel" id="panel-communication">
+      <div class="panel-heading">Comunicazione</div>
+      <div class="panel-desc">Email transazionali, cookie banner e script di tracking.</div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Email Settings</div>
+            <div class="card-desc">Mittente e template email di sistema</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-row">
+            <div class="field-group">
+              <label class="field-label">Nome mittente</label>
+              <input class="field-input" type="text" value="Cornertable">
+            </div>
+            <div class="field-group">
+              <label class="field-label">Email mittente</label>
+              <input class="field-input" type="text" value="hello@cornertable.agency">
+            </div>
+          </div>
+          <div class="field-group" style="margin-top:4px;">
+            <label class="field-label">Anteprima email contatti</label>
+            <div class="email-preview">
+              <div class="email-preview-header">Nuovo messaggio da cornertable.agency</div>
+              <div class="email-preview-body">
+                Hai ricevuto un nuovo messaggio dal modulo di contatto.<br><br>
+                <strong>Nome:</strong> Mario Rossi<br>
+                <strong>Email:</strong> mario@esempio.it<br>
+                <strong>Messaggio:</strong> Vorrei un preventivo per...
+              </div>
+              <div class="email-preview-footer">Inviato da Hederae CMS · cornertable.agency</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Cookie Banner</div>
+            <div class="card-desc">Testo e comportamento del banner cookie</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="field-group">
+            <label class="field-label">Titolo banner</label>
+            <input class="field-input" type="text" value="Utilizziamo i cookie">
+          </div>
+          <div class="field-group">
+            <label class="field-label">Testo</label>
+            <textarea class="field-input" rows="2">Questo sito usa cookie tecnici e, con il tuo consenso, cookie analitici per migliorare l'esperienza.</textarea>
+          </div>
+          <div class="toggle-row" style="margin-top:8px;">
+            <div>
+              <div class="toggle-label">Mostra banner</div>
+              <div class="toggle-desc">Attiva il banner di consenso cookie</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="settings-card">
+        <div class="card-header">
+          <div>
+            <div class="card-title">Script di tracking</div>
+            <div class="card-desc">Analytics, Hotjar, Pixel e altri script esterni</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="script-row">
+            <span class="script-badge">GA4</span>
+            <span class="script-name">Google Analytics 4</span>
+            <label class="toggle" style="margin-left:auto;">
+              <input type="checkbox" checked>
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <div class="script-row">
+            <span class="script-badge" style="background:rgba(255,150,0,.12);color:#A05000;">META</span>
+            <span class="script-name">Meta Pixel</span>
+            <label class="toggle" style="margin-left:auto;">
+              <input type="checkbox">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+          <button class="add-item-btn" style="margin-top:8px;">
+            + Aggiungi script
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /content-area -->
+</div><!-- /editor-wrapper -->
+
+<script>
+  function switchCat(cat, btn) {
+    document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.cat-panel').forEach(p => p.classList.remove('active'));
+    btn.classList.add('active');
+    document.getElementById('panel-' + cat).classList.add('active');
+  }
+
+  function addNavItem() {
+    const list = document.getElementById('nav-items');
+    const html = `<div class="nav-item-row">
+      <span class="nav-item-drag">⠿</span>
+      <div class="nav-item-inputs">
+        <input class="nav-item-input" type="text" placeholder="Etichetta">
+        <input class="nav-item-input" type="text" placeholder="/url" style="font-family:var(--font-mono);font-size:11px;">
+      </div>
+      <button class="nav-item-remove" onclick="removeNavItem(this)">×</button>
+    </div>`;
+    list.insertAdjacentHTML('beforeend', html);
+  }
+
+  function removeNavItem(btn) {
+    btn.closest('.nav-item-row').remove();
+  }
+
+  // Save feedback
+  document.getElementById('save-btn').addEventListener('click', function() {
+    const orig = this.textContent;
+    this.textContent = '✓ Salvato';
+    this.style.background = '#0F5C2E';
+    setTimeout(() => { this.textContent = orig; this.style.background = ''; }, 2000);
+  });
+</script>
+</body>
+</html>
