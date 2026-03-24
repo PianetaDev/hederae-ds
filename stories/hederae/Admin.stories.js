@@ -272,6 +272,29 @@ Il contesto della pagina rimane visibile ma dimmed — sai esattamente dove sei.
   },
 };
 
+/* ─── COLLECTION LIST ─── */
+
+export const CMS_CollectionList = {
+  name: '✦ CMS · Lista Collezione (Pagine)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-collection-list.html', label: 'CMS · Pagine', state: 'Lista' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Lista collezione — step intermedio tra Dashboard e Editor.**
+
+Lo schermo mancante nel flusso: Dashboard → **Lista** → Editor.
+Mostra tutti i documenti di una collezione (Pagine) con filtri, selezione e azioni inline.
+
+- **Topbar**: breadcrumb Dashboard › Pagine + ricerca live + bottone "Nuova pagina"
+- **Filter tabs**: Tutti / Pubblicati / Bozze / In revisione con contatori
+- **Tabella**: checkbox multipla, titolo + slug, stato badge, avatar autore, data modifica
+- **Hover row**: rivela bottoni "Modifica" (→ Page Builder) e "⋯" contesto
+- **Bulk select**: selezionando righe appare la barra azioni (Duplica / Pubblica / Elimina)
+- **Pagination**: in fondo
+    `.trim() } },
+  },
+};
+
 /* ─── CONFRONTO ─── */
 export const Confronto_T1_vs_T4 = {
   name: '↔ Confronto T1 vs T4',

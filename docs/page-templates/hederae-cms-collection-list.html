@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae CMS · Pagine</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:   #013E39;
+    --accent:  #D8EC28;
+    --nav-w:   220px;
+    --font:    'IBM Plex Sans', system-ui, sans-serif;
+    --mono:    'IBM Plex Mono', monospace;
+    --text:    #1a1a1a;
+    --muted:   #6e7176;
+    --border:  #e3e4e7;
+    --hover:   #f4f4f5;
+    --surface: #fafafa;
+  }
+
+  body { font-family: var(--font); background: #fff; color: var(--text); height: 100vh; overflow: hidden; display: flex; }
+
+  /* ─── NAV ─── */
+  .nav {
+    width: var(--nav-w);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; flex-shrink: 0;
+    background: #fff;
+  }
+  .nav-workspace {
+    padding: 0 12px; height: 52px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .ws-icon {
+    width: 28px; height: 28px; background: var(--brand); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .ws-icon svg { width: 14px; height: 14px; color: var(--accent); }
+  .ws-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .ws-chevron { cursor: pointer; color: var(--muted); }
+  .ws-chevron svg { width: 14px; height: 14px; }
+
+  .nav-section { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .nav-section:last-child { border-bottom: none; }
+  .nav-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .7px;
+    text-transform: uppercase; color: var(--muted); padding: 6px 14px 4px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; font-size: 13px; color: var(--text);
+    cursor: pointer; transition: background .1s; position: relative;
+  }
+  .nav-item:hover { background: var(--hover); }
+  .nav-item.active { background: var(--hover); font-weight: 500; color: var(--brand); }
+  .nav-item.active::before {
+    content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 3px; background: var(--brand); border-radius: 0 2px 2px 0;
+  }
+  .nav-item svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+  .nav-item.active svg { color: var(--brand); }
+  .nav-count { margin-left: auto; font-size: 11px; color: var(--muted); }
+
+  .nav-footer {
+    margin-top: auto; padding: 12px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 9px; cursor: pointer;
+  }
+  .nav-footer:hover { background: var(--hover); }
+  .user-av {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+  }
+  .user-name { font-size: 12px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--muted); }
+
+  /* ─── MAIN ─── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  /* Topbar */
+  .topbar {
+    height: 52px; border-bottom: 1px solid var(--border);
+    padding: 0 24px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .breadcrumb { display: flex; align-items: center; gap: 6px; font-size: 13px; }
+  .bc-link { color: var(--muted); cursor: pointer; }
+  .bc-link:hover { color: var(--brand); }
+  .bc-sep { color: var(--border); font-size: 15px; }
+  .bc-current { font-weight: 600; color: var(--text); }
+  .topbar-spacer { flex: 1; }
+
+  .search-box {
+    display: flex; align-items: center; gap: 7px;
+    padding: 6px 12px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 7px; font-size: 12px; color: var(--muted);
+    cursor: text; min-width: 220px; transition: border-color .15s;
+  }
+  .search-box:hover { border-color: #bbb; }
+  .search-box svg { width: 13px; height: 13px; flex-shrink: 0; }
+  .search-input {
+    border: none; background: transparent; font-size: 12px; color: var(--text);
+    font-family: var(--font); outline: none; flex: 1;
+  }
+  .search-input::placeholder { color: var(--muted); }
+
+  .btn-new {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px; background: var(--brand); color: #fff;
+    border: none; border-radius: 7px; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: var(--font); transition: background .12s; white-space: nowrap;
+  }
+  .btn-new:hover { background: #025248; }
+  .btn-new svg { width: 14px; height: 14px; }
+
+  /* ─── CONTENT ─── */
+  .content { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+
+  /* Filter bar */
+  .filter-bar {
+    padding: 12px 24px; border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    background: #fff;
+  }
+  .filter-tabs { display: flex; gap: 2px; }
+  .ftab {
+    padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    cursor: pointer; color: var(--muted); transition: all .12s;
+    display: flex; align-items: center; gap: 5px;
+  }
+  .ftab:hover { background: var(--hover); color: var(--text); }
+  .ftab.active { background: var(--hover); color: var(--text); }
+  .ftab-count {
+    font-size: 10px; background: #e8e8ea; color: var(--muted);
+    border-radius: 10px; padding: 1px 6px; font-weight: 600;
+  }
+  .ftab.active .ftab-count { background: #d4d4d8; color: var(--text); }
+
+  .filter-sep { width: 1px; height: 20px; background: var(--border); margin: 0 4px; }
+  .filter-spacer { flex: 1; }
+
+  .sort-btn {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border: 1px solid var(--border); border-radius: 6px;
+    font-size: 12px; color: var(--muted); background: #fff; cursor: pointer;
+    transition: all .12s; font-family: var(--font);
+  }
+  .sort-btn:hover { border-color: #bbb; color: var(--text); }
+  .sort-btn svg { width: 12px; height: 12px; }
+
+  /* Bulk bar (visible when rows selected) */
+  .bulk-bar {
+    display: none; padding: 10px 24px; background: #eff6ff; border-bottom: 1px solid #bfdbfe;
+    align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .bulk-bar.visible { display: flex; }
+  .bulk-count { font-size: 13px; font-weight: 500; color: #1e40af; }
+  .bulk-spacer { flex: 1; }
+  .bulk-action {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 12px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all .12s; border: 1px solid transparent;
+  }
+  .bulk-action.secondary { color: #374151; border-color: #d1d5db; background: #fff; }
+  .bulk-action.secondary:hover { border-color: var(--brand); color: var(--brand); }
+  .bulk-action.danger { color: #dc2626; border-color: #fecaca; background: #fff; }
+  .bulk-action.danger:hover { background: #fef2f2; }
+  .bulk-action svg { width: 13px; height: 13px; }
+  .bulk-deselect { color: #6b7280; cursor: pointer; font-size: 12px; padding: 4px 8px; border-radius: 6px; }
+  .bulk-deselect:hover { background: #dbeafe; }
+
+  /* Table */
+  .table-wrap { flex: 1; overflow-y: auto; }
+  table { width: 100%; border-collapse: collapse; }
+  thead { position: sticky; top: 0; z-index: 5; background: #fff; }
+  thead tr { border-bottom: 1px solid var(--border); }
+  th {
+    padding: 9px 12px; font-size: 11px; font-weight: 600; color: var(--muted);
+    text-align: left; letter-spacing: .3px; white-space: nowrap; cursor: pointer;
+    user-select: none; transition: color .1s;
+  }
+  th:hover { color: var(--text); }
+  th.sorted { color: var(--brand); }
+  th svg { width: 11px; height: 11px; vertical-align: middle; margin-left: 3px; opacity: .6; }
+  th:first-child { width: 40px; padding-left: 24px; cursor: default; }
+  th:last-child { width: 80px; text-align: right; padding-right: 24px; }
+
+  tbody tr {
+    border-bottom: 1px solid var(--border); cursor: pointer;
+    transition: background .08s;
+  }
+  tbody tr:hover { background: var(--hover); }
+  tbody tr.selected { background: #eff6ff; }
+  tbody tr:hover .row-actions { opacity: 1; pointer-events: all; }
+  tbody tr:hover .col-date { opacity: 0; }
+  tbody tr.selected:hover { background: #dbeafe; }
+
+  td {
+    padding: 11px 12px; font-size: 13px; vertical-align: middle;
+  }
+  td:first-child { padding-left: 24px; }
+  td:last-child { padding-right: 24px; }
+
+  /* Checkbox */
+  .cb-wrap { display: flex; align-items: center; }
+  .cb {
+    width: 15px; height: 15px; border: 1.5px solid #d1d5db; border-radius: 4px;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all .12s; flex-shrink: 0;
+  }
+  .cb:hover { border-color: var(--brand); }
+  .cb.checked { background: var(--brand); border-color: var(--brand); }
+  .cb.checked svg { display: block; }
+  .cb svg { display: none; width: 9px; height: 9px; color: var(--accent); }
+  .cb-all.indeterminate { background: var(--brand); border-color: var(--brand); }
+  .cb-all.indeterminate::after { content: '—'; color: var(--accent); font-size: 9px; font-weight: 700; line-height: 1; }
+  .cb-all.indeterminate svg { display: none; }
+
+  /* Title cell */
+  .cell-title { display: flex; align-items: center; gap: 10px; }
+  .doc-type-dot {
+    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
+  }
+  .col-title-text { font-weight: 500; color: var(--text); }
+  .col-slug { font-size: 11px; color: var(--muted); margin-top: 2px; font-family: var(--mono); }
+
+  /* Status badge */
+  .status-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 500; padding: 3px 8px;
+    border-radius: 99px; white-space: nowrap;
+  }
+  .sdot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; }
+  .s-pub   { background: #dcfce7; color: #15803d; } .s-pub   .sdot { background: #22c55e; }
+  .s-draft { background: #fef3c7; color: #b45309; } .s-draft .sdot { background: #f59e0b; }
+  .s-rev   { background: #ede9fe; color: #6d28d9; } .s-rev   .sdot { background: #8b5cf6; }
+  .s-arch  { background: #f3f4f6; color: #6b7280; } .s-arch  .sdot { background: #9ca3af; }
+
+  /* Author */
+  .author-wrap { display: flex; align-items: center; gap: 7px; }
+  .author-av {
+    width: 22px; height: 22px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 9px; font-weight: 600; color: #fff; flex-shrink: 0;
+  }
+  .author-name { font-size: 12px; color: var(--muted); }
+
+  /* Date */
+  .col-date { font-size: 12px; color: var(--muted); }
+
+  /* Inline actions */
+  .row-actions {
+    display: flex; align-items: center; gap: 5px; justify-content: flex-end;
+    opacity: 0; pointer-events: none; transition: opacity .1s;
+  }
+  .row-btn {
+    display: flex; align-items: center; gap: 4px;
+    padding: 4px 10px; border-radius: 6px; font-size: 12px; font-weight: 500;
+    cursor: pointer; transition: all .12s; white-space: nowrap; border: 1px solid transparent;
+  }
+  .row-btn.edit { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .row-btn.edit:hover { background: #025248; }
+  .row-btn.more {
+    background: #fff; border-color: var(--border); color: var(--muted);
+    padding: 4px 7px;
+  }
+  .row-btn.more:hover { border-color: #bbb; color: var(--text); }
+  .row-btn svg { width: 12px; height: 12px; }
+
+  /* Pagination */
+  .pagination {
+    padding: 12px 24px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+    background: #fff;
+  }
+  .pagination-info { font-size: 12px; color: var(--muted); flex: 1; }
+  .page-btn {
+    display: flex; align-items: center; justify-content: center;
+    width: 30px; height: 30px; border-radius: 6px; border: 1px solid var(--border);
+    font-size: 12px; font-weight: 500; cursor: pointer; background: #fff;
+    transition: all .12s; color: var(--text); font-family: var(--font);
+  }
+  .page-btn:hover { border-color: var(--brand); color: var(--brand); }
+  .page-btn.active { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .page-btn:disabled { opacity: .4; cursor: default; pointer-events: none; }
+  .page-btn svg { width: 12px; height: 12px; }
+  .page-dots { font-size: 13px; color: var(--muted); padding: 0 2px; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-workspace">
+    <div class="ws-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z"/><path d="M6 8h4M8 6v4" stroke-linecap="round"/></svg>
+    </div>
+    <span class="ws-name">Hederae CMS</span>
+    <span class="ws-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg></span>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-item" onclick="window.location.href='hederae-cms-dashboard.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Dashboard
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Contenuti</div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>
+      Pagine
+      <span class="nav-count">12</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+      News
+      <span class="nav-count">34</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg>
+      Prodotti
+      <span class="nav-count">8</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+      Media
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Design System</div>
+    <div class="nav-item" onclick="window.location.href='hederae-cms-pattern-editor.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Pattern
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Impostazioni</div>
+    <div class="nav-item" onclick="window.location.href='hederae-cms-globals-editor.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M11.8 4.2l-.7.7M4.2 11.8l-.7.7"/></svg>
+      Globali
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <div class="user-av">M</div>
+    <div style="flex:1">
+      <div class="user-name">Max</div>
+      <div class="user-role">Admin</div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#999" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="breadcrumb">
+      <span class="bc-link" onclick="window.location.href='hederae-cms-dashboard.html'">Dashboard</span>
+      <span class="bc-sep">/</span>
+      <span class="bc-current">Pagine</span>
+    </div>
+    <div class="topbar-spacer"></div>
+    <div class="search-box">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4"/><path d="M10.5 10.5l2.5 2.5"/></svg>
+      <input class="search-input" placeholder="Cerca pagine…" id="searchInput" oninput="filterRows()">
+    </div>
+    <button class="btn-new" onclick="window.location.href='hederae-cms-page-builder.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3v10M3 8h10" stroke-linecap="round"/></svg>
+      Nuova pagina
+    </button>
+  </div>
+
+  <!-- Filter bar -->
+  <div class="filter-bar">
+    <div class="filter-tabs">
+      <div class="ftab active" onclick="setFilter('tutti', this)">
+        Tutti <span class="ftab-count">12</span>
+      </div>
+      <div class="ftab" onclick="setFilter('pubblicato', this)">
+        Pubblicati <span class="ftab-count">7</span>
+      </div>
+      <div class="ftab" onclick="setFilter('bozza', this)">
+        Bozze <span class="ftab-count">3</span>
+      </div>
+      <div class="ftab" onclick="setFilter('revisione', this)">
+        In revisione <span class="ftab-count">2</span>
+      </div>
+    </div>
+    <div class="filter-sep"></div>
+    <div class="filter-spacer"></div>
+    <button class="sort-btn">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M5 8h6M7 11h2"/></svg>
+      Filtri
+    </button>
+    <button class="sort-btn">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 5h8M6 8l2-2 2 2M8 6v6"/></svg>
+      Modifica: più recente
+    </button>
+  </div>
+
+  <!-- Bulk action bar -->
+  <div class="bulk-bar" id="bulkBar">
+    <span class="bulk-count" id="bulkCount">0 selezionati</span>
+    <div class="bulk-spacer"></div>
+    <div class="bulk-action secondary">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Duplica
+    </div>
+    <div class="bulk-action secondary">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 8h10M8 5l3 3-3 3"/></svg>
+      Pubblica
+    </div>
+    <div class="bulk-action danger">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 5h10M6 5V3h4v2M6 8v4M10 8v4M4.5 5l.5 8h6l.5-8"/></svg>
+      Elimina
+    </div>
+    <span class="bulk-deselect" onclick="deselectAll()">✕ Deseleziona</span>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table id="docTable">
+      <thead>
+        <tr>
+          <th><div class="cb-wrap"><div class="cb" id="cbAll" onclick="toggleAll()"></div></div></th>
+          <th class="sorted">
+            Titolo
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M5 10l3 3 3-3"/></svg>
+          </th>
+          <th>Stato</th>
+          <th>Autore</th>
+          <th>Ultima modifica</th>
+          <th>Azioni</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- rows injected by JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Pagination -->
+  <div class="pagination">
+    <span class="pagination-info" id="paginationInfo">Mostrando 1–12 di 12 pagine</span>
+    <button class="page-btn" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 4l-4 4 4 4"/></svg>
+    </button>
+    <button class="page-btn active">1</button>
+    <button class="page-btn">2</button>
+    <span class="page-dots">…</span>
+    <button class="page-btn">5</button>
+    <button class="page-btn">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg>
+    </button>
+  </div>
+
+</main>
+
+<script>
+const pages = [
+  { id:1,  title: 'Homepage',                  slug: '/',                           status: 'pubblicato', author: 'Max',       authorColor: '#013E39', modified: 'Oggi, 14:32' },
+  { id:2,  title: 'Chi siamo',                 slug: '/chi-siamo',                  status: 'pubblicato', author: 'Max',       authorColor: '#013E39', modified: 'Ieri, 10:15' },
+  { id:3,  title: 'Servizi',                   slug: '/servizi',                    status: 'pubblicato', author: 'Giulia',    authorColor: '#7c3aed', modified: '22 mar, 09:40' },
+  { id:4,  title: 'Servizio: Brand Identity',  slug: '/servizi/brand-identity',     status: 'pubblicato', author: 'Giulia',    authorColor: '#7c3aed', modified: '21 mar, 17:05' },
+  { id:5,  title: 'Servizio: Web Design',      slug: '/servizi/web-design',         status: 'bozza',      author: 'Max',       authorColor: '#013E39', modified: '20 mar, 11:22' },
+  { id:6,  title: 'Portfolio',                 slug: '/portfolio',                  status: 'pubblicato', author: 'Fabrizio',  authorColor: '#b45309', modified: '19 mar, 16:48' },
+  { id:7,  title: 'Case Study: Hederae',       slug: '/portfolio/hederae',          status: 'revisione',  author: 'Max',       authorColor: '#013E39', modified: '18 mar, 14:00' },
+  { id:8,  title: 'Case Study: Cornertable',   slug: '/portfolio/cornertable',      status: 'bozza',      author: 'Fabrizio',  authorColor: '#b45309', modified: '17 mar, 09:30' },
+  { id:9,  title: 'Blog',                      slug: '/blog',                       status: 'pubblicato', author: 'Giulia',    authorColor: '#7c3aed', modified: '15 mar, 12:10' },
+  { id:10, title: 'Contatti',                  slug: '/contatti',                   status: 'pubblicato', author: 'Max',       authorColor: '#013E39', modified: '12 mar, 10:55' },
+  { id:11, title: 'Privacy Policy',            slug: '/privacy',                    status: 'bozza',      author: 'Max',       authorColor: '#013E39', modified: '10 mar, 08:20' },
+  { id:12, title: 'Cookie Policy',             slug: '/cookie',                     status: 'revisione',  author: 'Giulia',    authorColor: '#7c3aed', modified: '8 mar, 15:44' },
+];
+
+const statusMap = {
+  pubblicato: { cls: 's-pub',   label: 'Pubblicato'  },
+  bozza:      { cls: 's-draft', label: 'Bozza'       },
+  revisione:  { cls: 's-rev',   label: 'In revisione' },
+  archiviato: { cls: 's-arch',  label: 'Archiviato'  },
+};
+
+const typeColors = {
+  '/':          '#3b82f6',
+  '/servizi':   '#16a34a',
+  '/portfolio': '#d97706',
+  '/blog':      '#f43f5e',
+};
+
+function docColor(slug) {
+  for (const k of Object.keys(typeColors)) {
+    if (slug.startsWith(k) && k !== '/') return typeColors[k];
+  }
+  if (slug === '/') return typeColors['/'];
+  return '#8b5cf6';
+}
+
+let selectedIds = new Set();
+let currentFilter = 'tutti';
+
+function render(rows) {
+  const tbody = document.getElementById('tableBody');
+  tbody.innerHTML = '';
+  if (rows.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" style="text-align:center;padding:48px 24px;color:var(--muted);font-size:13px;">
+      Nessuna pagina trovata.
+    </td></tr>`;
+    return;
+  }
+  rows.forEach(p => {
+    const s = statusMap[p.status] || statusMap.bozza;
+    const isSelected = selectedIds.has(p.id);
+    const initials = p.author.slice(0,2).toUpperCase();
+    const tr = document.createElement('tr');
+    if (isSelected) tr.classList.add('selected');
+    tr.dataset.id = p.id;
+    tr.dataset.status = p.status;
+    tr.dataset.title = p.title.toLowerCase();
+
+    tr.innerHTML = `
+      <td><div class="cb-wrap"><div class="cb ${isSelected?'checked':''}" onclick="toggleRow(event,${p.id})">
+        <svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 5l2.5 2.5L8 3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </div></div></td>
+      <td>
+        <div class="cell-title">
+          <div class="doc-type-dot" style="background:${docColor(p.slug)}"></div>
+          <div>
+            <div class="col-title-text">${p.title}</div>
+            <div class="col-slug">${p.slug}</div>
+          </div>
+        </div>
+      </td>
+      <td><span class="status-badge ${s.cls}"><span class="sdot"></span>${s.label}</span></td>
+      <td>
+        <div class="author-wrap">
+          <div class="author-av" style="background:${p.authorColor}">${initials}</div>
+          <span class="author-name">${p.author}</span>
+        </div>
+      </td>
+      <td><span class="col-date">${p.modified}</span></td>
+      <td>
+        <div class="row-actions">
+          <div class="row-btn edit" onclick="openEditor(event,${p.id})">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2.5l2.5 2.5L5 13.5H2.5v-2.5L11 2.5z"/><path d="M9.5 4l2.5 2.5"/></svg>
+            Modifica
+          </div>
+          <div class="row-btn more">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="8" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="12" cy="8" r="1"/></svg>
+          </div>
+        </div>
+      </td>
+    `;
+
+    tr.addEventListener('click', (e) => {
+      if (e.target.closest('.cb') || e.target.closest('.row-btn')) return;
+      toggleRow(e, p.id);
+    });
+    tbody.appendChild(tr);
+  });
+}
+
+function getFiltered() {
+  const q = document.getElementById('searchInput').value.toLowerCase();
+  return pages.filter(p => {
+    const matchStatus = currentFilter === 'tutti' || p.status === currentFilter;
+    const matchSearch = !q || p.title.toLowerCase().includes(q) || p.slug.includes(q);
+    return matchStatus && matchSearch;
+  });
+}
+
+function filterRows() {
+  render(getFiltered());
+  updateBulk();
+}
+
+function setFilter(f, el) {
+  currentFilter = f;
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filterRows();
+}
+
+function toggleRow(e, id) {
+  e.stopPropagation();
+  if (selectedIds.has(id)) selectedIds.delete(id);
+  else selectedIds.add(id);
+  filterRows();
+  updateBulk();
+  updateCbAll();
+}
+
+function toggleAll() {
+  const filtered = getFiltered();
+  const allSelected = filtered.every(p => selectedIds.has(p.id));
+  if (allSelected) filtered.forEach(p => selectedIds.delete(p.id));
+  else filtered.forEach(p => selectedIds.add(p.id));
+  filterRows();
+  updateBulk();
+  updateCbAll();
+}
+
+function deselectAll() {
+  selectedIds.clear();
+  filterRows();
+  updateBulk();
+  updateCbAll();
+}
+
+function updateBulk() {
+  const bar = document.getElementById('bulkBar');
+  const cnt = document.getElementById('bulkCount');
+  if (selectedIds.size > 0) {
+    bar.classList.add('visible');
+    cnt.textContent = selectedIds.size + (selectedIds.size === 1 ? ' selezionata' : ' selezionate');
+  } else {
+    bar.classList.remove('visible');
+  }
+}
+
+function updateCbAll() {
+  const filtered = getFiltered();
+  const cb = document.getElementById('cbAll');
+  cb.classList.remove('checked', 'indeterminate');
+  if (filtered.length === 0) return;
+  const selCount = filtered.filter(p => selectedIds.has(p.id)).length;
+  if (selCount === filtered.length) cb.classList.add('checked');
+  else if (selCount > 0) cb.classList.add('indeterminate');
+}
+
+function openEditor(e, id) {
+  e.stopPropagation();
+  window.location.href = 'hederae-cms-page-builder.html';
+}
+
+// Initial render
+render(pages);
+</script>
+</body>
+</html>
