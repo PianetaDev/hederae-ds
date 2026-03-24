@@ -62,17 +62,22 @@ export const T1_ListaDocumenti = {
 };
 
 export const T1_Editor = {
-  name: 'T1 · Editor con AI sidebar',
-  render: () => {
-    const w = templateStory({ ...base, src: 'hederae-admin-t1.html', label: 'Admin T1 · Editor', state: 'Editor' });
-    w.querySelector('iframe').addEventListener('load', () => {
-      try { w.querySelector('iframe').contentWindow.showView('editor', null); } catch(e) {}
-    });
-    return w;
-  },
+  name: 'T1 · Editor WYSIWYG + AI',
+  render: () => templateStory({ ...base, src: 'hederae-cms-t1-editor.html', label: 'T1 · Editor WYSIWYG', state: 'Editor' }),
   parameters: {
     viewport: { defaultViewport: 'desktop' },
-    docs: { description: { story: 'Editor con form principale + AI sidebar: sommario generato, tag suggeriti, azioni AI. Workflow a 3 stati.' } },
+    docs: { description: { story: `
+**Editor T1 — WYSIWYG + AI sidebar. Sostituzione completa del form editor.**
+
+Canvas centrale con l'articolo reale editabile inline. Click su qualsiasi testo → attivazione con toolbar floating.
+Rail destra a 4 tab: AI / Campi / Workflow / Storia.
+
+- **Canvas**: articolo autentico (cover, categoria, titolo, sottotitolo, autore, corpo). Ogni campo ha label chip al hover, bordo accent all'attivazione.
+- **AI tab**: sommario auto-generato, tag suggeriti, score qualità (leggibilità / SEO / completezza), azioni AI (Migliora, Traduci, Meta SEO, Abstract)
+- **Campi tab**: stato di completamento campo per campo con indicatori OK / Vuoto / Obbligatorio
+- **Workflow tab**: stati visuali (Bozza → Revisione → Pubblicato), revisore assegnato, approvazione con commento
+- **Storia tab**: versioni con ripristino
+    `.trim() } },
   },
 };
 
