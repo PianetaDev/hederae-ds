@@ -6,7 +6,7 @@
 <title>Hederae CMS — Globals Editor</title>
 <style>
   :root {
-    --sidebar-bg:    #013E39;
+    --sidebar-bg:    #ffffff;
     --sidebar-w:     220px;
     --accent:        #D8EC28;
     --surface:       #F5F6F4;
@@ -31,46 +31,47 @@
   /* SIDEBAR */
   .sidebar {
     width: var(--sidebar-w); background: var(--sidebar-bg);
+    border-right: 1px solid var(--border);
     display: flex; flex-direction: column; flex-shrink: 0; overflow-y: auto;
   }
   .sidebar-logo {
-    padding: 18px 16px 14px; display: flex; align-items: center; gap: 10px;
-    border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 8px;
+    padding: 14px 16px 12px; display: flex; align-items: center; gap: 10px;
+    border-bottom: 1px solid var(--border); margin-bottom: 8px;
   }
   .logo-mark {
-    width: 28px; height: 28px; background: var(--accent); border-radius: 50%;
+    width: 28px; height: 28px; background: var(--green-dark); border-radius: 7px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 700; color: var(--green-dark); flex-shrink: 0;
+    font-size: 13px; font-weight: 700; color: var(--accent); flex-shrink: 0;
   }
-  .logo-text { font-size: 13px; font-weight: 600; color: rgba(255,255,255,.9); }
-  .logo-sub  { font-size: 10px; color: rgba(255,255,255,.4); margin-top:1px; }
+  .logo-text { font-size: 13px; font-weight: 600; color: var(--text); }
+  .logo-sub  { font-size: 10px; color: var(--text-3); margin-top:1px; }
   .nav-label {
     padding: 6px 16px 4px;
     font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: .8px;
-    color: rgba(255,255,255,.35);
+    color: var(--text-3);
   }
   .nav-item {
     display: flex; align-items: center; gap: 8px; padding: 7px 16px;
-    font-size: 13px; color: rgba(255,255,255,.65);
+    font-size: 13px; color: var(--text-2);
     cursor: pointer; text-decoration: none; position: relative;
     transition: background .15s, color .15s;
   }
-  .nav-item:hover  { background: rgba(255,255,255,.06); color: rgba(255,255,255,.9); }
-  .nav-item.active { background: rgba(255,255,255,.10); color:#fff; font-weight:500; }
+  .nav-item:hover  { background: var(--surface); color: var(--text); }
+  .nav-item.active { background: var(--surface); color: var(--green-dark); font-weight:500; }
   .nav-item.active::before {
     content:''; position:absolute; left:0; top:6px; bottom:6px;
-    width:3px; background:var(--accent); border-radius:0 2px 2px 0;
+    width:3px; background:var(--green-dark); border-radius:0 2px 2px 0;
   }
-  .nav-icon { width:16px; height:16px; opacity:.65; flex-shrink:0; }
-  .nav-item.active .nav-icon { opacity:1; }
+  .nav-icon { width:16px; height:16px; color: var(--text-3); flex-shrink:0; }
+  .nav-item.active .nav-icon { color: var(--green-dark); }
   .sidebar-bottom {
     margin-top:auto; padding:12px 16px;
-    border-top:1px solid rgba(255,255,255,.08);
+    border-top:1px solid var(--border);
     display:flex; align-items:center; gap:8px;
   }
-  .avatar { width:28px; height:28px; border-radius:50%; background:var(--green-mid); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:#fff; flex-shrink:0; }
-  .sidebar-user-name { font-size:12px; color:rgba(255,255,255,.7); }
-  .sidebar-user-role { font-size:10px; color:rgba(255,255,255,.35); }
+  .avatar { width:28px; height:28px; border-radius:50%; background:var(--green-dark); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:700; color:var(--accent); flex-shrink:0; }
+  .sidebar-user-name { font-size:12px; color:var(--text); }
+  .sidebar-user-role { font-size:10px; color:var(--text-3); }
 
   /* MAIN */
   .editor-wrapper { flex:1; display:flex; flex-direction:column; overflow:hidden; min-width:0; }
