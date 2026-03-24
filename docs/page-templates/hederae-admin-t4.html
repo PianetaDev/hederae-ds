@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="it" data-brand="susdef" data-tier="t4">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hederae Admin — T4 · Base</title>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Serif:ital,wght@0,400;0,500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --sidebar-w: 200px;
+      --c-bg:      #F7F6F3;
+      --c-surface: #FFFFFF;
+      --c-border:  #DDD9D1;
+      --c-ink:     #1A1A18;
+      --c-ink-2:   #6B6B67;
+      --c-ink-3:   #ADADAB;
+      --c-brand:   #013E39;
+      --c-accent:  #D8EC28;
+      --c-green-bg:#E4F0EE;
+      --c-amber-bg:#FFF3D1;
+      --c-amber-tx:#8A5C00;
+      --font-b: 'IBM Plex Sans', sans-serif;
+      --font-u: 'IBM Plex Mono', monospace;
+      --font-d: 'IBM Plex Serif', serif;
+      --r: 6px;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: var(--font-b);
+      background: var(--c-bg);
+      color: var(--c-ink);
+      font-size: 14px;
+      line-height: 1.5;
+      -webkit-font-smoothing: antialiased;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    /* ─── SIDEBAR ─── */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--c-brand);
+      display: flex;
+      flex-direction: column;
+      height: 100vh;
+    }
+    .sb-brand {
+      display: flex; align-items: center; gap: 9px;
+      padding: 16px 14px 14px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .sb-mark {
+      width: 26px; height: 26px; border-radius: 5px;
+      background: var(--c-accent);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 12px; font-weight: 700; color: var(--c-brand); flex-shrink: 0;
+    }
+    .sb-name {
+      font-family: var(--font-u); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: rgba(255,255,255,0.9);
+    }
+    .sb-tier {
+      font-family: var(--font-u); font-size: 9px;
+      color: var(--c-accent); opacity: 0.75;
+      letter-spacing: 0.08em;
+    }
+
+    .sb-nav { flex: 1; padding: 10px 6px; }
+    .sb-link {
+      display: flex; align-items: center; gap: 8px;
+      padding: 8px 8px; border-radius: var(--r);
+      color: rgba(255,255,255,0.7);
+      text-decoration: none; font-size: 13px; font-weight: 500;
+      cursor: pointer;
+      transition: background 0.12s, color 0.12s;
+    }
+    .sb-link:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.95); }
+    .sb-link.active { background: rgba(216,236,40,0.14); color: var(--c-accent); }
+    .sb-link-count {
+      margin-left: auto;
+      font-family: var(--font-u); font-size: 10px;
+      background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.5);
+      padding: 1px 5px; border-radius: 10px;
+    }
+    .sb-link.active .sb-link-count { background: rgba(216,236,40,0.18); color: var(--c-accent); }
+    .sb-divider { height: 1px; background: rgba(255,255,255,0.07); margin: 6px 8px; }
+
+    .sb-user {
+      padding: 10px 12px;
+      border-top: 1px solid rgba(255,255,255,0.07);
+      display: flex; align-items: center; gap: 8px;
+    }
+    .sb-avatar {
+      width: 26px; height: 26px; border-radius: 50%;
+      background: rgba(216,236,40,0.2);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 10px; font-weight: 700; color: var(--c-accent); flex-shrink: 0;
+    }
+    .sb-uname { font-size: 12px; font-weight: 500; color: rgba(255,255,255,0.85); }
+
+    /* ─── MAIN ─── */
+    .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+    .topbar {
+      height: 50px;
+      background: var(--c-surface);
+      border-bottom: 1px solid var(--c-border);
+      display: flex; align-items: center; gap: 12px;
+      padding: 0 20px;
+      flex-shrink: 0;
+    }
+    .topbar-title { font-size: 14px; font-weight: 600; color: var(--c-ink); }
+    .topbar-spacer { flex: 1; }
+    .btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 7px 14px; border-radius: var(--r);
+      font-family: var(--font-b); font-size: 13px; font-weight: 500;
+      cursor: pointer; border: none; transition: all 0.12s;
+    }
+    .btn-primary { background: var(--c-brand); color: white; }
+    .btn-primary:hover { background: #025249; }
+    .btn-ghost { background: transparent; color: var(--c-ink-2); border: 1px solid var(--c-border); }
+    .btn-ghost:hover { background: var(--c-bg); }
+
+    /* ─── VIEWS ─── */
+    .view { display: none; flex: 1; overflow-y: auto; padding: 24px; flex-direction: column; gap: 20px; }
+    .view.active { display: flex; }
+
+    /* ─── DASHBOARD ─── */
+    .dash-welcome {
+      background: var(--c-brand);
+      border-radius: var(--r);
+      padding: 24px 28px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .dash-welcome-text { color: white; }
+    .dash-welcome-title {
+      font-family: var(--font-d); font-size: 22px; font-weight: 500;
+      margin-bottom: 6px;
+    }
+    .dash-welcome-sub { font-size: 14px; color: rgba(255,255,255,0.65); }
+    .dash-welcome-cta {
+      background: var(--c-accent);
+      color: var(--c-brand);
+      padding: 10px 20px; border-radius: var(--r);
+      font-weight: 600; font-size: 13px;
+      cursor: pointer; border: none; white-space: nowrap;
+    }
+
+    .dash-stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+    .stat-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r);
+      padding: 18px;
+    }
+    .stat-label { font-family: var(--font-u); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--c-ink-2); margin-bottom: 6px; }
+    .stat-value { font-family: var(--font-d); font-size: 30px; font-weight: 500; color: var(--c-ink); line-height: 1; }
+    .stat-sub { font-size: 12px; color: var(--c-ink-3); margin-top: 4px; }
+
+    .dash-recent {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r);
+    }
+    .card-header {
+      padding: 13px 18px 11px;
+      border-bottom: 1px solid var(--c-border);
+      font-size: 13px; font-weight: 600;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .card-link { font-size: 11px; font-weight: 500; color: var(--c-brand); cursor: pointer; }
+    .recent-item {
+      display: flex; align-items: center; gap: 14px;
+      padding: 12px 18px;
+      border-bottom: 1px solid var(--c-border);
+      cursor: pointer;
+    }
+    .recent-item:last-child { border-bottom: none; }
+    .recent-item:hover { background: var(--c-bg); }
+    .recent-type {
+      width: 32px; height: 32px; border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 14px; flex-shrink: 0;
+    }
+    .type-page  { background: var(--c-green-bg); }
+    .type-news  { background: var(--c-amber-bg); }
+    .recent-title { font-size: 13px; font-weight: 500; color: var(--c-ink); flex: 1; }
+    .recent-status {
+      font-family: var(--font-u); font-size: 9px; letter-spacing: 0.06em;
+      text-transform: uppercase; padding: 3px 8px; border-radius: 99px;
+    }
+    .sp-pub  { background: var(--c-green-bg); color: var(--c-brand); }
+    .sp-draft{ background: var(--c-amber-bg); color: var(--c-amber-tx); }
+    .recent-date { font-family: var(--font-u); font-size: 10px; color: var(--c-ink-3); white-space: nowrap; }
+
+    /* ─── LIST ─── */
+    .list-header {
+      display: flex; align-items: center; justify-content: space-between;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r); padding: 12px 16px;
+    }
+    .list-header-title { font-size: 14px; font-weight: 600; }
+    .filter-tabs { display: flex; gap: 4px; }
+    .filter-tab {
+      padding: 5px 12px; border-radius: 99px;
+      font-size: 12px; font-weight: 500; cursor: pointer;
+      border: 1px solid var(--c-border);
+      background: transparent; color: var(--c-ink-2);
+      transition: all 0.12s;
+    }
+    .filter-tab.active { background: var(--c-green-bg); color: var(--c-brand); border-color: var(--c-brand); }
+
+    .list-table {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r); overflow: hidden;
+    }
+    table { width: 100%; border-collapse: collapse; }
+    th {
+      font-family: var(--font-u); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: var(--c-ink-2); padding: 10px 16px; text-align: left;
+      background: var(--c-bg); border-bottom: 1px solid var(--c-border);
+    }
+    td { padding: 12px 16px; border-bottom: 1px solid var(--c-border); font-size: 13px; vertical-align: middle; }
+    tr:last-child td { border-bottom: none; }
+    tr:hover td { background: var(--c-bg); cursor: pointer; }
+    .td-title { font-weight: 500; }
+    .status-pill {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 99px;
+      font-family: var(--font-u); font-size: 9px; text-transform: uppercase; font-weight: 500;
+    }
+    .row-action {
+      padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--c-border);
+      background: var(--c-surface); color: var(--c-ink-2);
+      opacity: 0; transition: opacity 0.1s;
+    }
+    tr:hover .row-action { opacity: 1; }
+    .row-action:hover { border-color: var(--c-brand); color: var(--c-brand); }
+
+    /* ─── EDITOR ─── */
+    .editor-wrap { max-width: 680px; display: flex; flex-direction: column; gap: 16px; }
+    .form-card {
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r);
+    }
+    .form-card-head {
+      padding: 12px 18px; border-bottom: 1px solid var(--c-border);
+      font-size: 13px; font-weight: 600;
+    }
+    .form-card-body { padding: 16px 18px; display: flex; flex-direction: column; gap: 14px; }
+    .field { display: flex; flex-direction: column; gap: 5px; }
+    .field-label {
+      font-family: var(--font-u); font-size: 10px; font-weight: 500;
+      letter-spacing: 0.08em; text-transform: uppercase; color: var(--c-ink-2);
+    }
+    .field-req { color: #C1363C; }
+    .field-input {
+      width: 100%; padding: 8px 10px;
+      border: 1px solid var(--c-border); border-radius: var(--r);
+      font-family: var(--font-b); font-size: 13px; color: var(--c-ink);
+      background: var(--c-surface); outline: none; transition: border-color 0.12s;
+    }
+    .field-input:focus { border-color: var(--c-brand); box-shadow: 0 0 0 3px rgba(1,62,57,0.07); }
+    .field-textarea { resize: vertical; min-height: 100px; line-height: 1.7; }
+    .field-hint { font-size: 11px; color: var(--c-ink-3); }
+
+    .rich-toolbar {
+      display: flex; align-items: center; gap: 2px; padding: 6px 8px;
+      background: var(--c-bg); border: 1px solid var(--c-border);
+      border-radius: var(--r) var(--r) 0 0; border-bottom: none;
+    }
+    .rich-btn {
+      width: 28px; height: 26px; display: flex; align-items: center; justify-content: center;
+      border-radius: 4px; cursor: pointer; border: none; background: transparent;
+      font-size: 12px; font-weight: 700; color: var(--c-ink-2);
+    }
+    .rich-btn:hover { background: var(--c-border); color: var(--c-ink); }
+    .rich-sep { width: 1px; height: 16px; background: var(--c-border); margin: 0 3px; }
+    .rich-area {
+      border: 1px solid var(--c-border); border-radius: 0 0 var(--r) var(--r);
+      padding: 12px; min-height: 180px;
+      font-size: 14px; line-height: 1.75; color: var(--c-ink);
+      background: var(--c-surface); outline: none;
+    }
+    .rich-area:focus { border-color: var(--c-brand); }
+
+    .status-row {
+      display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    }
+    .status-opt {
+      display: flex; align-items: center; gap: 6px;
+      padding: 7px 12px; border-radius: var(--r); cursor: pointer;
+      border: 1px solid var(--c-border); background: var(--c-surface);
+      font-size: 12px; font-weight: 500; color: var(--c-ink-2); transition: all 0.12s;
+    }
+    .status-opt.sel { background: var(--c-green-bg); border-color: var(--c-brand); color: var(--c-brand); }
+    .sdot { width: 8px; height: 8px; border-radius: 50%; }
+    .sdot-d { background: #E08A00; }
+    .sdot-p { background: #1B7A3E; }
+
+    .action-row { display: flex; gap: 8px; justify-content: flex-end; }
+    .btn-save {
+      padding: 8px 16px; border-radius: var(--r); font-size: 13px; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--c-border); background: transparent; color: var(--c-ink-2);
+    }
+    .btn-pub {
+      padding: 8px 20px; border-radius: var(--r); font-size: 13px; font-weight: 600;
+      cursor: pointer; border: none; background: var(--c-brand); color: white;
+    }
+    .btn-pub:hover { background: #025249; }
+
+    /* ─── EMPTY STATE ─── */
+    .empty-state {
+      text-align: center; padding: 60px 20px;
+      background: var(--c-surface);
+      border: 1px solid var(--c-border);
+      border-radius: var(--r);
+    }
+    .empty-icon { font-size: 36px; margin-bottom: 12px; }
+    .empty-title { font-family: var(--font-d); font-size: 18px; margin-bottom: 6px; }
+    .empty-text { font-size: 13px; color: var(--c-ink-2); margin-bottom: 20px; }
+  </style>
+</head>
+<body>
+
+  <aside class="sidebar">
+    <div class="sb-brand">
+      <div class="sb-mark">S</div>
+      <div>
+        <div class="sb-name">Il mio sito</div>
+        <div class="sb-tier">Hederae · T4</div>
+      </div>
+    </div>
+    <nav class="sb-nav">
+      <div class="sb-link active" onclick="showView('dashboard',this)">
+        <span>⊞</span> Dashboard
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-link" onclick="showView('pagine',this)">
+        <span>⬜</span> Pagine
+        <span class="sb-link-count">8</span>
+      </div>
+      <div class="sb-link" onclick="showView('news',this)">
+        <span>📰</span> News
+        <span class="sb-link-count">14</span>
+      </div>
+      <div class="sb-divider"></div>
+      <div class="sb-link">
+        <span>◫</span> Media
+      </div>
+      <div class="sb-link">
+        <span>⚙</span> Impostazioni
+      </div>
+    </nav>
+    <div class="sb-user">
+      <div class="sb-avatar">G</div>
+      <div class="sb-uname">Giulia Bianchi</div>
+    </div>
+  </aside>
+
+  <div class="main">
+    <div class="topbar">
+      <div class="topbar-title" id="page-title">Dashboard</div>
+      <div class="topbar-spacer"></div>
+      <button class="btn btn-primary" id="topbar-cta" onclick="showView('editor',null)">+ Nuova pagina</button>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="view active" id="view-dashboard">
+      <div class="dash-welcome">
+        <div class="dash-welcome-text">
+          <div class="dash-welcome-title">Ciao Giulia 👋</div>
+          <div class="dash-welcome-sub">Il tuo sito è online e funziona perfettamente.</div>
+        </div>
+        <button class="dash-welcome-cta" onclick="showView('editor',null)">+ Nuovo contenuto</button>
+      </div>
+
+      <div class="dash-stats">
+        <div class="stat-card">
+          <div class="stat-label">Pagine</div>
+          <div class="stat-value">8</div>
+          <div class="stat-sub">tutte pubblicate</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">News</div>
+          <div class="stat-value">14</div>
+          <div class="stat-sub">2 in bozza</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-label">Media caricati</div>
+          <div class="stat-value">32</div>
+          <div class="stat-sub">immagini e PDF</div>
+        </div>
+      </div>
+
+      <div class="dash-recent">
+        <div class="card-header">
+          Contenuti recenti
+          <span class="card-link" onclick="showView('pagine',null)">Vedi tutti →</span>
+        </div>
+        <div class="recent-item" onclick="showView('editor',null)">
+          <div class="recent-type type-page">⬜</div>
+          <span class="recent-title">Chi siamo</span>
+          <span class="recent-status sp-pub">Pubblicata</span>
+          <span class="recent-date">24 Mar 2026</span>
+        </div>
+        <div class="recent-item" onclick="showView('editor',null)">
+          <div class="recent-type type-news">📰</div>
+          <span class="recent-title">Apriamo il nuovo showroom in centro</span>
+          <span class="recent-status sp-draft">Bozza</span>
+          <span class="recent-date">22 Mar 2026</span>
+        </div>
+        <div class="recent-item" onclick="showView('editor',null)">
+          <div class="recent-type type-page">⬜</div>
+          <span class="recent-title">Contatti</span>
+          <span class="recent-status sp-pub">Pubblicata</span>
+          <span class="recent-date">18 Mar 2026</span>
+        </div>
+        <div class="recent-item" onclick="showView('editor',null)">
+          <div class="recent-type type-news">📰</div>
+          <span class="recent-title">Novità per la primavera 2026</span>
+          <span class="recent-status sp-pub">Pubblicata</span>
+          <span class="recent-date">10 Mar 2026</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGINE -->
+    <div class="view" id="view-pagine">
+      <div class="list-header">
+        <span class="list-header-title">Pagine</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="filter-tabs">
+            <button class="filter-tab active">Tutte (8)</button>
+            <button class="filter-tab">Pubblicate (8)</button>
+          </div>
+          <button class="btn btn-primary" onclick="showView('editor',null)">+ Nuova pagina</button>
+        </div>
+      </div>
+      <div class="list-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Titolo pagina</th>
+              <th>Stato</th>
+              <th>Modificata</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="showView('editor',null)">
+              <td class="td-title">Home</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">24 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor',null)">
+              <td class="td-title">Chi siamo</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">24 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor',null)">
+              <td class="td-title">Servizi</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">20 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor',null)">
+              <td class="td-title">Portfolio</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">15 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor',null)">
+              <td class="td-title">Contatti</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">18 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- NEWS -->
+    <div class="view" id="view-news">
+      <div class="list-header">
+        <span class="list-header-title">News</span>
+        <div style="display:flex;align-items:center;gap:10px">
+          <div class="filter-tabs">
+            <button class="filter-tab active">Tutte (14)</button>
+            <button class="filter-tab">Pubblicate (12)</button>
+            <button class="filter-tab">Bozze (2)</button>
+          </div>
+          <button class="btn btn-primary" onclick="showView('editor-news',null)">+ Nuova news</button>
+        </div>
+      </div>
+      <div class="list-table">
+        <table>
+          <thead>
+            <tr>
+              <th>Titolo</th>
+              <th>Stato</th>
+              <th>Pubblicata</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr onclick="showView('editor-news',null)">
+              <td class="td-title">Apriamo il nuovo showroom in centro</td>
+              <td><span class="status-pill sp-draft">Bozza</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">—</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor-news',null)">
+              <td class="td-title">Novità per la primavera 2026</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">10 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor-news',null)">
+              <td class="td-title">Partecipiamo al Salone del Mobile 2026</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">2 Mar 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+            <tr onclick="showView('editor-news',null)">
+              <td class="td-title">Nuovo servizio di consulenza online</td>
+              <td><span class="status-pill sp-pub">Pubblicata</span></td>
+              <td style="font-family:var(--font-u);font-size:11px;color:var(--c-ink-2)">20 Feb 2026</td>
+              <td><button class="row-action">Modifica</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- EDITOR (pagina) -->
+    <div class="view" id="view-editor">
+      <div class="editor-wrap">
+
+        <div class="form-card">
+          <div class="form-card-head">Modifica pagina</div>
+          <div class="form-card-body">
+            <div class="field">
+              <label class="field-label">Titolo <span class="field-req">*</span></label>
+              <input class="field-input" type="text" value="Chi siamo">
+            </div>
+            <div class="field">
+              <label class="field-label">Testo della pagina</label>
+              <div class="rich-toolbar">
+                <button class="rich-btn">B</button>
+                <button class="rich-btn" style="font-style:italic">I</button>
+                <button class="rich-btn" style="text-decoration:underline">U</button>
+                <div class="rich-sep"></div>
+                <button class="rich-btn">H1</button>
+                <button class="rich-btn">H2</button>
+                <div class="rich-sep"></div>
+                <button class="rich-btn">≡</button>
+                <button class="rich-btn">🖼</button>
+              </div>
+              <div class="rich-area" contenteditable="true">
+                Siamo uno studio di design fondato nel 2010 a Milano. Ci occupiamo di interni residenziali e commerciali, con un approccio che unisce funzionalità e bellezza.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-card-head">Immagine di copertina</div>
+          <div class="form-card-body">
+            <div style="border:2px dashed var(--c-border);border-radius:var(--r);padding:24px;text-align:center;cursor:pointer" onmouseover="this.style.borderColor='var(--c-brand)'" onmouseout="this.style.borderColor='var(--c-border)'">
+              <div style="font-size:22px;margin-bottom:8px">🖼</div>
+              <div style="font-size:13px;color:var(--c-ink-2)">Trascina qui l'immagine o <span style="color:var(--c-brand);font-weight:500;cursor:pointer">sfoglia</span></div>
+              <div style="font-size:11px;color:var(--c-ink-3);margin-top:4px">JPG, PNG · max 5MB</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-card">
+          <div class="form-card-head">Pubblicazione</div>
+          <div class="form-card-body">
+            <div class="status-row">
+              <div class="status-opt">
+                <span class="sdot sdot-d"></span> Bozza
+              </div>
+              <div class="status-opt sel">
+                <span class="sdot sdot-p"></span> Pubblicata
+              </div>
+            </div>
+            <div class="action-row">
+              <button class="btn-save">Salva bozza</button>
+              <button class="btn-pub">Pubblica pagina</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- EDITOR (news) -->
+    <div class="view" id="view-editor-news">
+      <div class="editor-wrap">
+        <div class="form-card">
+          <div class="form-card-head">Nuova news</div>
+          <div class="form-card-body">
+            <div class="field">
+              <label class="field-label">Titolo <span class="field-req">*</span></label>
+              <input class="field-input" type="text" placeholder="Es. Apriamo il nuovo showroom in centro">
+            </div>
+            <div class="field">
+              <label class="field-label">Testo</label>
+              <div class="rich-toolbar">
+                <button class="rich-btn">B</button>
+                <button class="rich-btn" style="font-style:italic">I</button>
+                <button class="rich-btn" style="text-decoration:underline">U</button>
+                <div class="rich-sep"></div>
+                <button class="rich-btn">H1</button>
+                <button class="rich-btn">H2</button>
+                <div class="rich-sep"></div>
+                <button class="rich-btn">≡</button>
+                <button class="rich-btn">🖼</button>
+              </div>
+              <div class="rich-area" contenteditable="true" style="min-height:140px">Scrivi il testo della news qui…</div>
+            </div>
+            <div class="field">
+              <label class="field-label">Data pubblicazione</label>
+              <input class="field-input" type="date" value="2026-03-24">
+            </div>
+          </div>
+        </div>
+        <div class="form-card">
+          <div class="form-card-head">Pubblicazione</div>
+          <div class="form-card-body">
+            <div class="status-row">
+              <div class="status-opt sel"><span class="sdot sdot-d"></span> Bozza</div>
+              <div class="status-opt"><span class="sdot sdot-p"></span> Pubblicata</div>
+            </div>
+            <div class="action-row">
+              <button class="btn-save">Salva bozza</button>
+              <button class="btn-pub">Pubblica news</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    function showView(name, triggerEl) {
+      document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+      document.querySelectorAll('.sb-link').forEach(l => l.classList.remove('active'));
+      document.getElementById('view-' + name).classList.add('active');
+      if (triggerEl) triggerEl.classList.add('active');
+      const labels = {
+        dashboard: 'Dashboard', pagine: 'Pagine', news: 'News',
+        editor: 'Modifica pagina', 'editor-news': 'Nuova news'
+      };
+      document.getElementById('page-title').textContent = labels[name] || name;
+    }
+  </script>
+
+</body>
+</html>
