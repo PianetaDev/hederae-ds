@@ -208,6 +208,49 @@ export const CMS_Confronto_OldVsNew = {
   },
 };
 
+/* ─── WYSIWYG BUILDER ─── */
+
+export const CMS_PageBuilder = {
+  name: '✦ CMS · Page Builder (WYSIWYG)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-page-builder.html', label: 'CMS · Page Builder', state: 'Builder' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Page Builder WYSIWYG — vedi la pagina mentre la costruisci.**
+
+Shift concettuale rispetto al form editor: la canvas mostra le sezioni reali impilate,
+come appariranno sul sito. Nessun "Preview" separato — quello che vedi è quello che ottieni.
+
+- **Palette sinistra**: componenti drag-and-droppabili (Hero, Split, Features, CTA, Testo, Galleria, Form)
+- **Canvas centrale**: sezioni reali con hover controls (modifica, muovi, duplica, elimina)
+- **Rail destra**: Struttura (layer list) / Proprietà (field per sezione selezionata) / Pubblica
+- **Add zone**: drop zone tra sezioni + bottone in fondo per aggiungere nuovi blocchi
+- **Component drawer**: modal con grid di sezioni disponibili + search
+    `.trim() } },
+  },
+};
+
+export const CMS_BlockEditor = {
+  name: '✦ CMS · Block Editor (Inline)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-block-editor.html', label: 'CMS · Block Editor', state: 'Editing' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Editor inline WYSIWYG — sei dentro il blocco, editi direttamente in canvas.**
+
+Quando nel Page Builder clicchi "✏ Modifica" su una sezione, si apre questo editor.
+Il contesto della pagina rimane visibile ma dimmed — sai esattamente dove sei.
+
+- **Canvas**: il blocco attivo (Hero) è evidenziato con bordo accent. Le sezioni sotto/sopra sono dimmate e non cliccabili.
+- **Regioni editabili**: hover mostra bordo tratteggiato. Click seleziona e mostra toolbar floating.
+- **Toolbar rich text**: si posiziona sopra il campo attivo (Bold, Italic, Link, H1/H2, colore testo)
+- **Field chips**: ogni campo editabile mostra il suo nome (label chip verde) quando attivo
+- **Rail destra**: lista campi del blocco con stato (OK / Vuoto) + editor testo sync col canvas + Stile + Cronologia
+- **Back**: ← Pagina builder riporta al Page Builder con le modifiche salvate
+    `.trim() } },
+  },
+};
+
 /* ─── CONFRONTO ─── */
 export const Confronto_T1_vs_T4 = {
   name: '↔ Confronto T1 vs T4',
