@@ -285,6 +285,27 @@ Mostra tutti i documenti di una collezione (Pagine) con filtri, selezione e azio
   },
 };
 
+/* ─── SUSDEF · AREE TEMATICHE ─── */
+
+export const CMS_AreeTematiche = {
+  name: '✦ CMS · Aree Tematiche (SUSDEF)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-aree-tematiche.html', label: 'CMS · Aree Tematiche', state: 'Editor' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Editor Aree Tematiche — pattern colore + pallino.**
+
+Ogni area tematica Susdef ha un solo colore di base. Quel colore guida tutto: dot nella navigazione, badge nelle sezioni, infografica a ruota in homepage. Il CMS gestisce 3 campi: nome, colore (picker + hex), descrizione. La ruota SVG si aggiorna live al cambio colore.
+
+- **Lista**: 8 aree con dot colorato, contatori doc/eventi, stato attiva/nascosta
+- **Ruota preview**: SVG interattivo, click su dot = selezione area
+- **Color picker**: nativo + input hex sincronizzati, propagazione live ovunque
+- **Toggle visibilità**: nasconde l'area dalla navigazione e dalla ruota
+- **Slug**: con base URL fissa \`susdef.it/aree/\`
+    `.trim() } },
+  },
+};
+
 /* ─── SUSDEF T1 ─── */
 
 export const T1_SusdefDashboard = {
