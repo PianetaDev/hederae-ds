@@ -285,6 +285,16 @@ Mostra tutti i documenti di una collezione (Pagine) con filtri, selezione e azio
   },
 };
 
+/* ─── SUSDEF · PROGETTI ─── */
+
+export const CMS_Progetti = {
+  name: '✦ CMS · Progetti (SUSDEF)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-progetti.html', label: 'CMS · Progetti', state: 'Lista' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+  },
+};
+
 /* ─── SUSDEF · AREE TEMATICHE ─── */
 
 export const CMS_AreeTematiche = {

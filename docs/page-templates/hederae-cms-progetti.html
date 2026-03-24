@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Susdef CMS · Progetti</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --brand:#013E39; --accent:#D8EC28; --nav-w:220px;
+    --font:'IBM Plex Sans',system-ui,sans-serif; --mono:'IBM Plex Mono',monospace;
+    --text:#1a1a1a; --muted:#6e7176; --border:#e3e4e7; --hover:#f4f4f5; --surface:#fafafa;
+  }
+  body { font-family:var(--font); background:#fff; color:var(--text); height:100vh; overflow:hidden; display:flex; }
+
+  /* NAV */
+  .nav { width:var(--nav-w); border-right:1px solid var(--border); display:flex; flex-direction:column; flex-shrink:0; }
+  .nav-workspace { padding:0 12px; height:52px; display:flex; align-items:center; gap:8px; border-bottom:1px solid var(--border); }
+  .ws-icon { width:28px; height:28px; background:var(--brand); border-radius:7px; display:flex; align-items:center; justify-content:center; }
+  .ws-icon svg { width:14px; height:14px; color:var(--accent); }
+  .ws-name { font-size:13px; font-weight:600; flex:1; }
+  .ws-badge { font-family:var(--mono); font-size:9px; font-weight:700; background:var(--accent); color:var(--brand); padding:2px 6px; border-radius:4px; }
+  .nav-section { padding:8px 0; border-bottom:1px solid var(--border); }
+  .nav-section:last-child { border-bottom:none; }
+  .nav-label { font-size:10px; font-weight:600; letter-spacing:.7px; text-transform:uppercase; color:var(--muted); padding:6px 14px 4px; }
+  .nav-item { display:flex; align-items:center; gap:8px; padding:7px 14px; font-size:13px; cursor:pointer; transition:background .1s; position:relative; }
+  .nav-item:hover { background:var(--hover); }
+  .nav-item.active { background:var(--hover); font-weight:500; color:var(--brand); }
+  .nav-item.active::before { content:''; position:absolute; left:0; top:4px; bottom:4px; width:3px; background:var(--brand); border-radius:0 2px 2px 0; }
+  .nav-item svg { width:15px; height:15px; color:var(--muted); flex-shrink:0; }
+  .nav-item.active svg { color:var(--brand); }
+  .nav-count { margin-left:auto; font-size:11px; color:var(--muted); }
+  .nav-footer { margin-top:auto; padding:12px; border-top:1px solid var(--border); display:flex; align-items:center; gap:9px; cursor:pointer; }
+  .nav-footer:hover { background:var(--hover); }
+  .user-av { width:28px; height:28px; border-radius:50%; background:var(--brand); display:flex; align-items:center; justify-content:center; font-size:11px; font-weight:600; color:var(--accent); flex-shrink:0; }
+
+  /* MAIN */
+  .main { flex:1; display:flex; flex-direction:column; overflow:hidden; }
+  .topbar { height:52px; border-bottom:1px solid var(--border); padding:0 24px; display:flex; align-items:center; gap:10px; flex-shrink:0; }
+  .topbar-title { font-size:14px; font-weight:600; }
+  .topbar-spacer { flex:1; }
+  .topbar-filter { display:flex; gap:4px; }
+  .filter-btn { padding:5px 11px; border:1px solid var(--border); border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; background:#fff; color:var(--muted); transition:all .12s; }
+  .filter-btn:hover { border-color:#bbb; color:var(--text); }
+  .filter-btn.on { background:var(--brand); color:#fff; border-color:var(--brand); }
+  .topbar-btn { display:flex; align-items:center; gap:6px; padding:7px 14px; background:var(--brand); color:#fff; border:none; border-radius:7px; font-size:13px; font-weight:500; cursor:pointer; font-family:var(--font); }
+  .topbar-btn:hover { background:#025248; }
+  .topbar-btn svg { width:13px; height:13px; }
+
+  /* SPLIT */
+  .split { flex:1; display:grid; grid-template-columns:360px 1fr; overflow:hidden; }
+
+  /* LIST */
+  .list-panel { border-right:1px solid var(--border); overflow-y:auto; }
+  .list-search { padding:10px 14px; border-bottom:1px solid var(--border); }
+  .list-search input { width:100%; padding:7px 11px; border:1px solid var(--border); border-radius:7px; font-size:12px; font-family:var(--font); outline:none; background:var(--surface); color:var(--text); }
+  .list-search input:focus { border-color:var(--brand); }
+
+  /* Group header */
+  .group-header { padding:8px 16px 4px; font-size:10px; font-weight:700; letter-spacing:.06em; text-transform:uppercase; color:var(--muted); background:var(--surface); border-bottom:1px solid var(--border); display:flex; align-items:center; gap:6px; }
+  .group-icon { font-size:12px; }
+
+  /* Project row */
+  .proj-row { display:flex; align-items:center; gap:10px; padding:10px 16px; border-bottom:1px solid var(--border); cursor:pointer; transition:background .1s; position:relative; }
+  .proj-row:last-child { border-bottom:none; }
+  .proj-row:hover { background:var(--hover); }
+  .proj-row.active { background:#f0f8f6; }
+  .proj-row.active::before { content:''; position:absolute; left:0; top:0; bottom:0; width:3px; background:var(--brand); border-radius:0 2px 2px 0; }
+  .proj-row.edition { padding-left:36px; background:#fafafa; }
+  .proj-row.edition.active { background:#f0f8f6; }
+
+  .proj-expand { width:16px; height:16px; display:flex; align-items:center; justify-content:center; color:var(--muted); flex-shrink:0; font-size:10px; cursor:pointer; transition:transform .15s; }
+  .proj-expand.open { transform:rotate(90deg); }
+
+  .proj-info { flex:1; min-width:0; }
+  .proj-name { font-size:13px; font-weight:500; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+  .proj-meta { font-size:11px; color:var(--muted); margin-top:2px; display:flex; align-items:center; gap:6px; }
+
+  .proj-dots { display:flex; gap:3px; flex-shrink:0; }
+  .proj-dot { width:8px; height:8px; border-radius:50%; }
+
+  .badge { font-size:10px; font-weight:600; padding:2px 6px; border-radius:99px; flex-shrink:0; }
+  .badge-flagship { background:#ede9fe; color:#5b21b6; }
+  .badge-attivo   { background:#dcfce7; color:#15803d; }
+  .badge-concluso { background:var(--hover); color:var(--muted); }
+
+  /* EDITOR */
+  .editor-panel { overflow-y:auto; padding:24px 28px 60px; background:var(--surface); }
+
+  /* Tipo selector */
+  .tipo-pills { display:flex; gap:6px; margin-bottom:20px; padding:14px; background:#fff; border:1px solid var(--border); border-radius:10px; }
+  .tipo-pill { flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:7px; font-size:12px; font-weight:500; cursor:pointer; text-align:center; transition:all .15s; background:#fff; color:var(--muted); }
+  .tipo-pill:hover { border-color:#bbb; color:var(--text); }
+  .tipo-pill.on { background:var(--brand); color:#fff; border-color:var(--brand); }
+  .tipo-pill .pill-sub { font-size:10px; font-weight:400; margin-top:2px; opacity:.8; }
+
+  /* Parent selector (flagship edizione only) */
+  .parent-row { display:flex; align-items:center; gap:8px; padding:10px 14px; background:#fffbeb; border:1px solid #fde68a; border-radius:8px; margin-bottom:16px; }
+  .parent-icon { font-size:14px; }
+  .parent-label { font-size:12px; color:#92400e; flex:1; }
+  .parent-select { font-size:12px; font-family:var(--font); color:var(--brand); font-weight:600; background:transparent; border:none; cursor:pointer; }
+
+  /* Form */
+  .form-section { margin-bottom:20px; }
+  .form-section-title { font-size:11px; font-weight:600; color:var(--muted); text-transform:uppercase; letter-spacing:.05em; margin-bottom:10px; padding-bottom:8px; border-bottom:1px solid var(--border); }
+  .field { margin-bottom:14px; }
+  .field-label { font-size:12px; font-weight:500; margin-bottom:5px; display:block; }
+  .field-hint { font-size:11px; color:var(--muted); margin-top:4px; }
+  .field-input { width:100%; padding:8px 11px; border:1px solid var(--border); border-radius:7px; font-size:13px; font-family:var(--font); color:var(--text); background:#fff; outline:none; transition:border-color .15s; }
+  .field-input:focus { border-color:var(--brand); box-shadow:0 0 0 3px rgba(1,62,57,.07); }
+
+  /* Date range */
+  .date-range { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+
+  /* Stato toggle */
+  .stato-pills { display:flex; gap:6px; }
+  .stato-pill { padding:6px 14px; border:1px solid var(--border); border-radius:6px; font-size:12px; font-weight:500; cursor:pointer; transition:all .12s; background:#fff; color:var(--muted); }
+  .stato-pill:hover { border-color:#bbb; color:var(--text); }
+  .stato-pill.on-attivo   { background:#dcfce7; color:#15803d; border-color:#bbf7d0; }
+  .stato-pill.on-concluso { background:var(--hover); color:var(--text); border-color:#ccc; }
+
+  /* Visibilità */
+  .vis-pills { display:flex; gap:6px; }
+  .vis-pill { flex:1; padding:8px 10px; border:1px solid var(--border); border-radius:7px; font-size:12px; font-weight:500; cursor:pointer; text-align:center; transition:all .15s; background:#fff; color:var(--muted); }
+  .vis-pill:hover { border-color:#bbb; color:var(--text); }
+  .vis-pill.on { border-color:var(--brand); color:var(--brand); background:#f0f8f6; }
+  .vis-pill .vis-sub { font-size:10px; font-weight:400; margin-top:2px; display:block; }
+
+  /* Aree multi-select */
+  .area-chips { display:flex; flex-wrap:wrap; gap:6px; padding:10px; border:1px solid var(--border); border-radius:8px; background:#fff; min-height:44px; }
+  .area-chip { display:flex; align-items:center; gap:5px; padding:4px 10px; border-radius:99px; font-size:12px; font-weight:500; cursor:pointer; border:1px solid; transition:opacity .15s; }
+  .area-chip .chip-dot { width:8px; height:8px; border-radius:50%; flex-shrink:0; }
+  .area-chip .chip-x { margin-left:3px; font-size:11px; opacity:.6; }
+  .area-chip:hover .chip-x { opacity:1; }
+  .area-chip.off { opacity:.35; }
+
+  /* Save bar */
+  .save-bar { display:flex; align-items:center; gap:10px; padding:16px 0 0; border-top:1px solid var(--border); margin-top:8px; }
+  .btn-save { padding:8px 20px; background:var(--brand); color:#fff; border:none; border-radius:7px; font-size:13px; font-weight:500; cursor:pointer; font-family:var(--font); }
+  .btn-save:hover { background:#025248; }
+  .btn-cancel { padding:8px 16px; background:#fff; color:var(--text); border:1px solid var(--border); border-radius:7px; font-size:13px; cursor:pointer; font-family:var(--font); }
+  .save-hint { font-size:11px; color:var(--muted); margin-left:auto; }
+
+  /* Editions list in editor */
+  .editions-list { border:1px solid var(--border); border-radius:8px; overflow:hidden; margin-top:8px; }
+  .edition-item { display:flex; align-items:center; gap:10px; padding:9px 14px; border-bottom:1px solid var(--border); font-size:12px; cursor:pointer; transition:background .1s; }
+  .edition-item:last-child { border-bottom:none; }
+  .edition-item:hover { background:var(--hover); }
+  .edition-year { font-family:var(--mono); font-weight:600; color:var(--brand); min-width:36px; }
+  .edition-name { flex:1; color:var(--text); }
+  .edition-arrow { color:var(--muted); font-size:11px; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-workspace">
+    <div class="ws-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z"/><path d="M6 8h4M8 6v4" stroke-linecap="round"/></svg></div>
+    <span class="ws-name">Susdef CMS</span>
+    <span class="ws-badge">T1</span>
+  </div>
+  <div class="nav-section">
+    <div class="nav-item" onclick="window.location.href='hederae-cms-dashboard-susdef.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>Dashboard</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Contenuti</div>
+    <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>Hub<span class="nav-count">148</span></div>
+    <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>Documenti<span class="nav-count">326</span></div>
+    <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 3V2M11 3V2M2 7h12"/></svg>Eventi<span class="nav-count">42</span></div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg>Progetti<span class="nav-count">385</span></div>
+    <div class="nav-item" onclick="window.location.href='hederae-cms-aree-tematiche.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><circle cx="8" cy="8" r="2.5"/></svg>Aree tematiche<span class="nav-count">8</span></div>
+    <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM2 14s1-4 6-4 6 4 6 4"/></svg>Soci<span class="nav-count">214</span></div>
+    <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>Media</div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Impostazioni</div>
+    <div class="nav-item"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M11.8 4.2l-.7.7M4.2 11.8l-.7.7"/></svg>Globali</div>
+  </div>
+  <div class="nav-footer">
+    <div class="user-av">G</div>
+    <div style="flex:1"><div style="font-size:12px;font-weight:500">Giulia Rossi</div><div style="font-size:11px;color:var(--muted)">Content Manager</div></div>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <span class="topbar-title">Progetti</span>
+    <div class="topbar-filter">
+      <div class="filter-btn on" onclick="setFilter(this,'tutti')">Tutti</div>
+      <div class="filter-btn" onclick="setFilter(this,'attivi')">Attivi</div>
+      <div class="filter-btn" onclick="setFilter(this,'conclusi')">Conclusi</div>
+    </div>
+    <div class="topbar-spacer"></div>
+    <button class="topbar-btn">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg>
+      Nuovo progetto
+    </button>
+  </div>
+
+  <div class="split">
+
+    <!-- LIST -->
+    <div class="list-panel">
+      <div class="list-search">
+        <input type="text" placeholder="Cerca progetti…" />
+      </div>
+
+      <!-- Flagship -->
+      <div class="group-header"><span class="group-icon">★</span> Flagship · Ricorrenti <span style="margin-left:auto;font-weight:400">2 serie</span></div>
+
+      <!-- Italy for Climate container -->
+      <div class="proj-row" onclick="toggleExpand('itc'); selectProj('itc-container')">
+        <div class="proj-expand open" id="expand-itc">›</div>
+        <div class="proj-info">
+          <div class="proj-name">Italy for Climate</div>
+          <div class="proj-meta">
+            <span>3 edizioni</span>
+            <span>·</span>
+            <span>2023 → in corso</span>
+          </div>
+        </div>
+        <div class="proj-dots">
+          <div class="proj-dot" style="background:#4A8FD4" title="Energia e Clima"></div>
+          <div class="proj-dot" style="background:#E8924A" title="Mobilità Sostenibile"></div>
+          <div class="proj-dot" style="background:#E85A8A" title="Ecoinnovazione"></div>
+        </div>
+        <div class="badge badge-flagship">Flagship</div>
+      </div>
+      <div id="editions-itc">
+        <div class="proj-row edition" onclick="selectProj('itc-2025')">
+          <div style="width:16px;flex-shrink:0"></div>
+          <div class="proj-info">
+            <div class="proj-name">Italy for Climate 2025</div>
+            <div class="proj-meta"><span>In corso</span><span>·</span><span>gen 2025 →</span></div>
+          </div>
+          <div class="badge badge-attivo">Attivo</div>
+        </div>
+        <div class="proj-row edition active" onclick="selectProj('itc-2024')">
+          <div style="width:16px;flex-shrink:0"></div>
+          <div class="proj-info">
+            <div class="proj-name">Italy for Climate 2024</div>
+            <div class="proj-meta"><span>Concluso</span><span>·</span><span>gen–dic 2024</span></div>
+          </div>
+          <div class="badge badge-concluso">Concluso</div>
+        </div>
+        <div class="proj-row edition" onclick="selectProj('itc-2023')">
+          <div style="width:16px;flex-shrink:0"></div>
+          <div class="proj-info">
+            <div class="proj-name">Italy for Climate 2023</div>
+            <div class="proj-meta"><span>Concluso</span><span>·</span><span>gen–dic 2023</span></div>
+          </div>
+          <div class="badge badge-concluso">Concluso</div>
+        </div>
+      </div>
+
+      <!-- Stati Generali container -->
+      <div class="proj-row" onclick="toggleExpand('sg'); selectProj('sg-container')">
+        <div class="proj-expand" id="expand-sg">›</div>
+        <div class="proj-info">
+          <div class="proj-name">Stati Generali della Green Economy</div>
+          <div class="proj-meta"><span>2 edizioni</span><span>·</span><span>2023 → in corso</span></div>
+        </div>
+        <div class="proj-dots">
+          <div class="proj-dot" style="background:#9B8ED4" title="Stati Generali"></div>
+          <div class="proj-dot" style="background:#52B5A0" title="Economia Circolare"></div>
+        </div>
+        <div class="badge badge-flagship">Flagship</div>
+      </div>
+      <div id="editions-sg" style="display:none">
+        <div class="proj-row edition" onclick="selectProj('sg-2025')">
+          <div style="width:16px;flex-shrink:0"></div>
+          <div class="proj-info">
+            <div class="proj-name">Stati Generali 2025</div>
+            <div class="proj-meta"><span>In corso</span><span>·</span><span>mar 2025 →</span></div>
+          </div>
+          <div class="badge badge-attivo">Attivo</div>
+        </div>
+        <div class="proj-row edition" onclick="selectProj('sg-2024')">
+          <div style="width:16px;flex-shrink:0"></div>
+          <div class="proj-info">
+            <div class="proj-name">Stati Generali 2024</div>
+            <div class="proj-meta"><span>Concluso</span><span>·</span><span>mar–nov 2024</span></div>
+          </div>
+          <div class="badge badge-concluso">Concluso</div>
+        </div>
+      </div>
+
+      <!-- Una tantum attivi -->
+      <div class="group-header">◆ Progetti · Attivi <span style="margin-left:auto;font-weight:400">3</span></div>
+
+      <div class="proj-row" onclick="selectProj('ecocity')">
+        <div style="width:16px;flex-shrink:0"></div>
+        <div class="proj-info">
+          <div class="proj-name">EcoCity Milano</div>
+          <div class="proj-meta"><span>In corso</span><span>·</span><span>lug 2024 →</span></div>
+        </div>
+        <div class="proj-dots">
+          <div class="proj-dot" style="background:#7BC67A"></div>
+          <div class="proj-dot" style="background:#E8924A"></div>
+        </div>
+        <div class="badge badge-attivo">Attivo</div>
+      </div>
+
+      <div class="proj-row" onclick="selectProj('life-beeodrop')">
+        <div style="width:16px;flex-shrink:0"></div>
+        <div class="proj-info">
+          <div class="proj-name">LIFE BEEodrop</div>
+          <div class="proj-meta"><span>In corso</span><span>·</span><span>set 2023 →</span></div>
+        </div>
+        <div class="proj-dots">
+          <div class="proj-dot" style="background:#C8D84A"></div>
+          <div class="proj-dot" style="background:#52B5A0"></div>
+        </div>
+        <div class="badge badge-attivo">Attivo</div>
+      </div>
+
+      <div class="proj-row" onclick="selectProj('coasttrust')">
+        <div style="width:16px;flex-shrink:0"></div>
+        <div class="proj-info">
+          <div class="proj-name">COASTTRUST</div>
+          <div class="proj-meta"><span>In corso</span><span>·</span><span>gen 2024 →</span></div>
+        </div>
+        <div class="proj-dots">
+          <div class="proj-dot" style="background:#4A8FD4"></div>
+        </div>
+        <div class="badge badge-attivo">Attivo</div>
+      </div>
+
+      <!-- Una tantum conclusi -->
+      <div class="group-header" style="color:#bbb">◇ Progetti · Archiviati <span style="margin-left:auto;font-weight:400">379</span></div>
+
+      <div class="proj-row" style="opacity:.55" onclick="selectProj('pslifestyle')">
+        <div style="width:16px;flex-shrink:0"></div>
+        <div class="proj-info">
+          <div class="proj-name">PSLifestyle</div>
+          <div class="proj-meta"><span>Concluso</span><span>·</span><span>2020–2023</span></div>
+        </div>
+        <div class="proj-dots"><div class="proj-dot" style="background:#C8D84A"></div></div>
+        <div class="badge badge-concluso">Concluso</div>
+      </div>
+
+      <div class="proj-row" style="opacity:.55" onclick="selectProj('old2')">
+        <div style="width:16px;flex-shrink:0"></div>
+        <div class="proj-info">
+          <div class="proj-name">Piano Mobilità Sostenibile Napoli</div>
+          <div class="proj-meta"><span>Concluso</span><span>·</span><span>2018–2020</span></div>
+        </div>
+        <div class="proj-dots"><div class="proj-dot" style="background:#E8924A"></div></div>
+        <div class="badge badge-concluso">Concluso</div>
+      </div>
+
+      <div style="padding:10px 16px;font-size:12px;color:var(--muted);text-align:center;cursor:pointer">Mostra tutti i 379 archiviati →</div>
+    </div>
+
+    <!-- EDITOR -->
+    <div class="editor-panel">
+
+      <!-- Tipo pills -->
+      <div class="tipo-pills">
+        <div class="tipo-pill" onclick="setTipo('container')" id="tipo-container">
+          ★ Flagship
+          <div class="pill-sub">Serie ricorrente</div>
+        </div>
+        <div class="tipo-pill on" onclick="setTipo('edizione')" id="tipo-edizione">
+          ↳ Edizione
+          <div class="pill-sub">Anno di una serie</div>
+        </div>
+        <div class="tipo-pill" onclick="setTipo('progetto')" id="tipo-progetto">
+          ◆ Progetto
+          <div class="pill-sub">Una tantum</div>
+        </div>
+      </div>
+
+      <!-- Parent (visible for edizione) -->
+      <div class="parent-row" id="parent-row">
+        <span class="parent-icon">↳</span>
+        <span class="parent-label">Parte della serie</span>
+        <select class="parent-select">
+          <option selected>Italy for Climate</option>
+          <option>Stati Generali della Green Economy</option>
+        </select>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Identità</div>
+
+        <div class="field">
+          <label class="field-label">Nome</label>
+          <input class="field-input" type="text" value="Italy for Climate 2024" id="f-nome" />
+        </div>
+
+        <div class="field" id="field-anno">
+          <label class="field-label">Anno edizione</label>
+          <input class="field-input" type="number" value="2024" min="2000" max="2099" style="width:120px" />
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Stato e date</div>
+
+        <div class="field">
+          <label class="field-label">Stato</label>
+          <div class="stato-pills">
+            <div class="stato-pill on-concluso" onclick="setStato(this,'concluso')" id="stato-concluso">Concluso</div>
+            <div class="stato-pill" onclick="setStato(this,'attivo')" id="stato-attivo">Attivo</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="field-label">Periodo</label>
+          <div class="date-range">
+            <div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Inizio</div>
+              <input class="field-input" type="month" value="2024-01" />
+            </div>
+            <div>
+              <div style="font-size:11px;color:var(--muted);margin-bottom:4px">Fine <span style="opacity:.6">(vuoto = in corso)</span></div>
+              <input class="field-input" type="month" value="2024-12" />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Aree tematiche</div>
+        <div class="field">
+          <div class="area-chips" id="area-chips">
+            <div class="area-chip" style="background:#EEF6FF;border-color:#4A8FD4;color:#1a4a7a" onclick="toggleChip(this)">
+              <div class="chip-dot" style="background:#4A8FD4"></div>Energia e Clima<span class="chip-x">×</span>
+            </div>
+            <div class="area-chip" style="background:#FFF3E5;border-color:#E8924A;color:#7a3a0a" onclick="toggleChip(this)">
+              <div class="chip-dot" style="background:#E8924A"></div>Mobilità Sostenibile<span class="chip-x">×</span>
+            </div>
+            <div class="area-chip" style="background:#FEF0F6;border-color:#E85A8A;color:#7a1a40" onclick="toggleChip(this)">
+              <div class="chip-dot" style="background:#E85A8A"></div>Ecoinnovazione<span class="chip-x">×</span>
+            </div>
+            <div class="area-chip off" style="background:#F5F4FF;border-color:#9B8ED4;color:#3b2a7a" onclick="toggleChip(this)">
+              <div class="chip-dot" style="background:#9B8ED4"></div>Stati Generali<span class="chip-x">+</span>
+            </div>
+            <div class="area-chip off" style="background:#F0FDF4;border-color:#52B5A0;color:#0a4a3a" onclick="toggleChip(this)">
+              <div class="chip-dot" style="background:#52B5A0"></div>Economia Circolare<span class="chip-x">+</span>
+            </div>
+          </div>
+          <div class="field-hint">Seleziona tutte le aree rilevanti. Il progetto apparirà nelle sezioni di ciascuna area.</div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Visibilità</div>
+        <div class="vis-pills">
+          <div class="vis-pill on" onclick="setVis(this)">
+            Featured
+            <span class="vis-sub">Homepage + aree</span>
+          </div>
+          <div class="vis-pill" onclick="setVis(this)">
+            Standard
+            <span class="vis-sub">Solo nelle aree</span>
+          </div>
+          <div class="vis-pill" onclick="setVis(this)">
+            Archivio
+            <span class="vis-sub">Solo nella search</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-section">
+        <div class="form-section-title">Descrizione</div>
+        <div class="field">
+          <textarea class="field-input" style="min-height:80px">Italy for Climate è la coalizione italiana di imprese che si impegnano a raggiungere la neutralità climatica entro il 2050 accelerando la transizione verde nelle proprie attività e nella propria filiera.</textarea>
+        </div>
+      </div>
+
+      <div class="save-bar">
+        <button class="btn-save">Salva modifiche</button>
+        <button class="btn-cancel">Annulla</button>
+        <span class="save-hint" id="save-hint"></span>
+      </div>
+
+    </div>
+  </div>
+</main>
+
+<script>
+  function toggleExpand(id) {
+    const el = document.getElementById('editions-' + id);
+    const arrow = document.getElementById('expand-' + id);
+    const open = el.style.display !== 'none';
+    el.style.display = open ? 'none' : 'block';
+    arrow.classList.toggle('open', !open);
+  }
+
+  function selectProj(id) {
+    document.querySelectorAll('.proj-row').forEach(r => r.classList.remove('active'));
+    event.currentTarget.classList.add('active');
+  }
+
+  function setFilter(el, val) {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('on'));
+    el.classList.add('on');
+  }
+
+  function setTipo(tipo) {
+    ['container','edizione','progetto'].forEach(t => {
+      document.getElementById('tipo-' + t).classList.toggle('on', t === tipo);
+    });
+    const isEd = tipo === 'edizione';
+    const isContainer = tipo === 'container';
+    document.getElementById('parent-row').style.display = isEd ? 'flex' : 'none';
+    document.getElementById('field-anno').style.display = isEd ? 'block' : 'none';
+  }
+
+  function setStato(el, stato) {
+    document.querySelectorAll('.stato-pill').forEach(p => p.className = 'stato-pill');
+    el.className = 'stato-pill on-' + stato;
+  }
+
+  function setVis(el) {
+    document.querySelectorAll('.vis-pill').forEach(p => p.classList.remove('on'));
+    el.classList.add('on');
+  }
+
+  function toggleChip(el) {
+    const isOff = el.classList.contains('off');
+    el.classList.toggle('off', !isOff);
+    el.querySelector('.chip-x').textContent = isOff ? '×' : '+';
+  }
+</script>
+</body>
+</html>
