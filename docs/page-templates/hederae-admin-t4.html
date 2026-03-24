@@ -470,6 +470,144 @@
     }
     .btn-pub:hover { background: #025249; }
 
+    /* ─── SETTINGS ─── */
+    .settings-wrap {
+      max-width: 660px; display: flex; flex-direction: column; gap: 16px;
+    }
+    .scard {
+      background: var(--c-surface); border: 1px solid var(--c-border);
+      border-radius: var(--r); overflow: hidden;
+    }
+    .scard-head {
+      padding: 13px 18px 11px; border-bottom: 1px solid var(--c-border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .scard-title { font-size: 13px; font-weight: 600; color: var(--c-ink); }
+    .scard-sub { font-size: 11px; color: var(--c-ink-3); margin-top: 1px; }
+    .scard-body { padding: 18px; display: flex; flex-direction: column; gap: 16px; }
+
+    /* toggle switch */
+    .toggle-row {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--c-bg);
+      border: 1px solid var(--c-border); border-radius: var(--r);
+    }
+    .toggle-label { font-size: 13px; font-weight: 500; color: var(--c-ink); }
+    .toggle-hint { font-size: 11px; color: var(--c-ink-3); margin-top: 1px; }
+    .toggle {
+      width: 40px; height: 22px; border-radius: 11px;
+      background: var(--c-border); position: relative; cursor: pointer;
+      transition: background .2s; flex-shrink: 0;
+    }
+    .toggle.on { background: var(--c-brand); }
+    .toggle::after {
+      content: ''; position: absolute; top: 3px; left: 3px;
+      width: 16px; height: 16px; border-radius: 50%; background: #fff;
+      transition: left .2s; box-shadow: 0 1px 3px rgba(0,0,0,.2);
+    }
+    .toggle.on::after { left: 21px; }
+
+    /* provider pills */
+    .provider-row { display: flex; gap: 6px; flex-wrap: wrap; }
+    .provider-pill {
+      padding: 6px 14px; border-radius: 99px; font-size: 12px; font-weight: 500;
+      border: 1px solid var(--c-border); background: var(--c-surface);
+      color: var(--c-ink-2); cursor: pointer; transition: all .12s;
+    }
+    .provider-pill.sel {
+      background: var(--c-green-bg); border-color: var(--c-brand); color: var(--c-brand);
+    }
+
+    /* CO2 widget */
+    .co2-widget {
+      background: linear-gradient(135deg, #e8f4f0 0%, #f0f9e8 100%);
+      border: 1px solid #b8ddd0; border-radius: var(--r);
+      padding: 16px 18px;
+    }
+    .co2-metrics { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-bottom: 14px; }
+    .co2-metric-label {
+      font-family: var(--font-u); font-size: 9px; letter-spacing: .08em;
+      text-transform: uppercase; color: #4a7a6a; margin-bottom: 3px;
+    }
+    .co2-metric-val { font-size: 20px; font-weight: 600; color: var(--c-brand); line-height: 1; }
+    .co2-metric-unit { font-size: 10px; color: #4a7a6a; margin-top: 2px; }
+    .co2-bar-wrap { background: rgba(1,62,57,.08); border-radius: 99px; height: 6px; margin-bottom: 8px; overflow: hidden; }
+    .co2-bar { height: 100%; border-radius: 99px; background: var(--c-brand); width: 32%; }
+    .co2-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 11px; color: #4a7a6a;
+    }
+    .co2-equiv { font-weight: 600; }
+    .co2-badge {
+      background: var(--c-brand); color: var(--c-accent);
+      font-family: var(--font-u); font-size: 9px; font-weight: 600;
+      letter-spacing: .06em; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 99px;
+    }
+    .co2-disconnected {
+      text-align: center; padding: 20px;
+      font-size: 12px; color: var(--c-ink-3);
+    }
+
+    /* API key row */
+    .apikey-row {
+      display: flex; align-items: center; gap: 8px;
+      background: var(--c-bg); border: 1px solid var(--c-border);
+      border-radius: var(--r); padding: 9px 12px;
+    }
+    .apikey-val {
+      flex: 1; font-family: var(--font-u); font-size: 12px;
+      color: var(--c-ink-2); letter-spacing: .04em;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+    }
+    .apikey-btn {
+      padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: 500;
+      cursor: pointer; border: 1px solid var(--c-border);
+      background: var(--c-surface); color: var(--c-ink-2);
+      white-space: nowrap; transition: all .12s; flex-shrink: 0;
+    }
+    .apikey-btn:hover { border-color: var(--c-brand); color: var(--c-brand); }
+    .apikey-btn.danger:hover { border-color: #C1363C; color: #C1363C; }
+
+    /* MCP permission checkboxes */
+    .perm-list { display: flex; flex-direction: column; gap: 8px; }
+    .perm-row {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; background: var(--c-bg);
+      border: 1px solid var(--c-border); border-radius: var(--r);
+      cursor: pointer; transition: background .12s;
+    }
+    .perm-row:hover { background: #eef0f2; }
+    .perm-check {
+      width: 16px; height: 16px; border-radius: 4px; border: 1.5px solid var(--c-border);
+      background: #fff; display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: all .12s;
+    }
+    .perm-check.on { background: var(--c-brand); border-color: var(--c-brand); }
+    .perm-check.on::after { content: '✓'; font-size: 10px; color: #fff; font-weight: 700; }
+    .perm-text { font-size: 13px; color: var(--c-ink); flex: 1; }
+    .perm-badge {
+      font-family: var(--font-u); font-size: 9px; padding: 2px 6px;
+      border-radius: 99px; letter-spacing: .04em;
+    }
+    .perm-badge.safe { background: var(--c-green-bg); color: var(--c-brand); }
+    .perm-badge.caution { background: var(--c-amber-bg); color: var(--c-amber-tx); }
+
+    .mcp-endpoint {
+      display: flex; align-items: center; gap: 8px;
+      padding: 10px 12px; background: var(--c-bg);
+      border: 1px solid var(--c-border); border-radius: var(--r);
+    }
+    .mcp-dot { width: 8px; height: 8px; border-radius: 50%; background: #22c55e; flex-shrink: 0; }
+    .mcp-url {
+      flex: 1; font-family: var(--font-u); font-size: 11px; color: var(--c-ink-2);
+    }
+    .settings-section-label {
+      font-family: var(--font-u); font-size: 10px; font-weight: 500;
+      letter-spacing: .08em; text-transform: uppercase; color: var(--c-ink-3);
+      margin-bottom: -6px;
+    }
+
     /* ─── EMPTY STATE ─── */
     .empty-state {
       text-align: center; padding: 60px 20px;
@@ -509,7 +647,7 @@
       <div class="sb-link">
         <span>◫</span> Media
       </div>
-      <div class="sb-link">
+      <div class="sb-link" onclick="showView('impostazioni',this)">
         <span>⚙</span> Impostazioni
       </div>
     </nav>
@@ -890,6 +1028,204 @@
       </div>
     </div>
 
+    <!-- IMPOSTAZIONI -->
+    <div class="view" id="view-impostazioni">
+      <div class="settings-wrap">
+
+        <!-- 1. Cookie & Legal -->
+        <div class="scard">
+          <div class="scard-head">
+            <div>
+              <div class="scard-title">Cookie & Legal</div>
+              <div class="scard-sub">Gestisci il banner cookie e i testi legali del sito</div>
+            </div>
+          </div>
+          <div class="scard-body">
+
+            <div class="toggle-row">
+              <div>
+                <div class="toggle-label">Cookie banner attivo</div>
+                <div class="toggle-hint">Mostra il banner al primo accesso degli utenti</div>
+              </div>
+              <div class="toggle on" id="toggle-cookie" onclick="this.classList.toggle('on')"></div>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Testo banner cookie</label>
+              <textarea class="field-input field-textarea" style="min-height:72px">Questo sito utilizza cookie tecnici e, previo consenso, cookie analitici per migliorare la tua esperienza.</textarea>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Privacy policy</label>
+              <textarea class="field-input field-textarea">Informativa sulla privacy ai sensi del GDPR (Reg. UE 2016/679). Titolare del trattamento: Il mio sito Srl…</textarea>
+            </div>
+
+            <div class="field">
+              <label class="field-label">Termini d'uso</label>
+              <textarea class="field-input field-textarea">L'utilizzo del presente sito web è soggetto ai seguenti termini e condizioni…</textarea>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+              <button class="btn-save">Annulla</button>
+              <button class="btn-pub" style="padding:8px 20px">Salva</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 2. Newsletter -->
+        <div class="scard">
+          <div class="scard-head">
+            <div>
+              <div class="scard-title">Newsletter</div>
+              <div class="scard-sub">I contatti raccolti dal sito vengono inviati a questo provider</div>
+            </div>
+          </div>
+          <div class="scard-body">
+
+            <div class="field">
+              <label class="field-label">Provider</label>
+              <div class="provider-row">
+                <div class="provider-pill sel" onclick="selectProvider(this,'nl')">Brevo</div>
+                <div class="provider-pill" onclick="selectProvider(this,'nl')">Mailchimp</div>
+                <div class="provider-pill" onclick="selectProvider(this,'nl')">ConvertKit</div>
+                <div class="provider-pill" onclick="selectProvider(this,'nl')">Altro</div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label class="field-label">API Key</label>
+              <input class="field-input" type="password" value="xkeysib-a1b2c3d4e5f6" placeholder="Incolla la tua API key">
+            </div>
+
+            <div class="field">
+              <label class="field-label">ID Lista / Audience</label>
+              <input class="field-input" type="text" value="12345" placeholder="Es. 12345">
+              <span class="field-hint">Trovi l'ID nelle impostazioni del tuo account Brevo</span>
+            </div>
+
+            <div style="display:flex;justify-content:flex-end;gap:8px">
+              <button class="btn-save">Testa connessione</button>
+              <button class="btn-pub" style="padding:8px 20px">Salva</button>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 3. Analytics & CO2 -->
+        <div class="scard">
+          <div class="scard-head">
+            <div>
+              <div class="scard-title">Analytics & Impatto CO₂</div>
+              <div class="scard-sub">Statistiche di visita e stima dell'impronta ambientale mensile</div>
+            </div>
+          </div>
+          <div class="scard-body">
+
+            <div class="field">
+              <label class="field-label">Provider analytics</label>
+              <div class="provider-row">
+                <div class="provider-pill sel" onclick="selectProvider(this,'an')">Plausible</div>
+                <div class="provider-pill" onclick="selectProvider(this,'an')">Umami</div>
+                <div class="provider-pill" onclick="selectProvider(this,'an')">Google Analytics</div>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:8px;align-items:flex-end">
+              <div class="field" style="flex:1">
+                <label class="field-label">Dominio</label>
+                <input class="field-input" type="text" value="susdef.it">
+              </div>
+              <button class="btn-pub" style="padding:8px 16px;flex-shrink:0;margin-bottom:0">Connetti</button>
+            </div>
+
+            <!-- CO2 widget — stato connesso -->
+            <div class="co2-widget">
+              <div class="co2-metrics">
+                <div>
+                  <div class="co2-metric-label">Visite / mese</div>
+                  <div class="co2-metric-val">1.240</div>
+                </div>
+                <div>
+                  <div class="co2-metric-label">Peso medio</div>
+                  <div class="co2-metric-val">0.42</div>
+                  <div class="co2-metric-unit">MB per pagina</div>
+                </div>
+                <div>
+                  <div class="co2-metric-label">CO₂ / mese</div>
+                  <div class="co2-metric-val">0.99</div>
+                  <div class="co2-metric-unit">kg stimati</div>
+                </div>
+              </div>
+              <div class="co2-bar-wrap"><div class="co2-bar"></div></div>
+              <div class="co2-footer">
+                <span>Equivale a circa <span class="co2-equiv">~12 km in auto</span> · più leggero del 68% dei siti</span>
+                <span class="co2-badge">🌱 Sito green</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- 4. MCP & API -->
+        <div class="scard">
+          <div class="scard-head">
+            <div>
+              <div class="scard-title">Connetti Claude al sito</div>
+              <div class="scard-sub">Permetti a Claude di leggere e aggiornare i contenuti via MCP</div>
+            </div>
+          </div>
+          <div class="scard-body">
+
+            <div class="settings-section-label">Endpoint MCP</div>
+            <div class="mcp-endpoint">
+              <div class="mcp-dot"></div>
+              <div class="mcp-url">https://susdef.it/api/mcp</div>
+              <button class="apikey-btn" onclick="copyText('https://susdef.it/api/mcp',this)">Copia</button>
+            </div>
+
+            <div class="settings-section-label">Chiave API</div>
+            <div class="apikey-row">
+              <div class="apikey-val" id="api-key-val">hdr_live_••••••••••••••••••••••••••••••••</div>
+              <button class="apikey-btn" id="btn-show-key" onclick="toggleKey()">Mostra</button>
+              <button class="apikey-btn" onclick="copyText('hdr_live_sk_1a2b3c4d5e6f7g8h9i0j',this)">Copia</button>
+              <button class="apikey-btn danger" onclick="if(confirm('Rigenera la chiave? La vecchia smetterà di funzionare.')){}">Rigenera</button>
+            </div>
+
+            <div class="settings-section-label">Permessi Claude</div>
+            <div class="perm-list">
+              <div class="perm-row" onclick="togglePerm(this)">
+                <div class="perm-check on"></div>
+                <div class="perm-text">Leggi contenuti e pagine</div>
+                <span class="perm-badge safe">sicuro</span>
+              </div>
+              <div class="perm-row" onclick="togglePerm(this)">
+                <div class="perm-check on"></div>
+                <div class="perm-text">Crea e pubblica news</div>
+                <span class="perm-badge safe">sicuro</span>
+              </div>
+              <div class="perm-row" onclick="togglePerm(this)">
+                <div class="perm-check"></div>
+                <div class="perm-text">Modifica pagine esistenti</div>
+                <span class="perm-badge caution">attenzione</span>
+              </div>
+              <div class="perm-row" onclick="togglePerm(this)">
+                <div class="perm-check"></div>
+                <div class="perm-text">Gestisci impostazioni del sito</div>
+                <span class="perm-badge caution">attenzione</span>
+              </div>
+            </div>
+
+            <div style="background:var(--c-green-bg);border:1px solid #b8ddd0;border-radius:var(--r);padding:12px 14px;font-size:12px;color:#2d5c50;line-height:1.6">
+              <strong>Come funziona:</strong> con questa chiave puoi chiedere a Claude "pubblica la news che ti ho mandato" o "aggiorna il testo della pagina Chi siamo" direttamente in chat — senza entrare nell'admin.
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
 
   <script>
@@ -901,7 +1237,8 @@
       if (triggerEl) triggerEl.classList.add('active');
       const labels = {
         dashboard: 'Dashboard', pagine: 'Pagine', news: 'News',
-        editor: 'Modifica pagina', 'editor-news': 'Nuova news'
+        editor: 'Modifica pagina', 'editor-news': 'Nuova news',
+        impostazioni: 'Impostazioni'
       };
       document.getElementById('page-title').textContent = labels[name] || name;
     }
@@ -957,6 +1294,35 @@
     function unhlPrev(id) {
       const el = document.getElementById(id);
       if (el) el.classList.remove('prev-hl');
+    }
+
+    /* ── settings interactions ── */
+    function selectProvider(el, group) {
+      el.closest('.provider-row').querySelectorAll('.provider-pill').forEach(p => p.classList.remove('sel'));
+      el.classList.add('sel');
+    }
+
+    function togglePerm(row) {
+      row.querySelector('.perm-check').classList.toggle('on');
+    }
+
+    let keyVisible = false;
+    function toggleKey() {
+      const el = document.getElementById('api-key-val');
+      const btn = document.getElementById('btn-show-key');
+      keyVisible = !keyVisible;
+      el.textContent = keyVisible
+        ? 'hdr_live_sk_1a2b3c4d5e6f7g8h9i0j1k2l3m4n'
+        : 'hdr_live_••••••••••••••••••••••••••••••••';
+      btn.textContent = keyVisible ? 'Nascondi' : 'Mostra';
+    }
+
+    function copyText(text, btn) {
+      navigator.clipboard.writeText(text).catch(() => {});
+      const orig = btn.textContent;
+      btn.textContent = 'Copiato ✓';
+      btn.style.color = 'var(--c-brand)';
+      setTimeout(() => { btn.textContent = orig; btn.style.color = ''; }, 1800);
     }
   </script>
 

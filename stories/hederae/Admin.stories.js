@@ -118,7 +118,7 @@ export const T4_Pagine = {
 };
 
 export const T4_Editor = {
-  name: 'T4 · Editor semplice',
+  name: 'T4 · Editor split view',
   render: () => {
     const w = templateStory({ ...base, src: 'hederae-admin-t4.html', label: 'Admin T4 · Editor', state: 'Editor' });
     w.querySelector('iframe').addEventListener('load', () => {
@@ -128,7 +128,22 @@ export const T4_Editor = {
   },
   parameters: {
     viewport: { defaultViewport: 'desktop' },
-    docs: { description: { story: 'Editor T4: titolo, rich text, immagine copertina, stato. Nessuna AI, nessun workflow complesso.' } },
+    docs: { description: { story: 'Editor T4 split view: preview live a sinistra, form semplice a destra. Nessun tab, nessuna complessità — il form si aggiorna in tempo reale.' } },
+  },
+};
+
+export const T4_Impostazioni = {
+  name: 'T4 · Impostazioni',
+  render: () => {
+    const w = templateStory({ ...base, src: 'hederae-admin-t4.html', label: 'Admin T4 · Impostazioni', state: 'Settings' });
+    w.querySelector('iframe').addEventListener('load', () => {
+      try { w.querySelector('iframe').contentWindow.showView('impostazioni', null); } catch(e) {}
+    });
+    return w;
+  },
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: 'Impostazioni T4: Cookie & Legal, Newsletter (Brevo/Mailchimp), Analytics + widget CO₂ mensile, e sezione MCP per connettere Claude direttamente al sito.' } },
   },
 };
 
