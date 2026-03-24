@@ -62,21 +62,23 @@ export const T1_ListaDocumenti = {
 };
 
 export const T1_Editor = {
-  name: 'T1 · Editor WYSIWYG + AI',
-  render: () => templateStory({ ...base, src: 'hederae-cms-t1-editor.html', label: 'T1 · Editor WYSIWYG', state: 'Editor' }),
+  name: 'T1 · Editor Split View + AI',
+  render: () => templateStory({ ...base, src: 'hederae-cms-split-editor.html', label: 'T1 · Split Editor', state: 'Editor' }),
   parameters: {
     viewport: { defaultViewport: 'desktop' },
     docs: { description: { story: `
-**Editor T1 — WYSIWYG + AI sidebar. Sostituzione completa del form editor.**
+**Editor T1 — Split view: form a destra, preview live a sinistra. Smart e bidirezionale.**
 
-Canvas centrale con l'articolo reale editabile inline. Click su qualsiasi testo → attivazione con toolbar floating.
-Rail destra a 4 tab: AI / Campi / Workflow / Storia.
+Il "very smart" è tutto nell'interazione: form e preview sono sincronizzati in tempo reale,
+e la connessione funziona in entrambe le direzioni.
 
-- **Canvas**: articolo autentico (cover, categoria, titolo, sottotitolo, autore, corpo). Ogni campo ha label chip al hover, bordo accent all'attivazione.
-- **AI tab**: sommario auto-generato, tag suggeriti, score qualità (leggibilità / SEO / completezza), azioni AI (Migliora, Traduci, Meta SEO, Abstract)
-- **Campi tab**: stato di completamento campo per campo con indicatori OK / Vuoto / Obbligatorio
-- **Workflow tab**: stati visuali (Bozza → Revisione → Pubblicato), revisore assegnato, approvazione con commento
-- **Storia tab**: versioni con ripristino
+- **Scrivi nel form** → la preview si aggiorna istantaneamente. Cambia il titolo, vedi il titolo cambiare nell'articolo.
+- **Clicca sulla preview** → il form scrolla al campo corrispondente e lo evidenzia con un flash accent.
+- **Focus su un campo** → il blocco corrispondente nella preview si illumina con un bordo accent, e la preview scrolla a mostrarlo.
+- **Tab AI**: sommario generato, tag suggeriti, score qualità, azioni AI (Migliora / Traduci / Meta SEO / Abstract)
+- **Tab Workflow**: tracker stati visivo, revisore assegnato, approvazione
+- **View toggle**: Split / Form-only nella topbar
+- **SEO collapsibile**: meta title e description con generazione AI
     `.trim() } },
   },
 };

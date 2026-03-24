@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hederae CMS · Split Editor</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:   #013E39;
+    --accent:  #D8EC28;
+    --nav-w:   220px;
+    --form-w:  340px;
+    --font:    'IBM Plex Sans', system-ui, sans-serif;
+    --mono:    'IBM Plex Mono', monospace;
+    --text:    #1a1a1a;
+    --muted:   #6e7176;
+    --border:  #e3e4e7;
+    --hover:   #f4f4f5;
+    --surface: #fafafa;
+  }
+
+  body { font-family: var(--font); background: #fff; color: var(--text); height: 100vh; overflow: hidden; display: flex; }
+
+  /* ─── NAV ─── */
+  .nav {
+    width: var(--nav-w); border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; flex-shrink: 0; background: #fff;
+  }
+  .nav-workspace {
+    padding: 0 12px; height: 52px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .ws-icon { width: 28px; height: 28px; background: var(--brand); border-radius: 7px; display: flex; align-items: center; justify-content: center; }
+  .ws-icon svg { width: 14px; height: 14px; color: var(--accent); }
+  .ws-name { font-size: 13px; font-weight: 600; flex: 1; }
+  .ws-chevron svg { width: 14px; height: 14px; color: var(--muted); cursor: pointer; }
+  .nav-section { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .nav-section:last-child { border-bottom: none; }
+  .nav-label { font-size: 10px; font-weight: 600; letter-spacing: .7px; text-transform: uppercase; color: var(--muted); padding: 6px 14px 4px; }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; font-size: 13px; color: var(--text);
+    cursor: pointer; transition: background .1s; position: relative;
+  }
+  .nav-item:hover { background: var(--hover); }
+  .nav-item.active { background: var(--hover); font-weight: 500; color: var(--brand); }
+  .nav-item.active::before {
+    content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 3px; background: var(--brand); border-radius: 0 2px 2px 0;
+  }
+  .nav-item svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+  .nav-item.active svg { color: var(--brand); }
+  .nav-count { margin-left: auto; font-size: 11px; color: var(--muted); }
+  .nav-footer {
+    margin-top: auto; padding: 12px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 9px; cursor: pointer;
+  }
+  .nav-footer:hover { background: var(--hover); }
+  .user-av { width: 28px; height: 28px; border-radius: 50%; background: var(--brand); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 600; color: var(--accent); }
+  .user-name { font-size: 12px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--muted); }
+
+  /* ─── MAIN ─── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; }
+
+  /* Topbar */
+  .topbar {
+    height: 52px; border-bottom: 1px solid var(--border);
+    padding: 0 20px; display: flex; align-items: center; gap: 10px; flex-shrink: 0;
+  }
+  .back-btn {
+    display: flex; align-items: center; gap: 5px; padding: 5px 10px;
+    border-radius: 6px; font-size: 12px; font-weight: 500; color: var(--muted);
+    cursor: pointer; border: 1px solid var(--border); background: #fff; transition: all .12s;
+  }
+  .back-btn:hover { color: var(--text); border-color: #bbb; }
+  .back-btn svg { width: 13px; height: 13px; }
+  .bc-sep { color: var(--border); font-size: 15px; }
+  .bc-current { font-size: 13px; font-weight: 600; max-width: 260px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .topbar-spacer { flex: 1; }
+
+  /* View toggle */
+  .view-toggle { display: flex; border: 1px solid var(--border); border-radius: 7px; overflow: hidden; }
+  .vt-btn {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 10px; font-size: 11px; font-weight: 500; cursor: pointer;
+    color: var(--muted); background: #fff; border: none; font-family: var(--font);
+    transition: all .1s;
+  }
+  .vt-btn:hover { color: var(--text); background: var(--hover); }
+  .vt-btn.active { background: var(--brand); color: #fff; }
+  .vt-btn svg { width: 12px; height: 12px; }
+  .vt-sep { width: 1px; background: var(--border); }
+
+  .status-select {
+    display: flex; align-items: center; gap: 6px; padding: 5px 10px;
+    border-radius: 6px; border: 1px solid var(--border); font-size: 12px; font-weight: 500;
+    background: #fff; cursor: pointer; font-family: var(--font); transition: border-color .12s;
+  }
+  .status-select:hover { border-color: #bbb; }
+  .status-select svg { width: 12px; height: 12px; color: var(--muted); }
+  .sdot { width: 6px; height: 6px; border-radius: 50%; }
+  .btn-save {
+    padding: 7px 14px; background: #fff; border: 1px solid var(--border);
+    border-radius: 7px; font-size: 13px; font-weight: 500; cursor: pointer;
+    color: var(--text); font-family: var(--font); transition: all .12s;
+  }
+  .btn-save:hover { border-color: #bbb; }
+  .btn-publish {
+    display: flex; align-items: center; gap: 6px; padding: 7px 14px;
+    background: var(--brand); color: #fff; border: none; border-radius: 7px;
+    font-size: 13px; font-weight: 500; cursor: pointer; font-family: var(--font);
+    transition: background .12s;
+  }
+  .btn-publish:hover { background: #025248; }
+  .btn-publish svg { width: 14px; height: 14px; }
+
+  /* ─── SPLIT BODY ─── */
+  .split-body { flex: 1; display: flex; overflow: hidden; }
+
+  /* ─── PREVIEW ─── */
+  .preview-wrap {
+    flex: 1; background: var(--surface); overflow-y: auto;
+    display: flex; justify-content: center; padding: 40px 32px 80px;
+    min-width: 0; position: relative;
+  }
+  .article {
+    width: 100%; max-width: 640px;
+    background: #fff; border-radius: 12px; border: 1px solid var(--border);
+    overflow: hidden; min-height: 500px;
+  }
+
+  /* Cover */
+  .art-cover {
+    width: 100%; height: 210px; position: relative; overflow: hidden;
+    display: flex; align-items: center; justify-content: center; cursor: pointer;
+  }
+  .art-cover.has-hint { outline: none; }
+  .art-cover-bg {
+    position: absolute; inset: 0;
+    background: linear-gradient(135deg, #e0f2fe 0%, #ddd6fe 100%);
+  }
+  .art-cover-placeholder {
+    position: relative; z-index: 1; color: #a5b4fc; opacity: .5;
+  }
+  .art-cover-placeholder svg { width: 40px; height: 40px; }
+  .art-cover-badge {
+    position: absolute; top: 12px; right: 12px; z-index: 2;
+    background: rgba(1,62,57,.8); color: var(--accent);
+    font-size: 10px; font-weight: 700; letter-spacing: .5px;
+    padding: 3px 8px; border-radius: 6px; text-transform: uppercase;
+  }
+
+  /* Highlight ring on linked fields */
+  .preview-hl {
+    outline: 2px solid var(--accent) !important;
+    outline-offset: 2px !important;
+    border-radius: 4px;
+    transition: outline-color .15s;
+  }
+
+  /* Article body */
+  .art-body { padding: 28px 32px 36px; }
+  .art-category {
+    font-size: 11px; font-weight: 600; letter-spacing: .4px; text-transform: uppercase;
+    color: var(--brand); margin-bottom: 10px; cursor: pointer; display: inline-block;
+  }
+  .art-title {
+    font-size: 24px; font-weight: 700; line-height: 1.25; letter-spacing: -.4px;
+    margin-bottom: 10px; color: var(--text); cursor: pointer; border-radius: 4px;
+    padding: 2px 0;
+  }
+  .art-subtitle {
+    font-size: 15px; line-height: 1.6; color: #4b5563;
+    margin-bottom: 20px; cursor: pointer; border-radius: 4px; padding: 2px 0;
+  }
+  .art-meta {
+    display: flex; align-items: center; gap: 10px;
+    padding-bottom: 20px; margin-bottom: 22px; border-bottom: 1px solid var(--border);
+  }
+  .meta-av {
+    width: 30px; height: 30px; border-radius: 50%; background: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+  }
+  .meta-author { font-size: 13px; font-weight: 500; }
+  .meta-date   { font-size: 11px; color: var(--muted); }
+  .meta-read   { font-size: 11px; color: var(--muted); margin-left: auto; display: flex; align-items: center; gap: 4px; }
+  .meta-read svg { width: 12px; height: 12px; }
+  .art-p  { font-size: 14px; line-height: 1.75; color: #374151; margin-bottom: 16px; cursor: pointer; border-radius: 4px; padding: 2px 0; }
+  .art-h2 { font-size: 18px; font-weight: 700; color: var(--text); margin-bottom: 12px; cursor: pointer; border-radius: 4px; padding: 2px 0; }
+  .art-quote {
+    border-left: 3px solid var(--brand); padding: 12px 16px;
+    margin: 0 0 16px; background: var(--surface); border-radius: 0 8px 8px 0;
+    font-size: 14px; line-height: 1.6; color: #374151; font-style: italic; cursor: pointer;
+  }
+  .art-quote:hover { background: #f0f7f6; }
+
+  /* Hover tooltip on preview elements */
+  .art-title:hover, .art-subtitle:hover, .art-p:hover, .art-h2:hover, .art-quote:hover {
+    background: rgba(1,62,57,.04);
+  }
+  [data-field]:hover::after {
+    content: attr(data-hint);
+    position: absolute; top: -24px; left: 0;
+    font-size: 10px; font-weight: 600; color: var(--brand);
+    background: #e8f5f3; padding: 2px 7px; border-radius: 4px;
+    pointer-events: none; white-space: nowrap; z-index: 10; font-style: normal;
+  }
+  [data-field] { position: relative; }
+
+  /* ─── FORM ─── */
+  .form-wrap {
+    width: var(--form-w); border-left: 1px solid var(--border);
+    display: flex; flex-direction: column; overflow: hidden; flex-shrink: 0;
+  }
+  /* Form tabs */
+  .form-tabs {
+    display: flex; border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .ftab {
+    flex: 1; padding: 10px 4px; font-size: 11px; font-weight: 500;
+    text-align: center; cursor: pointer; color: var(--muted);
+    border-bottom: 2px solid transparent; transition: all .12s;
+    display: flex; align-items: center; justify-content: center; gap: 4px;
+  }
+  .ftab:hover { color: var(--text); background: var(--hover); }
+  .ftab.active { color: var(--brand); border-bottom-color: var(--brand); }
+  .ftab svg { width: 12px; height: 12px; }
+  .ftab .ai-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+  /* Form panels */
+  .form-panel { flex: 1; overflow-y: auto; display: none; }
+  .form-panel.active { display: block; }
+
+  /* Form content */
+  .form-body { padding: 20px 18px 40px; }
+
+  /* Field block */
+  .field-block { margin-bottom: 22px; }
+  .field-label {
+    font-size: 11px; font-weight: 600; letter-spacing: .3px;
+    color: var(--muted); margin-bottom: 6px; display: flex; align-items: center; gap: 6px;
+  }
+  .field-label .req { color: #ef4444; }
+  .field-label .ai-chip {
+    margin-left: auto; font-size: 9px; font-weight: 700; letter-spacing: .3px;
+    background: #e8f5f3; border: 1px solid #c0d8d6; color: var(--brand);
+    padding: 1px 5px; border-radius: 4px; cursor: pointer;
+  }
+  .field-label .ai-chip:hover { background: #d0ede9; }
+
+  /* Inputs */
+  .f-input, .f-textarea, .f-select {
+    width: 100%; border: 1px solid var(--border); border-radius: 8px;
+    padding: 9px 12px; font-size: 13px; font-family: var(--font);
+    color: var(--text); outline: none; background: #fff;
+    transition: border-color .15s, box-shadow .15s;
+  }
+  .f-input:focus, .f-textarea:focus, .f-select:focus {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(1,62,57,.08);
+  }
+  /* Active field — highlighted from preview click */
+  .f-input.hl, .f-textarea.hl {
+    border-color: var(--brand);
+    box-shadow: 0 0 0 3px rgba(216,236,40,.3);
+    animation: pulse .4s ease;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0   rgba(216,236,40,.5); }
+    60%  { box-shadow: 0 0 0 6px rgba(216,236,40,.2); }
+    100% { box-shadow: 0 0 0 3px rgba(216,236,40,.3); }
+  }
+  .f-textarea { resize: vertical; min-height: 70px; line-height: 1.6; }
+  .f-textarea.tall { min-height: 130px; }
+  .f-select { appearance: none; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='none' stroke='%236e7176' stroke-width='1.5'%3E%3Cpath d='M5 7l3 3 3-3'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; background-size: 14px; padding-right: 30px; }
+
+  /* Char count */
+  .char-hint { font-size: 10px; color: var(--muted); margin-top: 4px; text-align: right; }
+  .char-hint.warn { color: #d97706; }
+
+  /* Cover upload */
+  .cover-upload {
+    border: 1.5px dashed var(--border); border-radius: 8px; padding: 20px 16px;
+    text-align: center; cursor: pointer; transition: all .15s; color: var(--muted);
+    font-size: 12px;
+  }
+  .cover-upload:hover { border-color: var(--brand); color: var(--brand); background: rgba(1,62,57,.03); }
+  .cover-upload svg { width: 20px; height: 20px; margin: 0 auto 6px; display: block; opacity: .5; }
+
+  /* Tags input */
+  .tags-wrap {
+    display: flex; flex-wrap: wrap; gap: 5px;
+    border: 1px solid var(--border); border-radius: 8px; padding: 8px 10px;
+    cursor: text; transition: border-color .15s;
+    min-height: 40px; align-items: flex-start;
+  }
+  .tags-wrap:focus-within { border-color: var(--brand); box-shadow: 0 0 0 3px rgba(1,62,57,.08); }
+  .tag-chip {
+    display: flex; align-items: center; gap: 4px;
+    padding: 2px 8px; border-radius: 99px; font-size: 11px; font-weight: 500;
+    background: #f0fdf4; border: 1px solid #bbf7d0; color: #15803d; cursor: default;
+  }
+  .tag-chip .tag-x { cursor: pointer; opacity: .5; font-size: 10px; }
+  .tag-chip .tag-x:hover { opacity: 1; }
+  .tags-input {
+    border: none; outline: none; font-size: 12px; font-family: var(--font);
+    color: var(--text); background: transparent; min-width: 80px; flex: 1;
+    padding: 2px 0;
+  }
+  .tags-input::placeholder { color: var(--muted); }
+
+  /* Divider */
+  .form-divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+  /* SEO toggle */
+  .seo-toggle {
+    display: flex; align-items: center; gap: 7px; cursor: pointer;
+    font-size: 11px; font-weight: 600; letter-spacing: .3px;
+    text-transform: uppercase; color: var(--muted); padding: 4px 0; margin-bottom: 16px;
+    user-select: none;
+  }
+  .seo-toggle svg { width: 12px; height: 12px; transition: transform .2s; }
+  .seo-toggle.open svg { transform: rotate(90deg); }
+  .seo-section { display: none; }
+  .seo-section.open { display: block; }
+
+  /* AI Panel */
+  .ai-body { padding: 16px 18px 40px; }
+  .ai-section { margin-bottom: 20px; }
+  .ai-section-title { font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .ai-badge-row { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .ai-badge {
+    display: flex; align-items: center; gap: 5px; font-size: 10px; font-weight: 700;
+    letter-spacing: .5px; text-transform: uppercase; color: var(--brand);
+    background: #e8f5f3; border: 1px solid #c0d8d6; padding: 3px 8px; border-radius: 6px;
+  }
+  .ai-badge svg { width: 11px; height: 11px; }
+  .ai-badge-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+  .ai-updated { font-size: 11px; color: var(--muted); }
+  .ai-summary {
+    font-size: 12px; line-height: 1.6; color: #374151;
+    background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; position: relative;
+  }
+  .ai-summary::before {
+    content: ''; position: absolute; top: 0; left: 0; bottom: 0; width: 3px;
+    background: var(--brand); border-radius: 3px 0 0 3px;
+  }
+  .ai-summary-meta { font-size: 10px; color: var(--muted); margin-top: 6px; }
+  .ai-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .ai-tag {
+    padding: 3px 10px; border-radius: 99px; font-size: 11px; font-weight: 500;
+    cursor: pointer; transition: all .12s;
+  }
+  .ai-tag.active { background: #dcfce7; border: 1px solid #bbf7d0; color: #15803d; }
+  .ai-tag.suggested { background: #fef3c7; border: 1px solid #fde68a; color: #92400e; }
+  .ai-tag.suggested:hover { background: #fde68a; }
+  .ai-score-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+  .ai-score-label { font-size: 12px; flex: 1; }
+  .ai-score-bar { flex: 2; height: 4px; background: #f0f0f0; border-radius: 99px; overflow: hidden; }
+  .ai-score-fill { height: 100%; border-radius: 99px; }
+  .fill-good { background: #22c55e; } .fill-med { background: #f59e0b; }
+  .ai-score-pct { font-size: 11px; font-weight: 600; min-width: 28px; text-align: right; color: var(--muted); }
+  .ai-actions { display: flex; flex-direction: column; gap: 6px; }
+  .ai-action {
+    display: flex; align-items: center; gap: 8px; padding: 9px 12px;
+    border-radius: 8px; border: 1px solid var(--border); cursor: pointer;
+    font-size: 12px; font-weight: 500; background: #fff; transition: all .12s;
+  }
+  .ai-action:hover { border-color: var(--brand); background: #f7fbfb; color: var(--brand); }
+  .ai-action svg { width: 14px; height: 14px; color: var(--muted); flex-shrink: 0; }
+  .ai-action:hover svg { color: var(--brand); }
+  .ai-action-desc { font-size: 10px; color: var(--muted); font-weight: 400; margin-top: 1px; }
+
+  /* Workflow panel */
+  .wf-body { padding: 16px 18px 40px; }
+  .wf-status-card { background: #ede9fe; border: 1px solid #c4b5fd; border-radius: 10px; padding: 14px; margin-bottom: 16px; }
+  .wf-status-label { font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: #7c3aed; margin-bottom: 4px; }
+  .wf-status-name { font-size: 16px; font-weight: 700; color: #4c1d95; }
+  .wf-status-since { font-size: 11px; color: #7c3aed; margin-top: 2px; }
+  .wf-steps { margin-bottom: 16px; }
+  .wf-step { display: flex; align-items: flex-start; gap: 10px; padding: 8px 0; }
+  .wf-step-line { display: flex; flex-direction: column; align-items: center; }
+  .wf-dot { width: 18px; height: 18px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .wf-dot.done { background: #dcfce7; }
+  .wf-dot.done svg { width: 10px; height: 10px; color: #15803d; }
+  .wf-dot.current { background: var(--brand); }
+  .wf-dot.current::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); }
+  .wf-dot.pending { background: #f3f4f6; border: 2px solid var(--border); }
+  .wf-connector { width: 2px; height: 16px; background: var(--border); margin: 2px auto; }
+  .wf-connector.done { background: #bbf7d0; }
+  .wf-step-info { flex: 1; padding-top: 1px; }
+  .wf-step-name { font-size: 12px; font-weight: 500; }
+  .wf-step-name.current { color: var(--brand); }
+  .wf-step-meta { font-size: 11px; color: var(--muted); }
+  .wf-section-title { font-size: 10px; font-weight: 600; letter-spacing: .5px; text-transform: uppercase; color: var(--muted); margin-bottom: 8px; }
+  .wf-assignee-row { display: flex; align-items: center; gap: 8px; margin-bottom: 14px; }
+  .wf-av { width: 26px; height: 26px; border-radius: 50%; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; color: #fff; }
+  .wf-assignee-name { font-size: 12px; font-weight: 500; }
+  .wf-assignee-role { font-size: 11px; color: var(--muted); }
+  .wf-reassign { font-size: 11px; color: var(--brand); cursor: pointer; margin-left: auto; }
+  .wf-reassign:hover { text-decoration: underline; }
+  .wf-comment-area {
+    width: 100%; border: 1px solid var(--border); border-radius: 8px;
+    padding: 10px 12px; font-size: 12px; font-family: var(--font); color: var(--text);
+    resize: none; outline: none; min-height: 60px; transition: border-color .12s; margin-bottom: 8px;
+  }
+  .wf-comment-area:focus { border-color: var(--brand); }
+  .wf-btn-approve {
+    width: 100%; padding: 9px; background: var(--brand); color: #fff;
+    border: none; border-radius: 8px; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: var(--font); transition: background .12s;
+  }
+  .wf-btn-approve:hover { background: #025248; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-workspace">
+    <div class="ws-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z"/><path d="M6 8h4M8 6v4" stroke-linecap="round"/></svg></div>
+    <span class="ws-name">Hederae CMS</span>
+    <div class="ws-chevron"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg></div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-item" onclick="window.location.href='hederae-cms-dashboard.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Dashboard
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Contenuti</div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="10" rx="1.5"/><path d="M5 6h6M5 9h4"/></svg>
+      Documenti
+      <span class="nav-count">47</span>
+    </div>
+    <div class="nav-item active">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+      News
+      <span class="nav-count">91</span>
+    </div>
+    <div class="nav-item">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+      Media
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Design System</div>
+    <div class="nav-item" onclick="window.location.href='hederae-cms-pattern-editor.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Pattern
+    </div>
+  </div>
+  <div class="nav-section">
+    <div class="nav-label">Impostazioni</div>
+    <div class="nav-item" onclick="window.location.href='hederae-cms-globals-editor.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M11.8 4.2l-.7.7M4.2 11.8l-.7.7"/></svg>
+      Globali
+    </div>
+  </div>
+  <div class="nav-footer">
+    <div class="user-av">M</div>
+    <div style="flex:1"><div class="user-name">Max</div><div class="user-role">Admin</div></div>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#999" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <!-- Topbar -->
+  <div class="topbar">
+    <div class="back-btn" onclick="window.location.href='hederae-cms-collection-list.html'">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M10 4l-4 4 4 4"/></svg>
+      Lista
+    </div>
+    <span class="bc-sep" style="opacity:.3">/</span>
+    <span class="bc-current">EPOS ERIC: New Supercomputing Nodes Accelerate Climate Modelling</span>
+    <div class="topbar-spacer"></div>
+    <div class="view-toggle">
+      <button class="vt-btn active">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="6" height="12" rx="1"/><rect x="10" y="2" width="4" height="12" rx="1"/></svg>
+        Split
+      </button>
+      <div class="vt-sep"></div>
+      <button class="vt-btn">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="2" width="10" height="12" rx="1"/></svg>
+        Form
+      </button>
+    </div>
+    <div class="status-select">
+      <span class="sdot" style="background:#8b5cf6"></span>
+      In revisione
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 7l3 3 3-3"/></svg>
+    </div>
+    <button class="btn-save">Salva</button>
+    <button class="btn-publish">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2v9M4 7l4-5 4 5M3 14h10" stroke-linecap="round"/></svg>
+      Pubblica
+    </button>
+  </div>
+
+  <!-- Split body -->
+  <div class="split-body">
+
+    <!-- PREVIEW -->
+    <div class="preview-wrap" id="previewWrap">
+      <article class="article">
+        <!-- Cover -->
+        <div class="art-cover" id="prev-cover" data-field="cover" data-hint="Immagine copertina" onclick="focusField('cover')" title="Clicca per modificare">
+          <div class="art-cover-bg"></div>
+          <div class="art-cover-placeholder">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="M21 15l-5-5L5 21"/></svg>
+          </div>
+          <div class="art-cover-badge">NEWS</div>
+        </div>
+
+        <div class="art-body">
+          <div class="art-category" id="prev-category" data-field="category" data-hint="Categoria" onclick="focusField('category')">Research Infrastructure</div>
+
+          <div class="art-title" id="prev-title" data-field="title" data-hint="Titolo" onclick="focusField('title')">
+            EPOS ERIC: New Supercomputing Nodes Accelerate Climate Modelling Research
+          </div>
+
+          <div class="art-subtitle" id="prev-subtitle" data-field="subtitle" data-hint="Sottotitolo" onclick="focusField('subtitle')">
+            The latest expansion brings three new computing hubs online, reducing processing time by up to 60% for seismological and climate datasets.
+          </div>
+
+          <div class="art-meta">
+            <div class="meta-av" id="prev-author-av">EF</div>
+            <div style="flex:1">
+              <div class="meta-author" id="prev-author">Elena Ferretti</div>
+              <div class="meta-date"   id="prev-date">22 marzo 2026</div>
+            </div>
+            <div class="meta-read"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="5"/><path d="M8 5v3l2 2"/></svg> 6 min</div>
+          </div>
+
+          <div class="art-p" id="prev-p1" data-field="p1" data-hint="Paragrafo 1" onclick="focusField('p1')">
+            The European Plate Observing System (EPOS ERIC) announced this week the successful integration of three new high-performance computing nodes into its distributed research infrastructure. Located in Bologna, Helsinki, and Athens, the nodes collectively add over 2.4 petaflops of processing capacity to the existing network.
+          </div>
+
+          <div class="art-h2" id="prev-h2" data-field="h2" data-hint="Sottotitolo sezione" onclick="focusField('h2')">
+            Faster Processing for Complex Datasets
+          </div>
+
+          <div class="art-p" id="prev-p2" data-field="p2" data-hint="Paragrafo 2" onclick="focusField('p2')">
+            Researchers working with multi-decade seismological archives have reported significant improvements in data processing times. Tasks that previously required 18 to 22 hours to complete are now finishing in under eight hours, reducing analysis cycles from monthly to weekly.
+          </div>
+
+          <div class="art-quote" id="prev-quote" data-field="quote" data-hint="Citazione" onclick="focusField('quote')">
+            "This infrastructure milestone allows our scientific community to move from monthly to weekly analysis cycles." — Dr. Massimo Cocco, EPOS ERIC CEO
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- FORM -->
+    <div class="form-wrap">
+      <div class="form-tabs">
+        <div class="ftab active" onclick="setTab('content', this)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h10M3 8h6M3 12h8"/></svg>
+          Contenuto
+        </div>
+        <div class="ftab" onclick="setTab('ai', this)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6.5l-2.5 2.5.6 3.5L8 11l-3.1 1.5.6-3.5L3 6.5l3.5-1z"/></svg>
+          AI
+          <span class="ai-dot"></span>
+        </div>
+        <div class="ftab" onclick="setTab('workflow', this)">
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="4" cy="4" r="2"/><circle cx="12" cy="4" r="2"/><circle cx="8" cy="12" r="2"/><path d="M6 4h2M10 4h0M6.5 10.5l-2-4.5M9.5 10.5l2-4.5"/></svg>
+          Workflow
+        </div>
+      </div>
+
+      <!-- CONTENT PANEL -->
+      <div class="form-panel active" id="tab-content">
+        <div class="form-body">
+
+          <!-- Cover -->
+          <div class="field-block">
+            <div class="field-label">IMMAGINE COPERTINA</div>
+            <div class="cover-upload">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+              Carica immagine o trascina qui
+            </div>
+          </div>
+
+          <!-- Title -->
+          <div class="field-block">
+            <div class="field-label">TITOLO <span class="req">*</span></div>
+            <textarea id="f-title" class="f-textarea" rows="2"
+              oninput="syncField('title', this.value)"
+              onfocus="highlightPreview('title')"
+              onblur="unhighlightPreview('title')"
+            >EPOS ERIC: New Supercomputing Nodes Accelerate Climate Modelling Research</textarea>
+            <div class="char-hint" id="char-title">76 / 100</div>
+          </div>
+
+          <!-- Subtitle -->
+          <div class="field-block">
+            <div class="field-label">SOTTOTITOLO <span class="req">*</span></div>
+            <textarea id="f-subtitle" class="f-textarea" rows="3"
+              oninput="syncField('subtitle', this.value)"
+              onfocus="highlightPreview('subtitle')"
+              onblur="unhighlightPreview('subtitle')"
+            >The latest expansion brings three new computing hubs online, reducing processing time by up to 60% for seismological and climate datasets.</textarea>
+          </div>
+
+          <!-- Author + Date row -->
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+            <div class="field-block">
+              <div class="field-label">AUTORE</div>
+              <select id="f-author" class="f-select" onchange="syncAuthor(this.value)">
+                <option>Elena Ferretti</option>
+                <option>Max</option>
+                <option>Giulia Russo</option>
+                <option>Fabrizio</option>
+              </select>
+            </div>
+            <div class="field-block">
+              <div class="field-label">DATA</div>
+              <input type="date" id="f-date" class="f-input" value="2026-03-22" oninput="syncDate(this.value)">
+            </div>
+          </div>
+
+          <!-- Category -->
+          <div class="field-block">
+            <div class="field-label">CATEGORIA</div>
+            <select id="f-category" class="f-select" onchange="syncField('category', this.value)">
+              <option>Research Infrastructure</option>
+              <option>Climate Science</option>
+              <option>Data Management</option>
+              <option>Events</option>
+            </select>
+          </div>
+
+          <hr class="form-divider">
+
+          <!-- Body p1 -->
+          <div class="field-block">
+            <div class="field-label">PARAGRAFO 1
+              <span class="ai-chip" onclick="aiImprove('p1')">✦ Migliora</span>
+            </div>
+            <textarea id="f-p1" class="f-textarea tall" rows="5"
+              oninput="syncField('p1', this.value)"
+              onfocus="highlightPreview('p1')"
+              onblur="unhighlightPreview('p1')"
+            >The European Plate Observing System (EPOS ERIC) announced this week the successful integration of three new high-performance computing nodes into its distributed research infrastructure. Located in Bologna, Helsinki, and Athens, the nodes collectively add over 2.4 petaflops of processing capacity to the existing network.</textarea>
+          </div>
+
+          <!-- Section title h2 -->
+          <div class="field-block">
+            <div class="field-label">TITOLO SEZIONE</div>
+            <input type="text" id="f-h2" class="f-input"
+              value="Faster Processing for Complex Datasets"
+              oninput="syncField('h2', this.value)"
+              onfocus="highlightPreview('h2')"
+              onblur="unhighlightPreview('h2')"
+            >
+          </div>
+
+          <!-- Body p2 -->
+          <div class="field-block">
+            <div class="field-label">PARAGRAFO 2
+              <span class="ai-chip" onclick="aiImprove('p2')">✦ Migliora</span>
+            </div>
+            <textarea id="f-p2" class="f-textarea tall" rows="5"
+              oninput="syncField('p2', this.value)"
+              onfocus="highlightPreview('p2')"
+              onblur="unhighlightPreview('p2')"
+            >Researchers working with multi-decade seismological archives have reported significant improvements in data processing times. Tasks that previously required 18 to 22 hours to complete are now finishing in under eight hours, reducing analysis cycles from monthly to weekly.</textarea>
+          </div>
+
+          <!-- Quote -->
+          <div class="field-block">
+            <div class="field-label">CITAZIONE</div>
+            <textarea id="f-quote" class="f-textarea" rows="3"
+              oninput="syncField('quote', this.value)"
+              onfocus="highlightPreview('quote')"
+              onblur="unhighlightPreview('quote')"
+            >"This infrastructure milestone allows our scientific community to move from monthly to weekly analysis cycles." — Dr. Massimo Cocco, EPOS ERIC CEO</textarea>
+          </div>
+
+          <!-- Tags -->
+          <div class="field-block">
+            <div class="field-label">TAG</div>
+            <div class="tags-wrap" onclick="document.getElementById('tags-input').focus()">
+              <span class="tag-chip">EPOS ERIC <span class="tag-x" onclick="removeTag(this)">✕</span></span>
+              <span class="tag-chip">HPC <span class="tag-x" onclick="removeTag(this)">✕</span></span>
+              <span class="tag-chip">Sismica <span class="tag-x" onclick="removeTag(this)">✕</span></span>
+              <span class="tag-chip">Clima <span class="tag-x" onclick="removeTag(this)">✕</span></span>
+              <input id="tags-input" class="tags-input" placeholder="+ aggiungi tag" onkeydown="addTag(event)">
+            </div>
+          </div>
+
+          <hr class="form-divider">
+
+          <!-- SEO section collapsible -->
+          <div class="seo-toggle" id="seoToggle" onclick="toggleSeo()">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 4l4 4-4 4"/></svg>
+            SEO &amp; Metadati
+          </div>
+          <div class="seo-section" id="seoSection">
+            <div class="field-block">
+              <div class="field-label">META TITLE
+                <span class="ai-chip" onclick="void 0">✦ Genera</span>
+              </div>
+              <input type="text" class="f-input" placeholder="Lascia vuoto per usare il titolo principale">
+            </div>
+            <div class="field-block">
+              <div class="field-label">META DESCRIPTION
+                <span class="ai-chip" onclick="void 0">✦ Genera</span>
+              </div>
+              <textarea class="f-textarea" rows="3" placeholder="160 caratteri max"></textarea>
+              <div class="char-hint">0 / 160</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- AI PANEL -->
+      <div class="form-panel" id="tab-ai">
+        <div class="ai-body">
+          <div class="ai-badge-row">
+            <div class="ai-badge">
+              <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6.5l-2.5 2.5.6 3.5L8 11l-3.1 1.5.6-3.5L3 6.5l3.5-1z"/></svg>
+              Pipeline AI
+              <span class="ai-badge-dot"></span>
+            </div>
+            <span class="ai-updated">Aggiornato adesso</span>
+          </div>
+
+          <div class="ai-section">
+            <div class="ai-section-title">Sommario generato</div>
+            <div class="ai-summary">
+              EPOS ERIC integra tre nuovi nodi HPC (Bologna, Helsinki, Atene) con 2.4 PFlops totali, riducendo i tempi di processing del 60%. Impatto diretto sul monitoraggio tettonico in tempo quasi-reale.
+              <div class="ai-summary-meta">Generato 3 min fa · 312 tokens</div>
+            </div>
+          </div>
+
+          <div class="ai-section">
+            <div class="ai-section-title">Tag suggeriti</div>
+            <div class="ai-tags">
+              <span class="ai-tag active">EPOS ERIC</span>
+              <span class="ai-tag active">HPC</span>
+              <span class="ai-tag active">Sismica</span>
+              <span class="ai-tag active">Clima</span>
+              <span class="ai-tag suggested">Geofisica</span>
+              <span class="ai-tag suggested">FAIR Data</span>
+            </div>
+          </div>
+
+          <div class="ai-section">
+            <div class="ai-section-title">Qualità contenuto</div>
+            <div class="ai-score-row">
+              <span class="ai-score-label">Leggibilità</span>
+              <div class="ai-score-bar"><div class="ai-score-fill fill-good" style="width:82%"></div></div>
+              <span class="ai-score-pct">82%</span>
+            </div>
+            <div class="ai-score-row">
+              <span class="ai-score-label">SEO</span>
+              <div class="ai-score-bar"><div class="ai-score-fill fill-med" style="width:61%"></div></div>
+              <span class="ai-score-pct">61%</span>
+            </div>
+            <div class="ai-score-row">
+              <span class="ai-score-label">Completezza</span>
+              <div class="ai-score-bar"><div class="ai-score-fill fill-good" style="width:90%"></div></div>
+              <span class="ai-score-pct">90%</span>
+            </div>
+          </div>
+
+          <div class="ai-section">
+            <div class="ai-section-title">Azioni AI</div>
+            <div class="ai-actions">
+              <div class="ai-action">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 4h10M3 8h10M3 12h6"/></svg>
+                <div><div>Migliora testo</div><div class="ai-action-desc">Chiarezza, flusso, tono istituzionale</div></div>
+              </div>
+              <div class="ai-action">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 8h8M10 5l3 3-3 3"/></svg>
+                <div><div>Traduci EN → IT</div><div class="ai-action-desc">Traduzione con revisione integrata</div></div>
+              </div>
+              <div class="ai-action">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3.5L13 6.5l-2.5 2.5.6 3.5L8 11l-3.1 1.5.6-3.5L3 6.5l3.5-1z"/></svg>
+                <div><div>Genera meta SEO</div><div class="ai-action-desc">Title tag e description ottimizzati</div></div>
+              </div>
+              <div class="ai-action">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4h12v8H2zM6 4V2h4v2"/></svg>
+                <div><div>Crea abstract</div><div class="ai-action-desc">150 parole per newsletter</div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- WORKFLOW PANEL -->
+      <div class="form-panel" id="tab-workflow">
+        <div class="wf-body">
+          <div class="wf-status-card">
+            <div class="wf-status-label">Stato corrente</div>
+            <div class="wf-status-name">In revisione</div>
+            <div class="wf-status-since">Da ieri, 16:40</div>
+          </div>
+          <div class="wf-steps">
+            <div class="wf-step">
+              <div class="wf-step-line">
+                <div class="wf-dot done"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 5l2.5 2.5L8 3" stroke-linecap="round"/></svg></div>
+                <div class="wf-connector done"></div>
+              </div>
+              <div class="wf-step-info"><div class="wf-step-name">Bozza creata</div><div class="wf-step-meta">21 mar · Elena Ferretti</div></div>
+            </div>
+            <div class="wf-step">
+              <div class="wf-step-line">
+                <div class="wf-dot done"><svg viewBox="0 0 10 10" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 5l2.5 2.5L8 3" stroke-linecap="round"/></svg></div>
+                <div class="wf-connector done"></div>
+              </div>
+              <div class="wf-step-info"><div class="wf-step-name">Inviato in revisione</div><div class="wf-step-meta">22 mar · Elena Ferretti</div></div>
+            </div>
+            <div class="wf-step">
+              <div class="wf-step-line">
+                <div class="wf-dot current"></div>
+                <div class="wf-connector"></div>
+              </div>
+              <div class="wf-step-info"><div class="wf-step-name current">In revisione</div><div class="wf-step-meta">In attesa di approvazione</div></div>
+            </div>
+            <div class="wf-step">
+              <div class="wf-step-line"><div class="wf-dot pending"></div></div>
+              <div class="wf-step-info"><div class="wf-step-name" style="color:var(--muted)">Pubblicato</div><div class="wf-step-meta">—</div></div>
+            </div>
+          </div>
+          <div style="margin-bottom:14px">
+            <div class="wf-section-title">Revisore</div>
+            <div class="wf-assignee-row">
+              <div class="wf-av" style="background:#7c3aed">GR</div>
+              <div style="flex:1"><div class="wf-assignee-name">Giulia Russo</div><div class="wf-assignee-role">Content Manager</div></div>
+              <span class="wf-reassign">Cambia</span>
+            </div>
+          </div>
+          <div class="wf-section-title">Commento revisore</div>
+          <textarea class="wf-comment-area" placeholder="Nota per il team…"></textarea>
+          <button class="wf-btn-approve">✓ Approva e pubblica</button>
+        </div>
+      </div>
+    </div><!-- /form-wrap -->
+
+  </div><!-- /split-body -->
+</main>
+
+<script>
+function setTab(name, el) {
+  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.form-panel').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+/* Sync form → preview */
+function syncField(field, value) {
+  const map = {
+    title:    'prev-title',
+    subtitle: 'prev-subtitle',
+    category: 'prev-category',
+    p1:       'prev-p1',
+    h2:       'prev-h2',
+    p2:       'prev-p2',
+    quote:    'prev-quote',
+  };
+  if (map[field]) {
+    document.getElementById(map[field]).textContent = value || ' ';
+  }
+  // char count for title
+  if (field === 'title') {
+    const el = document.getElementById('char-title');
+    const l = value.length;
+    el.textContent = l + ' / 100';
+    el.className = 'char-hint' + (l > 90 ? ' warn' : '');
+  }
+}
+
+function syncAuthor(val) {
+  document.getElementById('prev-author').textContent = val;
+  document.getElementById('prev-author-av').textContent = val.slice(0,2).toUpperCase();
+}
+
+function syncDate(val) {
+  if (!val) return;
+  const d = new Date(val);
+  document.getElementById('prev-date').textContent = d.toLocaleDateString('it-IT', { day:'numeric', month:'long', year:'numeric' });
+}
+
+/* Preview → form: click preview element → focus + highlight form field */
+function focusField(field) {
+  const fieldMap = {
+    title:    'f-title',
+    subtitle: 'f-subtitle',
+    p1:       'f-p1',
+    h2:       'f-h2',
+    p2:       'f-p2',
+    quote:    'f-quote',
+    category: 'f-category',
+    cover:    null,
+  };
+  const id = fieldMap[field];
+  if (!id) return;
+
+  // Switch to content tab if not there
+  const contentTab = document.querySelector('.ftab');
+  setTab('content', contentTab);
+
+  const el = document.getElementById(id);
+  if (!el) return;
+
+  // Scroll form to field
+  el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
+  // Highlight animation
+  el.classList.remove('hl');
+  void el.offsetWidth; // reflow
+  el.classList.add('hl');
+  el.focus();
+  setTimeout(() => el.classList.remove('hl'), 1200);
+}
+
+/* Form focus → highlight preview region */
+function highlightPreview(field) {
+  const map = {
+    title: 'prev-title', subtitle: 'prev-subtitle',
+    p1: 'prev-p1', h2: 'prev-h2', p2: 'prev-p2', quote: 'prev-quote',
+  };
+  const id = map[field];
+  if (!id) return;
+  const el = document.getElementById(id);
+  if (el) {
+    el.classList.add('preview-hl');
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+}
+
+function unhighlightPreview(field) {
+  const map = {
+    title: 'prev-title', subtitle: 'prev-subtitle',
+    p1: 'prev-p1', h2: 'prev-h2', p2: 'prev-p2', quote: 'prev-quote',
+  };
+  const id = map[field];
+  if (id) {
+    const el = document.getElementById(id);
+    if (el) el.classList.remove('preview-hl');
+  }
+}
+
+function toggleSeo() {
+  const toggle = document.getElementById('seoToggle');
+  const section = document.getElementById('seoSection');
+  toggle.classList.toggle('open');
+  section.classList.toggle('open');
+}
+
+function removeTag(x) {
+  x.parentElement.remove();
+}
+
+function addTag(e) {
+  if (e.key !== 'Enter' && e.key !== ',') return;
+  e.preventDefault();
+  const val = e.target.value.trim().replace(',','');
+  if (!val) return;
+  const wrap = e.target.parentElement;
+  const chip = document.createElement('span');
+  chip.className = 'tag-chip';
+  chip.innerHTML = `${val} <span class="tag-x" onclick="removeTag(this)">✕</span>`;
+  wrap.insertBefore(chip, e.target);
+  e.target.value = '';
+}
+
+function aiImprove(field) {
+  const el = document.getElementById('f-' + field);
+  if (!el) return;
+  el.classList.add('hl');
+  setTimeout(() => el.classList.remove('hl'), 1200);
+}
+</script>
+</body>
+</html>
