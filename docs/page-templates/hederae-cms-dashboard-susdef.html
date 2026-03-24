@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Susdef CMS · Dashboard</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --brand:    #013E39;
+    --accent:   #D8EC28;
+    --nav-w:    220px;
+    --font:     'IBM Plex Sans', system-ui, sans-serif;
+    --mono:     'IBM Plex Mono', monospace;
+    --text:     #1a1a1a;
+    --muted:    #6e7176;
+    --border:   #e3e4e7;
+    --hover:    #f4f4f5;
+    --surface:  #fafafa;
+  }
+
+  body { font-family: var(--font); background: #fff; color: var(--text); height: 100vh; overflow: hidden; display: flex; }
+
+  /* ─── NAV ─── */
+  .nav {
+    width: var(--nav-w);
+    border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; flex-shrink: 0;
+    background: #fff;
+  }
+  .nav-workspace {
+    padding: 0 12px; height: 52px;
+    display: flex; align-items: center; gap: 8px;
+    border-bottom: 1px solid var(--border); flex-shrink: 0;
+  }
+  .ws-icon {
+    width: 28px; height: 28px; background: var(--brand); border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .ws-icon svg { width: 14px; height: 14px; color: var(--accent); }
+  .ws-name { font-size: 13px; font-weight: 600; color: var(--text); flex: 1; }
+  .ws-badge {
+    font-family: var(--mono); font-size: 9px; font-weight: 700; letter-spacing: .05em;
+    background: var(--accent); color: var(--brand);
+    padding: 2px 6px; border-radius: 4px; flex-shrink: 0;
+  }
+
+  .nav-section { padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .nav-section:last-child { border-bottom: none; }
+  .nav-label {
+    font-size: 10px; font-weight: 600; letter-spacing: .7px;
+    text-transform: uppercase; color: var(--muted); padding: 6px 14px 4px;
+  }
+  .nav-item {
+    display: flex; align-items: center; gap: 8px;
+    padding: 7px 14px; font-size: 13px; color: var(--text);
+    cursor: pointer; transition: background .1s; position: relative;
+  }
+  .nav-item:hover { background: var(--hover); }
+  .nav-item.active { background: var(--hover); font-weight: 500; color: var(--brand); }
+  .nav-item.active::before {
+    content: ''; position: absolute; left: 0; top: 4px; bottom: 4px;
+    width: 3px; background: var(--brand); border-radius: 0 2px 2px 0;
+  }
+  .nav-item svg { width: 15px; height: 15px; color: var(--muted); flex-shrink: 0; }
+  .nav-item.active svg { color: var(--brand); }
+  .nav-count { margin-left: auto; font-size: 11px; color: var(--muted); }
+
+  .nav-footer {
+    margin-top: auto; padding: 12px; border-top: 1px solid var(--border);
+    display: flex; align-items: center; gap: 9px; cursor: pointer;
+  }
+  .nav-footer:hover { background: var(--hover); }
+  .user-av {
+    width: 28px; height: 28px; border-radius: 50%; background: var(--brand);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; font-weight: 600; color: var(--accent); flex-shrink: 0;
+  }
+  .user-name { font-size: 12px; font-weight: 500; }
+  .user-role { font-size: 11px; color: var(--muted); }
+
+  /* ─── MAIN ─── */
+  .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+
+  .topbar {
+    height: 52px; border-bottom: 1px solid var(--border);
+    padding: 0 28px; display: flex; align-items: center; gap: 12px; flex-shrink: 0;
+  }
+  .topbar-title { font-size: 14px; font-weight: 600; }
+  .topbar-spacer { flex: 1; }
+  .search-box {
+    display: flex; align-items: center; gap: 7px;
+    padding: 6px 12px; background: var(--surface); border: 1px solid var(--border);
+    border-radius: 7px; font-size: 12px; color: var(--muted);
+    cursor: pointer; min-width: 200px; transition: border-color .15s;
+  }
+  .search-box:hover { border-color: #bbb; }
+  .search-box svg { width: 13px; height: 13px; }
+  .kbd { margin-left: auto; font-family: var(--mono); font-size: 10px; background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 1px 5px; color: var(--muted); }
+  .btn-new {
+    display: flex; align-items: center; gap: 6px;
+    padding: 7px 14px; background: var(--brand); color: #fff;
+    border: none; border-radius: 7px; font-size: 13px; font-weight: 500;
+    cursor: pointer; font-family: var(--font); transition: background .12s;
+  }
+  .btn-new:hover { background: #025248; }
+  .btn-new svg { width: 14px; height: 14px; }
+
+  .content { flex: 1; overflow-y: auto; padding: 32px 28px 60px; }
+
+  /* Stats */
+  .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-bottom: 24px; }
+  .stat {
+    border: 1px solid var(--border); border-radius: 10px; padding: 16px 18px;
+  }
+  .stat-val { font-size: 26px; font-weight: 700; letter-spacing: -.5px; }
+  .stat-label { font-size: 12px; color: var(--muted); margin-top: 2px; }
+  .stat-delta { font-size: 11px; font-weight: 500; margin-top: 6px; display: flex; align-items: center; gap: 3px; }
+  .delta-up { color: #16a34a; }
+  .delta-neutral { color: var(--muted); }
+
+  /* AI queue badge */
+  .ai-badge {
+    display: inline-flex; align-items: center; gap: 5px;
+    background: #fffbeb; border: 1px solid #fde68a; color: #b45309;
+    font-size: 11px; font-weight: 500; padding: 3px 9px; border-radius: 99px;
+  }
+  .ai-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
+
+  /* Section row */
+  .section-row {
+    display: flex; align-items: baseline; gap: 8px; margin-bottom: 14px;
+  }
+  .section-title { font-size: 13px; font-weight: 600; }
+  .section-meta { font-size: 12px; color: var(--muted); }
+  .section-link { margin-left: auto; font-size: 12px; color: var(--brand); font-weight: 500; cursor: pointer; }
+  .section-link:hover { text-decoration: underline; }
+
+  /* Document list */
+  .doc-list {
+    border: 1px solid var(--border); border-radius: 10px; overflow: hidden; margin-bottom: 28px;
+  }
+  .doc-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 11px 16px; border-bottom: 1px solid var(--border);
+    cursor: pointer; transition: background .1s;
+  }
+  .doc-row:last-child { border-bottom: none; }
+  .doc-row:hover { background: var(--hover); }
+  .doc-row:hover .doc-cta { display: flex; }
+  .doc-row:hover .doc-time { display: none; }
+
+  .doc-icon {
+    width: 32px; height: 32px; border-radius: 7px;
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .doc-icon svg { width: 15px; height: 15px; }
+  .ti-hub     { background: #fef3c7; } .ti-hub svg     { color: #d97706; }
+  .ti-doc     { background: #eff6ff; } .ti-doc svg     { color: #3b82f6; }
+  .ti-event   { background: #f5f3ff; } .ti-event svg   { color: #7c3aed; }
+  .ti-project { background: #f0fdf4; } .ti-project svg { color: #16a34a; }
+  .ti-area    { background: #fff1f2; } .ti-area svg    { color: #e11d48; }
+
+  .doc-info { flex: 1; min-width: 0; }
+  .doc-name { font-size: 13px; font-weight: 500; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .doc-sub  { font-size: 11px; color: var(--muted); margin-top: 1px; }
+
+  .doc-status { display: flex; align-items: center; gap: 5px; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+  .sdot { width: 6px; height: 6px; border-radius: 50%; }
+  .s-pub  { color: #15803d; } .s-pub .sdot  { background: #22c55e; }
+  .s-draft{ color: #b45309; } .s-draft .sdot{ background: #f59e0b; }
+  .s-rev  { color: #4338ca; } .s-rev .sdot  { background: #6366f1; }
+
+  .doc-time { font-size: 11px; color: var(--muted); flex-shrink: 0; min-width: 70px; text-align: right; }
+  .doc-cta { display: none; gap: 6px; flex-shrink: 0; align-items: center; }
+  .doc-cta-btn {
+    display: flex; align-items: center; gap: 5px;
+    padding: 5px 10px; border-radius: 6px; border: 1px solid var(--border);
+    font-size: 12px; font-weight: 500; color: var(--text); background: #fff;
+    cursor: pointer; transition: all .12s; white-space: nowrap;
+  }
+  .doc-cta-btn:hover { border-color: var(--brand); color: var(--brand); }
+  .doc-cta-btn.primary { background: var(--brand); color: #fff; border-color: var(--brand); }
+  .doc-cta-btn.primary:hover { background: #025248; }
+  .doc-cta-btn svg { width: 12px; height: 12px; }
+
+  /* AI queue panel */
+  .ai-queue {
+    border: 1px solid #fde68a; border-radius: 10px; background: #fffdf5;
+    overflow: hidden; margin-bottom: 28px;
+  }
+  .ai-queue-header {
+    padding: 10px 16px; border-bottom: 1px solid #fde68a;
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; font-weight: 600; color: #92400e;
+  }
+  .ai-queue-header svg { width: 14px; height: 14px; color: #f59e0b; }
+  .ai-item {
+    display: flex; align-items: center; gap: 10px;
+    padding: 9px 16px; border-bottom: 1px solid #fef3c7; font-size: 12px;
+  }
+  .ai-item:last-child { border-bottom: none; }
+  .ai-item-dot { width: 6px; height: 6px; border-radius: 50%; background: #f59e0b; flex-shrink: 0; }
+  .ai-item-dot.done { background: #22c55e; }
+  .ai-item-name { flex: 1; color: var(--text); font-weight: 500; }
+  .ai-item-task { color: var(--muted); }
+  .ai-item-btn {
+    padding: 3px 9px; border-radius: 5px; border: 1px solid #fde68a;
+    font-size: 11px; font-weight: 500; color: #92400e; background: #fffbeb;
+    cursor: pointer;
+  }
+  .ai-item-btn:hover { background: #fef3c7; }
+  .ai-item-btn.done { border-color: #bbf7d0; color: #15803d; background: #f0fdf4; }
+
+  /* Two col */
+  .two-col { display: grid; grid-template-columns: 1fr 300px; gap: 20px; }
+
+  /* Quick create */
+  .quick-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 28px; }
+  .quick-card {
+    border: 1px solid var(--border); border-radius: 10px; padding: 14px 16px;
+    cursor: pointer; transition: all .15s; display: flex; align-items: center; gap: 12px;
+  }
+  .quick-card:hover { border-color: var(--brand); background: #f7fbfb; }
+  .quick-icon { width: 34px; height: 34px; border-radius: 9px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .quick-icon svg { width: 17px; height: 17px; }
+  .quick-label { font-size: 13px; font-weight: 500; }
+  .quick-desc  { font-size: 11px; color: var(--muted); margin-top: 2px; }
+
+  /* Activity */
+  .activity-list { display: flex; flex-direction: column; }
+  .act-item { display: flex; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border); }
+  .act-item:last-child { border-bottom: none; }
+  .act-av { width: 26px; height: 26px; border-radius: 50%; font-size: 10px; font-weight: 600; display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #fff; margin-top: 1px; }
+  .act-body { flex: 1; }
+  .act-text { font-size: 12px; line-height: 1.4; }
+  .act-text strong { font-weight: 500; }
+  .act-time { font-size: 11px; color: var(--muted); margin-top: 2px; }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600;700&family=IBM+Plex+Mono&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-workspace">
+    <div class="ws-icon">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M3 8c0-2.76 2.24-5 5-5s5 2.24 5 5-2.24 5-5 5-5-2.24-5-5z"/><path d="M6 8h4M8 6v4" stroke-linecap="round"/></svg>
+    </div>
+    <span class="ws-name">Susdef CMS</span>
+    <span class="ws-badge">T1</span>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-item active">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Dashboard
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Contenuti</div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg>
+      Hub
+      <span class="nav-count">148</span>
+    </div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg>
+      Documenti
+      <span class="nav-count">326</span>
+    </div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 3V2M11 3V2M2 7h12"/></svg>
+      Eventi
+      <span class="nav-count">42</span>
+    </div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg>
+      Progetti
+      <span class="nav-count">385</span>
+    </div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="6"/><path d="M5 8h6M8 5v6"/></svg>
+      Aree tematiche
+      <span class="nav-count">8</span>
+    </div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zM2 14s1-4 6-4 6 4 6 4"/></svg>
+      Soci
+      <span class="nav-count">214</span>
+    </div>
+    <div class="nav-item" onclick="navTo(this, '#')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="12" height="10" rx="1.5"/><path d="M5 4V3a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v1"/></svg>
+      Media
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Design System</div>
+    <div class="nav-item" onclick="navTo(this, 'hederae-cms-pattern-editor.html')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="5" height="5" rx="1"/><rect x="9" y="2" width="5" height="5" rx="1"/><rect x="2" y="9" width="5" height="5" rx="1"/><rect x="9" y="9" width="5" height="5" rx="1"/></svg>
+      Pattern
+    </div>
+  </div>
+
+  <div class="nav-section">
+    <div class="nav-label">Impostazioni</div>
+    <div class="nav-item" onclick="navTo(this, 'hederae-cms-globals-editor.html')">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="8" r="2.5"/><path d="M8 2v1M8 13v1M2 8h1M13 8h1M3.5 3.5l.7.7M11.8 11.8l.7.7M11.8 4.2l-.7.7M4.2 11.8l-.7.7"/></svg>
+      Globali
+    </div>
+  </div>
+
+  <div class="nav-footer">
+    <div class="user-av">G</div>
+    <div style="flex:1">
+      <div class="user-name">Giulia Rossi</div>
+      <div class="user-role">Content Manager</div>
+    </div>
+    <svg width="14" height="14" viewBox="0 0 16 16" fill="none" stroke="#999" stroke-width="1.5"><circle cx="8" cy="4" r="1"/><circle cx="8" cy="8" r="1"/><circle cx="8" cy="12" r="1"/></svg>
+  </div>
+</nav>
+
+<!-- MAIN -->
+<main class="main">
+  <div class="topbar">
+    <span class="topbar-title">Dashboard</span>
+    <div class="topbar-spacer"></div>
+    <div style="display:flex;align-items:center;gap:8px">
+      <span class="ai-badge">4 documenti in coda AI</span>
+    </div>
+    <div class="search-box">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="7" cy="7" r="4"/><path d="M10.5 10.5l3 3"/></svg>
+      Cerca in Susdef…
+      <span class="kbd">⌘K</span>
+    </div>
+    <button class="btn-new">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 3v10M3 8h10"/></svg>
+      Nuovo contenuto
+    </button>
+  </div>
+
+  <div class="content">
+
+    <!-- Stats grid by collection -->
+    <div class="stats">
+      <div class="stat">
+        <div class="stat-val">326</div>
+        <div class="stat-label">Documenti</div>
+        <div class="stat-delta delta-up">↑ +8 questo mese</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">385</div>
+        <div class="stat-label">Progetti</div>
+        <div class="stat-delta delta-up">↑ +12 questo mese</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">148</div>
+        <div class="stat-label">Articoli Hub</div>
+        <div class="stat-delta delta-up">↑ +5 questa settimana</div>
+      </div>
+      <div class="stat">
+        <div class="stat-val">42</div>
+        <div class="stat-label">Eventi</div>
+        <div class="stat-delta delta-neutral">3 in arrivo</div>
+      </div>
+    </div>
+
+    <!-- Performance + CO2 widget -->
+    <div style="background:linear-gradient(135deg,#e8f4f0 0%,#f0f9e8 100%);border:1px solid #b8ddd0;border-radius:8px;padding:16px 20px;margin-bottom:24px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px">
+        <div>
+          <span style="font-size:13px;font-weight:600;color:var(--brand)">Performance · Questo mese</span>
+          <span style="font-size:11px;color:#4a7a6a;margin-left:10px">susdef.it</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:8px">
+          <span style="font-size:11px;color:#4a7a6a">↑ +24% visite vs mese scorso</span>
+          <span style="background:var(--brand);color:var(--accent);font-family:var(--mono);font-size:9px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:3px 8px;border-radius:99px">🌱 Sito green</span>
+        </div>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:12px">
+        <div>
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#4a7a6a;margin-bottom:3px">Visite</div>
+          <div style="font-size:24px;font-weight:700;color:var(--brand);line-height:1">18.4K</div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#4a7a6a;margin-bottom:3px">Pagine viste</div>
+          <div style="font-size:24px;font-weight:700;color:var(--brand);line-height:1">52.1K</div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#4a7a6a;margin-bottom:3px">Bounce rate</div>
+          <div style="font-size:24px;font-weight:700;color:var(--brand);line-height:1">42<span style="font-size:14px">%</span></div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#4a7a6a;margin-bottom:3px">Peso medio</div>
+          <div style="font-size:24px;font-weight:700;color:var(--brand);line-height:1">0.44<span style="font-size:14px">MB</span></div>
+        </div>
+        <div>
+          <div style="font-family:var(--mono);font-size:9px;letter-spacing:.08em;text-transform:uppercase;color:#4a7a6a;margin-bottom:3px">CO₂ / mese</div>
+          <div style="font-size:24px;font-weight:700;color:var(--brand);line-height:1">8.9<span style="font-size:14px">kg</span></div>
+          <div style="font-size:10px;color:#4a7a6a;margin-top:2px">~107 km in auto</div>
+        </div>
+      </div>
+      <div style="background:rgba(1,62,57,.08);border-radius:99px;height:5px;overflow:hidden">
+        <div style="height:100%;width:32%;background:var(--brand);border-radius:99px"></div>
+      </div>
+      <div style="font-size:11px;color:#4a7a6a;margin-top:7px">Più leggero del <strong>68%</strong> dei siti nel settore ambientale · <a href="hederae-cms-globals-editor.html" style="color:var(--brand);font-weight:500;text-decoration:none">Impostazioni analytics →</a></div>
+    </div>
+
+    <!-- AI pipeline queue -->
+    <div class="ai-queue">
+      <div class="ai-queue-header">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M8 2l1.5 3 3.5.5-2.5 2.5.5 3.5L8 10l-3 1.5.5-3.5L3 5.5 6.5 5 8 2z"/></svg>
+        AI Pipeline — 4 documenti in elaborazione
+        <span style="margin-left:auto;font-size:11px;font-weight:400;color:#b45309">aggiornato ora</span>
+      </div>
+      <div class="ai-item">
+        <div class="ai-item-dot"></div>
+        <div class="ai-item-name">Rapporto Economia Circolare 2025</div>
+        <div class="ai-item-task">Generazione abstract…</div>
+        <div class="ai-item-btn">In corso</div>
+      </div>
+      <div class="ai-item">
+        <div class="ai-item-dot"></div>
+        <div class="ai-item-name">Progetto EcoCity Milano</div>
+        <div class="ai-item-task">Traduzione EN→IT</div>
+        <div class="ai-item-btn">In attesa</div>
+      </div>
+      <div class="ai-item">
+        <div class="ai-item-dot done"></div>
+        <div class="ai-item-name">Policy Biodiversità 2024–2030</div>
+        <div class="ai-item-task">Tag e categorie generati</div>
+        <div class="ai-item-btn done">Revisiona →</div>
+      </div>
+      <div class="ai-item">
+        <div class="ai-item-dot done"></div>
+        <div class="ai-item-name">Comunicato stampa: COP30</div>
+        <div class="ai-item-task">Meta SEO generato</div>
+        <div class="ai-item-btn done">Revisiona →</div>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+
+        <!-- Quick create -->
+        <div class="section-row"><span class="section-title">Crea nuovo</span></div>
+        <div class="quick-grid">
+          <div class="quick-card">
+            <div class="quick-icon" style="background:#fef3c7"><svg viewBox="0 0 18 18" fill="none" stroke="#d97706" stroke-width="1.4"><circle cx="9" cy="7" r="3.5"/><path d="M2 16c0-3.3 3.1-6 7-6s7 2.7 7 6"/></svg></div>
+            <div>
+              <div class="quick-label">Articolo Hub</div>
+              <div class="quick-desc">Notizia, analisi, commento</div>
+            </div>
+          </div>
+          <div class="quick-card">
+            <div class="quick-icon" style="background:#eff6ff"><svg viewBox="0 0 18 18" fill="none" stroke="#3b82f6" stroke-width="1.4"><rect x="2" y="2" width="14" height="14" rx="2"/><path d="M5 6h8M5 9h8M5 12h5"/></svg></div>
+            <div>
+              <div class="quick-label">Documento</div>
+              <div class="quick-desc">Report, policy, position paper</div>
+            </div>
+          </div>
+          <div class="quick-card">
+            <div class="quick-icon" style="background:#f5f3ff"><svg viewBox="0 0 18 18" fill="none" stroke="#7c3aed" stroke-width="1.4"><rect x="2" y="3" width="14" height="13" rx="2"/><path d="M6 3V2M12 3V2M2 8h14"/></svg></div>
+            <div>
+              <div class="quick-label">Evento</div>
+              <div class="quick-desc">Conferenza, webinar, workshop</div>
+            </div>
+          </div>
+          <div class="quick-card">
+            <div class="quick-icon" style="background:#f0fdf4"><svg viewBox="0 0 18 18" fill="none" stroke="#16a34a" stroke-width="1.4"><path d="M3 14V7l6-4 6 4v7l-6 4-6-4z"/></svg></div>
+            <div>
+              <div class="quick-label">Progetto</div>
+              <div class="quick-desc">Iniziativa, campagna, programma</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Recent docs -->
+        <div class="section-row">
+          <span class="section-title">Modificati di recente</span>
+          <span class="section-meta">901 totali</span>
+          <span class="section-link">Vedi tutti →</span>
+        </div>
+        <div class="doc-list">
+
+          <div class="doc-row">
+            <div class="doc-icon ti-hub"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="8" cy="6" r="3"/><path d="M2 14c0-3 2.69-5 6-5s6 2 6 5"/></svg></div>
+            <div class="doc-info">
+              <div class="doc-name">Crescita verde: i numeri dell'Italia nel 2025</div>
+              <div class="doc-sub">Hub · Giulia Rossi</div>
+            </div>
+            <div class="doc-status s-rev"><div class="sdot"></div>Revisione</div>
+            <div class="doc-time">10 min fa</div>
+            <div class="doc-cta">
+              <div class="doc-cta-btn primary">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+                Editor
+              </div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-icon ti-doc"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg></div>
+            <div class="doc-info">
+              <div class="doc-name">Rapporto Economia Circolare 2025</div>
+              <div class="doc-sub">Documento · Andrea Bianchi</div>
+            </div>
+            <div class="doc-status s-draft"><div class="sdot"></div>Bozza</div>
+            <div class="doc-time">1 ora fa</div>
+            <div class="doc-cta">
+              <div class="doc-cta-btn primary">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+                Editor
+              </div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-icon ti-event"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="12" height="11" rx="1.5"/><path d="M5 3V2M11 3V2M2 7h12"/></svg></div>
+            <div class="doc-info">
+              <div class="doc-name">Forum Sviluppo Sostenibile — Roma, 18 aprile</div>
+              <div class="doc-sub">Evento · Sara Longo</div>
+            </div>
+            <div class="doc-status s-pub"><div class="sdot"></div>Pubblicato</div>
+            <div class="doc-time">ieri</div>
+            <div class="doc-cta">
+              <div class="doc-cta-btn primary">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+                Editor
+              </div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-icon ti-project"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 12V5l6-3 6 3v7l-6 3-6-3z"/></svg></div>
+            <div class="doc-info">
+              <div class="doc-name">EcoCity Milano — Piano mobilità sostenibile</div>
+              <div class="doc-sub">Progetto · Marco Verdi</div>
+            </div>
+            <div class="doc-status s-pub"><div class="sdot"></div>Pubblicato</div>
+            <div class="doc-time">2 gg fa</div>
+            <div class="doc-cta">
+              <div class="doc-cta-btn primary">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+                Editor
+              </div>
+            </div>
+          </div>
+
+          <div class="doc-row">
+            <div class="doc-icon ti-doc"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="12" height="12" rx="2"/><path d="M5 5h6M5 8h6M5 11h3"/></svg></div>
+            <div class="doc-info">
+              <div class="doc-name">Policy Biodiversità 2024–2030</div>
+              <div class="doc-sub">Documento · Andrea Bianchi</div>
+            </div>
+            <div class="doc-status s-rev"><div class="sdot"></div>Revisione AI</div>
+            <div class="doc-time">3 gg fa</div>
+            <div class="doc-cta">
+              <div class="doc-cta-btn primary">
+                <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+                Editor
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Right col -->
+      <div>
+        <div class="section-row" style="margin-bottom:14px"><span class="section-title">Attività recente</span></div>
+        <div class="doc-list">
+          <div style="padding:12px 14px">
+            <div class="activity-list">
+              <div class="act-item">
+                <div class="act-av" style="background:#013E39">G</div>
+                <div class="act-body">
+                  <div class="act-text"><strong>Giulia</strong> ha modificato <strong>Crescita verde 2025</strong></div>
+                  <div class="act-time">10 min fa</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-av" style="background:#7c3aed">A</div>
+                <div class="act-body">
+                  <div class="act-text"><strong>Andrea</strong> ha caricato <strong>Rapporto CE 2025</strong></div>
+                  <div class="act-time">1 ora fa</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-av" style="background:#0891b2">S</div>
+                <div class="act-body">
+                  <div class="act-text"><strong>Sara</strong> ha pubblicato <strong>Forum Sostenibilità</strong></div>
+                  <div class="act-time">ieri, 14:30</div>
+                </div>
+              </div>
+              <div class="act-item">
+                <div class="act-av" style="background:#16a34a">M</div>
+                <div class="act-body">
+                  <div class="act-text"><strong>Marco</strong> ha aggiunto 6 soci al progetto <strong>EcoCity</strong></div>
+                  <div class="act-time">ieri, 11:05</div>
+                </div>
+              </div>
+              <div class="act-item" style="border:none">
+                <div class="act-av" style="background:#f59e0b;color:#fff">AI</div>
+                <div class="act-body">
+                  <div class="act-text"><strong>AI</strong> ha completato abstract per <strong>Policy Biodiversità</strong></div>
+                  <div class="act-time">2 gg fa, 09:15</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Workflow status -->
+        <div class="section-row" style="margin-bottom:12px;margin-top:4px"><span class="section-title">Workflow</span></div>
+        <div class="doc-list">
+          <div style="padding:14px 16px;display:flex;flex-direction:column;gap:12px">
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:12px;color:var(--muted)">Pubblicati</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="background:#dcfce7;border-radius:99px;height:6px;width:100px;overflow:hidden"><div style="height:100%;width:78%;background:#22c55e;border-radius:99px"></div></div>
+                <div style="font-size:12px;font-weight:600;color:#15803d;min-width:28px;text-align:right">703</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:12px;color:var(--muted)">Bozze</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="background:#fef3c7;border-radius:99px;height:6px;width:100px;overflow:hidden"><div style="height:100%;width:14%;background:#f59e0b;border-radius:99px"></div></div>
+                <div style="font-size:12px;font-weight:600;color:#b45309;min-width:28px;text-align:right">127</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;justify-content:space-between">
+              <div style="font-size:12px;color:var(--muted)">In revisione</div>
+              <div style="display:flex;align-items:center;gap:8px">
+                <div style="background:#ede9fe;border-radius:99px;height:6px;width:100px;overflow:hidden"><div style="height:100%;width:8%;background:#7c3aed;border-radius:99px"></div></div>
+                <div style="font-size:12px;font-weight:600;color:#4338ca;min-width:28px;text-align:right">71</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</main>
+
+<script>
+  function navTo(el, href) {
+    document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+    el.classList.add('active');
+    if (href !== '#') setTimeout(() => window.location.href = href, 120);
+  }
+</script>
+</body>
+</html>

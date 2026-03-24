@@ -285,6 +285,28 @@ Mostra tutti i documenti di una collezione (Pagine) con filtri, selezione e azio
   },
 };
 
+/* ─── SUSDEF T1 ─── */
+
+export const CMS_SusdefDashboard = {
+  name: '✦ CMS · Dashboard (SUSDEF)',
+  render: () => templateStory({ ...base, src: 'hederae-cms-dashboard-susdef.html', label: 'CMS · Susdef Dashboard', state: 'Home' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Dashboard CMS Susdef — T1 con AI pipeline attiva.**
+
+Variante client-specific per Fondazione per lo Sviluppo Sostenibile (susdef.it). Stessa architettura del CMS base, personalizzata per le 7 collezioni Susdef.
+
+- **Stat cards**: Documenti (326) / Progetti (385) / Articoli Hub (148) / Eventi (42) — by collection, non by stato
+- **CO₂ widget**: susdef.it — 18.4K visite, 8.9kg CO₂/mese, +24% trend
+- **AI Pipeline queue**: 4 documenti in elaborazione (abstract, traduzione, tag, meta SEO)
+- **Quick create**: Articolo Hub / Documento / Evento / Progetto
+- **Recenti**: contenuti realistici Susdef (rapporti economia circolare, forum, EcoCity, policy biodiversità)
+- **Workflow bar**: distribuzione pubblicati/bozze/revisione dell'intero archivio (901 doc totali)
+    `.trim() } },
+  },
+};
+
 /* ─── CONFRONTO ─── */
 export const Confronto_T1_vs_T4 = {
   name: '↔ Confronto T1 vs T4',
