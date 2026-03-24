@@ -219,38 +219,6 @@ export const CMS_GlobalsEditor = {
   },
 };
 
-export const CMS_Confronto_OldVsNew = {
-  name: '↔ CMS · Prima vs Dopo',
-  render: () => {
-    const container = document.createElement('div');
-    container.style.cssText = 'display:grid;grid-template-columns:1fr 1fr;height:100vh;gap:0;';
-    const labelStyle = 'position:absolute;top:8px;left:50%;transform:translateX(-50%);font-family:monospace;font-size:11px;font-weight:600;padding:3px 10px;border-radius:99px;z-index:10;white-space:nowrap;';
-    const items = [
-      { src: 'hederae-admin-t4.html', label: 'T4 · Attuale (Fabrizio)', bg: '#CC3300', color: '#fff' },
-      { src: 'hederae-cms-page-editor.html', label: 'Hederae · Redesign', bg: '#013E39', color: '#D8EC28' },
-    ];
-    items.forEach(({ src, label, bg, color }, i) => {
-      const wrap = document.createElement('div');
-      wrap.style.cssText = 'position:relative;border-right:' + (i===0?'1px solid #ddd':'none');
-      const lbl = document.createElement('div');
-      lbl.style.cssText = labelStyle + `background:${bg};color:${color};`;
-      lbl.textContent = label;
-      const iframe = document.createElement('iframe');
-      iframe.src = src;
-      iframe.style.cssText = 'width:100%;height:100%;border:none;';
-      wrap.appendChild(lbl);
-      wrap.appendChild(iframe);
-      container.appendChild(wrap);
-    });
-    return container;
-  },
-  parameters: {
-    layout: 'fullscreen',
-    viewport: { defaultViewport: 'desktop' },
-    docs: { description: { story: 'Side-by-side: T4 attuale (Fabrizio POC) vs Page Editor redesign Hederae. Stessa funzione, UX radicalmente diversa.' } },
-  },
-};
-
 /* ─── WYSIWYG BUILDER ─── */
 
 export const CMS_PageBuilder = {
