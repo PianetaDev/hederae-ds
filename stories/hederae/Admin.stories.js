@@ -125,6 +125,27 @@ export const T4_Editor = {
   },
 };
 
+/* ─── CMS DASHBOARD ─── */
+
+export const CMS_Dashboard = {
+  name: '✦ CMS · Dashboard',
+  render: () => templateStory({ ...base, src: 'hederae-cms-dashboard.html', label: 'CMS · Dashboard', state: 'Home' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**Dashboard CMS — punto di accesso a tutti gli strumenti. Nav light, connessa al builder.**
+
+Stile coerente con tutti gli altri template CMS: sidebar bianca, bordo 1px, verde brand come indicatore attivo.
+
+- Stats row: 4 card bordo sottile (totali / pubblicati / bozze / revisione)
+- Quick create: 4 tile → Pagina (→ Page Builder), News (→ Block Editor), Pattern (→ Pattern Editor), Globali
+- Lista documenti recenti: hover rivela il bottone CTA corretto per tipo (Page Builder vs Editor)
+- Click su riga → naviga allo strumento giusto
+- Attività recente nella colonna destra
+    `.trim() } },
+  },
+};
+
 /* ─── CMS FLOW (Cornertable / Fabrizio) ─── */
 
 export const CMS_PageEditor = {
