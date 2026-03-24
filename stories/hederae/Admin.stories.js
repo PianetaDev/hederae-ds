@@ -287,6 +287,21 @@ Mostra tutti i documenti di una collezione (Pagine) con filtri, selezione e azio
 
 /* ─── SUSDEF T1 ─── */
 
+export const T1_SusdefDashboard = {
+  name: '✦ T1 · Dashboard (SUSDEF)',
+  render: () => templateStory({ ...base, src: 'hederae-admin-t1-susdef.html', label: 'Admin · Susdef T1', state: 'Dashboard' }),
+  parameters: {
+    viewport: { defaultViewport: 'desktop' },
+    docs: { description: { story: `
+**BE completo Susdef — variante T1 del pannello Admin.**
+
+Stessa struttura di \`hederae-admin-t1.html\` (EPOS), adattata per Fondazione per lo Sviluppo Sostenibile. Solo i dati cambiano, l'architettura è identica — dimostra la scalabilità del template T1 tra clienti diversi.
+
+Differenze rispetto ad EPOS: nav con Documenti 326 / Articoli Hub 148 / Progetti 385 / Aree tematiche 8 / Soci 214. CO₂ su susdef.it (18.4K visite, 8.9kg/mese). Team: Giulia Rossi, Andrea Bianchi, Marco Verdi.
+    `.trim() } },
+  },
+};
+
 export const CMS_SusdefDashboard = {
   name: '✦ CMS · Dashboard (SUSDEF)',
   render: () => templateStory({ ...base, src: 'hederae-cms-dashboard-susdef.html', label: 'CMS · Susdef Dashboard', state: 'Home' }),
