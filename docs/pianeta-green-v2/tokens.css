@@ -1,0 +1,71 @@
+/**
+ * Pianeta.Green — design tokens (base per il nuovo sito)
+ * Fonte: Figma «Pianeta.Green», frame Landing (313:1576), 09/10/2026.
+ * Valori letti dal codice del frame; dove il disegno usa misure «sporche» (7.118, 10.677, 14.236 px)
+ * qui sono normalizzate sulla scala (vedi DS.md §Normalizzazioni).
+ * Architettura a 3 livelli come Hederae: base → semantic → componente.
+ */
+:root {
+  /* ── BASE: colori ─────────────────────────────── */
+  --pg-forest-900: #1c2e1a;   /* verde bosco: testo su chiaro, superfici scure */
+  --pg-cream-50:   #fdfbf4;   /* crema: superfici chiare, testo su scuro */
+  --pg-lime-300:   #f4ff8d;   /* lime: accento, evidenziazioni, CTA su scuro */
+
+  /* ── BASE: tipografia ─────────────────────────── */
+  --pg-font-display: 'Albert Sans', system-ui, sans-serif;
+  --pg-font-body:    'Albert Sans', system-ui, sans-serif;
+  --pg-font-ui:      'IBM Plex Sans', system-ui, sans-serif;   /* campi, placeholder, micro-testo */
+
+  --pg-text-72: 72px;  --pg-text-56: 56px;  --pg-text-40: 40px;  --pg-text-32: 32px;
+  --pg-text-24: 24px;  --pg-text-20: 20px;  --pg-text-18: 18px;  --pg-text-16: 16px;
+  --pg-text-14: 14px;  --pg-text-11: 11px;
+
+  --pg-leading-tight: 1.2;      /* titoli */
+  --pg-leading-32: 32px;        /* testo lungo 18-20 px */
+  --pg-leading-26: 26px;        /* testo 16 px */
+  --pg-leading-20: 20px;        /* UI compatta */
+  --pg-tracking-label: 0.1em;   /* etichette in maiuscolo (1.6px su 16px) */
+
+  --pg-weight-regular: 400;  --pg-weight-medium: 500;  --pg-weight-semibold: 600;  --pg-weight-bold: 700;
+
+  /* ── BASE: spaziature (scala di 4) ────────────── */
+  --pg-space-1: 4px;   --pg-space-2: 8px;   --pg-space-3: 12px;  --pg-space-4: 16px;
+  --pg-space-6: 24px;  --pg-space-8: 32px;  --pg-space-10: 40px; --pg-space-16: 64px; --pg-space-20: 80px;
+
+  /* ── BASE: forma, layout ──────────────────────── */
+  --pg-radius-0: 0;  --pg-radius-sm: 8px;
+  --pg-border-1: 1px;
+  --pg-canvas: 1440px;   /* tela di progetto */
+  --pg-content: 1376px;  /* contenuto: canvas − 2×32 */
+  --pg-gutter: 32px;
+  --pg-section-y: 80px;  /* padding verticale delle sezioni */
+
+  /* ── SEMANTIC: superfici e testo ──────────────── */
+  --pg-surface-light: var(--pg-cream-50);
+  --pg-surface-dark:  var(--pg-forest-900);
+  --pg-surface-accent: var(--pg-lime-300);
+  --pg-text-on-light: var(--pg-forest-900);
+  --pg-text-on-dark:  var(--pg-cream-50);
+  --pg-text-on-accent: var(--pg-forest-900);
+  --pg-highlight: var(--pg-lime-300);          /* sfondo della parola evidenziata nei titoli */
+  --pg-line-on-light: var(--pg-forest-900);
+  --pg-line-on-dark:  var(--pg-cream-50);
+  --pg-glass: rgba(217, 217, 217, 0.10);       /* velo su foto */
+  --pg-scrim: rgba(28, 46, 26, 0.50);          /* velo scuro su foto per leggibilità */
+
+  /* ── SEMANTIC: campi ──────────────────────────── */
+  --pg-field-bg: var(--pg-cream-50);
+  --pg-field-text: var(--pg-forest-900);
+  /* Nel Figma il placeholder è forest al 50% con opacity 30% → contrasto 1,3:1 (non passa). Qui 70% = 5,3:1 */
+  --pg-field-placeholder: color-mix(in srgb, var(--pg-forest-900) 70%, var(--pg-cream-50));
+  --pg-focus-ring: 2px solid var(--pg-forest-900);
+  --pg-focus-ring-on-dark: 2px solid var(--pg-lime-300);
+
+  /* ── IMMAGINI: sfocatura (valori PROVVISORI: da confermare con l'effetto Layer blur del Figma) ── */
+  --pg-blur-rest: 20px;       /* foto a riposo */
+  --pg-blur-active: 8px;      /* foto in hover, focus, scroll o lente */
+  --pg-blur-floor: 4px;       /* pavimento: la sfocatura non scende MAI sotto questo valore */
+  --pg-blur-duration: 600ms;
+  --pg-blur-ease: cubic-bezier(.2,.7,.2,1);
+  --pg-photo-scale: 1.08;     /* ingrandimento per nascondere il bordo sfumato del blur */
+}

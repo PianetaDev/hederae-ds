@@ -1,0 +1,106 @@
+/**
+ * Hederae DS — Pianeta.Green v2 Theme
+ * Brand: Pianeta.Green (nuovo layout)
+ * Theme: Light / Cream + Forest + Lime — foto di natura sfocate
+ * Tier: 1 — WCAG 2.1 AA required on all surfaces
+ * Source: Figma «Pianeta.Green», frame Landing (313:1576), 09/10/2026
+ * Styleguide: docs/pianeta-green-v2/styleguide.html — Prima pagina costruita con questo tema: Terra (/terra).
+ *
+ * ⚠️  Accessibility notes:
+ *   - Forest #1C2E1A on Cream #FDFBF4: 13.9:1 AAA.  Forest on Lime #F4FF8D: 13.4:1 AAA.
+ *   - Lime #F4FF8D on Cream: 1.04:1 — NEVER text/line on a light surface. Lime is accent: highlight bg, CTA on dark.
+ *   - Placeholder: forest 70% on cream = 5.3:1 (the Figma opacity gave 1.3:1 — do not reproduce it).
+ *   - Photos: always blurred, NEVER to zero (floor), always under a 50% forest scrim when text sits on them.
+ *
+ * Usage: <html data-brand="pianeta-green-v2">
+ */
+
+[data-brand="pianeta-green-v2"],
+.brand-pianeta-green-v2 {
+
+  /* ─── Primitive Scale (shared — DO NOT CHANGE) ─────────────── */
+  --space-0: 0px;  --space-1: 4px;  --space-2: 8px;  --space-3: 12px;  --space-4: 16px;
+  --space-6: 24px; --space-8: 32px; --space-12: 48px; --space-16: 64px; --space-20: 80px;
+  --radius-none: 0px;   /* angoli vivi: superfici, bottoni, card */
+  --radius-sm:   8px;   /* solo campi di inserimento */
+
+  /* ─── Font families ────────────────────────────────────────── */
+  --font-display: "Albert Sans", system-ui, sans-serif;
+  --font-heading: "Albert Sans", system-ui, sans-serif;
+  --font-body:    "Albert Sans", system-ui, sans-serif;
+  --font-ui:      "IBM Plex Sans", system-ui, sans-serif;   /* campi, placeholder, micro-testo */
+
+  /* ─── Surface ──────────────────────────────────────────────── */
+  --color-surface-page:    #FDFBF4;
+  --color-surface-raised:  #FDFBF4;
+  --color-surface-card:    #FDFBF4;
+  --color-surface-overlay: rgba(28, 46, 26, 0.50);     /* scrim su foto */
+  --color-surface-inverse: #1C2E1A;
+  --color-surface-accent:  #F4FF8D;
+
+  /* ─── Content ──────────────────────────────────────────────── */
+  --color-content-primary:   #1C2E1A;
+  --color-content-secondary: #1C2E1A;
+  --color-content-disabled:  rgba(28, 46, 26, 0.45);
+  --color-content-inverse:   #FDFBF4;
+  --color-content-brand:     #1C2E1A;
+  --color-content-accent:    #1C2E1A;                  /* testo su lime */
+
+  /* ─── Border ───────────────────────────────────────────────── */
+  --color-border-default: #1C2E1A;                     /* linea sottile da 1 px */
+  --color-border-subtle:  rgba(28, 46, 26, 0.25);
+  --color-border-brand:   #1C2E1A;
+  --color-border-focus:   #1C2E1A;                     /* su scuro: lime */
+
+  /* ─── Interactive — Primary (forest su crema) ──────────────── */
+  --color-interactive-primary-bg:          #1C2E1A;
+  --color-interactive-primary-bg-hover:    #000000;
+  --color-interactive-primary-bg-active:   #000000;
+  --color-interactive-primary-bg-disabled: rgba(28, 46, 26, 0.45);
+  --color-interactive-primary-label:       #FDFBF4;
+
+  /* ─── Interactive — Secondary (contorno) ───────────────────── */
+  --color-interactive-secondary-bg:       transparent;
+  --color-interactive-secondary-bg-hover: rgba(28, 46, 26, 0.08);
+  --color-interactive-secondary-border:   #1C2E1A;
+  --color-interactive-secondary-label:    #1C2E1A;
+
+  /* ─── Interactive — Accent (lime: SOLO su fondi scuri) ─────── */
+  --color-interactive-accent-bg:       #F4FF8D;
+  --color-interactive-accent-bg-hover: #E9F574;
+  --color-interactive-accent-label:    #1C2E1A;
+
+  /* ─── Link ─────────────────────────────────────────────────── */
+  --color-link-default: #1C2E1A;   /* sempre sottolineato */
+  --color-link-hover:   #000000;
+  --color-link-visited: #1C2E1A;
+
+  /* ─── Campi ────────────────────────────────────────────────── */
+  --color-field-bg:          #FDFBF4;
+  --color-field-border:      #1C2E1A;
+  --color-field-placeholder: color-mix(in srgb, #1C2E1A 70%, #FDFBF4);   /* 5.3:1 */
+
+  /* ─── Feedback ─────────────────────────────────────────────── */
+  --color-feedback-error-bg:   #fee2e2;
+  --color-feedback-error-text: #991b1b;
+  --color-feedback-success-bg:   #d1fadf;
+  --color-feedback-success-text: #166534;
+
+  /* ─── Brand ────────────────────────────────────────────────── */
+  --color-brand-primary:   #1C2E1A;
+  --color-brand-secondary: #FDFBF4;
+  --color-brand-accent:    #F4FF8D;
+  --color-highlight:       #F4FF8D;                    /* sfondo della parola evidenziata nei titoli */
+
+  /* ─── Foto sfocate (valori provvisori: confermare con «Layer blur» del Figma) ─── */
+  --photo-blur-rest:     20px;   /* a riposo */
+  --photo-blur-active:   8px;    /* hover, focus, scroll, lente */
+  --photo-blur-floor:    4px;    /* pavimento: MAI sotto questo valore */
+  --photo-blur-duration: 600ms;
+  --photo-blur-ease:     cubic-bezier(.2, .7, .2, 1);
+  --photo-scale:         1.08;   /* nasconde il bordo sfumato del blur */
+
+  /* ─── Motion ───────────────────────────────────────────────── */
+  --duration-fast: 100ms; --duration-normal: 200ms; --duration-slow: 350ms;
+  --easing-default: cubic-bezier(0.4, 0, 0.2, 1);
+}
