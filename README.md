@@ -16,6 +16,7 @@
 | **Rara** | 4 | Dark | ✅ Completo | [`css/themes/rara.css`](css/themes/rara.css) |
 | **Susdef** | 2 | Light | ✅ Completo | [`css/themes/susdef.css`](css/themes/susdef.css) |
 | **AGESCI** | 1 | Light | ✅ Completo* | [`css/themes/agesci.css`](css/themes/agesci.css) |
+| **Pianeta.Green v2** | 1 | Light | ✅ Completo (nuovo layout) | [`css/themes/pianeta-green-v2.css`](css/themes/pianeta-green-v2.css) · [styleguide](docs/pianeta-green-v2/styleguide.html) — prima pagina: Terra |
 | **Corner Table** | 3 | Light | ⚠️ Placeholder | [`css/themes/corner-table.css`](css/themes/corner-table.css) |
 
 > *AGESCI: font in attesa di conferma da Figma finale (Latte Creative)  

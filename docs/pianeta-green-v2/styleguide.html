@@ -1,0 +1,416 @@
+<!doctype html>
+<html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pianeta.Green v2 — Styleguide (Hederae)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Albert+Sans:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/**
+ * Pianeta.Green — design tokens (base per il nuovo sito)
+ * Fonte: Figma «Pianeta.Green», frame Landing (313:1576), 09/10/2026.
+ * Valori letti dal codice del frame; dove il disegno usa misure «sporche» (7.118, 10.677, 14.236 px)
+ * qui sono normalizzate sulla scala (vedi DS.md §Normalizzazioni).
+ * Architettura a 3 livelli come Hederae: base → semantic → componente.
+ */
+:root {
+  /* ── BASE: colori ─────────────────────────────── */
+  --pg-forest-900: #1c2e1a;   /* verde bosco: testo su chiaro, superfici scure */
+  --pg-cream-50:   #fdfbf4;   /* crema: superfici chiare, testo su scuro */
+  --pg-lime-300:   #f4ff8d;   /* lime: accento, evidenziazioni, CTA su scuro */
+
+  /* ── BASE: tipografia ─────────────────────────── */
+  --pg-font-display: 'Albert Sans', system-ui, sans-serif;
+  --pg-font-body:    'Albert Sans', system-ui, sans-serif;
+  --pg-font-ui:      'IBM Plex Sans', system-ui, sans-serif;   /* campi, placeholder, micro-testo */
+
+  --pg-text-72: 72px;  --pg-text-56: 56px;  --pg-text-40: 40px;  --pg-text-32: 32px;
+  --pg-text-24: 24px;  --pg-text-20: 20px;  --pg-text-18: 18px;  --pg-text-16: 16px;
+  --pg-text-14: 14px;  --pg-text-11: 11px;
+
+  --pg-leading-tight: 1.2;      /* titoli */
+  --pg-leading-32: 32px;        /* testo lungo 18-20 px */
+  --pg-leading-26: 26px;        /* testo 16 px */
+  --pg-leading-20: 20px;        /* UI compatta */
+  --pg-tracking-label: 0.1em;   /* etichette in maiuscolo (1.6px su 16px) */
+
+  --pg-weight-regular: 400;  --pg-weight-medium: 500;  --pg-weight-semibold: 600;  --pg-weight-bold: 700;
+
+  /* ── BASE: spaziature (scala di 4) ────────────── */
+  --pg-space-1: 4px;   --pg-space-2: 8px;   --pg-space-3: 12px;  --pg-space-4: 16px;
+  --pg-space-6: 24px;  --pg-space-8: 32px;  --pg-space-10: 40px; --pg-space-16: 64px; --pg-space-20: 80px;
+
+  /* ── BASE: forma, layout ──────────────────────── */
+  --pg-radius-0: 0;  --pg-radius-sm: 8px;
+  --pg-border-1: 1px;
+  --pg-canvas: 1440px;   /* tela di progetto */
+  --pg-content: 1376px;  /* contenuto: canvas − 2×32 */
+  --pg-gutter: 32px;
+  --pg-section-y: 80px;  /* padding verticale delle sezioni */
+
+  /* ── SEMANTIC: superfici e testo ──────────────── */
+  --pg-surface-light: var(--pg-cream-50);
+  --pg-surface-dark:  var(--pg-forest-900);
+  --pg-surface-accent: var(--pg-lime-300);
+  --pg-text-on-light: var(--pg-forest-900);
+  --pg-text-on-dark:  var(--pg-cream-50);
+  --pg-text-on-accent: var(--pg-forest-900);
+  --pg-highlight: var(--pg-lime-300);          /* sfondo della parola evidenziata nei titoli */
+  --pg-line-on-light: var(--pg-forest-900);
+  --pg-line-on-dark:  var(--pg-cream-50);
+  --pg-glass: rgba(217, 217, 217, 0.10);       /* velo su foto */
+  --pg-scrim: rgba(28, 46, 26, 0.50);          /* velo scuro su foto per leggibilità */
+
+  /* ── SEMANTIC: campi ──────────────────────────── */
+  --pg-field-bg: var(--pg-cream-50);
+  --pg-field-text: var(--pg-forest-900);
+  /* Nel Figma il placeholder è forest al 50% con opacity 30% → contrasto 1,3:1 (non passa). Qui 70% = 5,3:1 */
+  --pg-field-placeholder: color-mix(in srgb, var(--pg-forest-900) 70%, var(--pg-cream-50));
+  --pg-focus-ring: 2px solid var(--pg-forest-900);
+  --pg-focus-ring-on-dark: 2px solid var(--pg-lime-300);
+
+  /* ── IMMAGINI: sfocatura (valori PROVVISORI: da confermare con l'effetto Layer blur del Figma) ── */
+  --pg-blur-rest: 20px;       /* foto a riposo */
+  --pg-blur-active: 8px;      /* foto in hover, focus, scroll o lente */
+  --pg-blur-floor: 4px;       /* pavimento: la sfocatura non scende MAI sotto questo valore */
+  --pg-blur-duration: 600ms;
+  --pg-blur-ease: cubic-bezier(.2,.7,.2,1);
+  --pg-photo-scale: 1.08;     /* ingrandimento per nascondere il bordo sfumato del blur */
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--pg-surface-light);color:var(--pg-text-on-light);font:400 var(--pg-text-16)/var(--pg-leading-26) var(--pg-font-body)}
+a{color:inherit}
+:focus-visible{outline:var(--pg-focus-ring);outline-offset:3px}
+.on-dark :focus-visible{outline:var(--pg-focus-ring-on-dark)}
+.wrap{max-width:var(--pg-content);margin:0 auto;padding:0 var(--pg-gutter)}
+.sg-head{background:var(--pg-surface-dark);color:var(--pg-text-on-dark);padding:var(--pg-space-16) 0}
+.sg-head h1{font-size:var(--pg-text-56);line-height:var(--pg-leading-tight);font-weight:500;margin:0 0 var(--pg-space-4)}
+.sg-head p{max-width:60ch;margin:0;font-size:var(--pg-text-18);line-height:var(--pg-leading-32)}
+nav.toc{position:sticky;top:0;background:var(--pg-surface-light);border-bottom:1px solid var(--pg-line-on-light);z-index:5}
+nav.toc .wrap{display:flex;gap:var(--pg-space-6);overflow-x:auto;padding-top:var(--pg-space-3);padding-bottom:var(--pg-space-3)}
+nav.toc a{white-space:nowrap;text-decoration:none;font-size:var(--pg-text-14);font-weight:500}
+nav.toc a:hover{text-decoration:underline}
+section.sg{padding:var(--pg-section-y) 0;border-bottom:1px solid var(--pg-line-on-light)}
+section.sg h2{font-size:var(--pg-text-40);line-height:var(--pg-leading-tight);font-weight:500;margin:0 0 var(--pg-space-2)}
+section.sg>.wrap>p.lead{max-width:70ch;margin:0 0 var(--pg-space-10);font-size:var(--pg-text-18);line-height:var(--pg-leading-32)}
+h3.sub{font-size:var(--pg-text-14);font-weight:600;letter-spacing:var(--pg-tracking-label);text-transform:uppercase;margin:var(--pg-space-10) 0 var(--pg-space-4)}
+.grid{display:grid;gap:var(--pg-space-6)}
+.g3{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+.g2{grid-template-columns:repeat(auto-fit,minmax(380px,1fr))}
+code,.mono{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:13px}
+.note{border-left:4px solid var(--pg-lime-300);background:#fff;padding:var(--pg-space-3) var(--pg-space-4);font-size:var(--pg-text-14);line-height:var(--pg-leading-20)}
+.bad{border-left-color:#b3261e}
+/* colori */
+.sw{border:1px solid var(--pg-line-on-light)}
+.sw .chip{height:120px;display:flex;align-items:flex-end;padding:var(--pg-space-4);font-weight:600}
+.sw .meta{padding:var(--pg-space-3) var(--pg-space-4);font-size:var(--pg-text-14);line-height:var(--pg-leading-20)}
+table.pairs{border-collapse:collapse;width:100%;font-size:var(--pg-text-14)}
+table.pairs th,table.pairs td{border:1px solid var(--pg-line-on-light);padding:var(--pg-space-3);text-align:left;vertical-align:middle}
+.pill{display:inline-block;padding:2px 10px;border:1px solid currentColor;font-size:12px;font-weight:600}
+.ok{color:#1a6b3b}.ko{color:#b3261e}
+/* tipografia */
+.spec{display:grid;grid-template-columns:140px 1fr;gap:var(--pg-space-6);align-items:baseline;padding:var(--pg-space-4) 0;border-top:1px solid rgba(28,46,26,.25)}
+.spec .k{font-size:var(--pg-text-14);line-height:var(--pg-leading-20)}
+.hl{background:var(--pg-highlight);padding:0 .12em}
+/* spaziature */
+.sp{display:flex;align-items:center;gap:var(--pg-space-4);margin:var(--pg-space-2) 0;font-size:var(--pg-text-14)}
+.sp i{display:block;height:16px;background:var(--pg-forest-900)}
+/* ======= componenti ======= */
+.dark{background:var(--pg-surface-dark);color:var(--pg-text-on-dark)}
+.accent{background:var(--pg-surface-accent);color:var(--pg-text-on-accent)}
+.stage{border:1px solid var(--pg-line-on-light);margin-bottom:var(--pg-space-6)}
+.stage>.pad{padding:var(--pg-space-8)}
+.stage>.cap{border-top:1px solid var(--pg-line-on-light);background:#fff;padding:var(--pg-space-3) var(--pg-space-4);font-size:var(--pg-text-14);line-height:var(--pg-leading-20)}
+/* navbar */
+.pg-nav{padding:var(--pg-space-4) var(--pg-gutter) 0}
+.pg-nav .row{display:flex;justify-content:space-between;align-items:center;padding-bottom:var(--pg-space-3);border-bottom:1px solid currentColor;font-size:var(--pg-text-14)}
+.pg-nav .row b{font-weight:500}
+/* titolo con parola evidenziata */
+.pg-display{font-size:var(--pg-text-72);line-height:var(--pg-leading-tight);font-weight:400;margin:0}
+.pg-h2{font-size:var(--pg-text-56);line-height:var(--pg-leading-tight);font-weight:400;margin:0}
+.pg-h2 em,.pg-display em{font-style:normal;background:var(--pg-highlight);color:var(--pg-text-on-accent);padding:0 .12em}
+/* stat */
+.pg-stat .n{font-size:var(--pg-text-56);line-height:var(--pg-leading-tight);font-weight:400}
+.pg-stat .l{font-size:var(--pg-text-14);line-height:var(--pg-leading-20);margin-top:var(--pg-space-1)}
+/* etichetta maiuscola */
+.pg-eyebrow{font-size:var(--pg-text-14);letter-spacing:var(--pg-tracking-label);text-transform:uppercase;font-weight:500}
+/* layer card */
+.pg-layer{padding:var(--pg-space-6);min-height:320px;display:flex;flex-direction:column;gap:var(--pg-space-3);background:linear-gradient(var(--pg-scrim),var(--pg-scrim)),var(--pg-forest-900);color:var(--pg-text-on-dark)}
+.pg-layer h4{font-size:var(--pg-text-24);line-height:var(--pg-leading-tight);font-weight:500;margin:0}
+.pg-layer p{margin:0;font-size:var(--pg-text-16);line-height:var(--pg-leading-26)}
+/* bottone + campo */
+.pg-btn{display:inline-flex;align-items:center;justify-content:center;gap:var(--pg-space-2);padding:var(--pg-space-4) var(--pg-space-8);font:400 var(--pg-text-18)/28px var(--pg-font-body);border:var(--pg-border-1) solid transparent;cursor:pointer;text-decoration:none}
+.pg-btn.primary{background:var(--pg-forest-900);color:var(--pg-cream-50)}
+.pg-btn.primary:hover{background:#000}
+.pg-btn.accent{background:var(--pg-lime-300);color:var(--pg-forest-900)}
+.pg-btn.accent:hover{background:#e9f574}
+.pg-btn.ghost{background:transparent;border-color:currentColor;color:inherit}
+.pg-btn.ghost:hover{background:rgba(28,46,26,.08)}
+.on-dark .pg-btn.ghost:hover{background:rgba(253,251,244,.12)}
+.pg-btn[disabled]{opacity:.45;cursor:not-allowed}
+.pg-bar{display:flex;gap:10px;background:var(--pg-cream-50);padding:var(--pg-space-2);max-width:560px}
+.pg-bar input{flex:1;min-width:0;border:0;background:transparent;padding:var(--pg-space-4);font:400 var(--pg-text-18)/28px var(--pg-font-ui);color:var(--pg-field-text);border-radius:var(--pg-radius-sm)}
+.pg-bar input::placeholder{color:var(--pg-field-placeholder)}
+/* form */
+.pg-form{background:var(--pg-cream-50);color:var(--pg-text-on-light);padding:var(--pg-space-10);max-width:540px;display:grid;gap:var(--pg-space-4)}
+.pg-field{display:grid;gap:var(--pg-space-2)}
+.pg-field label{font:400 var(--pg-text-11)/1 var(--pg-font-body)}
+.pg-field input,.pg-field select{width:100%;background:var(--pg-field-bg);color:var(--pg-field-text);border:1px solid var(--pg-forest-900);padding:var(--pg-space-2) var(--pg-space-3);font:400 var(--pg-text-14)/23px var(--pg-font-ui)}
+.pg-field input::placeholder{color:var(--pg-field-placeholder)}
+.pg-field .err{font-size:var(--pg-text-11);color:#b3261e}
+.pg-check{display:flex;gap:var(--pg-space-3);align-items:flex-start;font-size:var(--pg-text-14);line-height:var(--pg-leading-20)}
+.pg-check input{width:18px;height:18px;margin:1px 0 0;accent-color:var(--pg-forest-900)}
+/* contatti */
+.pg-contact{display:grid;gap:var(--pg-space-1);font-size:var(--pg-text-18);line-height:var(--pg-leading-20)}
+.pg-contact b{font-weight:500}
+
+/* ======= immagini ======= */
+.ph{position:relative;overflow:hidden;aspect-ratio:3/4;background:var(--pg-forest-900);isolation:isolate}
+.ph .base,.ph .top{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(var(--pg-photo-scale));filter:blur(var(--pg-blur-rest));transition:filter var(--pg-blur-duration) var(--pg-blur-ease)}
+.ph::after{content:"";position:absolute;inset:0;background:var(--pg-scrim);z-index:1;pointer-events:none}
+.ph .t{position:absolute;z-index:2;left:var(--pg-space-6);right:var(--pg-space-6);bottom:var(--pg-space-6);color:var(--pg-cream-50);font-size:var(--pg-text-24);line-height:var(--pg-leading-tight);font-weight:500}
+.ph .t small{display:block;font-size:var(--pg-text-14);font-weight:400;margin-top:var(--pg-space-2);letter-spacing:var(--pg-tracking-label);text-transform:uppercase}
+.ph .top{opacity:0;filter:blur(var(--pg-blur-active));-webkit-mask-image:radial-gradient(circle 130px at var(--mx,-999px) var(--my,-999px),#000 0,#000 40%,transparent 100%);mask-image:radial-gradient(circle 130px at var(--mx,-999px) var(--my,-999px),#000 0,#000 40%,transparent 100%);transition:none}
+.fig{margin:0}.fig figcaption{font-size:var(--pg-text-14);line-height:var(--pg-leading-20);margin-top:var(--pg-space-2)}
+.fig.gal-off .ph .base,.ph .top{filter:blur(var(--pg-blur-active))}
+.fig.gal-off .ph::after{display:none}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:1px 8px;border:1px solid #b3261e;color:#b3261e;margin-left:6px}
+#demo[data-mode=hover] .ph:hover .base,#demo[data-mode=hover] .ph:focus-visible .base{filter:blur(var(--pg-blur-active))}
+#demo[data-mode=scroll] .ph .base{filter:blur(var(--b,var(--pg-blur-rest)));transition:none}
+#demo[data-mode=lens] .ph .top{opacity:1}
+.ctrl{display:grid;gap:var(--pg-space-3);max-width:460px;margin:0 0 var(--pg-space-6);font-size:var(--pg-text-14)}
+.ctrl label{display:grid;grid-template-columns:150px 1fr 48px;gap:var(--pg-space-3);align-items:center}
+.modes{display:flex;gap:var(--pg-space-6);flex-wrap:wrap;margin:0 0 var(--pg-space-4);font-size:var(--pg-text-14)}
+.readout{font-size:var(--pg-text-14);margin:var(--pg-space-3) 0 var(--pg-space-6)}
+@media (prefers-reduced-motion:reduce){.ph .base,.ph .top{transition:none}}
+@media(max-width:700px){.spec{grid-template-columns:1fr}.pg-display{font-size:44px}.pg-h2{font-size:36px}.sg-head h1{font-size:40px}}
+</style></head>
+<body>
+<header class="sg-head on-dark"><div class="wrap">
+  <p class="pg-eyebrow" style="margin-bottom:16px">Pianeta.Green · base del nuovo sito</p>
+  <h1>Styleguide e <span class="hl" style="color:#1c2e1a">design system</span></h1>
+  <p>Estratto dal Figma «Pianeta.Green», frame <b>Landing</b> (313:1576), il 09/10/2026. Tre colori, due famiglie di caratteri, angoli vivi. Qui trovi i token, la scala tipografica e i componenti che il disegno già contiene, con i problemi da correggere prima di costruirli.</p>
+</div></header>
+<nav class="toc" aria-label="Indice"><div class="wrap">
+  <a href="#principi">Principi</a><a href="#immagini">Immagini</a><a href="#colori">Colori</a><a href="#tipografia">Tipografia</a><a href="#spazi">Spazi e layout</a><a href="#componenti">Componenti</a><a href="#problemi">Da correggere</a>
+</div></nav>
+
+<section class="sg" id="principi"><div class="wrap">
+  <h2>Principi</h2>
+  <p class="lead">Quello che il disegno fa, ricavato dal frame. Va tenuto così finché non decidi di cambiarlo.</p>
+  <div class="grid g3">
+    <div class="note"><b>Tre colori, niente altro.</b> Verde bosco, crema, lime. Il lime è l'accento: serve a evidenziare una parola o a una CTA su scuro, mai come sfondo di testo su crema.</div>
+    <div class="note"><b>Angoli vivi.</b> Nessun arrotondamento sulle superfici e sui bottoni; solo i campi (8 px) hanno un raggio leggero.</div>
+    <div class="note"><b>Una parola evidenziata per titolo.</b> «Un sistema unico», «a modo tuo», «digitale»: la parola chiave ha sfondo lime.</div>
+    <div class="note"><b>Linee sottili al posto dei box.</b> Le sezioni si separano con una linea di 1 px e molto spazio (80 px sopra e sotto).</div>
+    <div class="note"><b>Le foto sono la parte fondamentale:</b> natura, luce e ombra, sempre sfocate, mai a zero. Vedi «Immagini e art direction».</div>
+    <div class="note"><b>Canvas 1440 px,</b> contenuto 1376 px con 32 px ai lati. Nel Figma esiste solo la versione desktop.</div>
+  </div>
+</div></section>
+
+
+<section class="sg" id="immagini"><div class="wrap">
+  <h2>Immagini e art direction</h2>
+  <p class="lead">Le foto sono il carattere del sito. Foto di natura con una sfocatura: texture, luce e ombra, mai un soggetto da riconoscere. La sfocatura può scendere quando l'utente si avvicina, ma <b>non va mai a zero</b>.</p>
+
+  <p class="note bad">Le foto di riferimento non sono in questo repository pubblico: i diritti vanno definiti (due delle sei hanno una filigrana di terzi). Nella demo qui sotto sono sostituite da sfumature.</p>
+
+  <h3 class="sub">Regole di art direction</h3>
+  <div class="grid g3">
+    <div class="note"><b>Soggetto:</b> natura da vicino. Texture (corteccia, prato, intonaco), foglie, luce che filtra. Niente persone, niente orizzonti, niente cieli.</div>
+    <div class="note"><b>Luce:</b> naturale e radente, con ombre nette di foglie o rami. Il contrasto tra zone al sole e in ombra è il disegno.</div>
+    <div class="note"><b>Colore:</b> verdi caldi (giallo-verde, muschio) che accompagnano forest e lime. I toni caldi (terracotta, beige) sono un accento raro, non la norma.</div>
+    <div class="note"><b>Grana:</b> pellicola o rumore fine, mai la pulizia da stock. Aiuta la sfocatura a sembrare materia, non un filtro.</div>
+    <div class="note"><b>Sfocatura:</b> sempre presente, tre livelli: a riposo, attiva, pavimento. Il pavimento non si supera in nessun caso.</div>
+    <div class="note"><b>Testo sopra:</b> sempre con velo scuro (50%). Il contrasto va misurato sul punto più chiaro della foto.</div>
+  </div>
+
+  <h3 class="sub">Interazione: la sfocatura scende, mai a zero</h3>
+  <div class="modes" role="radiogroup" aria-label="Modalità">
+    <label><input type="radio" name="mode" value="hover" checked> Passaggio del mouse / focus</label>
+    <label><input type="radio" name="mode" value="scroll"> Scorrimento (la foto si apre entrando nello schermo)</label>
+    <label><input type="radio" name="mode" value="lens"> Lente: la sfocatura scende solo attorno al cursore</label>
+  </div>
+  <div class="ctrl">
+    <label>A riposo <input id="c-rest" type="range" min="8" max="40" value="20"><output id="o-rest">20px</output></label>
+    <label>Attiva <input id="c-active" type="range" min="2" max="24" value="8"><output id="o-active">8px</output></label>
+    <label>Pavimento (minimo) <input id="c-floor" type="range" min="2" max="12" value="4"><output id="o-floor">4px</output></label>
+  </div>
+  <div class="readout" id="readout" aria-live="polite"></div>
+  <div class="grid g3" id="demo" data-mode="hover">
+    <div class="ph" tabindex="0"><div class="base bgph" style="background:radial-gradient(60% 50% at 28% 30%,#8fb061,transparent),radial-gradient(70% 60% at 72% 72%,#2c4a28,transparent),#1c2e1a"></div><div class="top bgph" style="background:radial-gradient(60% 50% at 28% 30%,#8fb061,transparent),radial-gradient(70% 60% at 72% 72%,#2c4a28,transparent),#1c2e1a"></div><div class="t">Il web sostenibile<small>Layer 01</small></div></div>
+    <div class="ph" tabindex="0"><div class="base bgph" style="background:radial-gradient(55% 50% at 70% 25%,#6f8f4a,transparent),radial-gradient(70% 60% at 30% 75%,#243d21,transparent),#1c2e1a"></div><div class="top bgph" style="background:radial-gradient(55% 50% at 70% 25%,#6f8f4a,transparent),radial-gradient(70% 60% at 30% 75%,#243d21,transparent),#1c2e1a"></div><div class="t">Terra — Dati &amp; Servizi<small>Layer 02</small></div></div>
+    <div class="ph" tabindex="0"><div class="base bgph" style="background:radial-gradient(60% 50% at 40% 35%,#a9a37a,transparent),radial-gradient(65% 60% at 70% 75%,#4a3b2c,transparent),#1c2e1a"></div><div class="top bgph" style="background:radial-gradient(60% 50% at 40% 35%,#a9a37a,transparent),radial-gradient(65% 60% at 70% 75%,#4a3b2c,transparent),#1c2e1a"></div><div class="t">Hederae — Esperienza<small>Layer 03</small></div></div>
+  </div>
+  <div class="grid g2" style="margin-top:24px">
+    <div class="note"><b>Mouse:</b> hover e focus da tastiera fanno la stessa cosa. <b>Touch:</b> niente hover; la sfocatura si apre con lo scorrimento (modalità 2) o a un tocco. <b>Movimento ridotto:</b> nessuna animazione, la foto resta a metà tra riposo e attiva.</div>
+    <div class="note"><b>Produzione:</b> animare il <code>filter</code> su foto grandi pesa sul telefono. Meglio due livelli già sfocati (riposo e attiva) sovrapposti con dissolvenza di opacità; il pavimento resta sempre cotto nell'immagine.</div>
+  </div>
+
+  <h3 class="sub">Peso e diritti</h3>
+  <div class="grid g2">
+    <div class="note bad"><b>Peso: 11 MB.</b> Le dieci immagini del frame sono PNG da 15 KB a 3,4 MB, in tutto circa 11 MB: incompatibile con l'LCP sotto 2,5 s. Poiché la sfocatura non scende mai a zero, le foto non servono nitide: si possono servire a metà risoluzione in AVIF o WebP. Obiettivo da misurare: meno di 150 KB l'una.</div>
+    <div class="note bad"><b>Diritti: due foto hanno una filigrana di terzi</b> («PHOTOGRAPHY BY @UNOEGO · 2024» e un codice del social Xiaohongshu). Vengono da un social, non da una licenza. Per pubblicare servono licenza, autore o foto proprie; un registro delle immagini (fonte, autore, licenza) è obbligatorio. Alla sfocatura minima la scritta può ancora intravedersi.</div>
+  </div>
+</div></section>
+
+<section class="sg" id="colori"><div class="wrap">
+  <h2>Colori</h2>
+  <p class="lead">Tre colori di base. Le coppie testo/sfondo sono misurate con il rapporto di contrasto WCAG.</p>
+  <div class="grid g3">
+    <div class="sw"><div class="chip" style="background:#1c2e1a;color:#fdfbf4">Forest</div><div class="meta"><b>#1C2E1A</b><br><code>--pg-forest-900</code><br>Testo su chiaro · superfici scure</div></div>
+    <div class="sw"><div class="chip" style="background:#fdfbf4;color:#1c2e1a">Cream</div><div class="meta"><b>#FDFBF4</b><br><code>--pg-cream-50</code><br>Superfici chiare · testo su scuro</div></div>
+    <div class="sw"><div class="chip" style="background:#f4ff8d;color:#1c2e1a">Lime</div><div class="meta"><b>#F4FF8D</b><br><code>--pg-lime-300</code><br>Accento · evidenziazione · CTA su scuro</div></div>
+  </div>
+  <h3 class="sub">Contrasti</h3>
+  <table class="pairs"><thead><tr><th>Coppia</th><th>Esempio</th><th>Rapporto</th><th>Esito</th></tr></thead><tbody>
+    <tr><td>Forest su Cream</td><td style="background:#fdfbf4;color:#1c2e1a">Testo di corpo</td><td>13,9 : 1</td><td><span class="pill ok">AAA</span></td></tr>
+    <tr><td>Cream su Forest</td><td style="background:#1c2e1a;color:#fdfbf4">Testo su scuro</td><td>13,9 : 1</td><td><span class="pill ok">AAA</span></td></tr>
+    <tr><td>Forest su Lime</td><td style="background:#f4ff8d;color:#1c2e1a">Parola evidenziata · CTA</td><td>13,4 : 1</td><td><span class="pill ok">AAA</span></td></tr>
+    <tr><td>Lime su Forest</td><td style="background:#1c2e1a;color:#f4ff8d">Titolo su scuro</td><td>13,4 : 1</td><td><span class="pill ok">AAA</span></td></tr>
+    <tr><td>Lime su Cream</td><td style="background:#fdfbf4;color:#f4ff8d">Non usare</td><td>1,04 : 1</td><td><span class="pill ko">non passa</span></td></tr>
+    <tr><td>Placeholder del Figma (forest 50% × opacità 30%)</td><td style="background:#fdfbf4;color:rgba(28,46,26,.15)">https://www.tuosito.com</td><td>1,3 : 1</td><td><span class="pill ko">non passa</span></td></tr>
+    <tr><td>Placeholder proposto (forest 70%)</td><td style="background:#fdfbf4;color:color-mix(in srgb,#1c2e1a 70%,#fdfbf4)">https://www.tuosito.com</td><td>5,3 : 1</td><td><span class="pill ok">AA</span></td></tr>
+  </tbody></table>
+  <h3 class="sub">Veli</h3>
+  <div class="grid g2">
+    <div class="note"><code>--pg-scrim</code> rgba(28,46,26,.5): velo scuro sulle foto, per far leggere il testo chiaro.</div>
+    <div class="note"><code>--pg-glass</code> rgba(217,217,217,.1): velo chiaro leggero sulle foto, solo effetto.</div>
+  </div>
+</div></section>
+
+<section class="sg" id="tipografia"><div class="wrap">
+  <h2>Tipografia</h2>
+  <p class="lead">Albert Sans per titoli e testo; IBM Plex Sans per i campi di inserimento e il micro-testo. Nel Figma compaiono anche IBM Plex Serif e Inter, una volta ciascuno: sono scarti, non sistema.</p>
+  <div class="spec"><div class="k">Display · 72/1,2<br><span class="mono">--pg-text-72</span></div><div class="pg-display">Il web sostenibile è anche il web più <em>veloce</em>.</div></div>
+  <div class="spec"><div class="k">H2 · 56/1,2<br><span class="mono">--pg-text-56</span></div><div class="pg-h2">Non tre prodotti ma un <em>sistema unico</em></div></div>
+  <div class="spec"><div class="k">H3 · 40/1,2<br><span class="mono">--pg-text-40</span></div><div style="font-size:40px;line-height:1.2">Misurare l'impatto del tuo sito</div></div>
+  <div class="spec"><div class="k">Titolo card · 24/1,2<br><span class="mono">--pg-text-24</span></div><div style="font-size:24px;line-height:1.2;font-weight:500">Terra — Dati &amp; Servizi</div></div>
+  <div class="spec"><div class="k">Testo grande · 18-20/32<br><span class="mono">--pg-text-18</span></div><div style="font-size:18px;line-height:32px;max-width:70ch">Invece di combinare soluzioni separate, abbiamo progettato tre layer che lavorano insieme. L'integrazione è la vera differenza: ogni scelta tecnica è coerente con le altre.</div></div>
+  <div class="spec"><div class="k">Testo · 16/26<br><span class="mono">--pg-text-16</span></div><div style="font-size:16px;line-height:26px;max-width:70ch">Componenti riutilizzabili, accessibilità strutturata e performance ottimizzate: un sistema coerente, inclusivo e capace di funzionare anche nelle condizioni meno favorevoli.</div></div>
+  <div class="spec"><div class="k">Etichetta · 14 maiuscolo +10%<br><span class="mono">--pg-text-14</span></div><div class="pg-eyebrow">Layer 01 · Infrastruttura</div></div>
+  <div class="spec"><div class="k">Campo · 14 Plex Sans<br><span class="mono">--pg-font-ui</span></div><div style="font:400 14px/23px 'IBM Plex Sans'">Il tuo nome · tua@email.it</div></div>
+  <div class="spec"><div class="k">Micro · 11<br><span class="mono">--pg-text-11</span></div><div style="font-size:11px;line-height:1">Nome · Organizzazione · Email</div></div>
+</div></section>
+
+<section class="sg" id="spazi"><div class="wrap">
+  <h2>Spazi e layout</h2>
+  <p class="lead">Scala di 4 px. Le sezioni respirano: 80 px sopra e sotto.</p>
+  <div class="sp"><i style="width:4px"></i>4 · <code>--pg-space-1</code></div>
+  <div class="sp"><i style="width:8px"></i>8 · <code>--pg-space-2</code></div>
+  <div class="sp"><i style="width:12px"></i>12 · <code>--pg-space-3</code></div>
+  <div class="sp"><i style="width:16px"></i>16 · <code>--pg-space-4</code></div>
+  <div class="sp"><i style="width:24px"></i>24 · <code>--pg-space-6</code></div>
+  <div class="sp"><i style="width:32px"></i>32 · <code>--pg-space-8</code></div>
+  <div class="sp"><i style="width:40px"></i>40 · <code>--pg-space-10</code></div>
+  <div class="sp"><i style="width:64px"></i>64 · <code>--pg-space-16</code></div>
+  <div class="sp"><i style="width:80px"></i>80 · <code>--pg-space-20</code> (padding verticale delle sezioni)</div>
+  <h3 class="sub">Layout</h3>
+  <div class="grid g3">
+    <div class="note">Tela <b>1440</b> px · contenuto <b>1376</b> px · margini <b>32</b> px.</div>
+    <div class="note">Tre colonne per le card dei layer (475 · 490 · 475 px) a filo, senza spazio tra loro.</div>
+    <div class="note">Raggio: <b>0</b> ovunque, <b>8</b> px solo sui campi. Linee di <b>1 px</b>.</div>
+  </div>
+</div></section>
+
+<section class="sg" id="componenti"><div class="wrap">
+  <h2>Componenti</h2>
+  <p class="lead">Quelli presenti nel frame, ricostruiti con i token. Ognuno è un candidato per il nuovo design system.</p>
+
+  <h3 class="sub">Navbar</h3>
+  <div class="stage"><div class="pad" style="background:var(--pg-cream-50)"><div class="pg-nav" style="padding:0"><div class="row"><b>Pianeta Green</b><span>Performance, sostenibilità e trasparenza. Progettato insieme.</span></div></div></div><div class="cap">Wordmark a sinistra, frase di servizio a destra, linea sottile sotto. Nel Figma è un frame di 31 px. Mancano: stato attivo, menu mobile.</div></div>
+
+  <h3 class="sub">Titoli con parola evidenziata</h3>
+  <div class="stage dark on-dark"><div class="pad"><p class="pg-display">Il web sostenibile<br>è anche il web più <em>veloce</em>.</p></div><div class="cap" style="color:var(--pg-forest-900)">Display 72/1,2. La parola chiave ha sfondo lime e testo forest (13,4:1). Il lime non va mai usato come colore del testo su crema.</div></div>
+
+  <h3 class="sub">Statistiche</h3>
+  <div class="stage dark on-dark"><div class="pad grid g3"><div class="pg-stat"><div class="n">&lt;2.5s</div><div class="l">LCP su ogni progetto</div></div><div class="pg-stat"><div class="n">−50%</div><div class="l">Peso pagine medio</div></div><div class="pg-stat"><div class="n">5+ anni</div><div class="l">Architettura senza rifacimenti</div></div></div><div class="cap" style="color:var(--pg-forest-900)">Numero 56/1,2 + didascalia 14/20. Nel Figma i numeri della home («99.7% uptime», «100% rinnovabile») non hanno ancora una fonte: vedi «Da correggere».</div></div>
+
+  <h3 class="sub">Card dei tre livelli</h3>
+  <div class="stage"><div class="grid g3" style="gap:0">
+    <div class="pg-layer"><span class="pg-eyebrow">Layer 01</span><h4>Mycelium — Infrastruttura</h4><p>Energia rinnovabile certificata, hosting italiano e gestione diretta da Pianeta.Studio.</p></div>
+    <div class="pg-layer" style="background:linear-gradient(rgba(28,46,26,.62),rgba(28,46,26,.62)),#2c4a28"><span class="pg-eyebrow">Layer 02</span><h4>Terra — Dati &amp; Servizi</h4><p>Il CMS del tuo sito, costruito su Payload. Il tuo team pubblica da solo.</p></div>
+    <div class="pg-layer" style="background:linear-gradient(rgba(28,46,26,.7),rgba(28,46,26,.7)),#3d5a36"><span class="pg-eyebrow">Layer 03</span><h4>Hederae — Esperienza</h4><p>Componenti riutilizzabili e token. Accessibilità WCAG 2.1 AA, anche con connessioni lente.</p></div>
+  </div><div class="cap">Superficie scura con foto sfumata e velo, etichetta 14 maiuscolo, titolo 24, testo 16/26. Tre card a filo. Nel Figma la foto è un'immagine: qui un fondo verde.</div></div>
+
+  <h3 class="sub">Bottoni</h3>
+  <div class="stage"><div class="pad" style="display:flex;gap:16px;flex-wrap:wrap;align-items:center">
+    <a class="pg-btn primary" href="#">Analizza</a><a class="pg-btn ghost" href="#">Scopri come</a><button class="pg-btn primary" disabled>Disabilitato</button>
+    <span class="dark on-dark" style="padding:16px;display:inline-flex;gap:16px"><a class="pg-btn accent" href="#">Parliamone</a><a class="pg-btn ghost" href="#">Vedi l'offerta</a></span>
+  </div><div class="cap">Primario (forest su crema), secondario con contorno, accento lime solo su fondi scuri. Angoli vivi, padding 16/32, testo 18/28. Stati hover e focus aggiunti qui: il Figma non li disegna.</div></div>
+
+  <h3 class="sub">Campo + bottone (Pianeta.Meter)</h3>
+  <div class="stage dark on-dark"><div class="pad"><div class="pg-bar"><input type="url" placeholder="https://www.tuosito.com" aria-label="Indirizzo del sito"><a class="pg-btn primary" href="#">Analizza</a></div></div><div class="cap" style="color:var(--pg-forest-900)">Contenitore crema con 8 px di padding, campo trasparente (raggio 8), bottone forest. Il placeholder è corretto a 70% (nel Figma 1,3:1).</div></div>
+
+  <h3 class="sub">Modulo di contatto</h3>
+  <div class="stage dark on-dark"><div class="pad"><form class="pg-form" onsubmit="return false">
+    <div class="grid" style="grid-template-columns:1fr 1fr;gap:16px"><div class="pg-field"><label for="n">Nome</label><input id="n" placeholder="Il tuo nome"></div><div class="pg-field"><label for="o">Organizzazione</label><input id="o" placeholder="Nome ente / azienda"></div></div>
+    <div class="pg-field"><label for="e">Email</label><input id="e" type="email" placeholder="tua@email.it"></div>
+    <div class="pg-field"><label for="i">Interesse</label><select id="i"><option>Seleziona…</option><option>Sito e CMS</option><option>Misura dell'impatto</option></select></div>
+    <label class="pg-check"><input type="checkbox"> Ho letto e accetto la Privacy Policy</label>
+    <a class="pg-btn primary" href="#" style="width:100%">Invia</a>
+  </form></div><div class="cap" style="color:var(--pg-forest-900)">Campi con bordo forest, etichetta 11 sopra, testo campo 14 in IBM Plex Sans. Nel Figma etichette e campi sono a 10,7 e 14,2 px (disegno scalato): qui normalizzati a 11 e 14. Mancano gli stati di errore, successo, disabilitato.</div></div>
+
+  <h3 class="sub">Elenco contatti</h3>
+  <div class="stage"><div class="pad"><div class="pg-contact"><div><b>Email:</b> info@pianeta.studio</div><div><b>Telefono:</b> +39 393 805 5439</div><div><b>Web:</b> <a href="#">pianeta.studio</a></div><div><b>Sede:</b> Catania · Milano · Roma · Remote-first</div></div></div><div class="cap">Etichetta Medium + valore Regular, 18/20. Nel frame la sede è «Catania · Milano · Roma»: coerente con la correzione sede/SB di pianeta.green.</div></div>
+
+  <h3 class="sub">Fascia lime di chiusura</h3>
+  <div class="stage accent"><div class="pad" style="padding:var(--pg-space-20) var(--pg-space-8)"><p class="pg-h2" style="max-width:20ch;font-size:44px">Progettiamo esperienze digitali che uniscono design, tecnologia e sostenibilità.</p></div><div class="cap" style="color:var(--pg-forest-900)">Sfondo lime pieno con testo forest (13,4:1): è l'unico posto in cui il lime fa da superficie.</div></div>
+</div></section>
+
+<section class="sg" id="problemi"><div class="wrap">
+  <h2>Da correggere prima di costruire</h2>
+  <p class="lead">Cose che il Figma fa e che il design system non deve ereditare così.</p>
+  <div class="grid g2">
+    <div class="note bad"><b>Placeholder illeggibile.</b> Forest 50% × opacità 30% dà 1,3:1. Usare forest al 70% (5,3:1).</div>
+    <div class="note bad"><b>Misure sporche.</b> Nel modulo compaiono 7,118 · 10,677 · 14,236 px: disegno scalato. Normalizzati a 8 · 11 · 14.</div>
+    <div class="note bad"><b>Quattro famiglie di caratteri.</b> Albert Sans, IBM Plex Sans, più IBM Plex Serif e Inter (una volta ciascuno). Tenere le prime due.</div>
+    <div class="note bad"><b>Solo desktop.</b> Non c'è il disegno per tablet e telefono: titoli a 72 e 56 px, tre colonne a filo e il modulo a 540 px vanno ripensati.</div>
+    <div class="note bad"><b>Stati mancanti.</b> Focus, hover, errore, disabilitato, caricamento: nessuno è disegnato.</div>
+    <div class="note bad"><b>Numeri senza fonte.</b> «99.7% uptime», «100% energia rinnovabile certificata» e «−50% peso pagine» non sono dimostrati nei nostri file. Il «LCP &lt; 2,5 s» è misurato a 2,4–2,6 s.</div>
+    <div class="note bad"><b>Testo nel livello Terra.</b> «Tecnologia open source… un altro developer può subentrare» è contro la decisione del 09/10 (niente leva sul codice consegnato).</div>
+    <div class="note bad"><b>Nomi dei layer nel Figma.</b> I frame si chiamano «Frame 357», «Rectangle 249»: servono nomi veri per passare ai componenti.</div>
+  </div>
+</div></section>
+
+<script>
+(function(){
+  var root=document.documentElement, demo=document.getElementById('demo');
+  var rest=document.getElementById('c-rest'), act=document.getElementById('c-active'), fl=document.getElementById('c-floor');
+  var ro=document.getElementById('readout'), reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+  function clampVals(){
+    var f=+fl.value; if(+act.value<f)act.value=f; if(+rest.value<+act.value)rest.value=act.value;
+    root.style.setProperty('--pg-blur-rest',rest.value+'px');
+    root.style.setProperty('--pg-blur-active',act.value+'px');
+    root.style.setProperty('--pg-blur-floor',f+'px');
+    document.getElementById('o-rest').textContent=rest.value+'px';
+    document.getElementById('o-active').textContent=act.value+'px';
+    document.getElementById('o-floor').textContent=f+'px';
+    update();
+  }
+  function say(){
+    var m=demo.dataset.mode;
+    ro.textContent= m==='hover'?'A riposo '+rest.value+' px; con mouse o focus scende a '+act.value+' px. Il minimo assoluto è '+fl.value+' px.':
+      m==='scroll'?'La foto passa da '+rest.value+' px a '+act.value+' px mentre sale verso il centro dello schermo. Il minimo assoluto è '+fl.value+' px.':
+      'Fuori dalla lente '+rest.value+' px, dentro '+act.value+' px. Il minimo assoluto è '+fl.value+' px.';
+  }
+  function scrollBlur(){
+    if(demo.dataset.mode!=='scroll')return;
+    demo.querySelectorAll('.ph').forEach(function(el){
+      var r=el.getBoundingClientRect(), vh=innerHeight, p=1-Math.min(1,Math.max(0,Math.abs((r.top+r.height/2)-vh/2)/(vh/2)));
+      if(reduce)p=.5;
+      var b=Math.max(+fl.value, +rest.value-(+rest.value-+act.value)*p);
+      el.querySelector('.base').style.setProperty('--b',b.toFixed(1)+'px');
+    });
+  }
+  function update(){ say(); if(demo.dataset.mode!=='scroll'){demo.querySelectorAll('.base').forEach(function(i){i.style.removeProperty('--b')})} scrollBlur(); }
+  [rest,act,fl].forEach(function(e){e.addEventListener('input',clampVals)});
+  document.querySelectorAll('input[name=mode]').forEach(function(r){r.addEventListener('change',function(){demo.dataset.mode=r.value;update()})});
+  addEventListener('scroll',scrollBlur,{passive:true}); addEventListener('resize',scrollBlur);
+  demo.querySelectorAll('.ph').forEach(function(el){
+    el.addEventListener('pointermove',function(e){ if(demo.dataset.mode!=='lens')return; var r=el.getBoundingClientRect(); el.querySelector('.top').style.setProperty('--mx',(e.clientX-r.left)+'px'); el.querySelector('.top').style.setProperty('--my',(e.clientY-r.top)+'px'); });
+    el.addEventListener('pointerleave',function(){ var t=el.querySelector('.top'); t.style.setProperty('--mx','-999px'); t.style.setProperty('--my','-999px'); });
+  });
+  clampVals();
+})();
+</script>
+</body></html>
